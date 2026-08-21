@@ -24,6 +24,7 @@ html {
 body {
           background: var(--white);
           color: var(--gray);
+          overflow-x: hidden;
 }
 
 nav {
@@ -156,8 +157,8 @@ nav #bigscreenmenu li:hover::after {
           display: grid;
 
           grid-template-columns: 1fr 1fr;
-
-
+overflow: hidden;
+padding-left: 8%;
           padding-left: 8%;
 
 }
