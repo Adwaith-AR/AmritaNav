@@ -5,9 +5,7 @@ const Elements = document.querySelectorAll(".element");
 const h1s = document.querySelectorAll(".slidIn");
 
 const collage = document.getElementById("Collage");
-collage.style.opacity = "0";
-collage.style.transform = "translateX(240px)";
-collage.style.transition = "1s";
+
 document.body.display = "0";
 
 const observer = new IntersectionObserver(entries => {
