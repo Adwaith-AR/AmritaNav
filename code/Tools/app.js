@@ -45,8 +45,28 @@ const Tools = {
                                         label: "Alrayan",
                                         link: "https://maps.app.goo.gl/858me3E9kB4CGfCH7?g_st=ac", 
                                         distance: "120m away"
+                              },
+                              {
+                                        label: "Alrayan",
+                                        link: "https://maps.app.goo.gl/858me3E9kB4CGfCH7?g_st=ac",
+                                        distance: "120m away"
                               }
-
+                              ,
+                              {
+                                        label: "Alrayan",
+                                        link: "https://maps.app.goo.gl/858me3E9kB4CGfCH7?g_st=ac",
+                                        distance: "120m away"
+                              },
+                              {
+                                        label: "Alrayan",
+                                        link: "https://maps.app.goo.gl/858me3E9kB4CGfCH7?g_st=ac",
+                                        distance: "120m away"
+                              },
+                              {
+                                        label: "Alrayan",
+                                        link: "https://maps.app.goo.gl/858me3E9kB4CGfCH7?g_st=ac",
+                                        distance: "120m away"
+                              }
                     ]
           },
           "Clubs": {
