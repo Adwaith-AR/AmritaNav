@@ -49,7 +49,15 @@ const Tools = {
           "Clubs": {
                     Label: "Clubs",
                     IconClass: "fa-solid fa-users",
-                    description: "Explore all student clubs."
+                    description: "Explore all student clubs.",
+                    Options: [
+                              {
+                                        label: "MandiMansil",
+                                        location: "",
+                                        distance: "120m away"
+                              },
+
+                    ]
           },
           "Emergency": {
                     Label: "Emergency",
