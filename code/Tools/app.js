@@ -32,18 +32,18 @@ const Tools = {
                     Options: [
                               {
                                         label: "MandiMansil",
-                                        location: "https://maps.app.goo.gl/Dr6Q8fMmTnynD9vm7?g_st=ac",
+                                        link: "https://maps.app.goo.gl/Dr6Q8fMmTnynD9vm7?g_st=ac",
                                         distance: "120m away"
                               },
                               {
                                         label: "Rayan",
-                                        location: "",
+                                        link: "",
                                         distance: "120m away"
                               }
                               ,
                               {
                                         label: "Alrayan",
-                                        location: "https://maps.app.goo.gl/858me3E9kB4CGfCH7?g_st=ac", 
+                                        link: "https://maps.app.goo.gl/858me3E9kB4CGfCH7?g_st=ac", 
                                         distance: "120m away"
                               }
 
@@ -55,8 +55,13 @@ const Tools = {
                     description: "Explore all student clubs.",
                     Options: [
                               {
-                                        label: "MandiMansil",
-                                        location: "",
+                                        label: "Bios",
+                                        link: "",
+                                        distance: "120m away"
+                              },
+                              {
+                                        label: "Amfoss",
+                                        link: "",
                                         distance: "120m away"
                               },
 
@@ -65,7 +70,20 @@ const Tools = {
           "Emergency": {
                     Label: "Emergency",
                     IconClass: "fa-solid fa-phone",
-                    description: "Quick access to important contacts."
+                    description: "Quick access to important contacts.",
+                    Options: [
+                              {
+                                        label: "Fire",
+                                        link: "",
+                                        distance: "120m away"
+                              },
+                              {
+                                        label: "Amfoss",
+                                        link: "",
+                                        distance: "120m away"
+                              },
+
+                    ]
           },
           "Gyms": {
                     Label: "Gyms",
@@ -78,7 +96,27 @@ const Tools = {
                     description: "Stay updated with campus news."
           }
 }
-function CardGenerator(type, label, p, Icon, location) {
+
+
+Object.values(Tools).forEach(element => {
+          items.push(CardGenerator(1, element.Label, element.description, element.IconClass, ""))
+          container.innerHTML = items.join("")
+
+
+});
+
+
+
+function item_selected(ItemName) {
+          items = []
+          Tools[ItemName].Options.forEach(element => {
+                    items.push(CardGenerator(2, element.label, element.distance, "", element.link))
+          })
+          container.innerHTML = items.join("")
+
+
+}
+function CardGenerator(type, label, p, Icon, link) {
           switch (type) {
                     case 1:
                               return (`
@@ -96,31 +134,12 @@ function CardGenerator(type, label, p, Icon, location) {
                                                   <div class="details">
                                                             <h3>${label}</h3>
                                                             <p>${p}</p>
-                                                            <a href="${location}">
+                                                            <a href="${link}">
                                                                       <button>Lets's Go</button>
                                                             </a>
                                                   </div>
                                         </div>
                                         `)
           }
-
-}
-
-Object.values(Tools).forEach(element => {
-          items.push(CardGenerator(1, element.Label, element.description, element.IconClass, ""))
-          container.innerHTML = items.join("")
-
-
-});
-
-
-
-function item_selected(ItemName) {
-          items = []
-          Tools[ItemName].Options.forEach(element => {
-                    items.push(CardGenerator(2, element.label, element.distance, "", element.location))
-          })
-          container.innerHTML = items.join("")
-
 
 }
