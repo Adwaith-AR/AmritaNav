@@ -32,16 +32,19 @@ const Tools = {
                     Options: [
                               {
                                         label: "MandiMansil",
-                                        location: "", distance: "120m away"
+                                        location: "https://maps.app.goo.gl/Dr6Q8fMmTnynD9vm7?g_st=ac",
+                                        distance: "120m away"
                               },
                               {
-                                        label: "Ryan",
-                                        location: "", distance: "120m away"
+                                        label: "Rayan",
+                                        location: "",
+                                        distance: "120m away"
                               }
                               ,
                               {
                                         label: "Alrayan",
-                                        location: "", distance: "120m away"
+                                        location: "https://maps.app.goo.gl/858me3E9kB4CGfCH7?g_st=ac", 
+                                        distance: "120m away"
                               }
 
                     ]
@@ -75,19 +78,38 @@ const Tools = {
                     description: "Stay updated with campus news."
           }
 }
+function CardGenerator(type, label, p, Icon, location) {
+          switch (type) {
+                    case 1:
+                              return (`
+                                        <div class="card" onclick="item_selected('${label}')">
+                                                  <i class="${Icon}"></i>
+                                                  <h3>${label}</h3>
+                                                  <p>${p}</p>
+                                        </div>
+                                        `)
+                              break
+                    case 2:
+                              return (`
+                                        <div class="card_type2">
+                                                  <img src="./img/${label}.png" alt="">
+                                                  <div class="details">
+                                                            <h3>${label}</h3>
+                                                            <p>${p}</p>
+                                                            <a href="${location}">
+                                                                      <button>Lets's Go</button>
+                                                            </a>
+                                                  </div>
+                                        </div>
+                                        `)
+          }
+
+}
 
 Object.values(Tools).forEach(element => {
-          items.push(`             
-                    <div class="card" onclick="item_selected('${element.Label}')">
-                    
-                              <i class="${element.IconClass}"></i>
-                    
-                              <h3>${element.Label}</h3>
-                    
-                              <p>${element.description}</p>
-                    
-                    </div>`)
+          items.push(CardGenerator(1, element.Label, element.description, element.IconClass, ""))
           container.innerHTML = items.join("")
+
 
 });
 
@@ -96,20 +118,9 @@ Object.values(Tools).forEach(element => {
 function item_selected(ItemName) {
           items = []
           Tools[ItemName].Options.forEach(element => {
-                    items.push(`
-                              <div class="card_type2">
-                                        <img src="./img/${element.label}.png" alt="">
-                                        <div class="details">
-                                                  <h3>${element.label}</h3>
-                                                  <p>${element.distance}</p>
-                                                  <a href="${element.location}">
-                                                            <button>Lets's Go</button>
-                                                  </a>
-                                        </div>
-                              </div>`)
-
+                    items.push(CardGenerator(2, element.label, element.distance, "", element.location))
           })
-          container.innerHTML=items.join("")
+          container.innerHTML = items.join("")
 
 
 }
