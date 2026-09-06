@@ -230,6 +230,7 @@ nav #bigscreenmenu li:hover::after {
                     display: grid;
 
                     h3 {
+                              font-size: 100%;
                               margin-bottom: 10px;
                               text-transform: uppercase;
                     }
