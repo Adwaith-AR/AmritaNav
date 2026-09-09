@@ -1,3 +1,4 @@
+@import url('https://cdn-uicons.flaticon.com/4.0.0/uicons-bold-straight/css/uicons-bold-straight.css');
 * {
           --primary: #8f1537;
           --primary-dark: #6f102a;
@@ -230,7 +231,6 @@ nav #bigscreenmenu li:hover::after {
                     display: grid;
 
                     h3 {
-                              font-size: 100%;
                               margin-bottom: 10px;
                               text-transform: uppercase;
                     }
@@ -294,19 +294,45 @@ nav #bigscreenmenu li:hover::after {
 
 }
 
-.card_type3:hover {
+.cardType3 {
+          background: var(--white);
+          padding: 35px;
+          border-radius: 18px;
+          text-align: center;
+          box-shadow: 0 5px 18px rgba(0, 0, 0, .08);
+          transition: .3s;
+          text-decoration: none;
+          color:var(--black);
+
+          i {
+
+                    font-size: 45px;
+                    color: var(--primary);
+                    margin-bottom: 20px;
+
+          }
+
+          h3 {
+
+                    margin-bottom: 10px;
+
+          }
+
+          p {
+
+                    font-size: 14px;
+                    color: var(--gray);
+
+          }
+
+
+
+}
+.cardType3:hover {
 
           transform: translateY(-10px);
 
 }
-.material-symbols-outlined {
-          font-variation-settings:
-                    'FILL' 0,
-                    'wght' 400,
-                    'GRAD' 0,
-                    'opsz' 24
-}
-
 
 
 @media(max-width:900px) {
