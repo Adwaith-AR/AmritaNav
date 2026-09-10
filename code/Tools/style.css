@@ -1,4 +1,26 @@
 @import url('https://cdn-uicons.flaticon.com/4.0.0/uicons-bold-straight/css/uicons-bold-straight.css');
+
+@keyframes expand {
+          0% {
+                    top: 0px;
+                    left: 0px;
+
+                    width: 10%;
+                    height: 10%;
+
+          }
+
+
+
+          100% {
+                    top: 0px;
+                    left: 0px;
+                    width: 100vw;
+                    height: 100vh;
+          }
+
+}
+
 * {
           --primary: #8f1537;
           --primary-dark: #6f102a;
@@ -160,7 +182,7 @@ nav #bigscreenmenu li:hover::after {
 #Container {
 
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(230px,500px));
+          grid-template-columns: repeat(auto-fit, minmax(230px, 500px));
           gap: 30px;
 
 }
@@ -172,6 +194,7 @@ nav #bigscreenmenu li:hover::after {
           text-align: center;
           box-shadow: 0 5px 18px rgba(0, 0, 0, .08);
           transition: .3s;
+          transform: width height 10s;
 
           i {
 
@@ -211,8 +234,9 @@ nav #bigscreenmenu li:hover::after {
           text-align: center;
           box-shadow: 0 5px 18px rgba(0, 0, 0, .1);
           transition: .3s;
+          transform: width height 10s;
           box-sizing: border-box;
-          display: grid       ;
+          display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 10px;
 
@@ -260,12 +284,14 @@ nav #bigscreenmenu li:hover::after {
           transform: translateY(-10px);
 
 }
+
 .card_type3 {
 
           background: var(--white);
           padding: 35px;
           border-radius: 18px;
           text-align: center;
+          transform: width height 10s;
           box-shadow: 0 5px 18px rgba(0, 0, 0, .08);
           transition: .3s;
 
@@ -302,7 +328,7 @@ nav #bigscreenmenu li:hover::after {
           box-shadow: 0 5px 18px rgba(0, 0, 0, .08);
           transition: .3s;
           text-decoration: none;
-          color:var(--black);
+          color: var(--black);
 
           i {
 
@@ -328,6 +354,7 @@ nav #bigscreenmenu li:hover::after {
 
 
 }
+
 .cardType3:hover {
 
           transform: translateY(-10px);
@@ -367,5 +394,12 @@ nav #bigscreenmenu li:hover::after {
                     padding: 10px;
 
           }
+
+}
+
+.type {
+
+          padding: 10px;
+          position: absolute;
 
 }

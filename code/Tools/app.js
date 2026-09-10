@@ -174,7 +174,7 @@ function CardGenerator(type, label,description,distance, Icon, link) {
                               break
                     case 2:
                               return (`
-                                        <div class="card_type2">
+                                        <div class="card_type2" id="${label}" onclick="expand('${label}')">
                                                   <img src="./img/${label}.png" alt="">
                                                   <div class="details">
                                                             <h3>${label}</h3>
@@ -195,4 +195,17 @@ function CardGenerator(type, label,description,distance, Icon, link) {
                                         </a>`)                                        
           }
 
+}
+function expand(id) {
+          const box =document.getElementById(id)
+          if (box.style.width != "100vw") { 
+                    document.body.style="overflow:hidden"
+                    box.style = "filter: blur(20px);"
+                    box.style = "filter: blur(20px);animation:expand 200ms forwards;  z-index: 99999999999999;position: absolute;"
+                    setTimeout(() => {
+                              box.style = " height: 100vh; width: 100vw;filter: blur(0px); z-index: 99999999999999;position: absolute;top: 0px;  left: 0px;";
+                    }, 400);
+          }
+         
+           
 }
