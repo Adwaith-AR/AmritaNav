@@ -3,7 +3,7 @@ const container = document.getElementById("Container")
 
 const mobilemenu = document.getElementById("mobilemenu");
 
-
+let skipper = 1
 let items = []
 
 mobilemenu.style.display = "none"
@@ -40,40 +40,8 @@ const Tools = {
                               },
                               {
                                         type: 2,
-                                        label: "Rayan",
-                                        link: "",
-                                        distance: "120m away"
-                              }
-                              ,
-                              {
-                                        type: 2,
-                                        label: "Alrayan",
-                                        link: "https://maps.app.goo.gl/858me3E9kB4CGfCH7?g_st=ac",
-                                        distance: "120m away"
-                              },
-                              {
-                                        type: 2,
-                                        label: "Alrayan",
-                                        link: "https://maps.app.goo.gl/858me3E9kB4CGfCH7?g_st=ac",
-                                        distance: "120m away"
-                              }
-                              ,
-                              {
-                                        type: 2,
-                                        label: "Alrayan",
-                                        link: "https://maps.app.goo.gl/858me3E9kB4CGfCH7?g_st=ac",
-                                        distance: "120m away"
-                              },
-                              {
-                                        type: 2,
-                                        label: "Alrayan",
-                                        link: "https://maps.app.goo.gl/858me3E9kB4CGfCH7?g_st=ac",
-                                        distance: "120m away"
-                              },
-                              {
-                                        type: 2,
-                                        label: "Alrayan",
-                                        link: "https://maps.app.goo.gl/858me3E9kB4CGfCH7?g_st=ac",
+                                        label: "MandiMansil",
+                                        link: "https://maps.app.goo.gl/Dr6Q8fMmTnynD9vm7?g_st=ac",
                                         distance: "120m away"
                               }
                     ]
@@ -149,8 +117,8 @@ const data = {
                     link: "https://maps.app.goo.gl/Dr6Q8fMmTnynD9vm7?g_st=ac",
                     distance: "120m away",
                     contacts: ["+91 9544457621", "+91 8918282189", "+91 8918282189"],
-                    items: ["porita", "mandi", "chiken", "kundi", "kundi", "kundi", "kundi", "kundi", "kundi", "kundi", "kundi", "kundi", "kundi", "kundi", "kundi"],
-                    price: ["110", "200", "232", "232", "232", "232", "232", "232", "232", "232", "232", "232", "232", "232", "232"]
+                    items: ["porita", "mandi", "chiken", "chiken", "chiken", "chiken", "chiken", "chiken", "chiken", "chiken"],
+                    price: ["110", "200", "232", "232", "232", "232", "232", "232", "232", "232"]
           }
 }
 
@@ -162,10 +130,16 @@ Object.values(Tools).forEach(element => {
 
 });
 
-function closeMenu() { item_selected(localStorage.getItem('ItemName')) }
+function closeContainer() {
+          document.body.style = "overflow:visible;"
+          skipper=0
+          window.console.log(localStorage.getItem("ItemName"))
+          item_selected(localStorage.getItem('ItemName'))
+}
 
 function item_selected(ItemName) {
           localStorage.setItem("ItemName", ItemName)
+          window.console.log(localStorage.getItem("ItemName"))
           items = []
           Tools[ItemName].Options.forEach(element => {
                     items.push(CardGenerator(element.type, element.label, element.description, element.distance, element.Icon, element.link))
@@ -174,6 +148,7 @@ function item_selected(ItemName) {
 
 
 }
+
 function CardGenerator(type, label, description, distance, Icon, link, items, price, details) {
           switch (type) {
                     case 1:
@@ -211,7 +186,6 @@ function CardGenerator(type, label, description, distance, Icon, link, items, pr
 
                     case 4:
                               let k, ItemList = "", contacts = ""
-                              console.log(items,price,details)
                               for (k = 0; k < items.length; k++) {
                                         ItemList += `
                                                   <tr>
@@ -245,7 +219,7 @@ function CardGenerator(type, label, description, distance, Icon, link, items, pr
                                                                       <button>Lets's Go</button>
                                                             </a>
                                                             
-                                                            <button class="close"><a href=""><i class="fa-solid fa-xmark"></a></i></button>
+                                                            <button onclick="closeContainer()" class="close"><i class="fa-solid fa-xmark"></i></button>
                                                              
                                                   `)
 
@@ -253,25 +227,33 @@ function CardGenerator(type, label, description, distance, Icon, link, items, pr
 
 }
 function expand(id) {
-          const box = document.getElementById(id)
-          const details = document.getElementById(id + "d")
-          if (box.style.width != "100vw") {
-                    window.scrollTo({
-                              top: 0,
-                              behavior: 'instant'
-                    });
-                    document.body.style = "overflow:hidden;"
-                    container.style = "overflow:scroll;"
-                    box.style = "filter: blur(20px);"
+          if (skipper == 1) {
 
-                    box.style = "filter: blur(20px);animation:expand 200ms forwards;  z-index: 99999999999999;position: absolute;"
-                    setTimeout(() => {
-                              details.innerHTML = CardGenerator(data[id].type, data[id].label, "", data[id].distance, "", data[id].link, data[id].items, data[id].price, data[id].contacts)
-                              box.style = "overflow:scroll; height: 100vh; width: 100vw;filter: blur(0px); z-index: 99999999999999;position: absolute;top: 0px;  left: 0px;";
+                    const box = document.getElementById(id)
+                    const details = document.getElementById(id + "d")
+                    if (box.style.width != "100vw") {
+                              window.scrollTo({
+                                        top: 0,
+                                        behavior: 'instant'
+                              });
+                              document.body.style = "overflow:hidden;"
+                              box.style = "filter: blur(20px);"
 
-                              box.classList.replace('card_type2', 'card_type4');
-                    }, 400);
+                              box.style = "filter: blur(20px);animation:expand 200ms forwards;  z-index: 999999;position: absolute;"
+                              setTimeout(() => {
+                                        console.log(id)
+                                        details.innerHTML = CardGenerator(data[id].type, data[id].label, "", data[id].distance, "", data[id].link, data[id].items, data[id].price, data[id].contacts)
+                                        box.style = "overflow:scroll; height: 100vh; width: 100vw;filter: blur(0px); z-index: 99999999999999;position: absolute;top: 0px;  left: 0px;";
+
+                                        box.classList.replace('card_type2', 'card_type4');
+                              }, 400);
+                    }
           }
+          else if (skipper != 1) { 
+                    skipper=1
+          }
+
+
 
 
 }
