@@ -130,12 +130,7 @@ Object.values(Tools).forEach(element => {
 
 });
 
-function closeContainer() {
-          document.body.style = "overflow:visible;"
-          skipper=0
-          window.console.log(localStorage.getItem("ItemName"))
-          item_selected(localStorage.getItem('ItemName'))
-}
+
 
 function item_selected(ItemName) {
           localStorage.setItem("ItemName", ItemName)
@@ -237,13 +232,13 @@ function expand(id) {
                                         behavior: 'instant'
                               });
                               document.body.style = "overflow:hidden;"
-                              box.style = "filter: blur(20px);"
-
-                              box.style = "filter: blur(20px);animation:expand 200ms forwards;  z-index: 999999;position: absolute;"
+                              box.style = "filter: animation:expand 200ms forwards;  z-index: 999999;position: absolute;"
+                              setTimeout(() => {
+                                        details.innerHTML = CardGenerator(data[id].type, data[id].label, "", data[id].distance, "", data[id].link, data[id].items, data[id].price, data[id].contacts)
+                              }, 50);
                               setTimeout(() => {
                                         console.log(id)
-                                        details.innerHTML = CardGenerator(data[id].type, data[id].label, "", data[id].distance, "", data[id].link, data[id].items, data[id].price, data[id].contacts)
-                                        box.style = "overflow:scroll; height: 100vh; width: 100vw;filter: blur(0px); z-index: 99999999999999;position: absolute;top: 0px;  left: 0px;";
+                                        box.style = "overflow:scroll; height: 100vh; width: 100vw; z-index: 9999;position: absolute;top: 0px;  left: 0px;";
 
                                         box.classList.replace('card_type2', 'card_type4');
                               }, 400);
@@ -256,4 +251,10 @@ function expand(id) {
 
 
 
+}
+function closeContainer() {
+          document.body.style = "overflow:visible;"
+          skipper=0
+          window.console.log(localStorage.getItem("ItemName"))
+          item_selected(localStorage.getItem('ItemName'))
 }
