@@ -2,10 +2,10 @@
 
 @keyframes expand {
           0% {
-                    top:25%;
+                    top: 25%;
                     left: 25%;
-
-                    width:250px;
+                    filter: blur(25px);
+                    width: 250px;
                     height: 250px;
 
           }
@@ -13,6 +13,7 @@
 
 
           100% {
+                    filter: blur(25px);
                     top: 0px;
                     left: 0px;
                     width: 100vw;
@@ -238,7 +239,7 @@ nav #bigscreenmenu li:hover::after {
           transform: width height 10s;
           box-sizing: border-box;
           display: grid;
-          grid-template-columns:1fr 1fr;
+          grid-template-columns: 1fr 1fr;
           gap: 10px;
 
 
@@ -296,7 +297,7 @@ nav #bigscreenmenu li:hover::after {
           transition: .3s;
           transform: width height 10s;
           box-sizing: border-box;
-          
+
           padding: 20px;
           gap: 10px;
           display: grid;
@@ -350,7 +351,6 @@ nav #bigscreenmenu li:hover::after {
                               margin-bottom: 50px;
                               background: var(--primary-dark);
                               width: fit-content
-
                     }
 
                     a {
@@ -533,6 +533,7 @@ nav #bigscreenmenu li:hover::after {
                     gap: 10px;
                     display: grid;
                     grid-template-columns: 1fr;
+
                     img {
                               place-self: center;
                               border-radius: 15px;

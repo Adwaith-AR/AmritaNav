@@ -232,7 +232,7 @@ function expand(id) {
                                         behavior: 'instant'
                               });
                               document.body.style = "overflow:hidden;"
-                              box.style = "filter: animation:expand 200ms forwards;  z-index: 999999;position: absolute;"
+                              box.style = "animation:expand 200ms forwards;  z-index: 999999;position: absolute;"
                               setTimeout(() => {
                                         details.innerHTML = CardGenerator(data[id].type, data[id].label, "", data[id].distance, "", data[id].link, data[id].items, data[id].price, data[id].contacts)
                               }, 50);
