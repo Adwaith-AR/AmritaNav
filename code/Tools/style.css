@@ -183,6 +183,7 @@ nav #bigscreenmenu li:hover::after {
 
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(230px, 500px));
+          place-content: center;
           gap: 30px;
 
 }
