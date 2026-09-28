@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Flag to suppress room selection click when user was dragging/panning
+  let suppressClick = false;
+
   // --- Room Selection Logic ---
   const rooms = document.querySelectorAll('.selectable-room');
   let selectedRoom = null;
@@ -21,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   rooms.forEach(room => {
     room.addEventListener('click', (e) => {
+      if (suppressClick) return;
       e.stopPropagation();
       selectRoom(room);
 
@@ -47,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.addEventListener('click', () => {
+    if (suppressClick) return;
     if (selectedRoom) {
       selectedRoom.classList.remove('selected');
       selectedRoom.setAttribute('aria-pressed', 'false');
@@ -483,6 +488,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const sortedRooms = fData.rooms.slice().sort((a, b) => a.name.localeCompare(b.name));
 
       sortedRooms.forEach(r => {
+        // Do not add courtyards to navigation
+        if (r.id.toLowerCase().includes('courtyard') || r.name.toLowerCase().includes('courtyard') || (r.code && r.code.toLowerCase().includes('cyd'))) {
+          return;
+        }
+
         const text = r.code && r.code !== r.name ? `${r.name} (${r.code})` : r.name;
 
         if (navStartSelect) {
@@ -857,6 +867,222 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         generateCampusRoute();
       }
+    });
+  }
+
+  // ==========================================
+  // --- Map Pan & Zoom Engine (Map Area Only) ---
+  // ==========================================
+  const mapPanStage = document.getElementById('map-pan-stage');
+  const zoomInBtn = document.getElementById('map-zoom-in');
+  const zoomOutBtn = document.getElementById('map-zoom-out');
+  const zoomResetBtn = document.getElementById('map-zoom-reset');
+
+  if (mapContainer && mapPanStage) {
+    let scale = 1;
+    let panX = 0;
+    let panY = 0;
+    const MIN_SCALE = 1.0;
+    const MAX_SCALE = 4.5;
+
+    function applyTransform(smooth = false) {
+      if (!mapPanStage) return;
+      if (smooth) {
+        mapPanStage.style.transition = 'transform 0.25s cubic-bezier(0.2, 0, 0, 1)';
+      } else {
+        mapPanStage.style.transition = 'none';
+      }
+      mapPanStage.style.transform = `translate3d(${panX}px, ${panY}px, 0px) scale(${scale})`;
+    }
+
+    mapPanStage.addEventListener('transitionend', () => {
+      mapPanStage.style.transition = 'none';
+    });
+
+    function clampPan() {
+      if (!mapContainer) return;
+      const cRect = mapContainer.getBoundingClientRect();
+      const scaledW = cRect.width * scale;
+      const scaledH = cRect.height * scale;
+
+      if (scale <= 1.01) {
+        panX = 0;
+        panY = 0;
+        return;
+      }
+
+      // Allow comfortable panning margins so edge rooms can be centered
+      const marginX = Math.min(80, cRect.width * 0.2);
+      const marginY = Math.min(80, cRect.height * 0.2);
+
+      const minX = cRect.width - scaledW - marginX;
+      const maxX = marginX;
+      panX = Math.min(maxX, Math.max(minX, panX));
+
+      const minY = cRect.height - scaledH - marginY;
+      const maxY = marginY;
+      panY = Math.min(maxY, Math.max(minY, panY));
+    }
+
+    function zoomAtPoint(targetScale, clientX, clientY, smooth = false) {
+      const rect = mapContainer.getBoundingClientRect();
+      const offsetX = clientX - rect.left;
+      const offsetY = clientY - rect.top;
+
+      const stageX = (offsetX - panX) / scale;
+      const stageY = (offsetY - panY) / scale;
+
+      scale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, targetScale));
+      panX = offsetX - stageX * scale;
+      panY = offsetY - stageY * scale;
+
+      clampPan();
+      applyTransform(smooth);
+    }
+
+    function resetView(smooth = true) {
+      scale = 1;
+      panX = 0;
+      panY = 0;
+      applyTransform(smooth);
+    }
+
+    // 1. Mouse wheel & Mac Trackpad Pinch inside Map Container ONLY
+    mapContainer.addEventListener('wheel', (e) => {
+      // Prevent entire webpage from scrolling or zooming while hovering map
+      e.preventDefault();
+
+      let zoomFactor;
+      if (e.ctrlKey) {
+        // macOS trackpad pinch gesture
+        zoomFactor = Math.exp(-e.deltaY * 0.01);
+      } else {
+        // Traditional mouse scroll wheel
+        zoomFactor = e.deltaY < 0 ? 1.15 : 0.87;
+      }
+
+      const newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale * zoomFactor));
+      zoomAtPoint(newScale, e.clientX, e.clientY, false);
+    }, { passive: false });
+
+    // 2. Pointer Events for 1-Finger / Mouse Drag and 2-Finger Touch Pinch
+    const activePointers = new Map();
+    let isDragging = false;
+    let startPointerDist = 0;
+    let startPinchScale = 1;
+    let totalDragDistance = 0;
+
+    mapContainer.addEventListener('pointerdown', (e) => {
+      // Don't initiate map pan if interacting with control buttons
+      if (e.target.closest('#map-zoom-controls') || e.target.closest('#gps-dock')) {
+        return;
+      }
+
+      mapContainer.setPointerCapture(e.pointerId);
+      activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+      if (activePointers.size === 1) {
+        isDragging = true;
+        totalDragDistance = 0;
+        mapPanStage.style.transition = 'none';
+        mapPanStage.classList.add('is-panning');
+      } else if (activePointers.size === 2) {
+        isDragging = false;
+        mapPanStage.classList.remove('is-panning');
+        const pts = Array.from(activePointers.values());
+        startPointerDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+        startPinchScale = scale;
+      }
+    });
+
+    mapContainer.addEventListener('pointermove', (e) => {
+      if (!activePointers.has(e.pointerId)) return;
+      const prevPt = activePointers.get(e.pointerId);
+      const dx = e.clientX - prevPt.x;
+      const dy = e.clientY - prevPt.y;
+      activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+      if (activePointers.size === 1 && isDragging) {
+        totalDragDistance += Math.hypot(dx, dy);
+        if (totalDragDistance > 5) {
+          suppressClick = true;
+        }
+        panX += dx;
+        panY += dy;
+        clampPan();
+        applyTransform(false);
+      } else if (activePointers.size === 2) {
+        suppressClick = true;
+        const pts = Array.from(activePointers.values());
+        const currentDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+        if (startPointerDist > 0) {
+          const pinchCenterX = (pts[0].x + pts[1].x) / 2;
+          const pinchCenterY = (pts[0].y + pts[1].y) / 2;
+          const newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, startPinchScale * (currentDist / startPointerDist)));
+          zoomAtPoint(newScale, pinchCenterX, pinchCenterY, false);
+        }
+      }
+    });
+
+    function handlePointerEnd(e) {
+      if (activePointers.has(e.pointerId)) {
+        try {
+          mapContainer.releasePointerCapture(e.pointerId);
+        } catch (_) {}
+        activePointers.delete(e.pointerId);
+      }
+
+      if (activePointers.size === 0) {
+        isDragging = false;
+        mapPanStage.classList.remove('is-panning');
+        if (suppressClick) {
+          setTimeout(() => {
+            suppressClick = false;
+          }, 100);
+        }
+      } else if (activePointers.size === 1) {
+        isDragging = true;
+        mapPanStage.classList.add('is-panning');
+      }
+    }
+
+    mapContainer.addEventListener('pointerup', handlePointerEnd);
+    mapContainer.addEventListener('pointercancel', handlePointerEnd);
+
+    // 3. Floating Zoom Controls
+    if (zoomInBtn) {
+      zoomInBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const rect = mapContainer.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const newScale = Math.min(MAX_SCALE, scale * 1.3);
+        zoomAtPoint(newScale, cx, cy, true);
+      });
+    }
+
+    if (zoomOutBtn) {
+      zoomOutBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const rect = mapContainer.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const newScale = Math.max(MIN_SCALE, scale / 1.3);
+        zoomAtPoint(newScale, cx, cy, true);
+      });
+    }
+
+    if (zoomResetBtn) {
+      zoomResetBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        resetView(true);
+      });
+    }
+
+    // 4. Resize listener to re-clamp pan if container size changes
+    window.addEventListener('resize', () => {
+      clampPan();
+      applyTransform(false);
     });
   }
 });

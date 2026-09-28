@@ -474,6 +474,77 @@ body {
   display: inline-block;
   line-height: 0;
   max-width: 100%;
+  overflow: hidden;
+  touch-action: none;
+  border-radius: 6px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.map-pan-stage {
+  position: relative;
+  width: 100%;
+  line-height: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+  cursor: grab;
+}
+
+.map-pan-stage.is-panning {
+  cursor: grabbing;
+}
+
+.map-zoom-controls {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  z-index: 25;
+  display: inline-flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  user-select: none;
+  line-height: normal;
+}
+
+.map-zoom-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  color: #1e293b;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  line-height: 1;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  font-family: inherit;
+}
+
+.map-zoom-btn:last-child {
+  border-bottom: none;
+}
+
+.map-zoom-btn.reset {
+  font-size: 15px;
+}
+
+.map-zoom-btn:hover {
+  background: #f1f5f9;
+  color: #2563eb;
+}
+
+.map-zoom-btn:active {
+  background: #e2e8f0;
 }
 
 .floor-layer {

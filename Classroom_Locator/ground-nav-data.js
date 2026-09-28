@@ -13651,6 +13651,18 @@ class CampusRouter {
   }
 }
 
+// Courtyard locations are non-selectable and excluded from navigation
+const isCourtyardRoom = (r) => r.id.toLowerCase().includes('courtyard') || r.name.toLowerCase().includes('courtyard') || (r.code && r.code.toLowerCase().includes('cyd'));
+if (CAMPUS_DATA_PLACEHOLDER.floors && CAMPUS_DATA_PLACEHOLDER.floors.ground && CAMPUS_DATA_PLACEHOLDER.floors.ground.rooms) {
+  CAMPUS_DATA_PLACEHOLDER.floors.ground.rooms = CAMPUS_DATA_PLACEHOLDER.floors.ground.rooms.filter(r => !isCourtyardRoom(r));
+}
+if (CAMPUS_DATA_PLACEHOLDER.allRooms) {
+  CAMPUS_DATA_PLACEHOLDER.allRooms = CAMPUS_DATA_PLACEHOLDER.allRooms.filter(r => !isCourtyardRoom(r));
+}
+if (CAMPUS_DATA_PLACEHOLDER.rooms) {
+  CAMPUS_DATA_PLACEHOLDER.rooms = CAMPUS_DATA_PLACEHOLDER.rooms.filter(r => !isCourtyardRoom(r));
+}
+
 window.CampusRouter = CampusRouter;
 window.GroundRouter = CampusRouter;
 window.CAMPUS_NAV_DATA = CAMPUS_DATA_PLACEHOLDER;
