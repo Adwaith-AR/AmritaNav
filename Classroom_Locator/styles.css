@@ -171,9 +171,13 @@ body {
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  -webkit-user-drag: none;
+  cursor: grab;
+}
+
+.map-container.is-panning,
+.map-container:active {
+  cursor: grabbing;
 }
 
 .map-pan-stage {
@@ -209,6 +213,11 @@ body {
   height: 100%;
   object-fit: contain;
   display: block;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 [data-theme="dark"] .central-image {

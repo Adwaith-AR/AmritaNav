@@ -979,28 +979,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function clampPan() {
-      if (!mapContainer) return;
+      if (!mapContainer || !mapPanStage) return;
       const cRect = mapContainer.getBoundingClientRect();
-      const scaledW = cRect.width * scale;
-      const scaledH = cRect.height * scale;
+      const stageW = mapPanStage.offsetWidth || cRect.width;
+      const stageH = mapPanStage.offsetHeight || cRect.height;
+      const scaledW = stageW * scale;
+      const scaledH = stageH * scale;
 
-      if (scale <= 1.01) {
-        panX = 0;
-        panY = 0;
-        return;
-      }
+      // Allow dragging freely across the screen at any zoom level
+      const marginX = Math.max(cRect.width * 0.75, 350);
+      const marginY = Math.max(cRect.height * 0.75, 350);
 
-      // Allow comfortable panning margins so edge rooms can be centered
-      const marginX = Math.min(80, cRect.width * 0.2);
-      const marginY = Math.min(80, cRect.height * 0.2);
+      const boundMinX = Math.min(cRect.width - scaledW - marginX, marginX);
+      const boundMaxX = Math.max(cRect.width - scaledW - marginX, marginX);
+      panX = Math.min(boundMaxX, Math.max(boundMinX, panX));
 
-      const minX = cRect.width - scaledW - marginX;
-      const maxX = marginX;
-      panX = Math.min(maxX, Math.max(minX, panX));
-
-      const minY = cRect.height - scaledH - marginY;
-      const maxY = marginY;
-      panY = Math.min(maxY, Math.max(minY, panY));
+      const boundMinY = Math.min(cRect.height - scaledH - marginY, marginY);
+      const boundMaxY = Math.max(cRect.height - scaledH - marginY, marginY);
+      panY = Math.min(boundMaxY, Math.max(boundMinY, panY));
     }
 
     function zoomAtPoint(targetScale, clientX, clientY, smooth = false) {
@@ -1071,12 +1067,21 @@ document.addEventListener('DOMContentLoaded', () => {
     let totalDragDistance = 0;
 
     mapContainer.addEventListener('pointerdown', (e) => {
-      // Don't initiate map pan if interacting with control buttons
-      if (e.target.closest('#map-zoom-controls') || e.target.closest('#gps-dock')) {
+      // Don't initiate map pan if interacting with control buttons, sheets, or floating bars
+      if (e.target.closest('#map-zoom-controls') ||
+          e.target.closest('#gps-dock') ||
+          e.target.closest('.floating-top-bar') ||
+          e.target.closest('.bottom-nav') ||
+          e.target.closest('.bottom-sheet')) {
         return;
       }
 
-      mapContainer.setPointerCapture(e.pointerId);
+      if (e.button !== undefined && e.button !== 0) return;
+
+      try {
+        mapContainer.setPointerCapture(e.pointerId);
+      } catch (_) {}
+
       activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
 
       if (activePointers.size === 1) {
@@ -1084,9 +1089,11 @@ document.addEventListener('DOMContentLoaded', () => {
         totalDragDistance = 0;
         mapPanStage.style.transition = 'none';
         mapPanStage.classList.add('is-panning');
+        mapContainer.classList.add('is-panning');
       } else if (activePointers.size === 2) {
         isDragging = false;
         mapPanStage.classList.remove('is-panning');
+        mapContainer.classList.remove('is-panning');
         const pts = Array.from(activePointers.values());
         startPointerDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
         startPinchScale = scale;
@@ -1102,7 +1109,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (activePointers.size === 1 && isDragging) {
         totalDragDistance += Math.hypot(dx, dy);
-        if (totalDragDistance > 5) {
+        if (totalDragDistance > 4) {
           suppressClick = true;
         }
         panX += dx;
@@ -1133,19 +1140,23 @@ document.addEventListener('DOMContentLoaded', () => {
       if (activePointers.size === 0) {
         isDragging = false;
         mapPanStage.classList.remove('is-panning');
+        mapContainer.classList.remove('is-panning');
         if (suppressClick) {
           setTimeout(() => {
             suppressClick = false;
-          }, 100);
+          }, 80);
         }
       } else if (activePointers.size === 1) {
         isDragging = true;
         mapPanStage.classList.add('is-panning');
+        mapContainer.classList.add('is-panning');
       }
     }
 
     mapContainer.addEventListener('pointerup', handlePointerEnd);
     mapContainer.addEventListener('pointercancel', handlePointerEnd);
+    mapContainer.addEventListener('lostpointercapture', handlePointerEnd);
+    mapContainer.addEventListener('dragstart', (e) => e.preventDefault());
 
     // 3. Floating Zoom Controls
     if (zoomInBtn) {
