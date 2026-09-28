@@ -2,6 +2,40 @@ document.addEventListener('DOMContentLoaded', () => {
   // Flag to suppress room selection click when user was dragging/panning
   let suppressClick = false;
 
+  // ==========================================
+  // --- Theme Engine (Light / Dark Mode) ---
+  // ==========================================
+  const themeBtnLight = document.getElementById('theme-btn-light');
+  const themeBtnDark  = document.getElementById('theme-btn-dark');
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('amritanav-theme', theme);
+
+    if (themeBtnLight) {
+      const isLight = theme === 'light';
+      themeBtnLight.classList.toggle('active', isLight);
+      themeBtnLight.setAttribute('aria-checked', String(isLight));
+    }
+    if (themeBtnDark) {
+      const isDark = theme === 'dark';
+      themeBtnDark.classList.toggle('active', isDark);
+      themeBtnDark.setAttribute('aria-checked', String(isDark));
+    }
+  }
+
+  // Initialise from saved preference, fall back to OS preference
+  const savedTheme = localStorage.getItem('amritanav-theme');
+  const osPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(savedTheme || (osPrefersDark ? 'dark' : 'light'));
+
+  if (themeBtnLight) {
+    themeBtnLight.addEventListener('click', (e) => { e.stopPropagation(); applyTheme('light'); });
+  }
+  if (themeBtnDark) {
+    themeBtnDark.addEventListener('click', (e) => { e.stopPropagation(); applyTheme('dark'); });
+  }
+
   // --- Room Selection Logic ---
   const rooms = document.querySelectorAll('.selectable-room');
   let selectedRoom = null;

@@ -25,7 +25,21 @@
 
   <div class="container">
     <header class="header">
-      <h1 class="brand-title">Amrita Nav</h1>
+      <div class="header-top-row">
+        <h1 class="brand-title">Amrita Nav</h1>
+        <div class="theme-toggle-wrapper">
+          <div class="theme-switcher" role="radiogroup" aria-label="Color Theme">
+            <button type="button" class="theme-btn active" id="theme-btn-light" data-theme="light" role="radio" aria-checked="true" title="Light mode">
+              <span class="theme-icon">☀️</span>
+              <span class="theme-text">Light</span>
+            </button>
+            <button type="button" class="theme-btn" id="theme-btn-dark" data-theme="dark" role="radio" aria-checked="false" title="Dark mode">
+              <span class="theme-icon">🌙</span>
+              <span class="theme-text">Dark</span>
+            </button>
+          </div>
+        </div>
+      </div>
       <div class="floor-switcher" role="tablist" aria-label="Floor Selection">
         <button type="button" class="floor-btn" data-floor="ground" role="tab" aria-selected="false">Ground</button>
         <button type="button" class="floor-btn" data-floor="first" role="tab" aria-selected="false">First</button>
