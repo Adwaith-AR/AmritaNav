@@ -10,16 +10,24 @@
   <div class="container">
     <header class="header">
       <h1 class="brand-title">Amrita Nav</h1>
+      <div class="floor-switcher" role="tablist" aria-label="Floor Selection">
+        <button type="button" class="floor-btn active" data-floor="ground" role="tab" aria-selected="true">Ground</button>
+        <button type="button" class="floor-btn" data-floor="first" role="tab" aria-selected="false">First</button>
+        <button type="button" class="floor-btn" data-floor="second" role="tab" aria-selected="false">Second</button>
+        <button type="button" class="floor-btn" data-floor="third" role="tab" aria-selected="false">Third</button>
+      </div>
     </header>
 
     <main class="main-content">
       <div class="image-wrapper">
         <div class="map-container">
-          <img 
-            src="amrita-nav-map.png" 
-            alt="Amrita Nav" 
-            class="central-image"
-          >
+          <!-- Ground Floor -->
+          <div class="floor-layer active" id="floor-layer-ground" data-floor="ground">
+            <img 
+              src="amrita-nav-map.png" 
+              alt="Amrita Nav - Ground Floor" 
+              class="central-image"
+            >
           <svg class="selection-overlay" viewBox="0 0 2112 1300" aria-label="Amrita Nav Floor Plan">
             <defs>
               <radialGradient id="gps-beam-grad" cx="0" cy="0" r="52" gradientUnits="userSpaceOnUse">
@@ -99,6 +107,34 @@
               <circle class="gps-pin-center" cx="0" cy="0" r="3" />
             </g>
           </svg>
+        </div>
+
+        <!-- First Floor -->
+        <div class="floor-layer" id="floor-layer-first" data-floor="first">
+          <img 
+            src="floor-1.svg" 
+            alt="Amrita Nav - First Floor" 
+            class="central-image"
+          >
+        </div>
+
+        <!-- Second Floor -->
+        <div class="floor-layer" id="floor-layer-second" data-floor="second">
+          <img 
+            src="floor-2.svg" 
+            alt="Amrita Nav - Second Floor" 
+            class="central-image"
+          >
+        </div>
+
+        <!-- Third Floor -->
+        <div class="floor-layer" id="floor-layer-third" data-floor="third">
+          <img 
+            src="floor-3.svg" 
+            alt="Amrita Nav - Third Floor" 
+            class="central-image"
+          >
+        </div>
 
           <!-- Floating GPS Control Dock -->
           <div class="gps-dock" id="gps-dock">

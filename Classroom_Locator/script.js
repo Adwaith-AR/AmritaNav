@@ -50,6 +50,60 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==========================================
+  // --- Floor Switching Logic ---
+  // ==========================================
+  // Floor System: Ground Floor, First Floor, Second Floor, Third Floor
+  const floorButtons = document.querySelectorAll('.floor-btn');
+  const floorLayers = document.querySelectorAll('.floor-layer');
+  let currentFloor = 'ground';
+
+  function switchFloor(floorId) {
+    if (currentFloor === floorId) return;
+    currentFloor = floorId;
+
+    // Deselect any selected room when switching floors to avoid lingering state
+    if (selectedRoom) {
+      selectedRoom.classList.remove('selected');
+      selectedRoom.setAttribute('aria-pressed', 'false');
+      selectedRoom = null;
+    }
+
+    // Update floor switcher button controls
+    floorButtons.forEach(btn => {
+      const isSelected = btn.dataset.floor === floorId;
+      btn.classList.toggle('active', isSelected);
+      btn.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+    });
+
+    // Display only selected floor's map, hide the others
+    floorLayers.forEach(layer => {
+      const isSelected = layer.dataset.floor === floorId;
+      layer.classList.toggle('active', isSelected);
+    });
+  }
+
+  floorButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const targetFloor = btn.dataset.floor;
+      if (targetFloor) {
+        switchFloor(targetFloor);
+      }
+    });
+
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        e.stopPropagation();
+        const targetFloor = btn.dataset.floor;
+        if (targetFloor) {
+          switchFloor(targetFloor);
+        }
+      }
+    });
+  });
+
+  // ==========================================
   // --- GPS Live Location & Tracking Engine ---
   // ==========================================
   // GeoTIFF Affine Transform (from gdalinfo gf.tiff)
