@@ -33,7 +33,32 @@
         <button type="button" class="floor-btn" data-floor="third" role="tab" aria-selected="false">Third</button>
       </div>
 
-      <!-- Ground Floor Navigation Bar (Visible only on Ground Floor) -->
+      <!-- Classroom Search Box -->
+      <div class="classroom-search-container" id="classroom-search-container">
+        <div class="classroom-search-box">
+          <span class="search-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </span>
+          <input
+            type="text"
+            id="classroom-search-input"
+            class="classroom-search-input"
+            placeholder="Search classroom…"
+            aria-label="Search classroom"
+            autocomplete="off"
+            spellcheck="false"
+          >
+          <button type="button" id="classroom-search-clear" class="classroom-search-clear" title="Clear search" aria-label="Clear search" style="display: none;">✕</button>
+          <button type="button" id="classroom-search-btn" class="classroom-search-btn" aria-label="Search">Search</button>
+        </div>
+        <div id="classroom-search-suggestions" class="classroom-search-suggestions" style="display: none;" role="listbox" aria-label="Search suggestions"></div>
+        <div id="classroom-search-feedback" class="classroom-search-feedback" style="display: none;" role="status"></div>
+      </div>
+
+      <!-- Multi-Floor Navigation Bar -->
       <div id="ground-nav-bar" class="ground-nav-bar" style="display: none;">
         <div class="nav-control-group">
           <div class="nav-select-wrapper">

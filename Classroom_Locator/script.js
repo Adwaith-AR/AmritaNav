@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let selectedRoom = null;
 
   function selectRoom(room) {
+    document.querySelectorAll('.selectable-room.search-highlighted').forEach(el => {
+      el.classList.remove('search-highlighted');
+    });
     if (selectedRoom === room) {
       room.classList.remove('selected');
       room.setAttribute('aria-pressed', 'false');
@@ -57,13 +60,21 @@ document.addEventListener('DOMContentLoaded', () => {
       selectedRoom.setAttribute('aria-pressed', 'false');
       selectedRoom = null;
     }
+    document.querySelectorAll('.selectable-room.search-highlighted').forEach(el => {
+      el.classList.remove('search-highlighted');
+    });
   });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && selectedRoom) {
-      selectedRoom.classList.remove('selected');
-      selectedRoom.setAttribute('aria-pressed', 'false');
-      selectedRoom = null;
+    if (e.key === 'Escape') {
+      if (selectedRoom) {
+        selectedRoom.classList.remove('selected');
+        selectedRoom.setAttribute('aria-pressed', 'false');
+        selectedRoom = null;
+      }
+      document.querySelectorAll('.selectable-room.search-highlighted').forEach(el => {
+        el.classList.remove('search-highlighted');
+      });
     }
   });
 
@@ -877,6 +888,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const zoomInBtn = document.getElementById('map-zoom-in');
   const zoomOutBtn = document.getElementById('map-zoom-out');
   const zoomResetBtn = document.getElementById('map-zoom-reset');
+  let focusOnCoordinates = null;
 
   if (mapContainer && mapPanStage) {
     let scale = 1;
@@ -946,6 +958,25 @@ document.addEventListener('DOMContentLoaded', () => {
       panY = 0;
       applyTransform(smooth);
     }
+
+    focusOnCoordinates = function(cx, cy, targetScale = 2.4, smooth = true) {
+      if (!mapContainer || !mapPanStage) return;
+      const cRect = mapContainer.getBoundingClientRect();
+      const activeLayer = document.querySelector('.floor-layer.active');
+      const img = activeLayer ? activeLayer.querySelector('.central-image') : null;
+      const stageW = (img && img.offsetWidth) ? img.offsetWidth : (mapPanStage.offsetWidth || 1000);
+      const stageH = (img && img.offsetHeight) ? img.offsetHeight : (mapPanStage.offsetHeight || 615);
+
+      const stageX = (cx / 2112) * stageW;
+      const stageY = (cy / 1300) * stageH;
+
+      scale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, targetScale));
+      panX = (cRect.width / 2) - (stageX * scale);
+      panY = (cRect.height / 2) - (stageY * scale);
+
+      clampPan();
+      applyTransform(smooth);
+    };
 
     // 1. Mouse wheel & Mac Trackpad Pinch inside Map Container ONLY
     mapContainer.addEventListener('wheel', (e) => {
@@ -1085,4 +1116,355 @@ document.addEventListener('DOMContentLoaded', () => {
       applyTransform(false);
     });
   }
+
+  // ==========================================
+  // --- Classroom Search Engine ---
+  // ==========================================
+  const searchInput = document.getElementById('classroom-search-input');
+  const searchClear = document.getElementById('classroom-search-clear');
+  const searchBtn = document.getElementById('classroom-search-btn');
+  const searchSuggestions = document.getElementById('classroom-search-suggestions');
+  const searchFeedback = document.getElementById('classroom-search-feedback');
+
+  // Build searchable rooms list using existing project data (window.CAMPUS_NAV_DATA)
+  // with fallback to querying DOM SVG selectable-room elements.
+  function getSearchableRooms() {
+    const navData = window.CAMPUS_NAV_DATA || window.GROUND_NAV_DATA;
+    const floorKeys = ['ground', 'first', 'second', 'third'];
+    const floorTitles = {
+      ground: 'Ground Floor',
+      first: '1st Floor',
+      second: '2nd Floor',
+      third: '3rd Floor'
+    };
+
+    const roomList = [];
+    const seenIds = new Set();
+
+    if (navData && navData.floors) {
+      floorKeys.forEach(fKey => {
+        const floorObj = navData.floors[fKey];
+        if (!floorObj || !floorObj.rooms) return;
+        floorObj.rooms.forEach(r => {
+          if (!r.id || seenIds.has(r.id)) return;
+          // Courtyard areas are non-selectable and excluded
+          if (r.id.toLowerCase().includes('courtyard') || (r.name && r.name.toLowerCase().includes('courtyard')) || (r.code && r.code.toLowerCase().includes('cyd'))) {
+            return;
+          }
+          seenIds.add(r.id);
+          roomList.push({
+            id: r.id,
+            name: r.name || r.id,
+            code: r.code || '',
+            floor: fKey,
+            floorTitle: floorTitles[fKey] || fKey,
+            cx: typeof r.cx === 'number' ? r.cx : 1056,
+            cy: typeof r.cy === 'number' ? r.cy : 650
+          });
+        });
+      });
+    }
+
+    // Fallback for any DOM selectable room not in dataset
+    const domRooms = document.querySelectorAll('.selectable-room');
+    domRooms.forEach(roomEl => {
+      const id = roomEl.id;
+      if (!id || seenIds.has(id)) return;
+      if (id.toLowerCase().includes('courtyard')) return;
+      seenIds.add(id);
+
+      const layer = roomEl.closest('.floor-layer');
+      const floor = layer ? (layer.dataset.floor || 'ground') : 'ground';
+      const name = roomEl.dataset.name || roomEl.getAttribute('aria-label') || id;
+      const code = roomEl.dataset.code || '';
+
+      let cx = 1056;
+      let cy = 650;
+      const tf = roomEl.getAttribute('transform');
+      if (tf) {
+        const rotMatch = tf.match(/rotate\(\s*[\d\.\-]+\s+([\d\.\-]+)\s+([\d\.\-]+)\s*\)/);
+        if (rotMatch) {
+          cx = parseFloat(rotMatch[1]);
+          cy = parseFloat(rotMatch[2]);
+        }
+      } else {
+        const x = parseFloat(roomEl.getAttribute('x')) || 0;
+        const y = parseFloat(roomEl.getAttribute('y')) || 0;
+        const w = parseFloat(roomEl.getAttribute('width')) || 0;
+        const h = parseFloat(roomEl.getAttribute('height')) || 0;
+        cx = x + w / 2;
+        cy = y + h / 2;
+      }
+
+      roomList.push({
+        id,
+        name,
+        code,
+        floor,
+        floorTitle: floorTitles[floor] || floor,
+        cx,
+        cy
+      });
+    });
+
+    return roomList;
+  }
+
+  const searchableRooms = getSearchableRooms();
+
+  // Normalize query and room text by stripping whitespaces, dashes, and special characters
+  function normalizeRoomQuery(str) {
+    if (!str) return '';
+    return str.toLowerCase().replace(/[\s\-_—]/g, '');
+  }
+
+  // Scoring function:
+  // Exact match: 100
+  // Starts with: 80
+  // Substring in raw text: 60
+  // Substring in normalized text: 40
+  function scoreRoomMatch(room, query) {
+    const qRaw = query.trim().toLowerCase();
+    const qNorm = normalizeRoomQuery(query);
+    if (!qNorm) return 0;
+
+    const nameRaw = (room.name || '').toLowerCase();
+    const codeRaw = (room.code || '').toLowerCase();
+    const idRaw = (room.id || '').toLowerCase();
+
+    const nameNorm = normalizeRoomQuery(room.name);
+    const codeNorm = normalizeRoomQuery(room.code);
+    const idNorm = normalizeRoomQuery(room.id);
+
+    if (codeNorm === qNorm || nameNorm === qNorm) return 100;
+    if (codeNorm.startsWith(qNorm) || nameNorm.startsWith(qNorm)) return 80;
+    if (nameRaw.includes(qRaw) || codeRaw.includes(qRaw) || idRaw.includes(qRaw)) return 60;
+    if (nameNorm.includes(qNorm) || codeNorm.includes(qNorm) || idNorm.includes(qNorm)) return 40;
+
+    return 0;
+  }
+
+  function findRoomMatches(query) {
+    if (!query || !query.trim()) return [];
+    return searchableRooms
+      .map(room => ({ room, score: scoreRoomMatch(room, query) }))
+      .filter(item => item.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .map(item => item.room);
+  }
+
+  let activeSuggestionIndex = -1;
+
+  function renderSuggestions(matches) {
+    if (!searchSuggestions) return;
+    searchSuggestions.innerHTML = '';
+    activeSuggestionIndex = -1;
+
+    if (!matches || matches.length === 0) {
+      searchSuggestions.style.display = 'none';
+      return;
+    }
+
+    const maxItems = 8;
+    const displayed = matches.slice(0, maxItems);
+
+    displayed.forEach((room, idx) => {
+      const item = document.createElement('div');
+      item.className = 'suggestion-item';
+      item.setAttribute('role', 'option');
+      item.setAttribute('data-index', idx);
+
+      const infoDiv = document.createElement('div');
+      infoDiv.className = 'suggestion-room-info';
+
+      const nameSpan = document.createElement('span');
+      nameSpan.className = 'suggestion-room-name';
+      nameSpan.textContent = room.name;
+
+      infoDiv.appendChild(nameSpan);
+
+      if (room.code && room.code !== room.name) {
+        const codeSpan = document.createElement('span');
+        codeSpan.className = 'suggestion-room-code';
+        codeSpan.textContent = room.code;
+        infoDiv.appendChild(codeSpan);
+      }
+
+      const badge = document.createElement('span');
+      badge.className = 'suggestion-floor-badge';
+      badge.textContent = room.floorTitle;
+
+      item.appendChild(infoDiv);
+      item.appendChild(badge);
+
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        searchInput.value = room.name;
+        locateClassroom(room);
+      });
+
+      searchSuggestions.appendChild(item);
+    });
+
+    searchSuggestions.style.display = 'block';
+  }
+
+  function locateClassroom(room) {
+    if (!room) return;
+
+    // 1. Hide initial floor prompt if active & ensure main-content is visible
+    if (floorPromptModal && floorPromptModal.style.display !== 'none') {
+      floorPromptModal.style.display = 'none';
+    }
+    if (mainContent && mainContent.style.display === 'none') {
+      mainContent.style.display = 'flex';
+    }
+
+    // 2. Clear invalid search feedback & hide suggestions
+    if (searchFeedback) {
+      searchFeedback.style.display = 'none';
+      searchFeedback.textContent = '';
+    }
+    if (searchSuggestions) {
+      searchSuggestions.style.display = 'none';
+    }
+
+    // 3. Switch floor if classroom is on another floor
+    if (currentFloor !== room.floor) {
+      switchFloor(room.floor);
+    }
+
+    // 4. Highlight the classroom element
+    const roomEl = document.getElementById(room.id);
+    if (roomEl) {
+      // Remove any previous search pulse highlights
+      document.querySelectorAll('.selectable-room.search-highlighted').forEach(el => {
+        el.classList.remove('search-highlighted');
+      });
+
+      // Select the room
+      if (selectedRoom !== roomEl) {
+        selectRoom(roomEl);
+      }
+      roomEl.classList.add('search-highlighted');
+
+      // Set destination in navigation system if applicable
+      if (typeof onRoomClicked === 'function') {
+        onRoomClicked(roomEl.id);
+      } else if (currentFloor === 'ground' && typeof onGroundRoomClicked === 'function') {
+        onGroundRoomClicked(roomEl.id);
+      }
+    }
+
+    // 5. Center and zoom ONLY the map on the searched classroom
+    requestAnimationFrame(() => {
+      if (typeof focusOnCoordinates === 'function') {
+        focusOnCoordinates(room.cx, room.cy, 2.4, true);
+      }
+    });
+  }
+
+  function performSearch() {
+    if (!searchInput) return;
+    const query = searchInput.value.trim();
+    if (!query) return;
+
+    const matches = findRoomMatches(query);
+
+    if (matches.length > 0) {
+      const bestMatch = matches[0];
+      searchInput.value = bestMatch.name;
+      locateClassroom(bestMatch);
+    } else {
+      // Invalid search: Show "Classroom not found."
+      // Do NOT change map or floor!
+      if (searchFeedback) {
+        searchFeedback.textContent = 'Classroom not found.';
+        searchFeedback.style.display = 'block';
+      }
+      if (searchSuggestions) {
+        searchSuggestions.style.display = 'none';
+      }
+    }
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      const val = searchInput.value;
+      if (searchClear) {
+        searchClear.style.display = val ? 'inline-flex' : 'none';
+      }
+      if (searchFeedback) {
+        searchFeedback.style.display = 'none';
+      }
+
+      if (!val.trim()) {
+        if (searchSuggestions) searchSuggestions.style.display = 'none';
+        return;
+      }
+
+      const matches = findRoomMatches(val);
+      renderSuggestions(matches);
+    });
+
+    searchInput.addEventListener('keydown', (e) => {
+      if (searchSuggestions && searchSuggestions.style.display !== 'none') {
+        const items = searchSuggestions.querySelectorAll('.suggestion-item');
+        if (items.length > 0) {
+          if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            activeSuggestionIndex = (activeSuggestionIndex + 1) % items.length;
+            items.forEach((it, idx) => it.classList.toggle('active', idx === activeSuggestionIndex));
+            items[activeSuggestionIndex].scrollIntoView({ block: 'nearest' });
+            return;
+          } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            activeSuggestionIndex = (activeSuggestionIndex - 1 + items.length) % items.length;
+            items.forEach((it, idx) => it.classList.toggle('active', idx === activeSuggestionIndex));
+            items[activeSuggestionIndex].scrollIntoView({ block: 'nearest' });
+            return;
+          } else if (e.key === 'Enter' && activeSuggestionIndex >= 0 && activeSuggestionIndex < items.length) {
+            e.preventDefault();
+            items[activeSuggestionIndex].click();
+            return;
+          }
+        }
+      }
+
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        performSearch();
+      } else if (e.key === 'Escape') {
+        if (searchSuggestions) searchSuggestions.style.display = 'none';
+      }
+    });
+  }
+
+  if (searchBtn) {
+    searchBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      performSearch();
+    });
+  }
+
+  if (searchClear) {
+    searchClear.addEventListener('click', (e) => {
+      e.stopPropagation();
+      searchInput.value = '';
+      searchClear.style.display = 'none';
+      if (searchSuggestions) searchSuggestions.style.display = 'none';
+      if (searchFeedback) searchFeedback.style.display = 'none';
+      document.querySelectorAll('.selectable-room.search-highlighted').forEach(el => {
+        el.classList.remove('search-highlighted');
+      });
+      searchInput.focus();
+    });
+  }
+
+  // Close suggestions when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#classroom-search-container')) {
+      if (searchSuggestions) searchSuggestions.style.display = 'none';
+    }
+  });
 });
