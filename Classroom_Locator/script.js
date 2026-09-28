@@ -23,12 +23,21 @@ document.addEventListener('DOMContentLoaded', () => {
     room.addEventListener('click', (e) => {
       e.stopPropagation();
       selectRoom(room);
+
+      // On Ground Floor, selecting a room automatically sets it as navigation destination
+      if (currentFloor === 'ground' && room.id && typeof onGroundRoomClicked === 'function') {
+        onGroundRoomClicked(room.id);
+      }
     });
 
     room.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         selectRoom(room);
+
+        if (currentFloor === 'ground' && room.id && typeof onGroundRoomClicked === 'function') {
+          onGroundRoomClicked(room.id);
+        }
       }
     });
   });
@@ -58,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const floorPromptModal = document.getElementById('floor-prompt-modal');
   const floorPromptBtns = document.querySelectorAll('.floor-prompt-btn');
   const mainContent = document.getElementById('main-content');
+  const groundNavBar = document.getElementById('ground-nav-bar');
   let currentFloor = null;
 
   function moveGpsMarkerToActiveFloor() {
@@ -96,6 +106,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Move/display GPS location marker on the active floor's map
     moveGpsMarkerToActiveFloor();
+
+    // Ground Floor Navigation visibility:
+    // Navigation works ONLY on the Ground Floor.
+    // If the user switches away from Ground Floor, navigation is hidden and routes cleared.
+    // When they return to Ground Floor, navigation becomes available again.
+    if (floorId === 'ground') {
+      if (groundNavBar) groundNavBar.style.display = 'flex';
+    } else {
+      if (groundNavBar) groundNavBar.style.display = 'none';
+      if (typeof clearActiveRoute === 'function') {
+        clearActiveRoute();
+      }
+    }
   }
 
   // Handle Initial Floor Selection Prompt (on website open)
@@ -252,6 +275,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (headingDeg !== null && gpsHeadingCone) {
       gpsHeadingCone.style.display = 'block';
       gpsHeadingCone.setAttribute('transform', `rotate(${Math.round(headingDeg)})`);
+    }
+
+    // Dynamic ground route update if active and starting from GPS
+    if (currentFloor === 'ground' && activeRoute && typeof generateGroundRoute === 'function' && navStartSelect && navStartSelect.value === 'gps') {
+      generateGroundRoute();
     }
   }
 
@@ -576,4 +604,246 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
+
+  // ==========================================
+  // --- Ground Floor Navigation System ---
+  // ==========================================
+  const navStartSelect = document.getElementById('nav-start-select');
+  const navDestSelect = document.getElementById('nav-dest-select');
+  const navSwapBtn = document.getElementById('nav-swap-btn');
+  const getRouteBtn = document.getElementById('get-route-btn');
+  const clearRouteBtn = document.getElementById('clear-route-btn');
+  const routeSummaryBar = document.getElementById('route-summary-bar');
+  const routeDistanceText = document.getElementById('route-distance-text');
+  const routeTimeText = document.getElementById('route-time-text');
+  const groundRouteLayer = document.getElementById('ground-route-layer');
+
+  let groundRouter = null;
+  if (typeof window.GroundRouter === 'function' && window.GROUND_NAV_DATA) {
+    groundRouter = new window.GroundRouter(window.GROUND_NAV_DATA);
+  }
+
+  let activeRoute = null;
+
+  function populateNavDropdowns() {
+    if (!window.GROUND_NAV_DATA || !window.GROUND_NAV_DATA.rooms) return;
+
+    // Sort rooms alphabetically by name
+    const sortedRooms = window.GROUND_NAV_DATA.rooms
+      .slice()
+      .sort((a, b) => a.name.localeCompare(b.name));
+
+    if (navStartSelect) {
+      while (navStartSelect.options.length > 1) {
+        navStartSelect.remove(1);
+      }
+      sortedRooms.forEach(r => {
+        const opt = document.createElement('option');
+        opt.value = r.id;
+        opt.textContent = `${r.name} (${r.code})`;
+        navStartSelect.appendChild(opt);
+      });
+    }
+
+    if (navDestSelect) {
+      while (navDestSelect.options.length > 1) {
+        navDestSelect.remove(1);
+      }
+      sortedRooms.forEach(r => {
+        const opt = document.createElement('option');
+        opt.value = r.id;
+        opt.textContent = `${r.name} (${r.code})`;
+        navDestSelect.appendChild(opt);
+      });
+    }
+  }
+
+  populateNavDropdowns();
+
+  function renderGroundRoute(route) {
+    if (!groundRouteLayer) return;
+    activeRoute = route;
+
+    if (!route || !route.points || route.points.length === 0) {
+      groundRouteLayer.innerHTML = '';
+      if (routeSummaryBar) routeSummaryBar.style.display = 'none';
+      if (clearRouteBtn) clearRouteBtn.style.display = 'none';
+      return;
+    }
+
+    const pointsStr = route.points.map(pt => `${pt[0].toFixed(1)},${pt[1].toFixed(1)}`).join(' ');
+
+    let svgHtml = '';
+    // Underlay glowing path
+    svgHtml += `<polyline points="${pointsStr}" class="route-glow-polyline" />`;
+    // Animated dashed corridor path
+    svgHtml += `<polyline points="${pointsStr}" class="route-core-polyline" />`;
+
+    // Start Pin (shown if start is a room or non-GPS point)
+    const startPt = route.points[0];
+    const endPt = route.points[route.points.length - 1];
+
+    if (route.origin && route.origin.id !== 'gps_location') {
+      svgHtml += `
+        <g class="route-pin route-pin-start" transform="translate(${startPt[0].toFixed(1)}, ${startPt[1].toFixed(1)})">
+          <circle cx="0" cy="0" r="7" fill="#10b981" stroke="#ffffff" stroke-width="2.5" />
+          <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
+        </g>
+      `;
+    }
+
+    // Destination Pin
+    svgHtml += `
+      <g class="route-pin route-pin-dest" transform="translate(${endPt[0].toFixed(1)}, ${endPt[1].toFixed(1)})">
+        <circle cx="0" cy="0" r="8" fill="#e11d48" stroke="#ffffff" stroke-width="2.5" />
+        <circle cx="0" cy="0" r="3" fill="#ffffff" />
+      </g>
+    `;
+
+    groundRouteLayer.innerHTML = svgHtml;
+
+    if (routeSummaryBar && routeDistanceText && routeTimeText) {
+      routeDistanceText.textContent = `Distance: ${route.totalDistanceMeters}m`;
+      routeTimeText.textContent = `Est. Walk: ~${route.timeFormatted}`;
+      routeSummaryBar.style.display = 'inline-flex';
+    }
+
+    if (clearRouteBtn) {
+      clearRouteBtn.style.display = 'inline-block';
+    }
+  }
+
+  function generateGroundRoute() {
+    if (!groundRouter || currentFloor !== 'ground') return;
+    if (!navDestSelect || !navDestSelect.value) {
+      clearActiveRoute();
+      return;
+    }
+
+    const startVal = navStartSelect ? navStartSelect.value : 'gps';
+    const destVal = navDestSelect.value;
+
+    let startTarget;
+    if (startVal === 'gps') {
+      startTarget = {
+        x: currentPos.x,
+        y: currentPos.y,
+        name: isGpsActive ? (isSimulating ? 'Current Simulated Position' : 'Current GPS Location') : 'Campus Entrance'
+      };
+    } else {
+      startTarget = startVal;
+    }
+
+    const result = groundRouter.findRoute(startTarget, destVal);
+    if (result && result.success) {
+      renderGroundRoute(result);
+    } else {
+      clearActiveRoute();
+    }
+  }
+
+  function clearActiveRoute() {
+    activeRoute = null;
+    if (groundRouteLayer) {
+      groundRouteLayer.innerHTML = '';
+    }
+    if (routeSummaryBar) {
+      routeSummaryBar.style.display = 'none';
+    }
+    if (clearRouteBtn) {
+      clearRouteBtn.style.display = 'none';
+    }
+    if (navDestSelect) {
+      navDestSelect.value = '';
+    }
+  }
+
+  function onGroundRoomClicked(roomId) {
+    if (currentFloor !== 'ground') return;
+    if (!selectedRoom) {
+      clearActiveRoute();
+      return;
+    }
+    if (navDestSelect) {
+      navDestSelect.value = roomId;
+    }
+    generateGroundRoute();
+  }
+
+  // Event Listeners for Ground Navigation Controls
+  if (getRouteBtn) {
+    getRouteBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      generateGroundRoute();
+    });
+  }
+
+  if (clearRouteBtn) {
+    clearRouteBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      clearActiveRoute();
+      if (selectedRoom) {
+        selectedRoom.classList.remove('selected');
+        selectedRoom.setAttribute('aria-pressed', 'false');
+        selectedRoom = null;
+      }
+    });
+  }
+
+  if (navDestSelect) {
+    navDestSelect.addEventListener('change', () => {
+      const targetRoomId = navDestSelect.value;
+      if (targetRoomId) {
+        const roomEl = document.getElementById(targetRoomId);
+        if (roomEl && roomEl.classList.contains('selectable-room')) {
+          if (selectedRoom !== roomEl) {
+            selectRoom(roomEl);
+          }
+        }
+        generateGroundRoute();
+      } else {
+        clearActiveRoute();
+        if (selectedRoom) {
+          selectedRoom.classList.remove('selected');
+          selectedRoom.setAttribute('aria-pressed', 'false');
+          selectedRoom = null;
+        }
+      }
+    });
+  }
+
+  if (navStartSelect) {
+    navStartSelect.addEventListener('change', () => {
+      if (navDestSelect && navDestSelect.value) {
+        generateGroundRoute();
+      }
+    });
+  }
+
+  if (navSwapBtn) {
+    navSwapBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const curStart = navStartSelect.value;
+      const curDest = navDestSelect.value;
+      if (curStart === 'gps') {
+        if (curDest) {
+          navStartSelect.value = curDest;
+          navDestSelect.value = '';
+          clearActiveRoute();
+        }
+        return;
+      }
+      if (curDest) {
+        navStartSelect.value = curDest;
+        navDestSelect.value = curStart;
+        const newDestEl = document.getElementById(curStart);
+        if (newDestEl && newDestEl.classList.contains('selectable-room')) {
+          if (selectedRoom !== newDestEl) {
+            selectRoom(newDestEl);
+          }
+        }
+        generateGroundRoute();
+      }
+    });
+  }
 });
