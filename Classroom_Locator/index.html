@@ -7,22 +7,38 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Initial Floor Selection Prompt -->
+  <div id="floor-prompt-modal" class="floor-prompt-modal" role="dialog" aria-modal="true" aria-labelledby="floor-prompt-title">
+    <div class="floor-prompt-card">
+      <div class="floor-prompt-header">
+        <h1 class="brand-title" style="margin-bottom: 0.5rem;">Amrita Nav</h1>
+        <h2 id="floor-prompt-title" class="floor-prompt-question">Which floor are you currently on?</h2>
+      </div>
+      <div class="floor-prompt-options">
+        <button type="button" class="floor-prompt-btn" data-floor="ground">Ground Floor</button>
+        <button type="button" class="floor-prompt-btn" data-floor="first">First Floor</button>
+        <button type="button" class="floor-prompt-btn" data-floor="second">Second Floor</button>
+        <button type="button" class="floor-prompt-btn" data-floor="third">Third Floor</button>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
     <header class="header">
       <h1 class="brand-title">Amrita Nav</h1>
       <div class="floor-switcher" role="tablist" aria-label="Floor Selection">
-        <button type="button" class="floor-btn active" data-floor="ground" role="tab" aria-selected="true">Ground</button>
+        <button type="button" class="floor-btn" data-floor="ground" role="tab" aria-selected="false">Ground</button>
         <button type="button" class="floor-btn" data-floor="first" role="tab" aria-selected="false">First</button>
         <button type="button" class="floor-btn" data-floor="second" role="tab" aria-selected="false">Second</button>
         <button type="button" class="floor-btn" data-floor="third" role="tab" aria-selected="false">Third</button>
       </div>
     </header>
 
-    <main class="main-content">
+    <main class="main-content" id="main-content" style="display: none;">
       <div class="image-wrapper">
         <div class="map-container">
           <!-- Ground Floor -->
-          <div class="floor-layer active" id="floor-layer-ground" data-floor="ground">
+          <div class="floor-layer" id="floor-layer-ground" data-floor="ground">
             <img 
               src="amrita-nav-map.png" 
               alt="Amrita Nav - Ground Floor" 
@@ -94,6 +110,12 @@
 
             <!-- GPS Live Location Marker -->
             <g id="gps-marker" class="gps-marker" style="display: none;" transform="translate(380, 830)" aria-label="Live GPS Location">
+              <defs>
+                <radialGradient id="gps-beam-grad" cx="0" cy="0" r="52" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.45" />
+                  <stop offset="100%" stop-color="#3b82f6" stop-opacity="0" />
+                </radialGradient>
+              </defs>
               <title id="gps-marker-title">Live GPS Location</title>
               <circle id="gps-accuracy-ring" class="gps-accuracy-ring" cx="0" cy="0" r="35" />
               <circle class="gps-pulse-ring" cx="0" cy="0" r="14" />

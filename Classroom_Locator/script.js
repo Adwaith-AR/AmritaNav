@@ -50,15 +50,28 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==========================================
-  // --- Floor Switching Logic ---
+  // --- Floor Switching & Prompt Logic ---
   // ==========================================
   // Floor System: Ground Floor, First Floor, Second Floor, Third Floor
   const floorButtons = document.querySelectorAll('.floor-btn');
   const floorLayers = document.querySelectorAll('.floor-layer');
-  let currentFloor = 'ground';
+  const floorPromptModal = document.getElementById('floor-prompt-modal');
+  const floorPromptBtns = document.querySelectorAll('.floor-prompt-btn');
+  const mainContent = document.getElementById('main-content');
+  let currentFloor = null;
+
+  function moveGpsMarkerToActiveFloor() {
+    const activeLayer = document.querySelector('.floor-layer.active');
+    const marker = document.getElementById('gps-marker');
+    if (!activeLayer || !marker) return;
+    const activeOverlay = activeLayer.querySelector('.selection-overlay');
+    if (activeOverlay && marker.parentElement !== activeOverlay) {
+      activeOverlay.appendChild(marker);
+    }
+  }
 
   function switchFloor(floorId) {
-    if (currentFloor === floorId) return;
+    if (currentFloor === floorId && document.querySelector('.floor-layer.active')) return;
     currentFloor = floorId;
 
     // Deselect any selected room when switching floors to avoid lingering state
@@ -80,8 +93,44 @@ document.addEventListener('DOMContentLoaded', () => {
       const isSelected = layer.dataset.floor === floorId;
       layer.classList.toggle('active', isSelected);
     });
+
+    // Move/display GPS location marker on the active floor's map
+    moveGpsMarkerToActiveFloor();
   }
 
+  // Handle Initial Floor Selection Prompt (on website open)
+  floorPromptBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const selectedFloor = btn.dataset.floor;
+      if (selectedFloor) {
+        if (floorPromptModal) {
+          floorPromptModal.style.display = 'none';
+        }
+        if (mainContent) {
+          mainContent.style.display = 'flex';
+        }
+        switchFloor(selectedFloor);
+      }
+    });
+
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const selectedFloor = btn.dataset.floor;
+        if (selectedFloor) {
+          if (floorPromptModal) {
+            floorPromptModal.style.display = 'none';
+          }
+          if (mainContent) {
+            mainContent.style.display = 'flex';
+          }
+          switchFloor(selectedFloor);
+        }
+      }
+    });
+  });
+
+  // Handle Floor Switcher Control Buttons
   floorButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -507,10 +556,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Allow double-clicking on the map when GPS is active to manually test repositioning
-  if (selectionOverlay) {
-    selectionOverlay.addEventListener('dblclick', (e) => {
+  const selectionOverlays = document.querySelectorAll('.selection-overlay');
+  selectionOverlays.forEach(overlay => {
+    overlay.addEventListener('dblclick', (e) => {
       if (!isGpsActive) return;
-      const rect = selectionOverlay.getBoundingClientRect();
+      const rect = overlay.getBoundingClientRect();
       const clickX = ((e.clientX - rect.left) / rect.width) * 2112;
       const clickY = ((e.clientY - rect.top) / rect.height) * 1300;
 
@@ -525,5 +575,5 @@ document.addEventListener('DOMContentLoaded', () => {
         accuracy: 'Custom indoor test location'
       });
     });
-  }
+  });
 });
