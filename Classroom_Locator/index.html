@@ -53,8 +53,12 @@
           <button type="button" id="clear-route-btn" class="nav-btn secondary" style="display: none;">Clear</button>
         </div>
         <div id="route-summary-bar" class="route-summary-bar" style="display: none;">
-          <span id="route-distance-text" class="route-metric"></span>
-          <span id="route-time-text" class="route-metric"></span>
+          <div class="route-metrics-group">
+            <span id="route-distance-text" class="route-metric"></span>
+            <span id="route-time-text" class="route-metric"></span>
+          </div>
+          <div id="route-floor-steps" class="route-floor-steps"></div>
+          <div id="route-instruction-bar" class="route-instruction-bar" style="display: none;"></div>
         </div>
       </div>
     </header>
@@ -133,7 +137,7 @@
             <rect id="room_1790578548474" class="selectable-room" x="507" y="660" width="60" height="60" transform="rotate(353 537 690)" data-name="Stairs" data-code="R-156" role="button" tabindex="0" aria-label="Stairs (R-156)" aria-pressed="false"><title>Stairs (R-156)</title></rect>
 
             <!-- Ground Floor Active Route Layer -->
-            <g id="ground-route-layer" class="ground-route-layer"></g>
+            <g id="ground-route-layer" class="ground-route-layer route-layer" data-floor="ground"></g>
 
             <!-- GPS Live Location Marker -->
             <g id="gps-marker" class="gps-marker" style="display: none;" transform="translate(380, 830)" aria-label="Live GPS Location">
@@ -222,6 +226,8 @@
             <rect id="f1_room_1790501909379" class="selectable-room" x="940" y="580" width="134" height="89" transform="rotate(353 1007 624.5)" data-name="CS Staff Room" data-code="R-155" role="button" tabindex="0" aria-label="CS Staff Room (R-155)" aria-pressed="false"><title>CS Staff Room (R-155)</title></rect>
             <rect id="f1_room_1790521278087" class="selectable-room" x="440" y="1072" width="80" height="42" transform="rotate(355 480 1093)" data-name="Ladies Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies Toilet (WC)" aria-pressed="false"><title>Ladies Toilet (WC)</title></rect>
             <rect id="f1_room_1790521338973" class="selectable-room" x="391" y="532" width="69" height="43" transform="rotate(354 425.5 553.5)" data-name="Mens Toilet" data-code="WC" role="button" tabindex="0" aria-label="Mens Toilet (WC)" aria-pressed="false"><title>Mens Toilet (WC)</title></rect>
+            <!-- First Floor Active Route Layer -->
+            <g id="route-layer-first" class="route-layer" data-floor="first"></g>
           </svg>
         </div>
 
@@ -289,6 +295,8 @@
             <rect id="f2_room_1790502692180" class="selectable-room" x="1880" y="758" width="97" height="109" transform="rotate(354 1928.5 812.5)" data-name="Microwave Lab" data-code="R-155" role="button" tabindex="0" aria-label="Microwave Lab (R-155)" aria-pressed="false"><title>Microwave Lab (R-155)</title></rect>
             <rect id="f2_room_1790520116929" class="selectable-room" x="454" y="1072" width="64" height="41" transform="rotate(355 486 1092.5)" data-name="Ladies toilet " data-code="R-156" role="button" tabindex="0" aria-label="Ladies toilet  (R-156)" aria-pressed="false"><title>Ladies toilet  (R-156)</title></rect>
             <rect id="f2_room_1790520135835" class="selectable-room" x="391" y="532" width="69" height="43" transform="rotate(354 425.5 553.5)" data-name="Mens Toilet" data-code="WC" role="button" tabindex="0" aria-label="Mens Toilet (WC)" aria-pressed="false"><title>Mens Toilet (WC)</title></rect>
+            <!-- Second Floor Active Route Layer -->
+            <g id="route-layer-second" class="route-layer" data-floor="second"></g>
           </svg>
         </div>
 
@@ -356,6 +364,8 @@
             <rect id="f3_room_1790502692180" class="selectable-room" x="1880" y="758" width="97" height="109" transform="rotate(354 1928.5 812.5)" data-name="S-319 — HUT Lab" data-code="R-155" role="button" tabindex="0" aria-label="S-319 — HUT Lab (R-155)" aria-pressed="false"><title>S-319 — HUT Lab (R-155)</title></rect>
             <rect id="f3_room_1790523167761" class="selectable-room" x="391" y="532" width="69" height="43" transform="rotate(355 425.5 553.5)" data-name="Men Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men Toilet (WC)" aria-pressed="false"><title>Men Toilet (WC)</title></rect>
             <rect id="f3_room_1790523236934" class="selectable-room" x="454" y="1072" width="64" height="41" transform="rotate(354 486 1092.5)" data-name="Ladies Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies Toilet (WC)" aria-pressed="false"><title>Ladies Toilet (WC)</title></rect>
+            <!-- Third Floor Active Route Layer -->
+            <g id="route-layer-third" class="route-layer" data-floor="third"></g>
           </svg>
         </div>
 
@@ -369,25 +379,6 @@
               <span class="gps-status-dot" id="gps-status-dot"></span>
               <span class="gps-btn-text" id="gps-btn-text">Locate Me</span>
             </button>
-
-            <div id="gps-status-card" class="gps-status-card" style="display: none;">
-              <div class="gps-status-header">
-                <span id="gps-status-text" class="gps-status-text">Acquiring GPS fix...</span>
-                <button id="gps-close-status" class="gps-close-btn" type="button" aria-label="Close status" title="Close status">✕</button>
-              </div>
-              <div class="gps-status-meta" id="gps-status-meta" style="display: none;">
-                <span id="gps-coords-text"></span>
-                <span id="gps-accuracy-text"></span>
-              </div>
-              <div class="gps-status-actions">
-                <button id="gps-sim-btn" class="gps-sim-btn" type="button" title="Simulate walking along campus corridors">
-                  <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
-                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                  </svg>
-                  <span id="gps-sim-btn-text">Simulate Walk</span>
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
