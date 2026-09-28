@@ -5,10 +5,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   // --- Theme Engine (Light / Dark Mode) ---
   // ==========================================
+  // ==========================================
+  // --- Theme Engine (Light / Dark Mode) ---
+  // ==========================================
   const themeBtnLight = document.getElementById('theme-btn-light');
   const themeBtnDark  = document.getElementById('theme-btn-dark');
+  const bnavThemeToggle = document.getElementById('bnav-theme-toggle');
+  const bnavThemeIcon = document.getElementById('bnav-theme-icon');
+  const bnavThemeLabel = document.getElementById('bnav-theme-label');
+
+  let currentTheme = 'light';
 
   function applyTheme(theme) {
+    currentTheme = theme;
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('amritanav-theme', theme);
 
@@ -22,6 +31,18 @@ document.addEventListener('DOMContentLoaded', () => {
       themeBtnDark.classList.toggle('active', isDark);
       themeBtnDark.setAttribute('aria-checked', String(isDark));
     }
+
+    if (bnavThemeIcon && bnavThemeLabel) {
+      if (theme === 'dark') {
+        bnavThemeIcon.textContent = '☀️';
+        bnavThemeLabel.textContent = 'Light';
+        if (bnavThemeToggle) bnavThemeToggle.title = 'Switch to Light Mode';
+      } else {
+        bnavThemeIcon.textContent = '🌙';
+        bnavThemeLabel.textContent = 'Dark';
+        if (bnavThemeToggle) bnavThemeToggle.title = 'Switch to Dark Mode';
+      }
+    }
   }
 
   // Initialise from saved preference, fall back to OS preference
@@ -34,6 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   if (themeBtnDark) {
     themeBtnDark.addEventListener('click', (e) => { e.stopPropagation(); applyTheme('dark'); });
+  }
+  if (bnavThemeToggle) {
+    bnavThemeToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    });
   }
 
   // --- Room Selection Logic ---
@@ -123,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const mainContent = document.getElementById('main-content');
   const groundNavBar = document.getElementById('ground-nav-bar');
   let currentFloor = null;
+  let activeCategoryFilter = null; // 'toilet' | 'lab' | 'office' | null
 
   function moveGpsMarkerToActiveFloor() {
     const activeLayer = document.querySelector('.floor-layer.active');
@@ -169,6 +197,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update active floor pill in route summary if route is active
     if (typeof updateRouteFloorPills === 'function') {
       updateRouteFloorPills();
+    }
+
+    // Re-apply active category filter (washrooms, labs, offices) on the newly selected floor
+    if (typeof applyCategoryHighlight === 'function' && activeCategoryFilter) {
+      applyCategoryHighlight(activeCategoryFilter);
     }
   }
 
@@ -1500,5 +1533,212 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!e.target.closest('#classroom-search-container')) {
       if (searchSuggestions) searchSuggestions.style.display = 'none';
     }
+  });
+
+  // ==========================================
+  // --- Category Chips & Quick Filters (Washrooms, Labs, Offices) ---
+  // ==========================================
+  const categoryChips = document.querySelectorAll('.category-chip');
+
+  function isToiletRoom(el) {
+    const name = el.dataset.name || el.getAttribute('aria-label') || '';
+    const code = el.dataset.code || '';
+    const id = el.id || '';
+    return /toilet|mens\s*toilet|ladies\s*toilet|\bwc\b/i.test(name) ||
+           /toilet|\bwc\b/i.test(code) ||
+           /toilet/i.test(id) ||
+           (/\bmens\b/i.test(name) && !/nanosciences/i.test(name));
+  }
+
+  function isLabRoom(el) {
+    const name = el.dataset.name || el.getAttribute('aria-label') || '';
+    const code = el.dataset.code || '';
+    const id = el.id || '';
+    return /lab|workshop|metallurgy|wind_tunnel|cae_cell/i.test(name) ||
+           /lab/i.test(code) ||
+           /lab|workshop|metallurgy|wind_tunnel|cae_cell/i.test(id);
+  }
+
+  function isOfficeRoom(el) {
+    const name = el.dataset.name || el.getAttribute('aria-label') || '';
+    const code = el.dataset.code || '';
+    const id = el.id || '';
+    return /office|dept|staff|dean|director|principal|admin|reception|chair|hod|reserve|\bsa\b/i.test(name) ||
+           /office|admin|dept|dir/i.test(code) ||
+           /office|admin|director|principal|dept/i.test(id);
+  }
+
+  function clearCategoryHighlights() {
+    document.querySelectorAll('.selectable-room').forEach(el => {
+      el.classList.remove('search-highlighted', 'toilet-highlighted', 'lab-highlighted', 'office-highlighted');
+    });
+  }
+
+  function applyCategoryHighlight(category) {
+    clearCategoryHighlights();
+    if (!category) return;
+
+    const activeLayer = document.querySelector('.floor-layer.active');
+    if (!activeLayer) return;
+
+    const roomsOnFloor = activeLayer.querySelectorAll('.selectable-room');
+    let matchedCount = 0;
+    const highlightClass = category === 'toilet' ? 'toilet-highlighted' : (category === 'lab' ? 'lab-highlighted' : 'office-highlighted');
+
+    roomsOnFloor.forEach(roomEl => {
+      let matches = false;
+      if (category === 'toilet') matches = isToiletRoom(roomEl);
+      else if (category === 'lab') matches = isLabRoom(roomEl);
+      else if (category === 'office') matches = isOfficeRoom(roomEl);
+
+      if (matches) {
+        roomEl.classList.add('search-highlighted', highlightClass);
+        matchedCount++;
+      }
+    });
+
+    const categoryNames = {
+      toilet: 'Washrooms',
+      lab: 'Labs',
+      office: 'Offices'
+    };
+
+    const floorNames = {
+      ground: 'Ground Floor',
+      first: '1st Floor',
+      second: '2nd Floor',
+      third: '3rd Floor'
+    };
+
+    const floorName = floorNames[currentFloor] || 'this floor';
+    if (searchFeedback) {
+      if (matchedCount > 0) {
+        searchFeedback.textContent = `Showing all ${matchedCount} ${categoryNames[category] || category} on ${floorName}`;
+        searchFeedback.style.color = category === 'toilet' ? '#0d9488' : (category === 'lab' ? '#e11d48' : '#2563eb');
+        searchFeedback.style.display = 'block';
+      } else {
+        searchFeedback.textContent = `No ${categoryNames[category] || category} found on ${floorName}`;
+        searchFeedback.style.color = '#dc2626';
+        searchFeedback.style.display = 'block';
+      }
+    }
+  }
+
+  categoryChips.forEach(chip => {
+    chip.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const cat = chip.dataset.category;
+
+      // If clicking already active chip, toggle it off
+      if (activeCategoryFilter === cat) {
+        activeCategoryFilter = null;
+        chip.classList.remove('active');
+        clearCategoryHighlights();
+        if (searchFeedback) searchFeedback.style.display = 'none';
+        return;
+      }
+
+      // Activate selected category chip, deactivate others
+      categoryChips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeCategoryFilter = cat;
+
+      // Clear single room selection & suggestions
+      if (searchSuggestions) searchSuggestions.style.display = 'none';
+      if (selectedRoom) {
+        selectedRoom.classList.remove('selected');
+        selectedRoom.setAttribute('aria-pressed', 'false');
+        selectedRoom = null;
+      }
+
+      applyCategoryHighlight(cat);
+    });
+  });
+
+  // ==========================================
+  // --- Bottom Navigation Bar Interactions ---
+  // ==========================================
+  const bnavExplore = document.getElementById('bnav-explore');
+  const bnavRoutes  = document.getElementById('bnav-routes');
+  const bnavSaved   = document.getElementById('bnav-saved');
+  const bnavProfile = document.getElementById('bnav-profile');
+
+  const savedSheet   = document.getElementById('saved-places-sheet');
+  const campusSheet  = document.getElementById('campus-info-sheet');
+  const savedClose   = document.getElementById('saved-sheet-close');
+  const campusClose  = document.getElementById('campus-sheet-close');
+
+  function closeAllSheets() {
+    if (savedSheet) savedSheet.style.display = 'none';
+    if (campusSheet) campusSheet.style.display = 'none';
+    if (bnavSaved) bnavSaved.classList.remove('active');
+    if (bnavProfile) bnavProfile.classList.remove('active');
+  }
+
+  if (savedClose) savedClose.addEventListener('click', () => { closeAllSheets(); });
+  if (campusClose) campusClose.addEventListener('click', () => { closeAllSheets(); });
+
+  if (bnavExplore) {
+    bnavExplore.addEventListener('click', () => {
+      closeAllSheets();
+      if (bnavExplore) bnavExplore.classList.add('active');
+      if (searchInput) {
+        searchInput.focus();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  }
+
+  if (bnavRoutes) {
+    bnavRoutes.addEventListener('click', () => {
+      closeAllSheets();
+      if (groundNavBar) {
+        const isHidden = groundNavBar.style.display === 'none' || !groundNavBar.style.display;
+        groundNavBar.style.display = isHidden ? 'flex' : 'none';
+        bnavRoutes.classList.toggle('active', isHidden);
+      }
+    });
+  }
+
+  if (bnavSaved) {
+    bnavSaved.addEventListener('click', () => {
+      if (savedSheet) {
+        const isOpen = savedSheet.style.display !== 'none';
+        closeAllSheets();
+        savedSheet.style.display = isOpen ? 'none' : 'block';
+        bnavSaved.classList.toggle('active', !isOpen);
+      }
+    });
+  }
+
+  if (bnavProfile) {
+    bnavProfile.addEventListener('click', () => {
+      if (campusSheet) {
+        const isOpen = campusSheet.style.display !== 'none';
+        closeAllSheets();
+        campusSheet.style.display = isOpen ? 'none' : 'block';
+        bnavProfile.classList.toggle('active', !isOpen);
+      }
+    });
+  }
+
+  // Handle saved item clicks
+  document.querySelectorAll('.saved-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const floor = item.dataset.floor;
+      const roomId = item.dataset.room;
+      if (floor) switchFloor(floor);
+      if (roomId) {
+        setTimeout(() => {
+          const roomEl = document.getElementById(roomId);
+          if (roomEl) {
+            selectRoom(roomEl);
+            if (typeof onRoomClicked === 'function') onRoomClicked(roomId);
+          }
+        }, 150);
+      }
+      closeAllSheets();
+    });
   });
 });

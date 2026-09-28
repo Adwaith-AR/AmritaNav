@@ -11,7 +11,7 @@
   <div id="floor-prompt-modal" class="floor-prompt-modal" role="dialog" aria-modal="true" aria-labelledby="floor-prompt-title">
     <div class="floor-prompt-card">
       <div class="floor-prompt-header">
-        <h1 class="brand-title" style="margin-bottom: 0.5rem;">Amrita Nav</h1>
+        <h1 class="brand-title">Amrita Nav</h1>
         <h2 id="floor-prompt-title" class="floor-prompt-question">Which floor are you currently on?</h2>
       </div>
       <div class="floor-prompt-options">
@@ -23,53 +23,86 @@
     </div>
   </div>
 
-  <div class="container">
-    <header class="header">
-      <div class="header-top-row">
-        <h1 class="brand-title">Amrita Nav</h1>
-        <div class="theme-toggle-wrapper">
-          <div class="theme-switcher" role="radiogroup" aria-label="Color Theme">
-            <button type="button" class="theme-btn active" id="theme-btn-light" data-theme="light" role="radio" aria-checked="true" title="Light mode">
-              <span class="theme-icon">☀️</span>
-              <span class="theme-text">Light</span>
-            </button>
-            <button type="button" class="theme-btn" id="theme-btn-dark" data-theme="dark" role="radio" aria-checked="false" title="Dark mode">
-              <span class="theme-icon">🌙</span>
-              <span class="theme-text">Dark</span>
+  <!-- ══ App Shell ══════════════════════════════════════════════ -->
+  <div class="app-shell" id="app-shell">
+
+    <!-- ── Floating Top Bar (search + floor chips + nav) ──────── -->
+    <div class="floating-top-bar" id="floating-top-bar">
+
+      <!-- Search row -->
+      <div class="search-row">
+        <div class="classroom-search-container" id="classroom-search-container">
+          <div class="floating-search-bar">
+            <span class="search-icon-wrap" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </span>
+            <input
+              type="text"
+              id="classroom-search-input"
+              class="classroom-search-input"
+              placeholder="Search here"
+              aria-label="Search classroom"
+              autocomplete="off"
+              spellcheck="false"
+            >
+            <button type="button" id="classroom-search-clear" class="classroom-search-clear" title="Clear search" aria-label="Clear search" style="display: none;">✕</button>
+            <!-- Mic icon -->
+            <button type="button" class="mic-btn" id="classroom-search-btn" aria-label="Search">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="23"/>
+                <line x1="8" y1="23" x2="16" y2="23"/>
+              </svg>
             </button>
           </div>
+          <div id="classroom-search-suggestions" class="classroom-search-suggestions" style="display: none;" role="listbox" aria-label="Search suggestions"></div>
+          <div id="classroom-search-feedback" class="classroom-search-feedback" style="display: none;" role="status"></div>
         </div>
-      </div>
-      <div class="floor-switcher" role="tablist" aria-label="Floor Selection">
-        <button type="button" class="floor-btn" data-floor="ground" role="tab" aria-selected="false">Ground</button>
-        <button type="button" class="floor-btn" data-floor="first" role="tab" aria-selected="false">First</button>
-        <button type="button" class="floor-btn" data-floor="second" role="tab" aria-selected="false">Second</button>
-        <button type="button" class="floor-btn" data-floor="third" role="tab" aria-selected="false">Third</button>
       </div>
 
-      <!-- Classroom Search Box -->
-      <div class="classroom-search-container" id="classroom-search-container">
-        <div class="classroom-search-box">
-          <span class="search-icon" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
+      <!-- Category & Floor Chips -->
+      <div class="chips-row" role="tablist" aria-label="Floor Selection and Categories">
+        <button type="button" class="floor-chip floor-btn active" data-floor="ground" role="tab" aria-selected="true">
+          <span class="chip-badge chip-badge-blue">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
           </span>
-          <input
-            type="text"
-            id="classroom-search-input"
-            class="classroom-search-input"
-            placeholder="Search classroom…"
-            aria-label="Search classroom"
-            autocomplete="off"
-            spellcheck="false"
-          >
-          <button type="button" id="classroom-search-clear" class="classroom-search-clear" title="Clear search" aria-label="Clear search" style="display: none;">✕</button>
-          <button type="button" id="classroom-search-btn" class="classroom-search-btn" aria-label="Search">Search</button>
-        </div>
-        <div id="classroom-search-suggestions" class="classroom-search-suggestions" style="display: none;" role="listbox" aria-label="Search suggestions"></div>
-        <div id="classroom-search-feedback" class="classroom-search-feedback" style="display: none;" role="status"></div>
+          <span class="chip-label">Ground</span>
+        </button>
+        <button type="button" class="floor-chip floor-btn" data-floor="first" role="tab" aria-selected="false">
+          <span class="chip-badge chip-badge-indigo">1</span>
+          <span class="chip-label">1st Floor</span>
+        </button>
+        <button type="button" class="floor-chip floor-btn" data-floor="second" role="tab" aria-selected="false">
+          <span class="chip-badge chip-badge-purple">2</span>
+          <span class="chip-label">2nd Floor</span>
+        </button>
+        <button type="button" class="floor-chip floor-btn" data-floor="third" role="tab" aria-selected="false">
+          <span class="chip-badge chip-badge-pink">3</span>
+          <span class="chip-label">3rd Floor</span>
+        </button>
+        <!-- Facility Category Chips: Washrooms, Labs, Offices -->
+        <button type="button" class="category-chip" data-category="toilet" title="Restrooms">
+          <span class="chip-badge chip-badge-teal">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M7 21v-7.5a2.5 2.5 0 0 1 5 0V21"/><path d="M12 21v-7.5a2.5 2.5 0 0 1 5 0V21"/></svg>
+          </span>
+          <span class="chip-label">Washrooms</span>
+        </button>
+        <button type="button" class="category-chip" data-category="lab" title="Laboratories">
+          <span class="chip-badge chip-badge-rose">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31L4.5 19.5A2 2 0 0 0 6.23 22h11.54a2 2 0 0 0 1.73-2.5L14 9.31V2"/></svg>
+          </span>
+          <span class="chip-label">Labs</span>
+        </button>
+        <button type="button" class="category-chip" data-category="office" title="Offices">
+          <span class="chip-badge chip-badge-blue">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          </span>
+          <span class="chip-label">Offices</span>
+        </button>
       </div>
 
       <!-- Multi-Floor Navigation Bar -->
@@ -100,7 +133,7 @@
           <div id="route-instruction-bar" class="route-instruction-bar" style="display: none;"></div>
         </div>
       </div>
-    </header>
+    </div><!-- /floating-top-bar -->
 
     <main class="main-content" id="main-content" style="display: none;">
       <div class="image-wrapper">
@@ -413,21 +446,153 @@
         <button type="button" class="map-zoom-btn reset" id="map-zoom-reset" title="Reset View" aria-label="Reset View">⟲</button>
       </div>
 
-      <!-- Floating GPS Control Dock -->
-      <div class="gps-dock" id="gps-dock">
-            <button id="gps-toggle-btn" class="gps-toggle-btn" type="button" aria-label="Toggle Live GPS Location" title="Toggle Live GPS Location">
-              <svg class="gps-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path d="M12 2v3m0 14v3M2 12h3m14 0h3"></path>
-              </svg>
-              <span class="gps-status-dot" id="gps-status-dot"></span>
-              <span class="gps-btn-text" id="gps-btn-text">Locate Me</span>
-            </button>
-          </div>
-        </div>
+      <!-- Floating Navigation Arrow FAB (Re-center / Locate Me - matches screenshot bottom-right) -->
+      <div class="nav-fab" id="gps-dock">
+        <button id="gps-toggle-btn" class="nav-arrow-btn gps-toggle-btn" type="button" aria-label="Locate Me" title="Locate Me">
+          <svg class="nav-arrow-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+          </svg>
+          <span class="gps-status-dot" id="gps-status-dot" style="display: none;"></span>
+          <span class="gps-btn-text" id="gps-btn-text" style="display: none;">Locate Me</span>
+        </button>
       </div>
-    </main>
+
+    </div> <!-- /#map-container -->
+  </div> <!-- /.image-wrapper -->
+</main> <!-- /#main-content -->
+
+<!-- ── Floating Bottom Navigation Dock (matches screenshot) ────── -->
+<nav class="bottom-nav" id="bottom-nav" aria-label="Bottom Navigation">
+  <button type="button" class="bottom-nav-item active" id="bnav-explore" title="Explore Campus">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <span class="bottom-nav-label">Explore</span>
+  </button>
+  <button type="button" class="bottom-nav-item" id="bnav-routes" title="Directions & Route">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="6" cy="19" r="3"></circle>
+      <path d="M9 19h8.5a4.5 4.5 0 0 0 0-9H5a4 4 0 0 1 0-8h11"></path>
+      <circle cx="18" cy="5" r="3"></circle>
+    </svg>
+    <span class="bottom-nav-label">Routes</span>
+  </button>
+  <button type="button" class="bottom-nav-item" id="bnav-saved" title="Saved Places">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+    </svg>
+    <span class="bottom-nav-label">Saved</span>
+  </button>
+  <!-- THEME TOGGLE BUTTON: Replaces the layer feature in image as requested -->
+  <button type="button" class="bottom-nav-item bottom-nav-theme-btn" id="bnav-theme-toggle" title="Toggle Light / Dark Mode" aria-label="Toggle Light / Dark Mode">
+    <span id="bnav-theme-icon" class="bottom-nav-theme-icon">🌙</span>
+    <span class="bottom-nav-label" id="bnav-theme-label">Dark</span>
+  </button>
+  <button type="button" class="bottom-nav-item" id="bnav-profile" title="Campus Info">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+      <circle cx="12" cy="7" r="4"></circle>
+    </svg>
+    <span class="bottom-nav-label">Campus</span>
+  </button>
+</nav>
+
+<!-- ── Saved Places Drawer / Sheet ──────────────────────────── -->
+<div class="bottom-sheet" id="saved-places-sheet" style="display: none;" role="dialog" aria-labelledby="saved-title">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <h3 id="saved-title" class="sheet-title">Saved & Key Places</h3>
+    <button type="button" class="sheet-close-btn" id="saved-sheet-close" aria-label="Close saved places">✕</button>
   </div>
+  <div class="sheet-content">
+    <div class="saved-item" data-room="room_acharya_hall" data-floor="ground">
+      <div class="saved-item-icon">🏛️</div>
+      <div class="saved-item-info">
+        <div class="saved-item-name">Acharya Hall</div>
+        <div class="saved-item-meta">Ground Floor • ACH-110</div>
+      </div>
+      <button type="button" class="saved-route-btn">Go</button>
+    </div>
+    <div class="saved-item" data-room="room_admin_block_a" data-floor="ground">
+      <div class="saved-item-icon">🏢</div>
+      <div class="saved-item-info">
+        <div class="saved-item-name">Administration Block (A) / Reception</div>
+        <div class="saved-item-meta">Ground Floor • ADM-BLK-A</div>
+      </div>
+      <button type="button" class="saved-route-btn">Go</button>
+    </div>
+    <div class="saved-item" data-room="room_special_hall" data-floor="ground">
+      <div class="saved-item-icon">🧘</div>
+      <div class="saved-item-info">
+        <div class="saved-item-name">Meditation Hall / SPH</div>
+        <div class="saved-item-meta">Ground Floor • SPH-102</div>
+      </div>
+      <button type="button" class="saved-route-btn">Go</button>
+    </div>
+    <div class="saved-item" data-room="room_cir_seminar" data-floor="ground">
+      <div class="saved-item-icon">🎓</div>
+      <div class="saved-item-info">
+        <div class="saved-item-name">CIR Seminar Room</div>
+        <div class="saved-item-meta">Ground Floor • CIR-106</div>
+      </div>
+      <button type="button" class="saved-route-btn">Go</button>
+    </div>
+    <div class="saved-item" data-room="f1_room_computer_lab" data-floor="first">
+      <div class="saved-item-icon">💻</div>
+      <div class="saved-item-info">
+        <div class="saved-item-name">Computer Lab (CSE)</div>
+        <div class="saved-item-meta">1st Floor • S-115</div>
+      </div>
+      <button type="button" class="saved-route-btn">Go</button>
+    </div>
+    <div class="saved-item" data-room="f2_room_main_conf" data-floor="second">
+      <div class="saved-item-icon">👥</div>
+      <div class="saved-item-info">
+        <div class="saved-item-name">Main Conference Room</div>
+        <div class="saved-item-meta">2nd Floor • CONF-MAIN</div>
+      </div>
+      <button type="button" class="saved-route-btn">Go</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Campus Info Drawer / Sheet ───────────────────────────── -->
+<div class="bottom-sheet" id="campus-info-sheet" style="display: none;" role="dialog" aria-labelledby="campus-title">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <h3 id="campus-title" class="sheet-title">Amrita Nav</h3>
+    <button type="button" class="sheet-close-btn" id="campus-sheet-close" aria-label="Close campus info">✕</button>
+  </div>
+  <div class="sheet-content">
+    <div class="campus-info-card">
+      <h4>📍 Indoor Navigation System</h4>
+      <p>Navigate across Ground, 1st, 2nd, and 3rd floors with shortest-path routing, staircase transition pins, and live GPS locator.</p>
+    </div>
+    <div class="campus-stats-row">
+      <div class="campus-stat">
+        <span class="stat-value">4</span>
+        <span class="stat-label">Floors</span>
+      </div>
+      <div class="campus-stat">
+        <span class="stat-value">60+</span>
+        <span class="stat-label">Rooms</span>
+      </div>
+      <div class="campus-stat">
+        <span class="stat-value">8</span>
+        <span class="stat-label">Staircases</span>
+      </div>
+    </div>
+    <div class="campus-legend">
+      <div class="legend-row"><span class="legend-dot green"></span> Start Location</div>
+      <div class="legend-row"><span class="legend-dot red"></span> Destination</div>
+      <div class="legend-row"><span class="legend-dot gold"></span> Stairway Change</div>
+      <div class="legend-row"><span class="legend-dot blue"></span> Live Location</div>
+    </div>
+  </div>
+</div>
+
+</div> <!-- /#app-shell -->
   <script src="ground-nav-data.js"></script>
   <script src="script.js"></script>
 </body>
