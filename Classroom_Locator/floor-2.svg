@@ -18,40 +18,40 @@
   <g id="pathways" class="layer-pathways">
     <polyline id="pathway_1790271320290-casing" class="pathway-casing" points="472,527 473,537 474,546 476,564 480,600 488,673 492,710 494,728 494.746,734.716 495,737 496,746 504,818 512,891 513.653,905.876 514,909 516,927 518,945 520,963 524,1000 534.503,1094.528 535,1099 536,1108" fill="none" stroke="#cbd5e1" stroke-width="27.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
     <polyline id="pathway_1790271320290" class="pathway-wall" points="472,527 473,537 474,546 476,564 480,600 488,673 492,710 494,728 494.746,734.716 495,737 496,746 504,818 512,891 513.653,905.876 514,909 516,927 518,945 520,963 524,1000 534.503,1094.528 535,1099 536,1108" fill="none" stroke="#ffffff" stroke-width="25" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="West Hall and Reception Corridor"/>
-    <polyline id="pathway_courtyard_north_concourse-casing" class="pathway-casing" points="495,737 939,686 1302,645 1429,631 1609,610 1815,585 1918,573 1944,570" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
-    <polyline id="pathway_courtyard_north_concourse" class="pathway-wall" points="495,737 939,686 1302,645 1429,631 1609,610 1815,585 1918,573 1944,570" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Courtyards — North Concourse"/>
-    <polyline id="pathway_courtyard_south_concourse-casing" class="pathway-casing" points="513.653,905.876 957.975,855.252 1321.126,813.876 1447.806,799.443 1628.636,778.84 1940.618,743.294" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
-    <polyline id="pathway_courtyard_south_concourse" class="pathway-wall" points="513.653,905.876 957.975,855.252 1321.126,813.876 1447.806,799.443 1628.636,778.84 1940.618,743.294" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Courtyards — South Concourse"/>
-    <polyline id="pathway_central_north_south_spine-casing" class="pathway-casing" points="916.973,495.38 938.482,684.159 957.975,855.252 980.027,1048.8" fill="none" stroke="#cbd5e1" stroke-width="26.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
-    <polyline id="pathway_central_north_south_spine" class="pathway-wall" points="916.973,495.38 938.482,684.159 957.975,855.252 980.027,1048.8" fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Central North–South Corridor"/>
+    <polyline id="pathway_courtyard_north_concourse-casing" class="pathway-casing" points="495,737 662,719 717,712 773,706 828,699 884,693 939,686 985,681 1030,676 1121,666 1167,661 1212,656 1257,651 1302,645 1366,638 1429,631 1519,621 1609,610 1661,604 1712,598 1815,585 1918,573 1944,570" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="pathway_courtyard_north_concourse" class="pathway-wall" points="495,737 662,719 717,712 773,706 828,699 884,693 939,686 985,681 1030,676 1121,666 1167,661 1212,656 1257,651 1302,645 1366,638 1429,631 1519,621 1609,610 1661,604 1712,598 1815,585 1918,573 1944,570" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Courtyards — North Concourse"/>
+    <polyline id="pathway_courtyard_south_concourse-casing" class="pathway-casing" points="514,906 625,894 681,888 736,881 792,875 847,868 903,862 958,855 1003,850 1049,845 1095,840 1140,835 1186,830 1231,824 1276,819 1321,814 1337,812 1353,810 1384,807 1448,800 1539,790 1629,779 1707,770 1785,761 1863,752 1941,743" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="pathway_courtyard_south_concourse" class="pathway-wall" points="514,906 625,894 681,888 736,881 792,875 847,868 903,862 958,855 1003,850 1049,845 1095,840 1140,835 1186,830 1231,824 1276,819 1321,814 1337,812 1353,810 1384,807 1448,800 1539,790 1629,779 1707,770 1785,761 1863,752 1941,743" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Courtyards — South Concourse"/>
+    <polyline id="pathway_central_north_south_spine-casing" class="pathway-casing" points="917,495 939,684 949,770 958,855 969,952 972,976 975,1000 980,1048" fill="none" stroke="#cbd5e1" stroke-width="26.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="pathway_central_north_south_spine" class="pathway-wall" points="917,495 939,684 949,770 958,855 969,952 972,976 975,1000 980,1048" fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Central North–South Corridor"/>
     <polyline id="pathway_middle_courtyard_link-casing" class="pathway-casing" points="1301.632,642.783 1321.126,813.876" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
     <polyline id="pathway_middle_courtyard_link" class="pathway-wall" points="1301.632,642.783 1321.126,813.876" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Central / East Courtyard Link"/>
-    <polyline id="pathway_east_north_south_spine-casing" class="pathway-casing" points="1583,359 1609,608 1629,779 1657,1024" fill="none" stroke="#cbd5e1" stroke-width="20.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
-    <polyline id="pathway_east_north_south_spine" class="pathway-wall" points="1583,359 1609,608 1629,779 1657,1024" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="East Wing North–South Corridor"/>
-    <polyline id="pathway_north_labs_west-casing" class="pathway-casing" points="832.038,173.929 869.282,500.814" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
-    <polyline id="pathway_north_labs_west" class="pathway-wall" points="832.038,173.929 869.282,500.814" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — West Passage"/>
-    <polyline id="pathway_north_labs_east-casing" class="pathway-casing" points="913.511,164.646 950.754,491.531" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
-    <polyline id="pathway_north_labs_east" class="pathway-wall" points="913.511,164.646 950.754,491.531" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — East Passage"/>
+    <polyline id="pathway_east_north_south_spine-casing" class="pathway-casing" points="1583,359 1609,608 1619,694 1629,779 1657,1024" fill="none" stroke="#cbd5e1" stroke-width="20.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="pathway_east_north_south_spine" class="pathway-wall" points="1583,359 1609,608 1619,694 1629,779 1657,1024" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="East Wing North–South Corridor"/>
+    <polyline id="pathway_north_labs_west-casing" class="pathway-casing" points="832.038,173.929 837,214 842,255 847,296 851,337 856,378 860,419 865,460 869.282,500.814" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="pathway_north_labs_west" class="pathway-wall" points="832.038,173.929 837,214 842,255 847,296 851,337 856,378 860,419 865,460 869.282,500.814" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — West Passage"/>
+    <polyline id="pathway_north_labs_east-casing" class="pathway-casing" points="914,165 919,206 922,227 924,247 929,288 933,329 936,350 938,370 942,411 947,452 951,492" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="pathway_north_labs_east" class="pathway-wall" points="914,165 919,206 922,227 924,247 929,288 933,329 936,350 938,370 942,411 947,452 951,492" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — East Passage"/>
     <polyline id="pathway_north_labs_top-casing" class="pathway-casing" points="832.038,173.929 872.774,169.287 913.511,164.646" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
     <polyline id="pathway_north_labs_top" class="pathway-wall" points="832.038,173.929 872.774,169.287 913.511,164.646" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — Upper Link"/>
     <polyline id="pathway_north_labs_bottom-casing" class="pathway-casing" points="869.282,500.814 916.973,495.38 950.754,491.531" fill="none" stroke="#cbd5e1" stroke-width="18.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
     <polyline id="pathway_north_labs_bottom" class="pathway-wall" points="869.282,500.814 916.973,495.38 950.754,491.531" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — Lower Link"/>
     <polyline id="pathway_north_toilet_approach-casing" class="pathway-casing" points="872.774,169.287 871.529,158.358" fill="none" stroke="#cbd5e1" stroke-width="18.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
     <polyline id="pathway_north_toilet_approach" class="pathway-wall" points="872.774,169.287 871.529,158.358" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Amenities Approach"/>
-    <polyline id="pathway_engineering_lab_concourse-casing" class="pathway-casing" points="1210.077,461.985 1406.804,439.571 1555.84,422.59" fill="none" stroke="#cbd5e1" stroke-width="20.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
-    <polyline id="pathway_engineering_lab_concourse" class="pathway-wall" points="1210.077,461.985 1406.804,439.571 1555.84,422.59" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Metallurgy / Fluids / CAE / Dynamics Corridor"/>
-    <polyline id="pathway_engineering_lab_link-casing" class="pathway-casing" points="1406.804,439.571 1428.313,628.35" fill="none" stroke="#cbd5e1" stroke-width="26.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
-    <polyline id="pathway_engineering_lab_link" class="pathway-wall" points="1406.804,439.571 1428.313,628.35" fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Engineering Labs to Main Concourse"/>
+    <polyline id="pathway_engineering_lab_concourse-casing" class="pathway-casing" points="1210.077,461.985 1259,456 1308,451 1357,445 1406.804,439.571 1450,435 1493,430 1580,420" fill="none" stroke="#cbd5e1" stroke-width="20.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="pathway_engineering_lab_concourse" class="pathway-wall" points="1210.077,461.985 1259,456 1308,451 1357,445 1406.804,439.571 1450,435 1493,430 1580,420" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Metallurgy / Fluids / CAE / Dynamics Corridor"/>
+    <polyline id="pathway_engineering_lab_link-casing" class="pathway-casing" points="1406.804,439.571 1412,487 1418,534 1428.313,628.35" fill="none" stroke="#cbd5e1" stroke-width="26.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="pathway_engineering_lab_link" class="pathway-wall" points="1406.804,439.571 1412,487 1418,534 1428.313,628.35" fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Engineering Labs to Main Concourse"/>
     <polyline id="pathway_south_office_link-casing" class="pathway-casing" points="1447.806,799.443 1469.858,992.99" fill="none" stroke="#cbd5e1" stroke-width="26.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
     <polyline id="pathway_south_office_link" class="pathway-wall" points="1447.806,799.443 1469.858,992.99" fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Conference / College Administration Link"/>
-    <polyline id="pathway_acharya_south_link-casing" class="pathway-casing" points="535,1095 654,1081 714,1075 744,1072" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
-    <polyline id="pathway_acharya_south_link" class="pathway-wall" points="535,1095 654,1081 714,1075 744,1072" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Acharya Hall to South Wing"/>
-    <polyline id="pathway_reception_passage-casing" class="pathway-casing" points="295.688,841.734 504,818" fill="none" stroke="#cbd5e1" stroke-width="24.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
-    <polyline id="pathway_reception_passage" class="pathway-wall" points="295.688,841.734 504,818" fill="none" stroke="#ffffff" stroke-width="22" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Main Entrance — Reception Passage"/>
-    <polyline id="pathway_1790501146427-casing" class="pathway-casing" points="796,1070 1240,1020" fill="none" stroke="#cbd5e1" stroke-width="34.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
-    <polyline id="pathway_1790501146427" class="pathway-wall" points="796,1070 1240,1020" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 22"/>
-    <polyline id="pathway_1790501178957-casing" class="pathway-casing" points="1283,1012 1643,972" fill="none" stroke="#cbd5e1" stroke-width="34.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
-    <polyline id="pathway_1790501178957" class="pathway-wall" points="1283,1012 1643,972" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 23"/>
+    <polyline id="pathway_acharya_south_link-casing" class="pathway-casing" points="535,1095 595,1088 654,1081 684,1078 714,1075 744,1072" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="pathway_acharya_south_link" class="pathway-wall" points="535,1095 595,1088 654,1081 684,1078 714,1075 744,1072" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Acharya Hall to South Wing"/>
+    <polyline id="pathway_1790501146427-casing" class="pathway-casing" points="796,1070 852,1064 907,1058 963,1052 1018,1045 1074,1039 1129,1033 1185,1027 1240,1020" fill="none" stroke="#cbd5e1" stroke-width="34.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="pathway_1790501146427" class="pathway-wall" points="796,1070 852,1064 907,1058 963,1052 1018,1045 1074,1039 1129,1033 1185,1027 1240,1020" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 22"/>
+    <polyline id="pathway_1790501178957-casing" class="pathway-casing" points="1283,1012 1373,1002 1418,997 1463,992 1553,982 1643,972" fill="none" stroke="#cbd5e1" stroke-width="34.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="pathway_1790501178957" class="pathway-wall" points="1283,1012 1373,1002 1418,997 1463,992 1553,982 1643,972" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 23"/>
+    <polyline id="pathway_1790575291631-casing" class="pathway-casing" points="480,540 530,535 580,530 630,525 680,520" fill="none" stroke="#cbd5e1" stroke-width="34.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="pathway_1790575291631" class="pathway-wall" points="480,540 530,535 580,530 630,525 680,520" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 19"/>
   </g>
 
   <!-- Vector Room Shapes -->
@@ -82,7 +82,7 @@
     <rect id="room_prayer_hall" class="room-wall" x="1876" y="456" width="63" height="107" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="N-225" data-code="PRY-125" transform="rotate(353 1907.5 509.5)"/>
     <polygon id="room_courtyard_fareast" class="room-wall" points="null,null null,null null,null null,null null,null null,null null,null" fill="#e5eddb" fill-opacity="0.85" stroke="#a3c299" stroke-width="2" data-name="Courtyard (Far-East)" data-code="CYD-FEAST"/>
     <rect id="room_college_admin" class="room-wall" x="1489" y="800" width="131" height="88" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-216" data-code="CADM-127" transform="rotate(353 1554.5 844)"/>
-    <rect id="room_computer_lab" class="room-wall" x="1649" y="778" width="229" height="107" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-220 / S-219 / S-218 / S-217" data-code="LAB-CS" transform="rotate(353 1763.5 831.5)"/>
+    <rect id="room_computer_lab" class="room-wall" x="1640" y="780" width="229" height="107" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-220 / S-219 / S-218 / S-217" data-code="LAB-CS" transform="rotate(353 1754.5 833.5)"/>
     <rect id="room_mech_workshop" class="room-wall" x="1287" y="1020" width="128" height="109" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-203" data-code="LAB-MECH" transform="rotate(354 1351 1074.5)"/>
     <rect id="room_robotics_lab" class="room-wall" x="1414" y="1009" width="69" height="108" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-202" data-code="LAB-ROBO" transform="rotate(354 1448.5 1063)"/>
     <rect id="room_wind_tunnel" class="room-wall" x="1483" y="998" width="129" height="109" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-214" data-code="LAB-WIND" transform="rotate(354 1547.5 1052.5)"/>
@@ -104,15 +104,15 @@
     <rect id="room_1790500631547" class="room-wall" x="1631" y="660" width="60" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 1661 691.5)"/>
     <rect id="room_1790500639780" class="room-wall" x="885" y="959" width="75" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(353 922.5 990.5)"/>
     <rect id="room_1790500650489" class="room-wall" x="1324" y="460" width="75" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 1361.5 491.5)"/>
-    <rect id="room_1790500850398" class="room-wall" x="824" y="77" width="91" height="81" fill="#0095d1" fill-opacity="0.85" stroke="#0095d1" stroke-width="2" data-name="Men&#039;s Toilet" data-code="R-154" transform="rotate(353 869.5 117.5)"/>
-    <rect id="room_1790500900853" class="room-wall" x="1614" y="1022" width="125" height="68" fill="#ff00f9" fill-opacity="0.85" stroke="#ff00f9" stroke-width="2" data-name="Ladies&#039; Toilet" data-code="R-154" transform="rotate(353 1676.5 1056)"/>
-    <rect id="room_1790500984653" class="room-wall" x="1164" y="1043" width="93" height="73" fill="#e8c5fd" fill-opacity="0.85" stroke="#f64bf8" stroke-width="2" data-name="Ladies&#039; Toilet" data-code="R-156" transform="rotate(353 1210.5 1079.5)"/>
-    <rect id="room_1790501046808" class="room-wall" x="1529" y="291" width="130" height="66" fill="#0095d1" fill-opacity="0.85" stroke="#0095d1" stroke-width="2" data-name="Men&#039;s Toilet" data-code="R-157" transform="rotate(353 1594 324)"/>
+    <rect id="room_1790500850398" class="room-wall" x="824" y="77" width="91" height="81" fill="#0095d1" fill-opacity="0.85" stroke="#0095d1" stroke-width="2" data-name="Men&#039;s Toilet" data-code="WC" transform="rotate(353 869.5 117.5)"/>
+    <rect id="room_1790500900853" class="room-wall" x="1614" y="1022" width="125" height="68" fill="#ff00f9" fill-opacity="0.85" stroke="#ff00f9" stroke-width="2" data-name="Ladies&#039; Toilet" data-code="WC" transform="rotate(353 1676.5 1056)"/>
+    <rect id="room_1790500984653" class="room-wall" x="1164" y="1043" width="93" height="73" fill="#e8c5fd" fill-opacity="0.85" stroke="#f64bf8" stroke-width="2" data-name="Ladies&#039; Toilet" data-code="WC" transform="rotate(353 1210.5 1079.5)"/>
+    <rect id="room_1790501046808" class="room-wall" x="1529" y="291" width="130" height="66" fill="#0095d1" fill-opacity="0.85" stroke="#0095d1" stroke-width="2" data-name="Men&#039;s Toilet" data-code="WC" transform="rotate(353 1594 324)"/>
     <rect id="room_1790501831784" class="room-wall" x="719" y="606" width="95" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-202" data-code="ADM-105" transform="rotate(354 766.5 650.5)"/>
     <rect id="room_1790501909379" class="room-wall" x="940" y="580" width="134" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-214" data-code="R-155" transform="rotate(353 1007 624.5)"/>
     <rect id="room_1790502692180" class="room-wall" x="1880" y="758" width="97" height="109" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Microwave Lab" data-code="R-155" transform="rotate(354 1928.5 812.5)"/>
-    <rect id="room_1790520116929" class="room-wall" x="454" y="1072" width="64" height="41" fill="#e8c5fd" fill-opacity="0.85" stroke="#fa00f5" stroke-width="2" data-name="Ladies toilet " data-code="R-156" transform="rotate(355 486 1092.5)"/>
-    <rect id="room_1790520135835" class="room-wall" x="391" y="532" width="69" height="43" fill="#0095cd" fill-opacity="0.85" stroke="#0095d1" stroke-width="2" data-name="Mens Toilet" data-code="WC" transform="rotate(354 425.5 553.5)"/>
+    <rect id="room_1790520116929" class="room-wall" x="454" y="1072" width="64" height="41" fill="#e8c5fd" fill-opacity="0.85" stroke="#fa00f5" stroke-width="2" data-name="Ladies&#039; toilet " data-code="WC" transform="rotate(355 486 1092.5)"/>
+    <rect id="room_1790520135835" class="room-wall" x="391" y="532" width="69" height="43" fill="#0095cd" fill-opacity="0.85" stroke="#0095d1" stroke-width="2" data-name="Men&#039;s Toilet" data-code="WC" transform="rotate(354 425.5 553.5)"/>
   </g>
 
   <!-- Room Labels -->
@@ -221,7 +221,7 @@
       <text class="room-label" y="-7">S-216</text>
       <text class="room-code" y="9">CADM-127</text>
     </g>
-    <g transform="translate(1764, 832)">
+    <g transform="translate(1755, 834)">
       <text class="room-label" y="-7">S-220 / S-219 / S-218 / S-217</text>
       <text class="room-code" y="9">LAB-CS</text>
     </g>
@@ -309,19 +309,19 @@
     </g>
     <g transform="translate(870, 118)">
       <text class="room-label" y="-7">Men&#039;s Toilet</text>
-      <text class="room-code" y="9">R-154</text>
+      <text class="room-code" y="9">WC</text>
     </g>
     <g transform="translate(1677, 1056)">
       <text class="room-label" y="-7">Ladies&#039; Toilet</text>
-      <text class="room-code" y="9">R-154</text>
+      <text class="room-code" y="9">WC</text>
     </g>
     <g transform="translate(1211, 1080)">
       <text class="room-label" y="-7">Ladies&#039; Toilet</text>
-      <text class="room-code" y="9">R-156</text>
+      <text class="room-code" y="9">WC</text>
     </g>
     <g transform="translate(1594, 324)">
       <text class="room-label" y="-7">Men&#039;s Toilet</text>
-      <text class="room-code" y="9">R-157</text>
+      <text class="room-code" y="9">WC</text>
     </g>
     <g transform="translate(767, 651)">
       <text class="room-label" y="-7">N-202</text>
@@ -336,11 +336,11 @@
       <text class="room-code" y="9">R-155</text>
     </g>
     <g transform="translate(486, 1093)">
-      <text class="room-label" y="-7">Ladies toilet </text>
-      <text class="room-code" y="9">R-156</text>
+      <text class="room-label" y="-7">Ladies&#039; toilet </text>
+      <text class="room-code" y="9">WC</text>
     </g>
     <g transform="translate(426, 554)">
-      <text class="room-label" y="-7">Mens Toilet</text>
+      <text class="room-label" y="-7">Men&#039;s Toilet</text>
       <text class="room-code" y="9">WC</text>
     </g>
   </g>
