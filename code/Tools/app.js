@@ -24,7 +24,8 @@ const Tools = {
                     type: 1,
                     Label: "Classroom Locator",
                     IconClass: "fa-solid fa-location-dot",
-                    description: "Find any classroom instantly."
+                    description: "Find any classroom instantly.",
+                    link: "ClassroomLocator/index.html"
           },
           "Food Court": {
                     type: 1,
@@ -124,7 +125,7 @@ const data = {
 
 
 Object.values(Tools).forEach(element => {
-          items.push(CardGenerator(1, element.Label, element.description, "", element.IconClass, ""))
+          items.push(CardGenerator(1, element.Label, element.description, "", element.IconClass, element.link || ""))
           container.innerHTML = items.join("")
 
 
@@ -133,6 +134,17 @@ Object.values(Tools).forEach(element => {
 
 
 function item_selected(ItemName) {
+          if (Tools[ItemName] && Tools[ItemName].link) {
+                    window.location.href = Tools[ItemName].link;
+                    return;
+          }
+          if (ItemName === "Classroom Locator") {
+                    window.location.href = "ClassroomLocator/index.html";
+                    return;
+          }
+          if (!Tools[ItemName] || !Tools[ItemName].Options) {
+                    return;
+          }
           localStorage.setItem("ItemName", ItemName)
           window.console.log(localStorage.getItem("ItemName"))
           items = []
@@ -147,6 +159,15 @@ function item_selected(ItemName) {
 function CardGenerator(type, label, description, distance, Icon, link, items, price, details) {
           switch (type) {
                     case 1:
+                              if (link) {
+                                        return (`
+                                                  <a href="${link}" class="card">
+                                                            <i class="${Icon}"></i>
+                                                            <h3>${label}</h3>
+                                                            <p>${description}</p>
+                                                  </a>
+                                                  `)
+                              }
                               return (`
                                         <div class="card" onclick="item_selected('${label}')">
                                                   <i class="${Icon}"></i>
