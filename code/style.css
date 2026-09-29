@@ -250,6 +250,9 @@ nav {
           text-align: center;
           box-shadow: 0 5px 18px rgba(0, 0, 0, .08);
           transition: .3s;
+          text-decoration: none;
+          color: inherit;
+          display: block;
 
 }
 
