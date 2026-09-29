@@ -1741,8 +1741,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "room_1790578100156",
-          "name": "Ladies Toilet",
-          "code": "R-147",
+          "name": "Ladies' Toilet",
+          "code": "WC",
           "floor": "ground",
           "floorIdx": 0,
           "floorTitle": "Ground Floor",
@@ -1755,8 +1755,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "room_1790578145285",
-          "name": "Ldies Toilet",
-          "code": "R-148",
+          "name": "Ladies' Toilet",
+          "code": "WC",
           "floor": "ground",
           "floorIdx": 0,
           "floorTitle": "Ground Floor",
@@ -1769,8 +1769,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "room_1790578197842",
-          "name": "Ladies Toilet",
-          "code": "R-149",
+          "name": "Ladies' Toilet",
+          "code": "WC",
           "floor": "ground",
           "floorIdx": 0,
           "floorTitle": "Ground Floor",
@@ -1783,8 +1783,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "room_1790578250255",
-          "name": "Mens Toilet",
-          "code": "R-150",
+          "name": "Men's Toilet",
+          "code": "WC",
           "floor": "ground",
           "floorIdx": 0,
           "floorTitle": "Ground Floor",
@@ -1797,8 +1797,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "room_1790578281913",
-          "name": "Mens",
-          "code": "R-151",
+          "name": "Men's Toilet",
+          "code": "WC",
           "floor": "ground",
           "floorIdx": 0,
           "floorTitle": "Ground Floor",
@@ -1811,8 +1811,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "room_1790578307230",
-          "name": "Mens Toilet",
-          "code": "R-152",
+          "name": "Men's Toilet",
+          "code": "WC",
           "floor": "ground",
           "floorIdx": 0,
           "floorTitle": "Ground Floor",
@@ -3922,7 +3922,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         {
           "id": "f1_room_1790500850398",
           "name": "Men's Toilet",
-          "code": "R-154",
+          "code": "WC",
           "floor": "first",
           "floorIdx": 1,
           "floorTitle": "First Floor",
@@ -3936,7 +3936,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         {
           "id": "f1_room_1790500900853",
           "name": "Ladies' Toilet",
-          "code": "R-154",
+          "code": "WC",
           "floor": "first",
           "floorIdx": 1,
           "floorTitle": "First Floor",
@@ -3950,7 +3950,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         {
           "id": "f1_room_1790500984653",
           "name": "Ladies' Toilet",
-          "code": "R-156",
+          "code": "WC",
           "floor": "first",
           "floorIdx": 1,
           "floorTitle": "First Floor",
@@ -3964,7 +3964,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         {
           "id": "f1_room_1790501046808",
           "name": "Men's Toilet",
-          "code": "R-157",
+          "code": "WC",
           "floor": "first",
           "floorIdx": 1,
           "floorTitle": "First Floor",
@@ -4005,7 +4005,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "f1_room_1790521278087",
-          "name": "Ladies Toilet",
+          "name": "Ladies' Toilet",
           "code": "WC",
           "floor": "first",
           "floorIdx": 1,
@@ -4019,7 +4019,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "f1_room_1790521338973",
-          "name": "Mens Toilet",
+          "name": "Men's Toilet",
           "code": "WC",
           "floor": "first",
           "floorIdx": 1,
@@ -6031,7 +6031,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         {
           "id": "f2_room_1790500850398",
           "name": "Men's Toilet",
-          "code": "R-154",
+          "code": "WC",
           "floor": "second",
           "floorIdx": 2,
           "floorTitle": "Second Floor",
@@ -6045,7 +6045,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         {
           "id": "f2_room_1790500900853",
           "name": "Ladies' Toilet",
-          "code": "R-154",
+          "code": "WC",
           "floor": "second",
           "floorIdx": 2,
           "floorTitle": "Second Floor",
@@ -6059,7 +6059,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         {
           "id": "f2_room_1790500984653",
           "name": "Ladies' Toilet",
-          "code": "R-156",
+          "code": "WC",
           "floor": "second",
           "floorIdx": 2,
           "floorTitle": "Second Floor",
@@ -6073,7 +6073,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         {
           "id": "f2_room_1790501046808",
           "name": "Men's Toilet",
-          "code": "R-157",
+          "code": "WC",
           "floor": "second",
           "floorIdx": 2,
           "floorTitle": "Second Floor",
@@ -6128,8 +6128,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "f2_room_1790520116929",
-          "name": "Ladies toilet ",
-          "code": "R-156",
+          "name": "Ladies' Toilet",
+          "code": "WC",
           "floor": "second",
           "floorIdx": 2,
           "floorTitle": "Second Floor",
@@ -6142,7 +6142,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "f2_room_1790520135835",
-          "name": "Mens Toilet",
+          "name": "Men's Toilet",
           "code": "WC",
           "floor": "second",
           "floorIdx": 2,
@@ -7376,7 +7376,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "f3_room_special_hall",
-          "name": "A-304",
+          "name": "A-308",
           "code": "SPH-102",
           "floor": "third",
           "floorIdx": 3,
@@ -7390,7 +7390,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "f3_room_gad_office",
-          "name": "A-304",
+          "name": "A-307",
           "code": "GAD-103",
           "floor": "third",
           "floorIdx": 3,
@@ -7404,7 +7404,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "f3_room_admin_block_a",
-          "name": "A-301",
+          "name": "A-304",
           "code": "ADM-BLK-A",
           "floor": "third",
           "floorIdx": 3,
@@ -7460,7 +7460,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "f3_room_mini_conf",
-          "name": "A-302",
+          "name": "A-305",
           "code": "CONF-MINI",
           "floor": "third",
           "floorIdx": 3,
@@ -7474,7 +7474,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "f3_room_main_conf",
-          "name": "A-301",
+          "name": "A-303",
           "code": "CONF-MAIN",
           "floor": "third",
           "floorIdx": 3,
@@ -7488,7 +7488,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "f3_room_acharya_hall",
-          "name": "A-301",
+          "name": "A-302",
           "code": "ACH-110",
           "floor": "third",
           "floorIdx": 3,
@@ -7516,7 +7516,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "f3_room_mfg_lab",
-          "name": "S-304",
+          "name": "S-305",
           "code": "LAB-MFG",
           "floor": "third",
           "floorIdx": 3,
@@ -7530,7 +7530,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "f3_room_mat_testing",
-          "name": "S-304",
+          "name": "S-306",
           "code": "LAB-MTL",
           "floor": "third",
           "floorIdx": 3,
@@ -7586,7 +7586,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "f3_room_ladies_infirmary",
-          "name": "S-310",
+          "name": "S-312",
           "code": "INF-118",
           "floor": "third",
           "floorIdx": 3,
@@ -7740,7 +7740,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "f3_room_robotics_lab",
-          "name": "S-313",
+          "name": "S-302",
           "code": "LAB-ROBO",
           "floor": "third",
           "floorIdx": 3,
@@ -7754,7 +7754,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "f3_room_wind_tunnel",
-          "name": "S-313",
+          "name": "S-314",
           "code": "LAB-WIND",
           "floor": "third",
           "floorIdx": 3,
@@ -8125,7 +8125,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "f3_room_1790523167761",
-          "name": "Men Toilet",
+          "name": "Men's Toilet",
           "code": "WC",
           "floor": "third",
           "floorIdx": 3,
@@ -8139,7 +8139,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "f3_room_1790523236934",
-          "name": "Ladies Toilet",
+          "name": "Ladies' Toilet",
           "code": "WC",
           "floor": "third",
           "floorIdx": 3,
@@ -8847,8 +8847,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "room_1790578100156",
-      "name": "Ladies Toilet",
-      "code": "R-147",
+      "name": "Ladies' Toilet",
+      "code": "WC",
       "floor": "ground",
       "floorIdx": 0,
       "floorTitle": "Ground Floor",
@@ -8861,8 +8861,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "room_1790578145285",
-      "name": "Ldies Toilet",
-      "code": "R-148",
+      "name": "Ladies' Toilet",
+      "code": "WC",
       "floor": "ground",
       "floorIdx": 0,
       "floorTitle": "Ground Floor",
@@ -8875,8 +8875,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "room_1790578197842",
-      "name": "Ladies Toilet",
-      "code": "R-149",
+      "name": "Ladies' Toilet",
+      "code": "WC",
       "floor": "ground",
       "floorIdx": 0,
       "floorTitle": "Ground Floor",
@@ -8889,8 +8889,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "room_1790578250255",
-      "name": "Mens Toilet",
-      "code": "R-150",
+      "name": "Men's Toilet",
+      "code": "WC",
       "floor": "ground",
       "floorIdx": 0,
       "floorTitle": "Ground Floor",
@@ -8903,8 +8903,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "room_1790578281913",
-      "name": "Mens",
-      "code": "R-151",
+      "name": "Men's Toilet",
+      "code": "WC",
       "floor": "ground",
       "floorIdx": 0,
       "floorTitle": "Ground Floor",
@@ -8917,8 +8917,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "room_1790578307230",
-      "name": "Mens Toilet",
-      "code": "R-152",
+      "name": "Men's Toilet",
+      "code": "WC",
       "floor": "ground",
       "floorIdx": 0,
       "floorTitle": "Ground Floor",
@@ -9686,7 +9686,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     {
       "id": "f1_room_1790500850398",
       "name": "Men's Toilet",
-      "code": "R-154",
+      "code": "WC",
       "floor": "first",
       "floorIdx": 1,
       "floorTitle": "First Floor",
@@ -9700,7 +9700,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     {
       "id": "f1_room_1790500900853",
       "name": "Ladies' Toilet",
-      "code": "R-154",
+      "code": "WC",
       "floor": "first",
       "floorIdx": 1,
       "floorTitle": "First Floor",
@@ -9714,7 +9714,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     {
       "id": "f1_room_1790500984653",
       "name": "Ladies' Toilet",
-      "code": "R-156",
+      "code": "WC",
       "floor": "first",
       "floorIdx": 1,
       "floorTitle": "First Floor",
@@ -9728,7 +9728,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     {
       "id": "f1_room_1790501046808",
       "name": "Men's Toilet",
-      "code": "R-157",
+      "code": "WC",
       "floor": "first",
       "floorIdx": 1,
       "floorTitle": "First Floor",
@@ -9769,7 +9769,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "f1_room_1790521278087",
-      "name": "Ladies Toilet",
+      "name": "Ladies' Toilet",
       "code": "WC",
       "floor": "first",
       "floorIdx": 1,
@@ -9783,7 +9783,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "f1_room_1790521338973",
-      "name": "Mens Toilet",
+      "name": "Men's Toilet",
       "code": "WC",
       "floor": "first",
       "floorIdx": 1,
@@ -10463,7 +10463,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     {
       "id": "f2_room_1790500850398",
       "name": "Men's Toilet",
-      "code": "R-154",
+      "code": "WC",
       "floor": "second",
       "floorIdx": 2,
       "floorTitle": "Second Floor",
@@ -10477,7 +10477,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     {
       "id": "f2_room_1790500900853",
       "name": "Ladies' Toilet",
-      "code": "R-154",
+      "code": "WC",
       "floor": "second",
       "floorIdx": 2,
       "floorTitle": "Second Floor",
@@ -10491,7 +10491,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     {
       "id": "f2_room_1790500984653",
       "name": "Ladies' Toilet",
-      "code": "R-156",
+      "code": "WC",
       "floor": "second",
       "floorIdx": 2,
       "floorTitle": "Second Floor",
@@ -10505,7 +10505,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     {
       "id": "f2_room_1790501046808",
       "name": "Men's Toilet",
-      "code": "R-157",
+      "code": "WC",
       "floor": "second",
       "floorIdx": 2,
       "floorTitle": "Second Floor",
@@ -10560,8 +10560,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "f2_room_1790520116929",
-      "name": "Ladies toilet ",
-      "code": "R-156",
+      "name": "Ladies' Toilet",
+      "code": "WC",
       "floor": "second",
       "floorIdx": 2,
       "floorTitle": "Second Floor",
@@ -10574,7 +10574,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "f2_room_1790520135835",
-      "name": "Mens Toilet",
+      "name": "Men's Toilet",
       "code": "WC",
       "floor": "second",
       "floorIdx": 2,
@@ -10602,7 +10602,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "f3_room_special_hall",
-      "name": "A-304",
+      "name": "A-308",
       "code": "SPH-102",
       "floor": "third",
       "floorIdx": 3,
@@ -10616,7 +10616,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "f3_room_gad_office",
-      "name": "A-304",
+      "name": "A-307",
       "code": "GAD-103",
       "floor": "third",
       "floorIdx": 3,
@@ -10630,7 +10630,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "f3_room_admin_block_a",
-      "name": "A-301",
+      "name": "A-304",
       "code": "ADM-BLK-A",
       "floor": "third",
       "floorIdx": 3,
@@ -10686,7 +10686,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "f3_room_mini_conf",
-      "name": "A-302",
+      "name": "A-305",
       "code": "CONF-MINI",
       "floor": "third",
       "floorIdx": 3,
@@ -10700,7 +10700,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "f3_room_main_conf",
-      "name": "A-301",
+      "name": "A-303",
       "code": "CONF-MAIN",
       "floor": "third",
       "floorIdx": 3,
@@ -10714,7 +10714,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "f3_room_acharya_hall",
-      "name": "A-301",
+      "name": "A-302",
       "code": "ACH-110",
       "floor": "third",
       "floorIdx": 3,
@@ -10742,7 +10742,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "f3_room_mfg_lab",
-      "name": "S-304",
+      "name": "S-305",
       "code": "LAB-MFG",
       "floor": "third",
       "floorIdx": 3,
@@ -10756,7 +10756,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "f3_room_mat_testing",
-      "name": "S-304",
+      "name": "S-306",
       "code": "LAB-MTL",
       "floor": "third",
       "floorIdx": 3,
@@ -10812,7 +10812,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "f3_room_ladies_infirmary",
-      "name": "S-310",
+      "name": "S-312",
       "code": "INF-118",
       "floor": "third",
       "floorIdx": 3,
@@ -10966,7 +10966,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "f3_room_robotics_lab",
-      "name": "S-313",
+      "name": "S-302",
       "code": "LAB-ROBO",
       "floor": "third",
       "floorIdx": 3,
@@ -10980,7 +10980,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "f3_room_wind_tunnel",
-      "name": "S-313",
+      "name": "S-314",
       "code": "LAB-WIND",
       "floor": "third",
       "floorIdx": 3,
@@ -11351,7 +11351,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "f3_room_1790523167761",
-      "name": "Men Toilet",
+      "name": "Men's Toilet",
       "code": "WC",
       "floor": "third",
       "floorIdx": 3,
@@ -11365,7 +11365,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "f3_room_1790523236934",
-      "name": "Ladies Toilet",
+      "name": "Ladies' Toilet",
       "code": "WC",
       "floor": "third",
       "floorIdx": 3,
@@ -13050,8 +13050,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "room_1790578100156",
-      "name": "Ladies Toilet",
-      "code": "R-147",
+      "name": "Ladies' Toilet",
+      "code": "WC",
       "floor": "ground",
       "floorIdx": 0,
       "floorTitle": "Ground Floor",
@@ -13064,8 +13064,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "room_1790578145285",
-      "name": "Ldies Toilet",
-      "code": "R-148",
+      "name": "Ladies' Toilet",
+      "code": "WC",
       "floor": "ground",
       "floorIdx": 0,
       "floorTitle": "Ground Floor",
@@ -13078,8 +13078,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "room_1790578197842",
-      "name": "Ladies Toilet",
-      "code": "R-149",
+      "name": "Ladies' Toilet",
+      "code": "WC",
       "floor": "ground",
       "floorIdx": 0,
       "floorTitle": "Ground Floor",
@@ -13092,8 +13092,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "room_1790578250255",
-      "name": "Mens Toilet",
-      "code": "R-150",
+      "name": "Men's Toilet",
+      "code": "WC",
       "floor": "ground",
       "floorIdx": 0,
       "floorTitle": "Ground Floor",
@@ -13106,8 +13106,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "room_1790578281913",
-      "name": "Mens",
-      "code": "R-151",
+      "name": "Men's Toilet",
+      "code": "WC",
       "floor": "ground",
       "floorIdx": 0,
       "floorTitle": "Ground Floor",
@@ -13120,8 +13120,8 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "room_1790578307230",
-      "name": "Mens Toilet",
-      "code": "R-152",
+      "name": "Men's Toilet",
+      "code": "WC",
       "floor": "ground",
       "floorIdx": 0,
       "floorTitle": "Ground Floor",

@@ -398,6 +398,27 @@ body {
   flex-shrink: 0;
 }
 
+.suggestion-floor-badge.floor-ground {
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-color: rgba(29, 78, 216, 0.25);
+}
+.suggestion-floor-badge.floor-first {
+  background: #e0e7ff;
+  color: #4338ca;
+  border-color: rgba(67, 56, 202, 0.25);
+}
+.suggestion-floor-badge.floor-second {
+  background: #f3e8ff;
+  color: #7e22ce;
+  border-color: rgba(126, 34, 206, 0.25);
+}
+.suggestion-floor-badge.floor-third {
+  background: #fce7f3;
+  color: #be185d;
+  border-color: rgba(190, 24, 93, 0.25);
+}
+
 .classroom-search-feedback {
   font-size: 12px;
   font-weight: 600;
@@ -1537,6 +1558,217 @@ body {
     padding: 8px 12px;
     text-align: center;
   }
+}
+
+/* ── Room Details Popup Message Modal ───────────────────────── */
+.room-details-popup {
+  position: absolute;
+  bottom: 80px;
+  left: 12px;
+  right: 12px;
+  z-index: 55;
+  pointer-events: none;
+  animation: popupSlideUp 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .room-details-popup {
+    left: 20px;
+    right: auto;
+    bottom: 88px;
+    width: 380px;
+    max-width: calc(100vw - 40px);
+    margin: 0;
+  }
+}
+
+@keyframes popupSlideUp {
+  from {
+    transform: translateY(16px) scale(0.97);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.room-popup-card {
+  pointer-events: auto;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16), 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.room-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.room-popup-badge-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.room-popup-icon {
+  font-size: 18px;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--card-bg-subtle);
+  border: 1px solid var(--border-color);
+}
+
+.room-popup-floor-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--card-bg-subtle);
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+}
+
+.room-popup-floor-badge.floor-ground {
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-color: rgba(29, 78, 216, 0.25);
+}
+.room-popup-floor-badge.floor-first {
+  background: #e0e7ff;
+  color: #4338ca;
+  border-color: rgba(67, 56, 202, 0.25);
+}
+.room-popup-floor-badge.floor-second {
+  background: #f3e8ff;
+  color: #7e22ce;
+  border-color: rgba(126, 34, 206, 0.25);
+}
+.room-popup-floor-badge.floor-third {
+  background: #fce7f3;
+  color: #be185d;
+  border-color: rgba(190, 24, 93, 0.25);
+}
+
+.room-popup-category-badge {
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  background: var(--card-bg-subtle);
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+}
+
+.room-popup-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--text-muted);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.room-popup-close-btn:hover {
+  background: var(--card-bg-subtle);
+  color: var(--text-main);
+}
+
+.room-popup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.room-popup-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.room-popup-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+
+.room-popup-code-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--card-bg-subtle);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.room-popup-floor-name {
+  font-weight: 500;
+}
+
+.room-popup-footer {
+  margin-top: 2px;
+}
+
+.room-popup-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  background: var(--btn-primary-bg, #2563eb);
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  padding: 12px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.32);
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.room-popup-nav-btn:hover {
+  background: var(--btn-primary-hover, #1d4ed8);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
+}
+
+.room-popup-nav-btn:active {
+  transform: translateY(0);
 }
 
 /* ── Legacy Selectors (for JS backwards compatibility) ───────── */

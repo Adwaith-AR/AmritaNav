@@ -92,11 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
       e.stopPropagation();
       selectRoom(room);
 
-      // Selecting a room on any floor automatically sets it as navigation destination
-      if (room.id && typeof onRoomClicked === 'function') {
-        onRoomClicked(room.id);
-      } else if (currentFloor === 'ground' && room.id && typeof onGroundRoomClicked === 'function') {
-        onGroundRoomClicked(room.id);
+      if (typeof handleMapRoomClick === 'function') {
+        handleMapRoomClick(room);
       }
     });
 
@@ -105,17 +102,18 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         selectRoom(room);
 
-        if (room.id && typeof onRoomClicked === 'function') {
-          onRoomClicked(room.id);
-        } else if (currentFloor === 'ground' && room.id && typeof onGroundRoomClicked === 'function') {
-          onGroundRoomClicked(room.id);
+        if (typeof handleMapRoomClick === 'function') {
+          handleMapRoomClick(room);
         }
       }
     });
   });
 
-  document.addEventListener('click', () => {
+  document.addEventListener('click', (e) => {
     if (suppressClick) return;
+    if (e && e.target && (e.target.closest('#room-details-popup') || e.target.closest('.selectable-room') || e.target.closest('#classroom-search-container'))) {
+      return;
+    }
     if (selectedRoom) {
       selectedRoom.classList.remove('selected');
       selectedRoom.setAttribute('aria-pressed', 'false');
@@ -124,6 +122,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.selectable-room.search-highlighted').forEach(el => {
       el.classList.remove('search-highlighted');
     });
+    if (typeof hideRoomDetailsPopup === 'function') {
+      hideRoomDetailsPopup();
+    }
   });
 
   document.addEventListener('keydown', (e) => {
@@ -136,6 +137,9 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.selectable-room.search-highlighted').forEach(el => {
         el.classList.remove('search-highlighted');
       });
+      if (typeof hideRoomDetailsPopup === 'function') {
+        hideRoomDetailsPopup();
+      }
     }
   });
 
@@ -1225,19 +1229,51 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!floorObj || !floorObj.rooms) return;
         floorObj.rooms.forEach(r => {
           if (!r.id || seenIds.has(r.id)) return;
-          // Courtyard areas are non-selectable and excluded
           if (r.id.toLowerCase().includes('courtyard') || (r.name && r.name.toLowerCase().includes('courtyard')) || (r.code && r.code.toLowerCase().includes('cyd'))) {
             return;
           }
           seenIds.add(r.id);
+
+          const rName = r.name || r.id;
+          const rCode = r.code || '';
+          const isToilet = /toilet|washroom|restroom|wc/i.test(rName) || /^wc$/i.test(rCode) || r.id.toLowerCase().includes('toilet');
+          const isLab = /lab/i.test(rName) || /lab/i.test(rCode);
+          const isOffice = /office|admin|reception|dept/i.test(rName) || /adm|dir|off/i.test(rCode);
+          const isHall = /hall|seminar|conf/i.test(rName) || /sph|amh|ach|conf|cir/i.test(rCode);
+
+          let category = 'room';
+          let icon = '🎓';
+          let categoryLabel = 'Classroom';
+          if (isToilet) {
+            category = 'toilet';
+            icon = '🚻';
+            categoryLabel = 'Restroom / Washroom';
+          } else if (isLab) {
+            category = 'lab';
+            icon = '🔬';
+            categoryLabel = 'Laboratory';
+          } else if (isOffice) {
+            category = 'office';
+            icon = '🏢';
+            categoryLabel = 'Department Office';
+          } else if (isHall) {
+            category = 'hall';
+            icon = '🏛️';
+            categoryLabel = 'Hall & Seminar';
+          }
+
           roomList.push({
             id: r.id,
-            name: r.name || r.id,
-            code: r.code || '',
+            name: rName,
+            code: rCode,
             floor: fKey,
             floorTitle: floorTitles[fKey] || fKey,
             cx: typeof r.cx === 'number' ? r.cx : 1056,
-            cy: typeof r.cy === 'number' ? r.cy : 650
+            cy: typeof r.cy === 'number' ? r.cy : 650,
+            isToilet,
+            category,
+            icon,
+            categoryLabel
           });
         });
       });
@@ -1255,6 +1291,32 @@ document.addEventListener('DOMContentLoaded', () => {
       const floor = layer ? (layer.dataset.floor || 'ground') : 'ground';
       const name = roomEl.dataset.name || roomEl.getAttribute('aria-label') || id;
       const code = roomEl.dataset.code || '';
+
+      const isToilet = /toilet|washroom|restroom|wc/i.test(name) || /^wc$/i.test(code) || id.toLowerCase().includes('toilet');
+      const isLab = /lab/i.test(name) || /lab/i.test(code);
+      const isOffice = /office|admin|reception|dept/i.test(name) || /adm|dir|off/i.test(code);
+      const isHall = /hall|seminar|conf/i.test(name) || /sph|amh|ach|conf|cir/i.test(code);
+
+      let category = 'room';
+      let icon = '🎓';
+      let categoryLabel = 'Classroom';
+      if (isToilet) {
+        category = 'toilet';
+        icon = '🚻';
+        categoryLabel = 'Restroom / Washroom';
+      } else if (isLab) {
+        category = 'lab';
+        icon = '🔬';
+        categoryLabel = 'Laboratory';
+      } else if (isOffice) {
+        category = 'office';
+        icon = '🏢';
+        categoryLabel = 'Department Office';
+      } else if (isHall) {
+        category = 'hall';
+        icon = '🏛️';
+        categoryLabel = 'Hall & Seminar';
+      }
 
       let cx = 1056;
       let cy = 650;
@@ -1281,7 +1343,11 @@ document.addEventListener('DOMContentLoaded', () => {
         floor,
         floorTitle: floorTitles[floor] || floor,
         cx,
-        cy
+        cy,
+        isToilet,
+        category,
+        icon,
+        categoryLabel
       });
     });
 
@@ -1296,15 +1362,65 @@ document.addEventListener('DOMContentLoaded', () => {
     return str.toLowerCase().replace(/[\s\-_—]/g, '');
   }
 
-  // Scoring function:
-  // Exact match: 100
-  // Starts with: 80
-  // Substring in raw text: 60
-  // Substring in normalized text: 40
+  // Detect floor intent from query
+  function parseFloorQuery(q) {
+    const lower = q.toLowerCase();
+    if (/\b(third|3rd)\b|floor\s*3\b/i.test(lower)) return 'third';
+    if (/\b(second|2nd)\b|floor\s*2\b/i.test(lower)) return 'second';
+    if (/\b(first|1st)\b|floor\s*1\b/i.test(lower)) return 'first';
+    if (/\b(ground)\b|floor\s*0\b/i.test(lower)) return 'ground';
+    return null;
+  }
+
+  // Smart Scoring function:
+  // Recognizes floor intent, category synonyms (toilet/washroom/restroom/wc, lab, office),
+  // room codes (e.g. A-301, SPH-102, WC, 306), and names.
   function scoreRoomMatch(room, query) {
     const qRaw = query.trim().toLowerCase();
     const qNorm = normalizeRoomQuery(query);
     if (!qNorm) return 0;
+
+    const targetFloor = parseFloorQuery(query);
+
+    // Strip floor tokens to find subject query
+    const subject = qRaw.replace(/\b(third|3rd|second|2nd|first|1st|ground|floor|\d(st|nd|rd|th))\b/gi, '').trim();
+    const subjectNorm = normalizeRoomQuery(subject);
+
+    // If user searched only a floor (e.g., "third floor", "3rd floor", "third", "3rd", "floor 3"):
+    if (targetFloor && !subjectNorm) {
+      if (room.floor === targetFloor) {
+        if (room.isToilet) return 85;
+        if (room.category === 'lab' || room.category === 'office') return 75;
+        return 65;
+      }
+      return 0;
+    }
+
+    // If user specified a floor and room is on a different floor, exclude it
+    if (targetFloor && room.floor !== targetFloor) {
+      return 0;
+    }
+
+    const testSubject = subject || qRaw;
+    const testNorm = subjectNorm || qNorm;
+
+    // Check toilet / washroom / restroom / bathroom / wc synonyms
+    const isToiletSearch = /\b(toilet|toilets|washroom|washrooms|restroom|restrooms|bathroom|bathrooms|wc|lavatory)\b/i.test(testSubject);
+    if (isToiletSearch && room.isToilet) {
+      let score = 95;
+      if (targetFloor && room.floor === targetFloor) score += 120;
+      else if (room.floor === currentFloor) score += 35;
+      return score;
+    }
+
+    // Check lab synonym
+    const isLabSearch = /\b(lab|labs|laboratory|laboratories)\b/i.test(testSubject);
+    if (isLabSearch && (room.category === 'lab' || (room.name && /lab/i.test(room.name)))) {
+      let score = 90;
+      if (targetFloor && room.floor === targetFloor) score += 120;
+      else if (room.floor === currentFloor) score += 25;
+      return score;
+    }
 
     const nameRaw = (room.name || '').toLowerCase();
     const codeRaw = (room.code || '').toLowerCase();
@@ -1314,12 +1430,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const codeNorm = normalizeRoomQuery(room.code);
     const idNorm = normalizeRoomQuery(room.id);
 
-    if (codeNorm === qNorm || nameNorm === qNorm) return 100;
-    if (codeNorm.startsWith(qNorm) || nameNorm.startsWith(qNorm)) return 80;
-    if (nameRaw.includes(qRaw) || codeRaw.includes(qRaw) || idRaw.includes(qRaw)) return 60;
-    if (nameNorm.includes(qNorm) || codeNorm.includes(qNorm) || idNorm.includes(qNorm)) return 40;
+    let score = 0;
 
-    return 0;
+    // Room code exact & prefix matches have highest priority
+    if (codeNorm === testNorm || nameNorm === testNorm) {
+      score = 120;
+    } else if (codeNorm.startsWith(testNorm) || nameNorm.startsWith(testNorm)) {
+      score = 95;
+    } else if (codeRaw.includes(testSubject) || nameRaw.includes(testSubject) || idRaw.includes(testSubject)) {
+      score = 75;
+    } else if (codeNorm.includes(testNorm) || nameNorm.includes(testNorm) || idNorm.includes(testNorm)) {
+      score = 55;
+    }
+
+    if (score > 0) {
+      if (targetFloor && room.floor === targetFloor) {
+        score += 80;
+      } else if (room.floor === currentFloor) {
+        score += 20;
+      }
+    }
+
+    return score;
   }
 
   function findRoomMatches(query) {
@@ -1343,7 +1475,8 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const maxItems = 8;
+    // Increased capacity to ensure all matching rooms/toilets across all 4 floors are visible
+    const maxItems = 28;
     const displayed = matches.slice(0, maxItems);
 
     displayed.forEach((room, idx) => {
@@ -1352,13 +1485,20 @@ document.addEventListener('DOMContentLoaded', () => {
       item.setAttribute('role', 'option');
       item.setAttribute('data-index', idx);
 
+      const iconSpan = document.createElement('span');
+      iconSpan.className = 'suggestion-icon';
+      iconSpan.textContent = room.icon || '📍';
+      iconSpan.style.fontSize = '16px';
+      iconSpan.style.flexShrink = '0';
+      item.appendChild(iconSpan);
+
       const infoDiv = document.createElement('div');
       infoDiv.className = 'suggestion-room-info';
+      infoDiv.style.flex = '1';
 
       const nameSpan = document.createElement('span');
       nameSpan.className = 'suggestion-room-name';
       nameSpan.textContent = room.name;
-
       infoDiv.appendChild(nameSpan);
 
       if (room.code && room.code !== room.name) {
@@ -1369,7 +1509,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const badge = document.createElement('span');
-      badge.className = 'suggestion-floor-badge';
+      badge.className = `suggestion-floor-badge floor-${room.floor}`;
       badge.textContent = room.floorTitle;
 
       item.appendChild(infoDiv);
@@ -1378,7 +1518,7 @@ document.addEventListener('DOMContentLoaded', () => {
       item.addEventListener('click', (e) => {
         e.stopPropagation();
         searchInput.value = room.name;
-        locateClassroom(room);
+        selectAndPreviewRoom(room);
       });
 
       searchSuggestions.appendChild(item);
@@ -1387,7 +1527,68 @@ document.addEventListener('DOMContentLoaded', () => {
     searchSuggestions.style.display = 'block';
   }
 
-  function locateClassroom(room) {
+  // ── Room Details Popup Manager ────────────────────────────────
+  let currentPopupRoom = null;
+
+  function showRoomDetailsPopup(room) {
+    if (!room) return;
+    currentPopupRoom = room;
+
+    const popup = document.getElementById('room-details-popup');
+    if (!popup) return;
+
+    const iconEl = document.getElementById('room-popup-icon');
+    const floorBadgeEl = document.getElementById('room-popup-floor-badge');
+    const categoryBadgeEl = document.getElementById('room-popup-category-badge');
+    const titleEl = document.getElementById('room-popup-title');
+    const codeBadgeEl = document.getElementById('room-popup-code-badge');
+    const floorNameEl = document.getElementById('room-popup-floor-name');
+
+    if (iconEl) iconEl.textContent = room.icon || '📍';
+    if (floorBadgeEl) {
+      floorBadgeEl.textContent = room.floorTitle || room.floor;
+      floorBadgeEl.className = `room-popup-floor-badge floor-${room.floor}`;
+    }
+    if (categoryBadgeEl) {
+      categoryBadgeEl.textContent = room.categoryLabel || 'Classroom';
+    }
+    if (titleEl) {
+      titleEl.textContent = room.name;
+    }
+    if (codeBadgeEl) {
+      if (room.code && room.code !== room.name) {
+        codeBadgeEl.textContent = `Code: ${room.code}`;
+        codeBadgeEl.style.display = 'inline-block';
+      } else {
+        codeBadgeEl.style.display = 'none';
+      }
+    }
+    if (floorNameEl) {
+      floorNameEl.textContent = `${room.floorTitle} • Amrita Campus`;
+    }
+
+    popup.style.display = 'block';
+  }
+
+  function hideRoomDetailsPopup() {
+    const popup = document.getElementById('room-details-popup');
+    if (popup) {
+      popup.style.display = 'none';
+    }
+    currentPopupRoom = null;
+  }
+
+  // Global helper for map room clicks
+  function handleMapRoomClick(roomEl) {
+    if (!roomEl) return;
+    const found = searchableRooms.find(r => r.id === roomEl.id);
+    if (found) {
+      showRoomDetailsPopup(found);
+    }
+  }
+
+  // Preview searched room on map WITHOUT starting navigation immediately
+  function selectAndPreviewRoom(room) {
     if (!room) return;
 
     // 1. Hide initial floor prompt if active & ensure main-content is visible
@@ -1407,39 +1608,37 @@ document.addEventListener('DOMContentLoaded', () => {
       searchSuggestions.style.display = 'none';
     }
 
-    // 3. Switch floor if classroom is on another floor
+    // 3. Switch floor if room is on another floor
     if (currentFloor !== room.floor) {
       switchFloor(room.floor);
     }
 
-    // 4. Highlight the classroom element
+    // 4. Highlight the room element on map
     const roomEl = document.getElementById(room.id);
     if (roomEl) {
-      // Remove any previous search pulse highlights
       document.querySelectorAll('.selectable-room.search-highlighted').forEach(el => {
         el.classList.remove('search-highlighted');
       });
 
-      // Select the room
       if (selectedRoom !== roomEl) {
         selectRoom(roomEl);
       }
       roomEl.classList.add('search-highlighted');
-
-      // Set destination in navigation system if applicable
-      if (typeof onRoomClicked === 'function') {
-        onRoomClicked(roomEl.id);
-      } else if (currentFloor === 'ground' && typeof onGroundRoomClicked === 'function') {
-        onGroundRoomClicked(roomEl.id);
-      }
     }
 
-    // 5. Center and zoom ONLY the map on the searched classroom
+    // 5. Center and zoom map on the searched room
     requestAnimationFrame(() => {
       if (typeof focusOnCoordinates === 'function') {
         focusOnCoordinates(room.cx, room.cy, 2.4, true);
       }
     });
+
+    // 6. Show room details popup card with "Start Navigation" button underneath
+    showRoomDetailsPopup(room);
+  }
+
+  function locateClassroom(room) {
+    selectAndPreviewRoom(room);
   }
 
   function performSearch() {
@@ -1452,18 +1651,52 @@ document.addEventListener('DOMContentLoaded', () => {
     if (matches.length > 0) {
       const bestMatch = matches[0];
       searchInput.value = bestMatch.name;
-      locateClassroom(bestMatch);
+      selectAndPreviewRoom(bestMatch);
     } else {
-      // Invalid search: Show "Classroom not found."
-      // Do NOT change map or floor!
       if (searchFeedback) {
-        searchFeedback.textContent = 'Classroom not found.';
+        searchFeedback.textContent = 'Room not found.';
         searchFeedback.style.display = 'block';
       }
       if (searchSuggestions) {
         searchSuggestions.style.display = 'none';
       }
     }
+  }
+
+  // ── Popup Action Buttons (Start Navigation & Close) ───────────
+  const roomPopupCloseBtn = document.getElementById('room-popup-close-btn');
+  const roomPopupNavBtn = document.getElementById('room-popup-nav-btn');
+
+  if (roomPopupCloseBtn) {
+    roomPopupCloseBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hideRoomDetailsPopup();
+      document.querySelectorAll('.selectable-room.search-highlighted').forEach(el => {
+        el.classList.remove('search-highlighted');
+      });
+      if (selectedRoom) {
+        selectedRoom.classList.remove('selected');
+        selectedRoom.setAttribute('aria-pressed', 'false');
+        selectedRoom = null;
+      }
+    });
+  }
+
+  if (roomPopupNavBtn) {
+    roomPopupNavBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!currentPopupRoom) return;
+      const targetRoom = currentPopupRoom;
+      hideRoomDetailsPopup();
+
+      if (navDestSelect) {
+        navDestSelect.value = targetRoom.id;
+      }
+      if (groundNavBar) {
+        groundNavBar.style.display = 'flex';
+      }
+      generateCampusRoute();
+    });
   }
 
   if (searchInput) {
@@ -1535,6 +1768,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.selectable-room.search-highlighted').forEach(el => {
         el.classList.remove('search-highlighted');
       });
+      hideRoomDetailsPopup();
       searchInput.focus();
     });
   }

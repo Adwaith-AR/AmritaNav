@@ -57,22 +57,22 @@
   <!-- Vector Room Shapes -->
   <g id="rooms" class="layer-rooms">
     <rect id="room_nanosciences" class="room-wall" x="730" y="197" width="113" height="326" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-306" data-code="ACN" transform="rotate(353 786.5 360)"/>
-    <rect id="room_special_hall" class="room-wall" x="300" y="580" width="165" height="94" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="A-304" data-code="SPH-102" transform="rotate(354 382.5 627)"/>
-    <rect id="room_gad_office" class="room-wall" x="378" y="671" width="75" height="62" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="A-304" data-code="GAD-103" transform="rotate(354 415.5 702)"/>
-    <rect id="room_admin_block_a" class="room-wall" x="297" y="738" width="174" height="189" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="A-301" data-code="ADM-BLK-A" transform="rotate(353 384 832.5)"/>
+    <rect id="room_special_hall" class="room-wall" x="300" y="580" width="165" height="94" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="A-308" data-code="SPH-102" transform="rotate(354 382.5 627)"/>
+    <rect id="room_gad_office" class="room-wall" x="378" y="671" width="75" height="62" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="A-307" data-code="GAD-103" transform="rotate(354 415.5 702)"/>
+    <rect id="room_admin_block_a" class="room-wall" x="297" y="738" width="174" height="189" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="A-304" data-code="ADM-BLK-A" transform="rotate(353 384 832.5)"/>
     <rect id="room_admission_office" class="room-wall" x="618" y="617" width="100" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-301" data-code="ADM-105" transform="rotate(354 668 661.5)"/>
     <rect id="room_cir_seminar" class="room-wall" x="811" y="594" width="101" height="89" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="N-303" data-code="CIR-106" transform="rotate(353 861.5 638.5)"/>
     <rect id="room_guest_room" class="room-wall" x="652" y="895" width="97" height="85" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="S-301" data-code="GST-107" transform="rotate(354 700.5 937.5)"/>
-    <rect id="room_mini_conf" class="room-wall" x="407" y="924" width="73" height="60" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="A-302" data-code="CONF-MINI" transform="rotate(354 443.5 954)"/>
-    <rect id="room_main_conf" class="room-wall" x="353" y="986" width="161" height="91" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="A-301" data-code="CONF-MAIN" transform="rotate(354 433.5 1031.5)"/>
-    <rect id="room_acharya_hall" class="room-wall" x="459" y="1101" width="295" height="112" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="A-301" data-code="ACH-110" transform="rotate(354 606.5 1157)"/>
+    <rect id="room_mini_conf" class="room-wall" x="407" y="924" width="73" height="60" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="A-305" data-code="CONF-MINI" transform="rotate(354 443.5 954)"/>
+    <rect id="room_main_conf" class="room-wall" x="353" y="986" width="161" height="91" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="A-303" data-code="CONF-MAIN" transform="rotate(354 433.5 1031.5)"/>
+    <rect id="room_acharya_hall" class="room-wall" x="459" y="1101" width="295" height="112" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="A-302" data-code="ACH-110" transform="rotate(354 606.5 1157)"/>
     <rect id="room_stationery" class="room-wall" x="808" y="1082" width="38" height="113" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="A-301" data-code="STN-111" transform="rotate(354 827 1138.5)"/>
-    <rect id="room_mfg_lab" class="room-wall" x="845" y="1070" width="226" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-304" data-code="LAB-MFG" transform="rotate(354 958 1125.5)"/>
-    <rect id="room_mat_testing" class="room-wall" x="1070" y="1055" width="65" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-304" data-code="LAB-MTL" transform="rotate(354 1102.5 1110.5)"/>
+    <rect id="room_mfg_lab" class="room-wall" x="845" y="1070" width="226" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-305" data-code="LAB-MFG" transform="rotate(354 958 1125.5)"/>
+    <rect id="room_mat_testing" class="room-wall" x="1070" y="1055" width="65" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-306" data-code="LAB-MTL" transform="rotate(354 1102.5 1110.5)"/>
     <rect id="room_wireless_ctr" class="room-wall" x="960" y="440" width="111" height="66" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-317" data-code="ACWNA" transform="rotate(354 1015.5 473)"/>
     <rect id="room_north_wing" class="room-wall" x="860" y="180" width="60" height="292" fill="#f1f5f9" fill-opacity="0.85" stroke="#475569" stroke-width="2" data-name="North Corridor Wing" data-code="CORR-N" transform="rotate(353 890 326)"/>
     <rect id="room_director_dean" class="room-wall" x="1135" y="840" width="99" height="90" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-309" data-code="DIR-OFFICE" transform="rotate(354 1184.5 885)"/>
-    <rect id="room_ladies_infirmary" class="room-wall" x="1330" y="820" width="30" height="92" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="S-310" data-code="INF-118" transform="rotate(354 1345 866)"/>
+    <rect id="room_ladies_infirmary" class="room-wall" x="1330" y="820" width="30" height="92" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="S-312" data-code="INF-118" transform="rotate(354 1345 866)"/>
     <rect id="room_metallurgy" class="room-wall" x="1205" y="332" width="69" height="109" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-319" data-code="LAB-MET" transform="rotate(353 1239.5 386.5)"/>
     <rect id="room_fluid_mech" class="room-wall" x="1276" y="319" width="127" height="110" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-320" data-code="LAB-FML" transform="rotate(353 1339.5 374)"/>
     <rect id="room_cae_cell" class="room-wall" x="1403" y="308" width="62" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-323" data-code="CAE-121" transform="rotate(352 1434 363.5)"/>
@@ -84,8 +84,8 @@
     <rect id="room_college_admin" class="room-wall" x="1489" y="800" width="131" height="88" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-315" data-code="CADM-127" transform="rotate(353 1554.5 844)"/>
     <rect id="room_computer_lab" class="room-wall" x="1649" y="778" width="229" height="107" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-318" data-code="LAB-CS" transform="rotate(353 1763.5 831.5)"/>
     <rect id="room_mech_workshop" class="room-wall" x="1287" y="1020" width="128" height="109" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-311" data-code="LAB-MECH" transform="rotate(354 1351 1074.5)"/>
-    <rect id="room_robotics_lab" class="room-wall" x="1414" y="1009" width="69" height="108" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-313" data-code="LAB-ROBO" transform="rotate(354 1448.5 1063)"/>
-    <rect id="room_wind_tunnel" class="room-wall" x="1483" y="998" width="129" height="109" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-313" data-code="LAB-WIND" transform="rotate(354 1547.5 1052.5)"/>
+    <rect id="room_robotics_lab" class="room-wall" x="1414" y="1009" width="69" height="108" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-302" data-code="LAB-ROBO" transform="rotate(354 1448.5 1063)"/>
+    <rect id="room_wind_tunnel" class="room-wall" x="1483" y="998" width="129" height="109" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-314" data-code="LAB-WIND" transform="rotate(354 1547.5 1052.5)"/>
     <rect id="room_1790266501061" class="room-wall" x="952" y="337" width="111" height="103" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-310" data-code="LAB-FLUID" transform="rotate(354 1007.5 388.5)"/>
     <rect id="room_1790266683270" class="room-wall" x="935" y="170" width="112" height="168" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-309" data-code="R-136" transform="rotate(354 991 254)"/>
     <rect id="room_1790267011208" class="room-wall" x="1233" y="829" width="96" height="91" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-313" data-code="Arts and Science" transform="rotate(354 1281 874.5)"/>
@@ -122,15 +122,15 @@
       <text class="room-code" y="9">ACN</text>
     </g>
     <g transform="translate(383, 627)">
-      <text class="room-label" y="-7">A-304</text>
+      <text class="room-label" y="-7">A-308</text>
       <text class="room-code" y="9">SPH-102</text>
     </g>
     <g transform="translate(416, 702)">
-      <text class="room-label" y="-7">A-304</text>
+      <text class="room-label" y="-7">A-307</text>
       <text class="room-code" y="9">GAD-103</text>
     </g>
     <g transform="translate(384, 833)">
-      <text class="room-label" y="-7">A-301</text>
+      <text class="room-label" y="-7">A-304</text>
       <text class="room-code" y="9">ADM-BLK-A</text>
     </g>
     <g transform="translate(668, 662)">
@@ -146,15 +146,15 @@
       <text class="room-code" y="9">GST-107</text>
     </g>
     <g transform="translate(444, 954)">
-      <text class="room-label" y="-7">A-302</text>
+      <text class="room-label" y="-7">A-305</text>
       <text class="room-code" y="9">CONF-MINI</text>
     </g>
     <g transform="translate(434, 1032)">
-      <text class="room-label" y="-7">A-301</text>
+      <text class="room-label" y="-7">A-303</text>
       <text class="room-code" y="9">CONF-MAIN</text>
     </g>
     <g transform="translate(607, 1157)">
-      <text class="room-label" y="-7">A-301</text>
+      <text class="room-label" y="-7">A-302</text>
       <text class="room-code" y="9">ACH-110</text>
     </g>
     <g transform="translate(827, 1139)">
@@ -162,11 +162,11 @@
       <text class="room-code" y="9">STN-111</text>
     </g>
     <g transform="translate(958, 1126)">
-      <text class="room-label" y="-7">S-304</text>
+      <text class="room-label" y="-7">S-305</text>
       <text class="room-code" y="9">LAB-MFG</text>
     </g>
     <g transform="translate(1103, 1111)">
-      <text class="room-label" y="-7">S-304</text>
+      <text class="room-label" y="-7">S-306</text>
       <text class="room-code" y="9">LAB-MTL</text>
     </g>
     <g transform="translate(1016, 473)">
@@ -182,7 +182,7 @@
       <text class="room-code" y="9">DIR-OFFICE</text>
     </g>
     <g transform="translate(1345, 866)">
-      <text class="room-label" y="-7">S-310</text>
+      <text class="room-label" y="-7">S-312</text>
       <text class="room-code" y="9">INF-118</text>
     </g>
     <g transform="translate(1240, 387)">
@@ -230,11 +230,11 @@
       <text class="room-code" y="9">LAB-MECH</text>
     </g>
     <g transform="translate(1449, 1063)">
-      <text class="room-label" y="-7">S-313</text>
+      <text class="room-label" y="-7">S-302</text>
       <text class="room-code" y="9">LAB-ROBO</text>
     </g>
     <g transform="translate(1548, 1053)">
-      <text class="room-label" y="-7">S-313</text>
+      <text class="room-label" y="-7">S-314</text>
       <text class="room-code" y="9">LAB-WIND</text>
     </g>
     <g transform="translate(1008, 389)">
