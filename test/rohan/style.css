@@ -1,0 +1,994 @@
+/* =========================================================
+   AMRITANAV
+   MAIN WEBSITE STYLING
+   ========================================================= */
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f8f5f0;
+    color: #252525;
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.navbar {
+    height: 82px;
+    padding: 0 7%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #ffffff;
+    border-bottom: 1px solid #e6e1dc;
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+
+/* LOGO */
+
+.logo {
+    display: flex;
+    flex-direction: column;
+
+    color: #8f123f;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.logo span {
+    font-size: 25px;
+}
+
+.logo small {
+    font-size: 8px;
+    letter-spacing: 2px;
+    margin-top: 3px;
+    color: #555;
+}
+
+
+/* NAVIGATION */
+
+.navbar nav {
+    display: flex;
+    gap: 35px;
+}
+
+.navbar nav a {
+    text-decoration: none;
+    color: #333;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    transition: 0.25s;
+}
+
+.navbar nav a:hover {
+    color: #9d0044;
+}
+
+
+/* LOGIN BUTTON */
+
+.login-btn {
+    border: none;
+
+    background: #9d0044;
+    color: white;
+
+    padding: 12px 22px;
+    border-radius: 6px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+.login-btn:hover {
+    background: #760032;
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   NAVIGATOR
+   ========================================================= */
+
+.navigator {
+    padding: 80px 7% 70px;
+
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(157, 0, 68, 0.07),
+            transparent 30%
+        ),
+        #f8f5f0;
+}
+
+
+/* HEADING */
+
+.navigator-heading {
+    max-width: 800px;
+    margin-bottom: 40px;
+}
+
+.small-title {
+    color: #9d0044;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 15px;
+}
+
+.navigator-heading h1 {
+    font-size: clamp(42px, 6vw, 75px);
+
+    line-height: 0.98;
+    letter-spacing: -3px;
+
+    margin-bottom: 25px;
+
+    color: #222;
+}
+
+.navigator-heading h1 span {
+    color: #9d0044;
+}
+
+.navigator-heading > p:last-child {
+    max-width: 600px;
+
+    font-size: 17px;
+    line-height: 1.7;
+
+    color: #666;
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.search-area {
+    display: flex;
+
+    max-width: 750px;
+
+    margin-bottom: 25px;
+}
+
+.search-area input {
+    flex: 1;
+
+    height: 56px;
+
+    border: 1px solid #d5d0cb;
+    border-right: none;
+
+    border-radius: 8px 0 0 8px;
+
+    padding: 0 20px;
+
+    font-size: 16px;
+
+    outline: none;
+
+    background: white;
+}
+
+.search-area input:focus {
+    border-color: #9d0044;
+}
+
+.search-area button {
+    width: 120px;
+
+    border: none;
+    border-radius: 0 8px 8px 0;
+
+    background: #9d0044;
+    color: white;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.search-area button:hover {
+    background: #760032;
+}
+
+
+/* =========================================================
+   FLOOR BUTTONS
+   ========================================================= */
+
+.floor-buttons {
+    display: flex;
+    gap: 10px;
+
+    margin-bottom: 25px;
+}
+
+.floor-btn {
+    padding: 12px 22px;
+
+    border: 1px solid #d4cec8;
+
+    background: white;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #555;
+
+    transition: 0.2s;
+}
+
+.floor-btn:hover {
+    border-color: #9d0044;
+    color: #9d0044;
+}
+
+.floor-btn.active {
+    background: #9d0044;
+    border-color: #9d0044;
+
+    color: white;
+}
+
+
+/* =========================================================
+   MAP CONTAINER
+   ========================================================= */
+
+.map-container {
+    background: white;
+
+    border: 1px solid #e1ddd8;
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================================================
+   MAP HEADER
+   ========================================================= */
+
+.map-title {
+    min-height: 75px;
+
+    padding: 18px 25px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-bottom: 1px solid #e8e4df;
+}
+
+.map-title h2 {
+    font-size: 22px;
+
+    color: #292929;
+
+    margin-bottom: 4px;
+}
+
+.map-title p {
+    font-size: 13px;
+    color: #888;
+}
+
+.map-info {
+    font-size: 13px;
+    color: #777;
+}
+
+.map-info span {
+    color: #9d0044;
+
+    font-size: 20px;
+
+    margin-right: 5px;
+}
+
+
+/* =========================================================
+   MAP VIEW
+   ========================================================= */
+
+.map-view {
+    width: 100%;
+    height: 700px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background: #eeeae5;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding: 20px;
+}
+
+
+/* =========================================================
+   FLOOR MAP WRAPPER
+   ========================================================= */
+
+.map-wrapper {
+    position: relative;
+
+    display: none;
+
+    width: 100%;
+    max-width: 850px;
+
+    margin: 0 auto;
+
+    flex-shrink: 0;
+}
+
+.map-wrapper.active-wrapper {
+    display: block;
+}
+
+
+/* =========================================================
+   FLOOR MAP IMAGE
+   ========================================================= */
+
+.floor-map {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    margin: 0 auto;
+
+    background: white;
+
+    box-shadow:
+        0 5px 25px rgba(0, 0, 0, 0.12);
+}
+
+
+/* =========================================================
+   ROOM MARKERS - COMMON
+   ========================================================= */
+
+.room-marker {
+    position: absolute;
+
+    background: transparent;
+    border: 3px solid transparent;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    z-index: 10;
+
+    transition:
+        background 0.2s,
+        transform 0.2s,
+        box-shadow 0.2s,
+        border-color 0.2s;
+}
+
+.room-marker:hover {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   GROUND FLOOR ROOM MARKERS
+   ========================================================= */
+
+/* ---------- NORTH WING ---------- */
+
+/* N-020 - Prayer Hall */
+.room-marker-N020 {
+    left: 42%;
+    top: 15.5%;
+
+    width: 6.1%;
+    height: 2.7%;
+}
+
+/* N-019 - Electrical Machines Lab */
+.room-marker-N019 {
+    left: 42.07%;
+    top: 18.05%;
+
+    width: 6%;
+    height: 9%;
+}
+
+/* N-017 - MC Dynamics Lab */
+.room-marker-N017 {
+    left: 32.3%;
+    top: 28.75%;
+
+
+    width: 6.2%;
+    height: 2.73%;
+}
+
+/* N-016 - C&I Lab */
+.room-marker-N016 {
+    left: 32.3%;
+    top: 31%;
+
+
+    width: 6.2%;
+    height: 2.73%;
+}
+
+/* N-015 - Fluid Mechanics Lab */
+.room-marker-N015 {
+    left: 32.3%;
+    top: 32.9%;
+
+
+    width: 6.2%;
+    height: 5%;}
+
+/* N-014 - Metallurgy Lab */
+.room-marker-N014 {
+    left: 32.3%;
+    top: 37.37%;
+
+
+    width: 6.2%;
+    height: 2.73%;
+}
+
+/* N-013 - Principal */
+.room-marker-N013 {
+    left: 42.6%;
+    top: 34.3%;
+
+
+    width: 5%;
+    height: 3.4%;
+}
+
+/* N-012 - HR Dept */
+.room-marker-N012 {
+    left: 42.6%;
+    top: 37.8%;
+
+
+    width: 5%;
+    height: 3.4%;
+}
+
+/* N-011 - Students Affairs */
+.room-marker-N011 {
+   left: 42.6%;
+    top: 41.1%;
+
+
+    width: 5%;
+    height: 3.5%;
+}
+
+/* N-010 - Staff Room */
+.room-marker-N010 {
+    left: 42.6%;
+    top: 45.4%;
+    
+    width: 5.1%;
+    height: 4.5%;
+}
+
+/* N-009 - Amrita Center */
+.room-marker-N009 {
+    left: 36.15%;
+    top: 44.5%;
+    
+    width: 3.4%;
+    height: 4.3%;
+}
+
+/* N-008 - M Tech */
+.room-marker-N008 {
+    left: 31.5%;
+    top: 44.5%;
+    
+    width: 4.8%;
+    height: 4.3%;
+}
+
+/* N-007 - Thermal Engineering Lab */
+.room-marker-N007 {
+    left: 0%;
+    top: 0%;
+    width: 5%;
+    height: 5%;
+}
+
+/* N-005-006 - Nano Sciences Research Lab */
+.room-marker-N005006 {
+    left: 0%;
+    top: 0%;
+    width: 5%;
+    height: 5%;
+}
+
+/* N-004 - Amrita Center for Nano Sciences */
+.room-marker-N004 {
+    left: 0%;
+    top: 0%;
+    width: 5%;
+    height: 5%;
+}
+
+/* N-003 - CR Seminar Room */
+.room-marker-N003 {
+    left: 0%;
+    top: 0%;
+    width: 5%;
+    height: 5%;
+}
+
+/* N-002 - Mechanical Professors Room */
+.room-marker-N002 {
+    left: 0%;
+    top: 0%;
+    width: 5%;
+    height: 5%;
+}
+
+/* N-001 - Admission Office */
+.room-marker-N001 {
+    left: 0%;
+    top: 0%;
+    width: 5%;
+    height: 5%;
+}
+
+
+/* ---------- SOUTH WING ---------- */
+
+/* S-014 - Nanotech Lab */
+.room-marker-S014 {
+    left: 56.8%;
+    top: 15.4%;
+
+    width: 6.2%;
+    height: 3.7%;}
+
+/* S-013 - Computer Lab */
+.room-marker-S013 {
+    left: 56.5%;
+    top: 19%;
+
+    width: 6%;
+    height: 8%;
+}
+
+/* S-012 - College Admin Office */
+.room-marker-S012 {
+    left: 56.8%;
+    top: 27.8%;
+
+    width: 5.1%;
+    height: 4.9%;
+}
+
+/* S-011 - CNC Robotics & Automation Lab */
+.room-marker-S011 {
+    left: 66%;
+    top: 32.9%;
+
+    width: 6.2%;
+    height: 3%;
+}
+
+/* S-010 - Conference Room */
+.room-marker-S010 {
+    left: 56.8%;
+    top: 34.04%;
+
+    width: 5.1%;
+    height: 2.6%;
+}
+
+/* S-009 */
+.room-marker-S009 {
+    left: 0%;
+    top: 0%;
+    width: 5%;
+    height: 5%;
+}
+
+/* S-008 - Principal Arts & Science */
+.room-marker-S008 {
+    left: 56.3%;
+    top: 37.89%;
+
+    width: 5.1%;
+    height: 3.2%;
+}
+
+/* S-007 - Director / Associate Dean */
+.room-marker-S007 {
+    left: 56.8%;
+    top: 41%;
+
+    width: 5.1%;
+    height: 3.8%;
+}
+
+/* S-006 - Staff Room */
+.room-marker-S006 {
+    left: 56.6%;
+    top: 45.4%;
+
+    width: 5.1%;
+    height: 4.5%;
+}
+
+/* S-005 - Material Testing Lab */
+.room-marker-S005 {
+    left: 66.2%;
+    top: 45.2%;
+
+    width: 6.2%;
+    height: 2.7%;
+}
+
+/* S-004 - Manufacturing Lab */
+.room-marker-S004 {
+    left: 0%;
+    top: 0%;
+    width: 5%;
+    height: 5%;
+}
+
+/* S-004A - Manufacturing Lab */
+.room-marker-S004A {
+    left: 0%;
+    top: 0%;
+    width: 5%;
+    height: 5%;
+}
+
+/* S-003 - Guest Room / Kitchen */
+.room-marker-S003 {
+    left: 0%;
+    top: 0%;
+    width: 5%;
+    height: 5%;
+}
+
+/* S-002 - Amrita Suite */
+.room-marker-S002 {
+    left: 0%;
+    top: 0%;
+    width: 5%;
+    height: 5%;
+}
+
+/* S-001 - Guest Room */
+.room-marker-S001 {
+    left: 0%;
+    top: 0%;
+    width: 5%;
+    height: 5%;
+}
+
+
+/* ---------- OTHER ROOMS ---------- */
+
+/* A-006 - Amriteshwari Hall */
+.room-marker-A006 {
+    left: 0%;
+    top: 0%;
+    width: 5%;
+    height: 5%;
+}
+
+/* A-005 - Special Programs Hall / Meditation Hall */
+.room-marker-A005 {
+    left: 0%;
+    top: 0%;
+    width: 5%;
+    height: 5%;
+}
+
+/* A-004 */
+.room-marker-A004 {
+    left: 0%;
+    top: 0%;
+    width: 5%;
+    height: 5%;
+}
+
+/* A-003 */
+.room-marker-A003 {
+    left: 0%;
+    top: 0%;
+    width: 5%;
+    height: 5%;
+}
+
+/* A-002 - Main Conference Hall */
+.room-marker-A002 {
+    left: 0%;
+    top: 0%;
+    width: 5%;
+    height: 5%;
+}
+
+/* A-001 - Acharya Hall */
+.room-marker-A001 {
+    left: 0%;
+    top: 0%;
+    width: 5%;
+    height: 5%;
+}
+
+
+/* =========================================================
+   SELECTED ROOM
+   ========================================================= */
+
+.room-marker.selected {
+    background: rgba(157, 0, 68, 0.75);
+
+    border: 4px solid #ffcc00;
+
+    box-shadow:
+        0 0 0 6px rgba(157, 0, 68, 0.25),
+        0 0 20px rgba(157, 0, 68, 0.5);
+
+    z-index: 100;
+}
+
+
+/* =========================================================
+   LOCATION RESULT
+   ========================================================= */
+
+.location-result {
+    max-width: 86%;
+
+    margin: 30px auto;
+
+    padding: 25px;
+
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    background: white;
+
+    border: 1px solid #e1ddd8;
+    border-radius: 12px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+.result-icon {
+    font-size: 30px;
+}
+
+.location-result h3 {
+    margin-bottom: 5px;
+
+    color: #292929;
+}
+
+.location-result p {
+    color: #777;
+}
+
+
+/* =========================================================
+   FEATURE SECTION
+   ========================================================= */
+
+.feature-section {
+    padding: 80px 7%;
+    background: #ffffff;
+}
+
+.feature-section h2 {
+    font-size: 45px;
+
+    line-height: 1.05;
+
+    margin-bottom: 45px;
+}
+
+.feature-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+.feature-card {
+    padding: 30px;
+
+    background: #f8f5f0;
+
+    border: 1px solid #e6e1dc;
+
+    border-radius: 12px;
+
+    transition: 0.25s;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.07);
+}
+
+.feature-card span {
+    font-size: 30px;
+}
+
+.feature-card h3 {
+    margin: 15px 0 10px;
+
+    font-size: 20px;
+}
+
+.feature-card p {
+    color: #666;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    padding: 50px 7%;
+
+    background: #252525;
+
+    color: white;
+
+    text-align: center;
+}
+
+.footer-logo {
+    color: #ffffff;
+
+    font-size: 24px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 10px;
+}
+
+footer p {
+    color: #bbb;
+
+    margin-bottom: 10px;
+}
+
+footer .copyright {
+    font-size: 13px;
+
+    color: #777;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .navbar {
+        height: auto;
+
+        padding: 18px 5%;
+
+        flex-wrap: wrap;
+
+        gap: 15px;
+    }
+
+    .navbar nav {
+        order: 3;
+
+        width: 100%;
+
+        justify-content: center;
+
+        gap: 15px;
+
+        flex-wrap: wrap;
+    }
+
+    .navigator {
+        padding: 50px 5%;
+    }
+
+    .map-view {
+        height: 550px;
+
+        padding: 10px;
+    }
+
+    .map-title {
+        padding: 15px;
+
+        align-items: flex-start;
+    }
+
+    .map-info {
+        display: none;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-section h2 {
+        font-size: 36px;
+    }
+
+}

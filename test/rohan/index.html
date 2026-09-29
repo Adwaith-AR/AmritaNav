@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Amritanav | Campus Navigator</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="navbar">
+        <div class="logo">
+            <span>AMRITA</span>
+            <small>VISHWA VIDYAPEETHAM</small>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="#navigator">Campus Navigator</a>
+            <a href="#survival">Survival Kit</a>
+            <a href="#clubs">Clubs</a>
+        </nav>
+
+        <button class="login-btn">Student Portal</button>
+    </header>
+
+
+    <!-- CAMPUS NAVIGATOR -->
+    <section id="navigator" class="navigator">
+
+        <div class="navigator-heading">
+            <p class="small-title">AMRITAPURI CAMPUS</p>
+
+            <h1>
+                Find your classroom.
+                <br>
+                <span>Find your way.</span>
+            </h1>
+
+            <p>
+                Search for classrooms, laboratories, offices and
+                other locations around the Amritapuri campus.
+            </p>
+        </div>
+
+
+        <!-- SEARCH -->
+        <div class="search-area">
+
+            <input
+                type="text"
+                id="roomSearch"
+                placeholder="Search room or location..."
+            >
+
+            <button onclick="searchRoom()">
+                Search
+            </button>
+
+        </div>
+
+
+        <!-- FLOOR BUTTONS -->
+        <div class="floor-buttons">
+
+            <button
+                class="floor-btn active"
+                onclick="showFloor('ground')"
+                id="groundBtn">
+                Ground Floor
+            </button>
+
+            <button
+                class="floor-btn"
+                onclick="showFloor('second')"
+                id="secondBtn">
+                Second Floor
+            </button>
+
+        </div>
+
+
+        <!-- MAP -->
+        <div class="map-container">
+
+            <div class="map-title">
+                <div>
+                    <h2 id="floorTitle">
+                        Ground Floor
+                    </h2>
+
+                    <p>
+                        Amritapuri Campus
+                    </p>
+                </div>
+
+                <div class="map-info">
+                    <span>●</span>
+                    Select a room to view details
+                </div>
+            </div>
+
+
+            <div class="map-view">
+
+    <!-- GROUND FLOOR MAP -->
+    <div class="map-wrapper" id="groundMapWrapper">
+
+        <img
+            src="maps/ground-floor.png"
+            id="groundMap"
+            class="floor-map active-map"
+            alt="Amritapuri Ground Floor Map"
+        >
+
+        <!-- =====================================================
+                GROUND FLOOR ROOM MARKERS
+                ===================================================== -->
+
+       <!-- N-020 -->
+        <button class="room-marker room-marker-N020"
+            id="marker-N020"
+            onclick="selectRoom('N-020')"
+            title="N-020 Prayer Hall"></button>
+
+        <!-- N-019 -->
+        <button class="room-marker room-marker-N019"
+            id="marker-N019"
+            onclick="selectRoom('N-019')"
+            title="N-019 Electrical Machines Lab"></button>
+
+        <!-- N-017 -->
+        <button class="room-marker room-marker-N017"
+            id="marker-N017"
+            onclick="selectRoom('N-017')"
+            title="N-017 MC Dynamics Lab"></button>
+
+        <!-- N-016 -->
+        <button class="room-marker room-marker-N016"
+            id="marker-N016"
+            onclick="selectRoom('N-016')"
+            title="N-016 CAE Lab"></button>
+
+        <!-- N-015 -->
+        <button class="room-marker room-marker-N015"
+            id="marker-N015"
+            onclick="selectRoom('N-015')"
+            title="N-015 Fluid Mechanics Lab"></button>
+
+        <!-- N-014 -->
+        <button class="room-marker room-marker-N014"
+            id="marker-N014"
+            onclick="selectRoom('N-014')"
+            title="N-014 Metallurgy Lab"></button>
+
+        <!-- N-013 -->
+        <button class="room-marker room-marker-N013"
+            id="marker-N013"
+            onclick="selectRoom('N-013')"
+            title="N-013 Principal"></button>
+
+        <!-- N-012 -->
+        <button class="room-marker room-marker-N012"
+            id="marker-N012"
+            onclick="selectRoom('N-012')"
+            title="N-012 HR Department"></button>
+
+        <!-- N-011 -->
+        <button class="room-marker room-marker-N011"
+            id="marker-N011"
+            onclick="selectRoom('N-011')"
+            title="N-011 Students Affairs"></button>
+
+        <!-- N-010 -->
+        <button class="room-marker room-marker-N010"
+            id="marker-N010"
+            onclick="selectRoom('N-010')"
+            title="N-010 Staff Room"></button>
+
+        <!-- N-009 -->
+        <button class="room-marker room-marker-N009"
+            id="marker-N009"
+            onclick="selectRoom('N-009')"
+            title="N-009 Amrita Center"></button>
+
+        <!-- N-008 -->
+        <button class="room-marker room-marker-N008"
+            id="marker-N008"
+            onclick="selectRoom('N-008')"
+            title="N-008 M Tech"></button>
+
+        <!-- N-007 -->
+        <button class="room-marker room-marker-N007"
+            id="marker-N007"
+            onclick="selectRoom('N-007')"
+            title="N-007 Thermal Engineering Lab"></button>
+
+        <!-- N-005-006 -->
+        <button class="room-marker room-marker-N005006"
+            id="marker-N005006"
+            onclick="selectRoom('N-005-006')"
+            title="N-005-006 Nano Sciences Research Lab"></button>
+
+        <!-- N-004 -->
+        <button class="room-marker room-marker-N004"
+            id="marker-N004"
+            onclick="selectRoom('N-004')"
+            title="N-004 Amrita Center"></button>
+
+        <!-- N-003 -->
+        <button class="room-marker room-marker-N003"
+            id="marker-N003"
+            onclick="selectRoom('N-003')"
+            title="N-003 CR Seminar Room"></button>
+
+        <!-- N-002 -->
+        <button class="room-marker room-marker-N002"
+            id="marker-N002"
+            onclick="selectRoom('N-002')"
+            title="N-002 Mechanical Professors Room"></button>
+
+        <!-- N-001 -->
+        <button class="room-marker room-marker-N001"
+            id="marker-N001"
+            onclick="selectRoom('N-001')"
+            title="N-001 Admission Office"></button>
+
+
+                <!-- S-014 -->
+        <button
+            class="room-marker room-marker-S014"
+            id="marker-S014"
+            onclick="selectRoom('S-014')"
+            title="S-014 Nanotech Lab">
+        </button>
+
+        <!-- S-013 -->
+        <button
+            class="room-marker room-marker-S013"
+            id="marker-S013"
+            onclick="selectRoom('S-013')"
+            title="S-013 Computer Lab">
+        </button>    
+
+        <!-- S-012 -->
+        <button class="room-marker room-marker-S012"
+            id="marker-S012"
+            onclick="selectRoom('S-012')"
+            title="S-012 College Admin Office"></button>
+
+        <!-- S-011 -->
+        <button class="room-marker room-marker-S011"
+            id="marker-S011"
+            onclick="selectRoom('S-011')"
+            title="S-011 CNC Robotics & Automation Lab"></button>
+
+        <!-- S-010 -->
+        <button class="room-marker room-marker-S010"
+            id="marker-S010"
+            onclick="selectRoom('S-010')"
+            title="S-010 Conference Room"></button>
+
+        <!-- S-009 -->
+        <button class="room-marker room-marker-S009"
+            id="marker-S009"
+            onclick="selectRoom('S-009')"
+            title="S-009"></button>
+
+        <!-- S-008 -->
+        <button class="room-marker room-marker-S008"
+            id="marker-S008"
+            onclick="selectRoom('S-008')"
+            title="S-008 Principal Arts & Science"></button>
+
+        <!-- S-007 -->
+        <button class="room-marker room-marker-S007"
+            id="marker-S007"
+            onclick="selectRoom('S-007')"
+            title="S-007 Director / Associate Dean"></button>
+
+        <!-- S-006 -->
+        <button class="room-marker room-marker-S006"
+            id="marker-S006"
+            onclick="selectRoom('S-006')"
+            title="S-006 Staff Room"></button>
+
+        <!-- S-005 -->
+        <button class="room-marker room-marker-S005"
+            id="marker-S005"
+            onclick="selectRoom('S-005')"
+            title="S-005 Material Testing Lab"></button>
+
+        <!-- S-004 -->
+        <button class="room-marker room-marker-S004"
+            id="marker-S004"
+            onclick="selectRoom('S-004')"
+            title="S-004 Manufacturing Lab"></button>
+
+        <!-- S-004A -->
+        <button class="room-marker room-marker-S004A"
+            id="marker-S004A"
+            onclick="selectRoom('S-004A')"
+            title="S-004A Manufacturing Lab"></button>
+
+        <!-- S-003 -->
+        <button class="room-marker room-marker-S003"
+            id="marker-S003"
+            onclick="selectRoom('S-003')"
+            title="S-003 Guest Room / Kitchen"></button>
+
+        <!-- S-002 -->
+        <button class="room-marker room-marker-S002"
+            id="marker-S002"
+            onclick="selectRoom('S-002')"
+            title="S-002 Amrita Suite"></button>
+
+        <!-- S-001 -->
+        <button class="room-marker room-marker-S001"
+            id="marker-S001"
+            onclick="selectRoom('S-001')"
+            title="S-001 Guest Room"></button>
+
+    </div>
+
+
+    <!-- SECOND FLOOR MAP -->
+    <div class="map-wrapper" id="secondMapWrapper">
+
+        <img
+            src="maps/second-floor.png"
+            id="secondMap"
+            class="floor-map"
+            alt="Amritapuri Second Floor Map"
+        >
+
+    </div>
+
+</div>
+
+        </div>
+
+    </section>
+
+
+    <!-- LOCATION RESULT -->
+    <section class="location-result" id="locationResult">
+
+        <div class="result-icon">
+            📍
+        </div>
+
+        <div>
+            <h3 id="resultTitle">
+                Search for a location
+            </h3>
+
+            <p id="resultText">
+                Enter a room number or location above.
+            </p>
+        </div>
+
+    </section>
+
+
+    <!-- SURVIVAL KIT -->
+    <section id="survival" class="feature-section">
+
+        <p class="small-title">
+            CAMPUS SURVIVAL KIT
+        </p>
+
+        <h2>
+            Everything you need,
+            <br>
+            in one place.
+        </h2>
+
+        <div class="feature-grid">
+
+            <div class="feature-card">
+                <span>🚨</span>
+                <h3>Emergency</h3>
+                <p>
+                    Important emergency contacts and
+                    campus support numbers.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <span>🍴</span>
+                <h3>Food Spots</h3>
+                <p>
+                    Find affordable food and refreshment
+                    spots around campus.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <span>📚</span>
+                <h3>Study Tips</h3>
+                <p>
+                    Useful resources and tips for
+                    surviving college life.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <span>🎓</span>
+                <h3>Scholarships</h3>
+                <p>
+                    Find scholarship opportunities and
+                    useful application links.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <span>🏥</span>
+                <h3>Medical</h3>
+                <p>
+                    Nearby hospitals, pharmacies and
+                    campus medical facilities.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <span>🎯</span>
+                <h3>Clubs</h3>
+                <p>
+                    Discover student clubs, activities
+                    and campus communities.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="footer-logo">
+            AMRITANAV
+        </div>
+
+        <p>
+            Your guide to Amrita Amritapuri.
+        </p>
+
+        <p class="copyright">
+            © 2026 Amritanav
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>

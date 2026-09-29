@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Campus Navigator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet">
+   <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <div class="app">
+
+      <header>
+        <div class="title">
+          <h1>Campus <span>Navigator</span></h1>
+          <div class="sub">Amrita &mdash; wayfinding</div>
+        </div>
+        <div class="compass" id="compassLabel"></div>
+      </header>
+
+      <div class="controls panel">
+        <div class="field">
+          <label>Floor</label>
+          <select id="floorSelect"></select>
+        </div>
+        <div class="field">
+          <label>From</label>
+          <select id="fromSelect"></select>
+        </div>
+        <button class="swap-btn" id="swapBtn" title="Swap">&#8646;</button>
+        <div class="field">
+          <label>To</label>
+          <select id="toSelect"></select>
+        </div>
+        <button class="go-btn" id="goBtn">Find Route</button>
+        <button class="calib-btn" id="calibBtn">Calibrate</button>
+      </div>
+      <div class="status" id="statusMsg"></div>
+
+      <div class="stage panel">
+        <div class="map-wrap" id="mapWrap">
+          <img id="floorImg" src="" alt="floor plan" />
+          <svg id="overlay" xmlns="http://www.w3.org/2000/svg"></svg>
+          <div id="markerLayer"></div>
+          <div id="roomDotLayer"></div>
+        </div>
+        <div class="legend">
+          <span><i style="background:var(--start)"></i> Start</span>
+          <span><i style="background:var(--end)"></i> Destination</span>
+          <span><i style="background:var(--cyan)"></i> Route</span>
+          <span><i style="background:var(--text-dim);opacity:.6"></i> Room marker (click to inspect)</span>
+        </div>
+      </div>
+
+      <div class="directions panel" id="directionsBox">
+        <h2>Directions</h2>
+        <div class="empty-hint" id="emptyHint">Pick a "From" and "To" room, then Find Route.</div>
+        <ol class="steps" id="stepsList"></ol>
+      </div>
+
+      <div class="calib-box panel" id="calibBox">
+        <h2>Calibration mode</h2>
+        <p>Click any point on the map to move the selected room's marker there. Pick a room from the dropdown below,
+          click its new spot, repeat for as many rooms as you like &mdash; then copy the updated coordinates and paste
+          them into the ROOM_DATA object in this file (search for the floor's key) to make it permanent.</p>
+        <select id="calibRoomSelect" style="width:100%;margin-bottom:10px;"></select>
+        <textarea id="calibOutput" readonly></textarea>
+        <button class="copy-btn" id="copyBtn">Copy JSON</button>
+      </div>
+
+      <footer>Coordinates are estimated from the uploaded floor-plan photos &mdash; use Calibrate mode to refine them.
+      </footer>
+    </div>
+
+    <script src="app.js">
+    </script>
+  </body>
+
+</html>

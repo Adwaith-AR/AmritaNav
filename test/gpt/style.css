@@ -1,0 +1,454 @@
+:root {
+          --bg: #0a1e3d;
+          --bg2: #0f2a52;
+          --grid: rgba(140, 190, 255, 0.07);
+          --grid-strong: rgba(140, 190, 255, 0.14);
+          --cyan: #5ee1ff;
+          --amber: #ffb545;
+          --text: #e8f1ff;
+          --text-dim: #8fa6c9;
+          --start: #4ade80;
+          --end: #f87171;
+          --panel: rgba(12, 34, 66, 0.88);
+          --border: rgba(140, 190, 255, 0.22);
+          --mono: 'IBM Plex Mono', ui-monospace, monospace;
+          --sans: 'IBM Plex Sans', system-ui, sans-serif;
+}
+
+* {
+          box-sizing: border-box;
+}
+
+html,
+body {
+          margin: 0;
+          padding: 0;
+}
+
+body {
+          background:
+                    linear-gradient(var(--grid) 1px, transparent 1px) 0 0/28px 28px,
+                    linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/28px 28px,
+                    radial-gradient(ellipse at 20% -10%, #123a6b 0%, var(--bg) 55%);
+          background-color: var(--bg);
+          color: var(--text);
+          font-family: var(--sans);
+          min-height: 100vh;
+          padding: 20px;
+}
+
+.app {
+          max-width: 1180px;
+          margin: 0 auto;
+}
+
+header {
+          display: flex;
+          align-items: baseline;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 8px;
+          border-bottom: 1px solid var(--border);
+          padding-bottom: 14px;
+          margin-bottom: 18px;
+}
+
+header .title {
+          display: flex;
+          align-items: baseline;
+          gap: 12px;
+}
+
+header h1 {
+          font-family: var(--mono);
+          font-weight: 700;
+          font-size: 22px;
+          letter-spacing: 0.5px;
+          margin: 0;
+          color: var(--text);
+}
+
+header h1 span {
+          color: var(--cyan);
+}
+
+header .sub {
+          font-family: var(--mono);
+          font-size: 11px;
+          color: var(--text-dim);
+          letter-spacing: 1px;
+          text-transform: uppercase;
+}
+
+.compass {
+          font-family: var(--mono);
+          font-size: 10px;
+          color: var(--text-dim);
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          letter-spacing: 1px;
+}
+
+.compass svg {
+          display: block;
+}
+
+.panel {
+          background: var(--panel);
+          border: 1px solid var(--border);
+          border-radius: 10px;
+}
+
+.controls {
+          padding: 16px;
+          margin-bottom: 18px;
+          display: grid;
+          grid-template-columns: auto 1fr auto 1fr auto auto;
+          gap: 12px;
+          align-items: end;
+}
+
+@media (max-width:900px) {
+          .controls {
+                    grid-template-columns: 1fr 1fr;
+          }
+}
+
+.field {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          min-width: 0;
+}
+
+.field label {
+          font-family: var(--mono);
+          font-size: 10px;
+          color: var(--text-dim);
+          text-transform: uppercase;
+          letter-spacing: 1.2px;
+}
+
+select,
+input {
+          background: #081830;
+          color: var(--text);
+          border: 1px solid var(--border);
+          border-radius: 6px;
+          padding: 9px 10px;
+          font-family: var(--mono);
+          font-size: 13px;
+          outline: none;
+          min-width: 0;
+}
+
+select:focus,
+input:focus {
+          border-color: var(--cyan);
+}
+
+.swap-btn {
+          background: transparent;
+          border: 1px solid var(--border);
+          color: var(--text-dim);
+          border-radius: 6px;
+          width: 36px;
+          height: 36px;
+          cursor: pointer;
+          font-size: 15px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          align-self: end;
+}
+
+.swap-btn:hover {
+          color: var(--cyan);
+          border-color: var(--cyan);
+}
+
+.go-btn {
+          background: var(--cyan);
+          color: #04263f;
+          border: none;
+          border-radius: 6px;
+          font-family: var(--mono);
+          font-weight: 700;
+          font-size: 13px;
+          letter-spacing: 0.5px;
+          padding: 10px 18px;
+          cursor: pointer;
+          text-transform: uppercase;
+          white-space: nowrap;
+}
+
+.go-btn:hover {
+          background: #8aeaff;
+}
+
+.go-btn:disabled {
+          opacity: 0.4;
+          cursor: not-allowed;
+}
+
+.calib-btn {
+          background: transparent;
+          color: var(--amber);
+          border: 1px solid var(--amber);
+          border-radius: 6px;
+          font-family: var(--mono);
+          font-size: 11px;
+          letter-spacing: 0.5px;
+          padding: 10px 12px;
+          cursor: pointer;
+          text-transform: uppercase;
+          white-space: nowrap;
+}
+
+.calib-btn.active {
+          background: var(--amber);
+          color: #3a2400;
+}
+
+.status {
+          font-family: var(--mono);
+          font-size: 12px;
+          color: var(--amber);
+          padding: 0 16px 14px;
+          margin-top: -8px;
+}
+
+.stage {
+          position: relative;
+          overflow: hidden;
+          border-radius: 10px;
+}
+
+.map-wrap {
+          position: relative;
+          width: 100%;
+          background: #071627;
+          line-height: 0;
+}
+
+.map-wrap img {
+          width: 100%;
+          display: block;
+          user-select: none;
+          -webkit-user-drag: none;
+}
+
+.map-wrap svg {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+}
+
+.map-wrap.calibrating img,
+.map-wrap.calibrating svg {
+          cursor: crosshair;
+}
+
+.marker {
+          position: absolute;
+          transform: translate(-50%, -100%);
+          font-family: var(--mono);
+          pointer-events: none;
+}
+
+.marker .dot {
+          width: 14px;
+          height: 14px;
+          border-radius: 50%;
+          margin: 0 auto;
+          border: 2px solid #04263f;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
+.marker.start .dot {
+          background: var(--start);
+}
+
+.marker.end .dot {
+          background: var(--end);
+}
+
+.marker .lbl {
+          margin-top: 2px;
+          font-size: 10px;
+          background: var(--panel);
+          border: 1px solid var(--border);
+          padding: 2px 6px;
+          border-radius: 4px;
+          white-space: nowrap;
+          transform: translateX(-50%);
+          position: relative;
+          left: 50%;
+          color: var(--text);
+}
+
+.room-dot {
+          position: absolute;
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: var(--text-dim);
+          opacity: 0.55;
+          transform: translate(-50%, -50%);
+          cursor: pointer;
+}
+
+.room-dot:hover {
+          opacity: 1;
+          background: var(--cyan);
+}
+
+.room-dot.selected {
+          background: var(--amber);
+          opacity: 1;
+          width: 10px;
+          height: 10px;
+}
+
+.legend {
+          display: flex;
+          gap: 18px;
+          flex-wrap: wrap;
+          padding: 12px 16px;
+          font-family: var(--mono);
+          font-size: 11px;
+          color: var(--text-dim);
+}
+
+.legend span {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+}
+
+.legend i {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          display: inline-block;
+}
+
+.directions {
+          padding: 16px;
+          margin-top: 18px;
+}
+
+.directions h2 {
+          font-family: var(--mono);
+          font-size: 12px;
+          text-transform: uppercase;
+          letter-spacing: 1.5px;
+          color: var(--text-dim);
+          margin: 0 0 12px;
+}
+
+.steps {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          counter-reset: step;
+}
+
+.steps li {
+          counter-increment: step;
+          display: flex;
+          gap: 12px;
+          padding: 9px 0;
+          border-bottom: 1px dashed var(--border);
+          font-size: 13.5px;
+}
+
+.steps li:last-child {
+          border-bottom: none;
+}
+
+.steps li::before {
+          content: counter(step);
+          font-family: var(--mono);
+          font-size: 11px;
+          color: #04263f;
+          background: var(--cyan);
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          font-weight: 700;
+}
+
+.empty-hint {
+          font-family: var(--mono);
+          font-size: 13px;
+          color: var(--text-dim);
+          padding: 4px 0;
+}
+
+.calib-box {
+          padding: 14px 16px;
+          margin-top: 18px;
+          display: none;
+}
+
+.calib-box.show {
+          display: block;
+}
+
+.calib-box h2 {
+          font-family: var(--mono);
+          font-size: 12px;
+          color: var(--amber);
+          text-transform: uppercase;
+          letter-spacing: 1.5px;
+          margin: 0 0 8px;
+}
+
+.calib-box p {
+          font-family: var(--mono);
+          font-size: 12px;
+          color: var(--text-dim);
+          line-height: 1.6;
+          margin: 0 0 10px;
+}
+
+.calib-box textarea {
+          width: 100%;
+          height: 140px;
+          background: #081830;
+          color: var(--cyan);
+          border: 1px solid var(--border);
+          border-radius: 6px;
+          font-family: var(--mono);
+          font-size: 11px;
+          padding: 10px;
+          resize: vertical;
+}
+
+.copy-btn {
+          margin-top: 8px;
+          background: transparent;
+          border: 1px solid var(--cyan);
+          color: var(--cyan);
+          border-radius: 6px;
+          font-family: var(--mono);
+          font-size: 11px;
+          padding: 7px 12px;
+          cursor: pointer;
+}
+
+footer {
+          font-family: var(--mono);
+          font-size: 10.5px;
+          color: var(--text-dim);
+          text-align: center;
+          padding: 22px 0 4px;
+          letter-spacing: 0.5px;
+}
