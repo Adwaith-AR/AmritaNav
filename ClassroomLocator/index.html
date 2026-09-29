@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amrita Nav</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Initial Floor Selection Prompt -->
+  <div id="floor-prompt-modal" class="floor-prompt-modal" role="dialog" aria-modal="true" aria-labelledby="floor-prompt-title">
+    <div class="floor-prompt-card">
+      <div class="floor-prompt-header">
+        <h1 class="brand-title">Amrita Nav</h1>
+        <h2 id="floor-prompt-title" class="floor-prompt-question">Which floor are you currently on?</h2>
+      </div>
+      <div class="floor-prompt-options">
+        <button type="button" class="floor-prompt-btn" data-floor="ground">Ground Floor</button>
+        <button type="button" class="floor-prompt-btn" data-floor="first">First Floor</button>
+        <button type="button" class="floor-prompt-btn" data-floor="second">Second Floor</button>
+        <button type="button" class="floor-prompt-btn" data-floor="third">Third Floor</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ App Shell ══════════════════════════════════════════════ -->
+  <div class="app-shell" id="app-shell">
+
+    <!-- ── Floating Top Bar (search + floor chips + nav) ──────── -->
+    <div class="floating-top-bar" id="floating-top-bar">
+
+      <!-- Search row -->
+      <div class="search-row">
+        <div class="classroom-search-container" id="classroom-search-container">
+          <div class="floating-search-bar">
+            <span class="search-icon-wrap" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </span>
+            <input
+              type="text"
+              id="classroom-search-input"
+              class="classroom-search-input"
+              placeholder="Search here"
+              aria-label="Search classroom"
+              autocomplete="off"
+              spellcheck="false"
+            >
+            <button type="button" id="classroom-search-clear" class="classroom-search-clear" title="Clear search" aria-label="Clear search" style="display: none;">✕</button>
+            <!-- Mic icon -->
+            <button type="button" class="mic-btn" id="classroom-search-btn" aria-label="Search">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="23"/>
+                <line x1="8" y1="23" x2="16" y2="23"/>
+              </svg>
+            </button>
+          </div>
+          <div id="classroom-search-suggestions" class="classroom-search-suggestions" style="display: none;" role="listbox" aria-label="Search suggestions"></div>
+          <div id="classroom-search-feedback" class="classroom-search-feedback" style="display: none;" role="status"></div>
+        </div>
+      </div>
+
+      <!-- Category & Floor Chips -->
+      <div class="chips-row" role="tablist" aria-label="Floor Selection and Categories">
+        <button type="button" class="floor-chip floor-btn active" data-floor="ground" role="tab" aria-selected="true">
+          <span class="chip-badge chip-badge-blue">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          </span>
+          <span class="chip-label">Ground</span>
+        </button>
+        <button type="button" class="floor-chip floor-btn" data-floor="first" role="tab" aria-selected="false">
+          <span class="chip-badge chip-badge-indigo">1</span>
+          <span class="chip-label">1st Floor</span>
+        </button>
+        <button type="button" class="floor-chip floor-btn" data-floor="second" role="tab" aria-selected="false">
+          <span class="chip-badge chip-badge-purple">2</span>
+          <span class="chip-label">2nd Floor</span>
+        </button>
+        <button type="button" class="floor-chip floor-btn" data-floor="third" role="tab" aria-selected="false">
+          <span class="chip-badge chip-badge-pink">3</span>
+          <span class="chip-label">3rd Floor</span>
+        </button>
+        <!-- Facility Category Chips: Washrooms, Labs, Offices -->
+        <button type="button" class="category-chip" data-category="toilet" title="Restrooms">
+          <span class="chip-badge chip-badge-teal">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M7 21v-7.5a2.5 2.5 0 0 1 5 0V21"/><path d="M12 21v-7.5a2.5 2.5 0 0 1 5 0V21"/></svg>
+          </span>
+          <span class="chip-label">Washrooms</span>
+        </button>
+        <button type="button" class="category-chip" data-category="lab" title="Laboratories">
+          <span class="chip-badge chip-badge-rose">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31L4.5 19.5A2 2 0 0 0 6.23 22h11.54a2 2 0 0 0 1.73-2.5L14 9.31V2"/></svg>
+          </span>
+          <span class="chip-label">Labs</span>
+        </button>
+        <button type="button" class="category-chip" data-category="office" title="Offices">
+          <span class="chip-badge chip-badge-blue">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          </span>
+          <span class="chip-label">Offices</span>
+        </button>
+      </div>
+
+      <!-- Multi-Floor Navigation Bar -->
+      <div id="ground-nav-bar" class="ground-nav-bar" style="display: none;">
+        <div class="nav-control-group">
+          <div class="nav-select-wrapper">
+            <span class="nav-icon">🟢</span>
+            <select id="nav-start-select" class="nav-select" aria-label="Starting Location">
+              <option value="gps">📍 Current Location (GPS)</option>
+            </select>
+          </div>
+          <button type="button" id="nav-swap-btn" class="nav-swap-btn" title="Swap start and destination" aria-label="Swap start and destination">⇄</button>
+          <div class="nav-select-wrapper">
+            <span class="nav-icon">🔴</span>
+            <select id="nav-dest-select" class="nav-select" aria-label="Destination Location">
+              <option value="">Select Destination...</option>
+            </select>
+          </div>
+          <button type="button" id="get-route-btn" class="nav-btn primary">Route</button>
+          <button type="button" id="clear-route-btn" class="nav-btn secondary" style="display: none;">Clear</button>
+        </div>
+        <div id="route-summary-bar" class="route-summary-bar" style="display: none;">
+          <div class="route-metrics-group">
+            <span id="route-distance-text" class="route-metric"></span>
+            <span id="route-time-text" class="route-metric"></span>
+          </div>
+          <div id="route-floor-steps" class="route-floor-steps"></div>
+          <div id="route-instruction-bar" class="route-instruction-bar" style="display: none;"></div>
+        </div>
+      </div>
+    </div><!-- /floating-top-bar -->
+
+    <main class="main-content" id="main-content" style="display: none;">
+      <div class="image-wrapper">
+        <div class="map-container" id="map-container">
+          <div class="map-pan-stage" id="map-pan-stage">
+            <!-- Ground Floor -->
+          <div class="floor-layer" id="floor-layer-ground" data-floor="ground">
+            <img 
+              src="floor-0.svg" 
+              alt="Amrita Nav - Ground Floor" 
+              class="central-image"
+              draggable="false"
+            >
+          <svg class="selection-overlay" viewBox="0 0 2112 1300" aria-label="Amrita Nav Floor Plan">
+            <defs>
+              <radialGradient id="gps-beam-grad" cx="0" cy="0" r="52" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.45" />
+                <stop offset="100%" stop-color="#3b82f6" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+                        <rect id="room_nanosciences" class="selectable-room" x="730" y="197" width="113" height="326" transform="rotate(353 786.5 360)" data-name="Amrita Center for Nanosciences" data-code="ACN" role="button" tabindex="0" aria-label="Amrita Center for Nanosciences (ACN)" aria-pressed="false"><title>Amrita Center for Nanosciences (ACN)</title></rect>
+            <rect id="room_special_hall" class="selectable-room" x="300" y="580" width="165" height="94" transform="rotate(354 382.5 627)" data-name="Special Programs Hall / Meditation Hall" data-code="SPH-102" role="button" tabindex="0" aria-label="Special Programs Hall / Meditation Hall (SPH-102)" aria-pressed="false"><title>Special Programs Hall / Meditation Hall (SPH-102)</title></rect>
+            <rect id="room_gad_office" class="selectable-room" x="378" y="671" width="75" height="62" transform="rotate(354 415.5 702)" data-name="GAD-PR Office" data-code="GAD-103" role="button" tabindex="0" aria-label="GAD-PR Office (GAD-103)" aria-pressed="false"><title>GAD-PR Office (GAD-103)</title></rect>
+            <rect id="room_admin_block_a" class="selectable-room" x="297" y="740" width="174" height="189" transform="rotate(353 384 834.5)" data-name="Administration Block (A) / Reception" data-code="ADM-BLK-A" role="button" tabindex="0" aria-label="Administration Block (A) / Reception (ADM-BLK-A)" aria-pressed="false"><title>Administration Block (A) / Reception (ADM-BLK-A)</title></rect>
+            <rect id="room_admission_office" class="selectable-room" x="620" y="615" width="100" height="89" transform="rotate(354 670 659.5)" data-name="Admission Office" data-code="ADM-105" role="button" tabindex="0" aria-label="Admission Office (ADM-105)" aria-pressed="false"><title>Admission Office (ADM-105)</title></rect>
+            <rect id="room_cir_seminar" class="selectable-room" x="811" y="592" width="101" height="89" transform="rotate(353 861.5 636.5)" data-name="CIR Seminar Room" data-code="CIR-106" role="button" tabindex="0" aria-label="CIR Seminar Room (CIR-106)" aria-pressed="false"><title>CIR Seminar Room (CIR-106)</title></rect>
+            <rect id="room_guest_room" class="selectable-room" x="652" y="895" width="97" height="85" transform="rotate(354 700.5 937.5)" data-name="Guest Room" data-code="GST-107" role="button" tabindex="0" aria-label="Guest Room (GST-107)" aria-pressed="false"><title>Guest Room (GST-107)</title></rect>
+            <rect id="room_mini_conf" class="selectable-room" x="407" y="924" width="73" height="60" transform="rotate(354 443.5 954)" data-name="Mini Conference Room" data-code="CONF-MINI" role="button" tabindex="0" aria-label="Mini Conference Room (CONF-MINI)" aria-pressed="false"><title>Mini Conference Room (CONF-MINI)</title></rect>
+            <rect id="room_main_conf" class="selectable-room" x="353" y="986" width="161" height="91" transform="rotate(354 433.5 1031.5)" data-name="Main Conference Room" data-code="CONF-MAIN" role="button" tabindex="0" aria-label="Main Conference Room (CONF-MAIN)" aria-pressed="false"><title>Main Conference Room (CONF-MAIN)</title></rect>
+            <rect id="room_acharya_hall" class="selectable-room" x="459" y="1101" width="295" height="112" transform="rotate(354 606.5 1157)" data-name="Acharya Hall" data-code="ACH-110" role="button" tabindex="0" aria-label="Acharya Hall (ACH-110)" aria-pressed="false"><title>Acharya Hall (ACH-110)</title></rect>
+            <rect id="room_stationery" class="selectable-room" x="808" y="1082" width="38" height="113" transform="rotate(354 827 1138.5)" data-name="Stationery & Courier" data-code="STN-111" role="button" tabindex="0" aria-label="Stationery & Courier (STN-111)" aria-pressed="false"><title>Stationery & Courier (STN-111)</title></rect>
+            <rect id="room_mfg_lab" class="selectable-room" x="845" y="1070" width="226" height="111" transform="rotate(354 958 1125.5)" data-name="Manufacturing Lab" data-code="LAB-MFG" role="button" tabindex="0" aria-label="Manufacturing Lab (LAB-MFG)" aria-pressed="false"><title>Manufacturing Lab (LAB-MFG)</title></rect>
+            <rect id="room_mat_testing" class="selectable-room" x="1070" y="1055" width="65" height="111" transform="rotate(354 1102.5 1110.5)" data-name="Material Testing Lab" data-code="LAB-MTL" role="button" tabindex="0" aria-label="Material Testing Lab (LAB-MTL)" aria-pressed="false"><title>Material Testing Lab (LAB-MTL)</title></rect>
+            <rect id="room_wireless_ctr" class="selectable-room" x="960" y="440" width="111" height="66" transform="rotate(354 1015.5 473)" data-name="Amrita Center for Wireless Networks & Apps" data-code="ACWNA" role="button" tabindex="0" aria-label="Amrita Center for Wireless Networks & Apps (ACWNA)" aria-pressed="false"><title>Amrita Center for Wireless Networks & Apps (ACWNA)</title></rect>
+            <rect id="room_director_dean" class="selectable-room" x="1135" y="840" width="99" height="90" transform="rotate(354 1184.5 885)" data-name="Director / Associate Dean" data-code="DIR-OFFICE" role="button" tabindex="0" aria-label="Director / Associate Dean (DIR-OFFICE)" aria-pressed="false"><title>Director / Associate Dean (DIR-OFFICE)</title></rect>
+            <rect id="room_ladies_infirmary" class="selectable-room" x="1330" y="820" width="30" height="92" transform="rotate(354 1345 866)" data-name="Ladies Infirmary" data-code="INF-118" role="button" tabindex="0" aria-label="Ladies Infirmary (INF-118)" aria-pressed="false"><title>Ladies Infirmary (INF-118)</title></rect>
+            <rect id="room_metallurgy" class="selectable-room" x="1205" y="332" width="69" height="109" transform="rotate(353 1239.5 386.5)" data-name="Metallurgy Laboratory" data-code="LAB-MET" role="button" tabindex="0" aria-label="Metallurgy Laboratory (LAB-MET)" aria-pressed="false"><title>Metallurgy Laboratory (LAB-MET)</title></rect>
+            <rect id="room_fluid_mech" class="selectable-room" x="1276" y="319" width="127" height="110" transform="rotate(353 1339.5 374)" data-name="Fluid Mechanics Lab" data-code="LAB-FML" role="button" tabindex="0" aria-label="Fluid Mechanics Lab (LAB-FML)" aria-pressed="false"><title>Fluid Mechanics Lab (LAB-FML)</title></rect>
+            <rect id="room_cae_cell" class="selectable-room" x="1403" y="308" width="62" height="111" transform="rotate(352 1434 363.5)" data-name="C.A.E. Cell" data-code="CAE-121" role="button" tabindex="0" aria-label="C.A.E. Cell (CAE-121)" aria-pressed="false"><title>C.A.E. Cell (CAE-121)</title></rect>
+            <rect id="room_dynamics_lab" class="selectable-room" x="1466" y="300" width="65" height="111" transform="rotate(353 1498.5 355.5)" data-name="Machine Dynamics Lab" data-code="LAB-MDL" role="button" tabindex="0" aria-label="Machine Dynamics Lab (LAB-MDL)" aria-pressed="false"><title>Machine Dynamics Lab (LAB-MDL)</title></rect>
+            <rect id="room_math_dept" class="selectable-room" x="1458" y="519" width="129" height="89" transform="rotate(354 1522.5 563.5)" data-name="Department of Mathematics" data-code="MATH-DEPT" role="button" tabindex="0" aria-label="Department of Mathematics (MATH-DEPT)" aria-pressed="false"><title>Department of Mathematics (MATH-DEPT)</title></rect>
+            <rect id="room_elec_machines" class="selectable-room" x="1614" y="474" width="263" height="108" transform="rotate(353 1745.5 528)" data-name="Electrical Machines Lab" data-code="LAB-EML" role="button" tabindex="0" aria-label="Electrical Machines Lab (LAB-EML)" aria-pressed="false"><title>Electrical Machines Lab (LAB-EML)</title></rect>
+            <rect id="room_prayer_hall" class="selectable-room" x="1876" y="456" width="63" height="107" transform="rotate(353 1907.5 509.5)" data-name="Prayer Hall" data-code="PRY-125" role="button" tabindex="0" aria-label="Prayer Hall (PRY-125)" aria-pressed="false"><title>Prayer Hall (PRY-125)</title></rect>
+            <rect id="room_college_admin" class="selectable-room" x="1489" y="800" width="131" height="88" transform="rotate(353 1554.5 844)" data-name="College Administration Office" data-code="CADM-127" role="button" tabindex="0" aria-label="College Administration Office (CADM-127)" aria-pressed="false"><title>College Administration Office (CADM-127)</title></rect>
+            <rect id="room_computer_lab" class="selectable-room" x="1649" y="778" width="229" height="107" transform="rotate(353 1763.5 831.5)" data-name="Computer Lab" data-code="LAB-CS" role="button" tabindex="0" aria-label="Computer Lab (LAB-CS)" aria-pressed="false"><title>Computer Lab (LAB-CS)</title></rect>
+            <rect id="room_nanotech_lab" class="selectable-room" x="1879" y="758" width="95" height="108" transform="rotate(353 1926.5 812)" data-name="Nanotech Lab" data-code="LAB-NANO" role="button" tabindex="0" aria-label="Nanotech Lab (LAB-NANO)" aria-pressed="false"><title>Nanotech Lab (LAB-NANO)</title></rect>
+            <rect id="room_mech_workshop" class="selectable-room" x="1287" y="1020" width="128" height="109" transform="rotate(354 1351 1074.5)" data-name="Mechanical Workshop" data-code="LAB-MECH" role="button" tabindex="0" aria-label="Mechanical Workshop (LAB-MECH)" aria-pressed="false"><title>Mechanical Workshop (LAB-MECH)</title></rect>
+            <rect id="room_robotics_lab" class="selectable-room" x="1414" y="1009" width="69" height="108" transform="rotate(354 1448.5 1063)" data-name="CNC Robotics & Autom. Lab" data-code="LAB-ROBO" role="button" tabindex="0" aria-label="CNC Robotics & Autom. Lab (LAB-ROBO)" aria-pressed="false"><title>CNC Robotics & Autom. Lab (LAB-ROBO)</title></rect>
+            <rect id="room_wind_tunnel" class="selectable-room" x="1483" y="998" width="129" height="109" transform="rotate(354 1547.5 1052.5)" data-name="Wind Tunnel" data-code="LAB-WIND" role="button" tabindex="0" aria-label="Wind Tunnel (LAB-WIND)" aria-pressed="false"><title>Wind Tunnel (LAB-WIND)</title></rect>
+            <rect id="room_1790266501061" class="selectable-room" x="952" y="337" width="111" height="103" transform="rotate(354 1007.5 388.5)" data-name="M Tech (Fluid Lab )" data-code="LAB-FLUID" role="button" tabindex="0" aria-label="M Tech (Fluid Lab ) (LAB-FLUID)" aria-pressed="false"><title>M Tech (Fluid Lab ) (LAB-FLUID)</title></rect>
+            <rect id="room_1790266683270" class="selectable-room" x="935" y="170" width="112" height="168" transform="rotate(354 991 254)" data-name="Room 36" data-code="R-136" role="button" tabindex="0" aria-label="Room 36 (R-136)" aria-pressed="false"><title>Room 36 (R-136)</title></rect>
+            <rect id="room_1790267011208" class="selectable-room" x="1231" y="825" width="96" height="91" transform="rotate(354 1279 870.5)" data-name="Principal Arts and Sciences" data-code="Arts and Science" role="button" tabindex="0" aria-label="Principal Arts and Sciences (Arts and Science)" aria-pressed="false"><title>Principal Arts and Sciences (Arts and Science)</title></rect>
+            <rect id="room_1790267197118" class="selectable-room" x="1360" y="816" width="69" height="91" transform="rotate(354 1394.5 861.5)" data-name="Conference Room" data-code="Conference" role="button" tabindex="0" aria-label="Conference Room (Conference)" aria-pressed="false"><title>Conference Room (Conference)</title></rect>
+            <rect id="room_1790267337608" class="selectable-room" x="749" y="884" width="96" height="87" transform="rotate(354 797 927.5)" data-name="AUMS Web Services" data-code="AUMS" role="button" tabindex="0" aria-label="AUMS Web Services (AUMS)" aria-pressed="false"><title>AUMS Web Services (AUMS)</title></rect>
+            <rect id="room_1790267611764" class="selectable-room" x="384" y="408" width="295" height="112" transform="rotate(354 531.5 464)" data-name="Amritheswari Hall " data-code="AMH-101" role="button" tabindex="0" aria-label="Amritheswari Hall  (AMH-101)" aria-pressed="false"><title>Amritheswari Hall  (AMH-101)</title></rect>
+            <rect id="room_1790267932589" class="selectable-room" x="1102" y="560" width="100" height="89" transform="rotate(353 1152 604.5)" data-name="Students Affair" data-code="SA" role="button" tabindex="0" aria-label="Students Affair (SA)" aria-pressed="false"><title>Students Affair (SA)</title></rect>
+            <rect id="room_1790267966500" class="selectable-room" x="1202" y="548" width="94" height="89" transform="rotate(353 1249 592.5)" data-name="Reserve" role="button" tabindex="0" aria-label="Reserve" aria-pressed="false"><title>Reserve</title></rect>
+            <rect id="room_1790268001235" class="selectable-room" x="1296" y="536" width="94" height="89" transform="rotate(353 1343 580.5)" data-name="Principal" role="button" tabindex="0" aria-label="Principal" aria-pressed="false"><title>Principal</title></rect>
+            <rect id="room_1790578035647" class="selectable-room" x="1339" y="453" width="60" height="47" transform="rotate(354 1369 476.5)" data-name="Stairs" data-code="R-145" role="button" tabindex="0" aria-label="Stairs (R-145)" aria-pressed="false"><title>Stairs (R-145)</title></rect>
+            <rect id="room_1790578073580" class="selectable-room" x="900" y="1000" width="60" height="40" transform="rotate(357 930 1020)" data-name="Stairs" data-code="R-146" role="button" tabindex="0" aria-label="Stairs (R-146)" aria-pressed="false"><title>Stairs (R-146)</title></rect>
+            <rect id="room_1790578100156" class="selectable-room" x="1160" y="1040" width="100" height="80" transform="rotate(355 1210 1080)" data-name="Ladies&#039; Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies&#039; Toilet (WC)" aria-pressed="false"><title>Ladies&#039; Toilet (WC)</title></rect>
+            <rect id="room_1790578145285" class="selectable-room" x="1614" y="1020" width="126" height="80" transform="rotate(355 1677 1060)" data-name="Ladies&#039; Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies&#039; Toilet (WC)" aria-pressed="false"><title>Ladies&#039; Toilet (WC)</title></rect>
+            <rect id="room_1790578197842" class="selectable-room" x="440" y="1073" width="80" height="41" transform="rotate(355 480 1093.5)" data-name="Ladies&#039; Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies&#039; Toilet (WC)" aria-pressed="false"><title>Ladies&#039; Toilet (WC)</title></rect>
+            <rect id="room_1790578250255" class="selectable-room" x="391" y="532" width="69" height="43" transform="rotate(355 425.5 553.5)" data-name="Men&#039;s Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men&#039;s Toilet (WC)" aria-pressed="false"><title>Men&#039;s Toilet (WC)</title></rect>
+            <rect id="room_1790578281913" class="selectable-room" x="820" y="76" width="94" height="85" transform="rotate(356 867 118.5)" data-name="Men&#039;s Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men&#039;s Toilet (WC)" aria-pressed="false"><title>Men&#039;s Toilet (WC)</title></rect>
+            <rect id="room_1790578307230" class="selectable-room" x="1530" y="288" width="128" height="72" transform="rotate(353 1594 324)" data-name="Men&#039;s Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men&#039;s Toilet (WC)" aria-pressed="false"><title>Men&#039;s Toilet (WC)</title></rect>
+            <rect id="room_1790578386471" class="selectable-room" x="860" y="300" width="60" height="60" transform="rotate(355 890 330)" data-name="Stairs" data-code="R-152" role="button" tabindex="0" aria-label="Stairs (R-152)" aria-pressed="false"><title>Stairs (R-152)</title></rect>
+            <rect id="room_1790578435142" class="selectable-room" x="960" y="731" width="58" height="67" transform="rotate(355 989 764.5)" data-name="Stairs" data-code="R-153" role="button" tabindex="0" aria-label="Stairs (R-153)" aria-pressed="false"><title>Stairs (R-153)</title></rect>
+            <rect id="room_1790578489388" class="selectable-room" x="1629" y="660" width="62" height="59" transform="rotate(354 1660 689.5)" data-name="Stairs" data-code="R-154" role="button" tabindex="0" aria-label="Stairs (R-154)" aria-pressed="false"><title>Stairs (R-154)</title></rect>
+            <rect id="room_1790578512841" class="selectable-room" x="532" y="910" width="80" height="60" transform="rotate(355 572 940)" data-name="Stairs" data-code="R-155" role="button" tabindex="0" aria-label="Stairs (R-155)" aria-pressed="false"><title>Stairs (R-155)</title></rect>
+            <rect id="room_1790578548474" class="selectable-room" x="507" y="660" width="60" height="60" transform="rotate(353 537 690)" data-name="Stairs" data-code="R-156" role="button" tabindex="0" aria-label="Stairs (R-156)" aria-pressed="false"><title>Stairs (R-156)</title></rect>
+
+            <!-- Ground Floor Active Route Layer -->
+            <g id="ground-route-layer" class="ground-route-layer route-layer" data-floor="ground"></g>
+
+            <!-- GPS Live Location Marker -->
+            <g id="gps-marker" class="gps-marker" style="display: none;" transform="translate(380, 830)" aria-label="Live GPS Location">
+              <defs>
+                <radialGradient id="gps-beam-grad" cx="0" cy="0" r="52" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.45" />
+                  <stop offset="100%" stop-color="#3b82f6" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+              <title id="gps-marker-title">Live GPS Location</title>
+              <circle id="gps-accuracy-ring" class="gps-accuracy-ring" cx="0" cy="0" r="35" />
+              <circle class="gps-pulse-ring" cx="0" cy="0" r="14" />
+              <g id="gps-heading-cone" class="gps-heading-cone" style="display: none;">
+                <path class="gps-beam" d="M 0 0 L -18 -48 A 52 52 0 0 1 18 -48 Z" fill="url(#gps-beam-grad)" />
+                <polygon class="gps-arrow" points="0,-28 6,-12 -6,-12" />
+              </g>
+              <circle class="gps-pin-shadow" cx="0" cy="2" r="12" />
+              <circle class="gps-pin-outer" cx="0" cy="0" r="11" />
+              <circle class="gps-pin-inner" cx="0" cy="0" r="8" />
+              <circle class="gps-pin-center" cx="0" cy="0" r="3" />
+            </g>
+          </svg>
+        </div>
+
+        <!-- First Floor -->
+        <div class="floor-layer" id="floor-layer-first" data-floor="first">
+          <img 
+            src="floor-1.svg" 
+            alt="Amrita Nav - First Floor" 
+            class="central-image"
+            draggable="false"
+          >
+          <svg class="selection-overlay" viewBox="0 0 2112 1300" aria-label="Amrita Nav First Floor Plan">
+            <rect id="f1_room_nanosciences" class="selectable-room" x="730" y="197" width="113" height="326" transform="rotate(353 786.5 360)" data-name="N-107 — Physics Lab" data-code="ACN" role="button" tabindex="0" aria-label="N-107 — Physics Lab (ACN)" aria-pressed="false"><title>N-107 — Physics Lab (ACN)</title></rect>
+            <rect id="f1_room_special_hall" class="selectable-room" x="300" y="580" width="165" height="94" transform="rotate(354 382.5 627)" data-name="A-105 — General Administration Dept. (CAD)" data-code="SPH-102" role="button" tabindex="0" aria-label="A-105 — General Administration Dept. (CAD) (SPH-102)" aria-pressed="false"><title>A-105 — General Administration Dept. (CAD) (SPH-102)</title></rect>
+            <rect id="f1_room_gad_office" class="selectable-room" x="378" y="671" width="75" height="62" transform="rotate(354 415.5 702)" data-name="ICTS — Reprographics Center" data-code="GAD-103" role="button" tabindex="0" aria-label="ICTS — Reprographics Center (GAD-103)" aria-pressed="false"><title>ICTS — Reprographics Center (GAD-103)</title></rect>
+            <rect id="f1_room_admin_block_a" class="selectable-room" x="297" y="738" width="174" height="189" transform="rotate(353 384 832.5)" data-name="A-104 — Accounts Office" data-code="ADM-BLK-A" role="button" tabindex="0" aria-label="A-104 — Accounts Office (ADM-BLK-A)" aria-pressed="false"><title>A-104 — Accounts Office (ADM-BLK-A)</title></rect>
+            <rect id="f1_room_admission_office" class="selectable-room" x="618" y="617" width="100" height="89" transform="rotate(354 668 661.5)" data-name="N-101" data-code="ADM-105" role="button" tabindex="0" aria-label="N-101 (ADM-105)" aria-pressed="false"><title>N-101 (ADM-105)</title></rect>
+            <rect id="f1_room_cir_seminar" class="selectable-room" x="811" y="594" width="101" height="89" transform="rotate(353 861.5 638.5)" data-name="N-103" data-code="CIR-106" role="button" tabindex="0" aria-label="N-103 (CIR-106)" aria-pressed="false"><title>N-103 (CIR-106)</title></rect>
+            <rect id="f1_room_guest_room" class="selectable-room" x="652" y="895" width="97" height="85" transform="rotate(354 700.5 937.5)" data-name="S-101" data-code="GST-107" role="button" tabindex="0" aria-label="S-101 (GST-107)" aria-pressed="false"><title>S-101 (GST-107)</title></rect>
+            <rect id="f1_room_mini_conf" class="selectable-room" x="407" y="924" width="73" height="60" transform="rotate(354 443.5 954)" data-name="A-104A — Reserve" data-code="CONF-MINI" role="button" tabindex="0" aria-label="A-104A — Reserve (CONF-MINI)" aria-pressed="false"><title>A-104A — Reserve (CONF-MINI)</title></rect>
+            <rect id="f1_room_main_conf" class="selectable-room" x="353" y="986" width="161" height="91" transform="rotate(354 433.5 1031.5)" data-name="A-103 — ICTS" data-code="CONF-MAIN" role="button" tabindex="0" aria-label="A-103 — ICTS (CONF-MAIN)" aria-pressed="false"><title>A-103 — ICTS (CONF-MAIN)</title></rect>
+            <rect id="f1_room_acharya_hall" class="selectable-room" x="459" y="1101" width="295" height="112" transform="rotate(354 606.5 1157)" data-name="A-102 — ICTS-Stores" data-code="ACH-110" role="button" tabindex="0" aria-label="A-102 — ICTS-Stores (ACH-110)" aria-pressed="false"><title>A-102 — ICTS-Stores (ACH-110)</title></rect>
+            <rect id="f1_room_stationery" class="selectable-room" x="808" y="1082" width="38" height="113" transform="rotate(354 827 1138.5)" data-name="A-101 — ICTS Server Room" data-code="STN-111" role="button" tabindex="0" aria-label="A-101 — ICTS Server Room (STN-111)" aria-pressed="false"><title>A-101 — ICTS Server Room (STN-111)</title></rect>
+            <rect id="f1_room_mfg_lab" class="selectable-room" x="845" y="1070" width="226" height="111" transform="rotate(354 958 1125.5)" data-name="S-104 — Dept. of English / MSW / Physical Education / Philosophy" data-code="LAB-MFG" role="button" tabindex="0" aria-label="S-104 — Dept. of English / MSW / Physical Education / Philosophy (LAB-MFG)" aria-pressed="false"><title>S-104 — Dept. of English / MSW / Physical Education / Philosophy (LAB-MFG)</title></rect>
+            <rect id="f1_room_mat_testing" class="selectable-room" x="1070" y="1055" width="65" height="111" transform="rotate(354 1102.5 1110.5)" data-name="S-105 — Cisco Lab / ICPC Lab / MSW Specialization" data-code="LAB-MTL" role="button" tabindex="0" aria-label="S-105 — Cisco Lab / ICPC Lab / MSW Specialization (LAB-MTL)" aria-pressed="false"><title>S-105 — Cisco Lab / ICPC Lab / MSW Specialization (LAB-MTL)</title></rect>
+            <rect id="f1_room_wireless_ctr" class="selectable-room" x="960" y="440" width="111" height="66" transform="rotate(354 1015.5 473)" data-name="N-108 — B.Tech Chemistry Lab" data-code="ACWNA" role="button" tabindex="0" aria-label="N-108 — B.Tech Chemistry Lab (ACWNA)" aria-pressed="false"><title>N-108 — B.Tech Chemistry Lab (ACWNA)</title></rect>
+            <rect id="f1_room_north_wing" class="selectable-room" x="860" y="184" width="60" height="292" transform="rotate(353 890 330)" data-name="North Corridor Wing" data-code="CORR-N" role="button" tabindex="0" aria-label="North Corridor Wing (CORR-N)" aria-pressed="false"><title>North Corridor Wing (CORR-N)</title></rect>
+            <rect id="f1_room_director_dean" class="selectable-room" x="1135" y="840" width="99" height="90" transform="rotate(354 1184.5 885)" data-name="S-107" data-code="DIR-OFFICE" role="button" tabindex="0" aria-label="S-107 (DIR-OFFICE)" aria-pressed="false"><title>S-107 (DIR-OFFICE)</title></rect>
+            <rect id="f1_room_ladies_infirmary" class="selectable-room" x="1330" y="820" width="30" height="92" transform="rotate(354 1345 866)" data-name="HOD-ECE" data-code="INF-118" role="button" tabindex="0" aria-label="HOD-ECE (INF-118)" aria-pressed="false"><title>HOD-ECE (INF-118)</title></rect>
+            <rect id="f1_room_metallurgy" class="selectable-room" x="1205" y="332" width="69" height="109" transform="rotate(353 1239.5 386.5)" data-name="N-116 — EEM Lab" data-code="LAB-MET" role="button" tabindex="0" aria-label="N-116 — EEM Lab (LAB-MET)" aria-pressed="false"><title>N-116 — EEM Lab (LAB-MET)</title></rect>
+            <rect id="f1_room_fluid_mech" class="selectable-room" x="1276" y="319" width="127" height="110" transform="rotate(353 1339.5 374)" data-name="N-116A — Control &amp; Instrum. Lab" data-code="LAB-FML" role="button" tabindex="0" aria-label="N-116A — Control &amp; Instrum. Lab (LAB-FML)" aria-pressed="false"><title>N-116A — Control &amp; Instrum. Lab (LAB-FML)</title></rect>
+            <rect id="f1_room_cae_cell" class="selectable-room" x="1403" y="308" width="62" height="111" transform="rotate(352 1434 363.5)" data-name="N-119" data-code="CAE-121" role="button" tabindex="0" aria-label="N-119 (CAE-121)" aria-pressed="false"><title>N-119 (CAE-121)</title></rect>
+            <rect id="f1_room_dynamics_lab" class="selectable-room" x="1466" y="300" width="65" height="111" transform="rotate(353 1498.5 355.5)" data-name="N-117 — Power &amp; Energy Lab (EEE)" data-code="LAB-MDL" role="button" tabindex="0" aria-label="N-117 — Power &amp; Energy Lab (EEE) (LAB-MDL)" aria-pressed="false"><title>N-117 — Power &amp; Energy Lab (EEE) (LAB-MDL)</title></rect>
+            <rect id="f1_room_math_dept" class="selectable-room" x="1458" y="519" width="129" height="89" transform="rotate(354 1522.5 563.5)" data-name="N-118 — CSE Staff Room" data-code="MATH-DEPT" role="button" tabindex="0" aria-label="N-118 — CSE Staff Room (MATH-DEPT)" aria-pressed="false"><title>N-118 — CSE Staff Room (MATH-DEPT)</title></rect>
+            <rect id="f1_room_elec_machines" class="selectable-room" x="1614" y="474" width="263" height="108" transform="rotate(353 1745.5 528)" data-name="N-120" data-code="LAB-EML" role="button" tabindex="0" aria-label="N-120 (LAB-EML)" aria-pressed="false"><title>N-120 (LAB-EML)</title></rect>
+            <rect id="f1_room_prayer_hall" class="selectable-room" x="1876" y="456" width="63" height="107" transform="rotate(353 1907.5 509.5)" data-name="Room 12" data-code="PRY-125" role="button" tabindex="0" aria-label="Room 12 (PRY-125)" aria-pressed="false"><title>Room 12 (PRY-125)</title></rect>
+            <rect id="f1_room_college_admin" class="selectable-room" x="1489" y="800" width="131" height="88" transform="rotate(353 1554.5 844)" data-name="S-114 — ECE Staff Room" data-code="CADM-127" role="button" tabindex="0" aria-label="S-114 — ECE Staff Room (CADM-127)" aria-pressed="false"><title>S-114 — ECE Staff Room (CADM-127)</title></rect>
+            <rect id="f1_room_computer_lab" class="selectable-room" x="1649" y="778" width="229" height="107" transform="rotate(353 1763.5 831.5)" data-name="S-115 — Computer Lab" data-code="LAB-CS" role="button" tabindex="0" aria-label="S-115 — Computer Lab (LAB-CS)" aria-pressed="false"><title>S-115 — Computer Lab (LAB-CS)</title></rect>
+            <rect id="f1_room_nanotech_lab" class="selectable-room" x="1890" y="604" width="131" height="97" transform="rotate(353 1955.5 652.5)" data-name="S-117 — Micro Processor Lab" data-code="LAB-NANO" role="button" tabindex="0" aria-label="S-117 — Micro Processor Lab (LAB-NANO)" aria-pressed="false"><title>S-117 — Micro Processor Lab (LAB-NANO)</title></rect>
+            <rect id="f1_room_mech_workshop" class="selectable-room" x="1287" y="1020" width="128" height="109" transform="rotate(354 1351 1074.5)" data-name="S-103" data-code="LAB-MECH" role="button" tabindex="0" aria-label="S-103 (LAB-MECH)" aria-pressed="false"><title>S-103 (LAB-MECH)</title></rect>
+            <rect id="f1_room_robotics_lab" class="selectable-room" x="1414" y="1009" width="69" height="108" transform="rotate(354 1448.5 1063)" data-name="S-102" data-code="LAB-ROBO" role="button" tabindex="0" aria-label="S-102 (LAB-ROBO)" aria-pressed="false"><title>S-102 (LAB-ROBO)</title></rect>
+            <rect id="f1_room_wind_tunnel" class="selectable-room" x="1483" y="998" width="129" height="109" transform="rotate(354 1547.5 1052.5)" data-name="S-101" data-code="LAB-WIND" role="button" tabindex="0" aria-label="S-101 (LAB-WIND)" aria-pressed="false"><title>S-101 (LAB-WIND)</title></rect>
+            <rect id="f1_room_1790266501061" class="selectable-room" x="952" y="337" width="111" height="103" transform="rotate(354 1007.5 388.5)" data-name="N-109 — M.Sc Chemistry Lab" data-code="LAB-FLUID" role="button" tabindex="0" aria-label="N-109 — M.Sc Chemistry Lab (LAB-FLUID)" aria-pressed="false"><title>N-109 — M.Sc Chemistry Lab (LAB-FLUID)</title></rect>
+            <rect id="f1_room_1790266683270" class="selectable-room" x="935" y="170" width="112" height="168" transform="rotate(354 991 254)" data-name="N-110 — Chem. Research Lab" data-code="R-136" role="button" tabindex="0" aria-label="N-110 — Chem. Research Lab (R-136)" aria-pressed="false"><title>N-110 — Chem. Research Lab (R-136)</title></rect>
+            <rect id="f1_room_1790267011208" class="selectable-room" x="1233" y="829" width="96" height="91" transform="rotate(354 1281 874.5)" data-name="S-108" data-code="Arts and Science" role="button" tabindex="0" aria-label="S-108 (Arts and Science)" aria-pressed="false"><title>S-108 (Arts and Science)</title></rect>
+            <rect id="f1_room_1790267197118" class="selectable-room" x="1360" y="816" width="69" height="91" transform="rotate(354 1394.5 861.5)" data-name="S-109 — Chairman CSE Dept." data-code="Conference" role="button" tabindex="0" aria-label="S-109 — Chairman CSE Dept. (Conference)" aria-pressed="false"><title>S-109 — Chairman CSE Dept. (Conference)</title></rect>
+            <rect id="f1_room_1790267337608" class="selectable-room" x="749" y="884" width="96" height="87" transform="rotate(354 797 927.5)" data-name="S-102" data-code="AUMS" role="button" tabindex="0" aria-label="S-102 (AUMS)" aria-pressed="false"><title>S-102 (AUMS)</title></rect>
+            <rect id="f1_room_1790267611764" class="selectable-room" x="384" y="408" width="295" height="112" transform="rotate(354 531.5 464)" data-name="A-108" data-code="AMH-101" role="button" tabindex="0" aria-label="A-108 (AMH-101)" aria-pressed="false"><title>A-108 (AMH-101)</title></rect>
+            <rect id="f1_room_1790267932589" class="selectable-room" x="1102" y="560" width="100" height="89" transform="rotate(353 1152 604.5)" data-name="N-113" data-code="SA" role="button" tabindex="0" aria-label="N-113 (SA)" aria-pressed="false"><title>N-113 (SA)</title></rect>
+            <rect id="f1_room_1790267966500" class="selectable-room" x="1202" y="548" width="94" height="89" transform="rotate(353 1249 592.5)" data-name="N-114" role="button" tabindex="0" aria-label="N-114" aria-pressed="false"><title>N-114</title></rect>
+            <rect id="f1_room_1790268001235" class="selectable-room" x="1296" y="536" width="94" height="89" transform="rotate(353 1343 580.5)" data-name="N-115 — Dept. of CSE/CSA" role="button" tabindex="0" aria-label="N-115 — Dept. of CSE/CSA" aria-pressed="false"><title>N-115 — Dept. of CSE/CSA</title></rect>
+            <rect id="f1_room_1790500434656" class="selectable-room" x="979" y="856" width="155" height="88" transform="rotate(354 1056.5 900)" data-name="S-105" data-code="R-145" role="button" tabindex="0" aria-label="S-105 (R-145)" aria-pressed="false"><title>S-105 (R-145)</title></rect>
+            <rect id="f1_room_1790500485062" class="selectable-room" x="845" y="873" width="106" height="86" transform="rotate(353 898 916)" data-name="S-103" data-code="R-146" role="button" tabindex="0" aria-label="S-103 (R-146)" aria-pressed="false"><title>S-103 (R-146)</title></rect>
+            <rect id="f1_room_1790500552707" class="selectable-room" x="533" y="911" width="75" height="63" transform="rotate(355 570.5 942.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f1_room_1790500614032" class="selectable-room" x="505" y="657" width="75" height="63" transform="rotate(355 542.5 688.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f1_room_1790500619454" class="selectable-room" x="961" y="732" width="54" height="66" transform="rotate(355 988 765)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f1_room_1790500625267" class="selectable-room" x="859" y="289" width="60" height="63" transform="rotate(355 889 320.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f1_room_1790500631547" class="selectable-room" x="1631" y="660" width="60" height="63" transform="rotate(355 1661 691.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f1_room_1790500639780" class="selectable-room" x="885" y="959" width="75" height="63" transform="rotate(353 922.5 990.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f1_room_1790500650489" class="selectable-room" x="1324" y="460" width="75" height="63" transform="rotate(355 1361.5 491.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f1_room_1790500850398" class="selectable-room" x="824" y="77" width="91" height="81" transform="rotate(353 869.5 117.5)" data-name="Men&#039;s Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men&#039;s Toilet (WC)" aria-pressed="false"><title>Men&#039;s Toilet (WC)</title></rect>
+            <rect id="f1_room_1790500900853" class="selectable-room" x="1614" y="1022" width="125" height="68" transform="rotate(353 1676.5 1056)" data-name="Ladies&#039; Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies&#039; Toilet (WC)" aria-pressed="false"><title>Ladies&#039; Toilet (WC)</title></rect>
+            <rect id="f1_room_1790500984653" class="selectable-room" x="1164" y="1043" width="93" height="73" transform="rotate(353 1210.5 1079.5)" data-name="Ladies&#039; Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies&#039; Toilet (WC)" aria-pressed="false"><title>Ladies&#039; Toilet (WC)</title></rect>
+            <rect id="f1_room_1790501046808" class="selectable-room" x="1529" y="291" width="130" height="66" transform="rotate(353 1594 324)" data-name="Men&#039;s Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men&#039;s Toilet (WC)" aria-pressed="false"><title>Men&#039;s Toilet (WC)</title></rect>
+            <rect id="f1_room_1790501831784" class="selectable-room" x="719" y="606" width="95" height="89" transform="rotate(354 766.5 650.5)" data-name="N-102" data-code="ADM-105" role="button" tabindex="0" aria-label="N-102 (ADM-105)" aria-pressed="false"><title>N-102 (ADM-105)</title></rect>
+            <rect id="f1_room_1790501909379" class="selectable-room" x="940" y="580" width="134" height="89" transform="rotate(353 1007 624.5)" data-name="CS Staff Room" data-code="R-155" role="button" tabindex="0" aria-label="CS Staff Room (R-155)" aria-pressed="false"><title>CS Staff Room (R-155)</title></rect>
+            <rect id="f1_room_1790521278087" class="selectable-room" x="440" y="1072" width="80" height="42" transform="rotate(355 480 1093)" data-name="Ladies&#039; Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies&#039; Toilet (WC)" aria-pressed="false"><title>Ladies&#039; Toilet (WC)</title></rect>
+            <rect id="f1_room_1790521338973" class="selectable-room" x="391" y="532" width="69" height="43" transform="rotate(354 425.5 553.5)" data-name="Men&#039;s Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men&#039;s Toilet (WC)" aria-pressed="false"><title>Men&#039;s Toilet (WC)</title></rect>
+            <!-- First Floor Active Route Layer -->
+            <g id="route-layer-first" class="route-layer" data-floor="first"></g>
+          </svg>
+        </div>
+
+        <!-- Second Floor -->
+        <div class="floor-layer" id="floor-layer-second" data-floor="second">
+          <img 
+            src="floor-2.svg" 
+            alt="Amrita Nav - Second Floor" 
+            class="central-image"
+            draggable="false"
+          >
+          <svg class="selection-overlay" viewBox="0 0 2112 1300" aria-label="Amrita Nav Second Floor Plan">
+            <rect id="f2_room_nanosciences" class="selectable-room" x="730" y="197" width="113" height="326" transform="rotate(353 786.5 360)" data-name="N-207" data-code="ACN" role="button" tabindex="0" aria-label="N-207 (ACN)" aria-pressed="false"><title>N-207 (ACN)</title></rect>
+            <rect id="f2_room_special_hall" class="selectable-room" x="300" y="580" width="165" height="94" transform="rotate(354 382.5 627)" data-name="A-208" data-code="SPH-102" role="button" tabindex="0" aria-label="A-208 (SPH-102)" aria-pressed="false"><title>A-208 (SPH-102)</title></rect>
+            <rect id="f2_room_gad_office" class="selectable-room" x="378" y="671" width="75" height="62" transform="rotate(354 415.5 702)" data-name="A-207" data-code="GAD-103" role="button" tabindex="0" aria-label="A-207 (GAD-103)" aria-pressed="false"><title>A-207 (GAD-103)</title></rect>
+            <rect id="f2_room_admin_block_a" class="selectable-room" x="297" y="738" width="174" height="189" transform="rotate(353 384 832.5)" data-name="A-204" data-code="ADM-BLK-A" role="button" tabindex="0" aria-label="A-204 (ADM-BLK-A)" aria-pressed="false"><title>A-204 (ADM-BLK-A)</title></rect>
+            <rect id="f2_room_admission_office" class="selectable-room" x="618" y="617" width="100" height="89" transform="rotate(354 668 661.5)" data-name="N-201" data-code="ADM-105" role="button" tabindex="0" aria-label="N-201 (ADM-105)" aria-pressed="false"><title>N-201 (ADM-105)</title></rect>
+            <rect id="f2_room_cir_seminar" class="selectable-room" x="811" y="594" width="101" height="89" transform="rotate(353 861.5 638.5)" data-name="N-203" data-code="CIR-106" role="button" tabindex="0" aria-label="N-203 (CIR-106)" aria-pressed="false"><title>N-203 (CIR-106)</title></rect>
+            <rect id="f2_room_guest_room" class="selectable-room" x="652" y="895" width="97" height="85" transform="rotate(354 700.5 937.5)" data-name="S-201" data-code="GST-107" role="button" tabindex="0" aria-label="S-201 (GST-107)" aria-pressed="false"><title>S-201 (GST-107)</title></rect>
+            <rect id="f2_room_mini_conf" class="selectable-room" x="407" y="924" width="73" height="60" transform="rotate(354 443.5 954)" data-name="A-205" data-code="CONF-MINI" role="button" tabindex="0" aria-label="A-205 (CONF-MINI)" aria-pressed="false"><title>A-205 (CONF-MINI)</title></rect>
+            <rect id="f2_room_main_conf" class="selectable-room" x="353" y="986" width="161" height="91" transform="rotate(354 433.5 1031.5)" data-name="A-203" data-code="CONF-MAIN" role="button" tabindex="0" aria-label="A-203 (CONF-MAIN)" aria-pressed="false"><title>A-203 (CONF-MAIN)</title></rect>
+            <rect id="f2_room_acharya_hall" class="selectable-room" x="459" y="1101" width="295" height="112" transform="rotate(354 606.5 1157)" data-name="A-202" data-code="ACH-110" role="button" tabindex="0" aria-label="A-202 (ACH-110)" aria-pressed="false"><title>A-202 (ACH-110)</title></rect>
+            <rect id="f2_room_stationery" class="selectable-room" x="808" y="1082" width="38" height="113" transform="rotate(354 827 1138.5)" data-name="A-201" data-code="STN-111" role="button" tabindex="0" aria-label="A-201 (STN-111)" aria-pressed="false"><title>A-201 (STN-111)</title></rect>
+            <rect id="f2_room_mfg_lab" class="selectable-room" x="845" y="1070" width="226" height="111" transform="rotate(354 958 1125.5)" data-name="S-205" data-code="LAB-MFG" role="button" tabindex="0" aria-label="S-205 (LAB-MFG)" aria-pressed="false"><title>S-205 (LAB-MFG)</title></rect>
+            <rect id="f2_room_mat_testing" class="selectable-room" x="1070" y="1055" width="65" height="111" transform="rotate(354 1102.5 1110.5)" data-name="S-206" data-code="LAB-MTL" role="button" tabindex="0" aria-label="S-206 (LAB-MTL)" aria-pressed="false"><title>S-206 (LAB-MTL)</title></rect>
+            <rect id="f2_room_wireless_ctr" class="selectable-room" x="960" y="440" width="111" height="66" transform="rotate(354 1015.5 473)" data-name="N-208" data-code="ACWNA" role="button" tabindex="0" aria-label="N-208 (ACWNA)" aria-pressed="false"><title>N-208 (ACWNA)</title></rect>
+            <rect id="f2_room_north_wing" class="selectable-room" x="860" y="184" width="60" height="292" transform="rotate(353 890 330)" data-name="North Corridor Wing" data-code="CORR-N" role="button" tabindex="0" aria-label="North Corridor Wing (CORR-N)" aria-pressed="false"><title>North Corridor Wing (CORR-N)</title></rect>
+            <rect id="f2_room_director_dean" class="selectable-room" x="1135" y="840" width="99" height="90" transform="rotate(354 1184.5 885)" data-name="S-210" data-code="DIR-OFFICE" role="button" tabindex="0" aria-label="S-210 (DIR-OFFICE)" aria-pressed="false"><title>S-210 (DIR-OFFICE)</title></rect>
+            <rect id="f2_room_ladies_infirmary" class="selectable-room" x="1330" y="820" width="30" height="92" transform="rotate(354 1345 866)" data-name="S-212" data-code="INF-118" role="button" tabindex="0" aria-label="S-212 (INF-118)" aria-pressed="false"><title>S-212 (INF-118)</title></rect>
+            <rect id="f2_room_metallurgy" class="selectable-room" x="1205" y="332" width="69" height="109" transform="rotate(353 1239.5 386.5)" data-name="N-218" data-code="LAB-MET" role="button" tabindex="0" aria-label="N-218 (LAB-MET)" aria-pressed="false"><title>N-218 (LAB-MET)</title></rect>
+            <rect id="f2_room_fluid_mech" class="selectable-room" x="1276" y="319" width="127" height="110" transform="rotate(353 1339.5 374)" data-name="N-220 / N-219" data-code="LAB-FML" role="button" tabindex="0" aria-label="N-220 / N-219 (LAB-FML)" aria-pressed="false"><title>N-220 / N-219 (LAB-FML)</title></rect>
+            <rect id="f2_room_cae_cell" class="selectable-room" x="1403" y="308" width="62" height="111" transform="rotate(352 1434 363.5)" data-name="N-221" data-code="CAE-121" role="button" tabindex="0" aria-label="N-221 (CAE-121)" aria-pressed="false"><title>N-221 (CAE-121)</title></rect>
+            <rect id="f2_room_dynamics_lab" class="selectable-room" x="1466" y="300" width="65" height="111" transform="rotate(353 1498.5 355.5)" data-name="N-220" data-code="LAB-MDL" role="button" tabindex="0" aria-label="N-220 (LAB-MDL)" aria-pressed="false"><title>N-220 (LAB-MDL)</title></rect>
+            <rect id="f2_room_math_dept" class="selectable-room" x="1458" y="519" width="129" height="89" transform="rotate(354 1522.5 563.5)" data-name="N-222" data-code="MATH-DEPT" role="button" tabindex="0" aria-label="N-222 (MATH-DEPT)" aria-pressed="false"><title>N-222 (MATH-DEPT)</title></rect>
+            <rect id="f2_room_elec_machines" class="selectable-room" x="1614" y="474" width="263" height="108" transform="rotate(353 1745.5 528)" data-name="N-223" data-code="LAB-EML" role="button" tabindex="0" aria-label="N-223 (LAB-EML)" aria-pressed="false"><title>N-223 (LAB-EML)</title></rect>
+            <rect id="f2_room_prayer_hall" class="selectable-room" x="1876" y="456" width="63" height="107" transform="rotate(353 1907.5 509.5)" data-name="N-225" data-code="PRY-125" role="button" tabindex="0" aria-label="N-225 (PRY-125)" aria-pressed="false"><title>N-225 (PRY-125)</title></rect>
+            <rect id="f2_room_college_admin" class="selectable-room" x="1489" y="800" width="131" height="88" transform="rotate(353 1554.5 844)" data-name="S-216" data-code="CADM-127" role="button" tabindex="0" aria-label="S-216 (CADM-127)" aria-pressed="false"><title>S-216 (CADM-127)</title></rect>
+            <rect id="f2_room_computer_lab" class="selectable-room" x="1640" y="780" width="229" height="107" transform="rotate(353 1754.5 833.5)" data-name="S-220 / S-219 / S-218 / S-217" data-code="LAB-CS" role="button" tabindex="0" aria-label="S-220 / S-219 / S-218 / S-217 (LAB-CS)" aria-pressed="false"><title>S-220 / S-219 / S-218 / S-217 (LAB-CS)</title></rect>
+            <rect id="f2_room_mech_workshop" class="selectable-room" x="1287" y="1020" width="128" height="109" transform="rotate(354 1351 1074.5)" data-name="S-203" data-code="LAB-MECH" role="button" tabindex="0" aria-label="S-203 (LAB-MECH)" aria-pressed="false"><title>S-203 (LAB-MECH)</title></rect>
+            <rect id="f2_room_robotics_lab" class="selectable-room" x="1414" y="1009" width="69" height="108" transform="rotate(354 1448.5 1063)" data-name="S-202" data-code="LAB-ROBO" role="button" tabindex="0" aria-label="S-202 (LAB-ROBO)" aria-pressed="false"><title>S-202 (LAB-ROBO)</title></rect>
+            <rect id="f2_room_wind_tunnel" class="selectable-room" x="1483" y="998" width="129" height="109" transform="rotate(354 1547.5 1052.5)" data-name="S-214" data-code="LAB-WIND" role="button" tabindex="0" aria-label="S-214 (LAB-WIND)" aria-pressed="false"><title>S-214 (LAB-WIND)</title></rect>
+            <rect id="f2_room_1790266501061" class="selectable-room" x="952" y="337" width="111" height="103" transform="rotate(354 1007.5 388.5)" data-name="N-209" data-code="LAB-FLUID" role="button" tabindex="0" aria-label="N-209 (LAB-FLUID)" aria-pressed="false"><title>N-209 (LAB-FLUID)</title></rect>
+            <rect id="f2_room_1790266683270" class="selectable-room" x="935" y="170" width="112" height="168" transform="rotate(354 991 254)" data-name="N-210" data-code="R-136" role="button" tabindex="0" aria-label="N-210 (R-136)" aria-pressed="false"><title>N-210 (R-136)</title></rect>
+            <rect id="f2_room_1790267011208" class="selectable-room" x="1233" y="829" width="96" height="91" transform="rotate(354 1281 874.5)" data-name="S-211" data-code="Arts and Science" role="button" tabindex="0" aria-label="S-211 (Arts and Science)" aria-pressed="false"><title>S-211 (Arts and Science)</title></rect>
+            <rect id="f2_room_1790267197118" class="selectable-room" x="1360" y="816" width="69" height="91" transform="rotate(354 1394.5 861.5)" data-name="S-212" data-code="Conference" role="button" tabindex="0" aria-label="S-212 (Conference)" aria-pressed="false"><title>S-212 (Conference)</title></rect>
+            <rect id="f2_room_1790267337608" class="selectable-room" x="749" y="884" width="96" height="87" transform="rotate(354 797 927.5)" data-name="S-202" data-code="AUMS" role="button" tabindex="0" aria-label="S-202 (AUMS)" aria-pressed="false"><title>S-202 (AUMS)</title></rect>
+            <rect id="f2_room_1790267611764" class="selectable-room" x="384" y="408" width="295" height="112" transform="rotate(354 531.5 464)" data-name="A-210" data-code="AMH-101" role="button" tabindex="0" aria-label="A-210 (AMH-101)" aria-pressed="false"><title>A-210 (AMH-101)</title></rect>
+            <rect id="f2_room_1790267932589" class="selectable-room" x="1102" y="560" width="100" height="89" transform="rotate(353 1152 604.5)" data-name="N-215" data-code="SA" role="button" tabindex="0" aria-label="N-215 (SA)" aria-pressed="false"><title>N-215 (SA)</title></rect>
+            <rect id="f2_room_1790267966500" class="selectable-room" x="1202" y="548" width="94" height="89" transform="rotate(353 1249 592.5)" data-name="N-216" role="button" tabindex="0" aria-label="N-216" aria-pressed="false"><title>N-216</title></rect>
+            <rect id="f2_room_1790268001235" class="selectable-room" x="1296" y="536" width="94" height="89" transform="rotate(353 1343 580.5)" data-name="N-217" role="button" tabindex="0" aria-label="N-217" aria-pressed="false"><title>N-217</title></rect>
+            <rect id="f2_room_1790500434656" class="selectable-room" x="979" y="856" width="155" height="88" transform="rotate(354 1056.5 900)" data-name="S-206" data-code="R-145" role="button" tabindex="0" aria-label="S-206 (R-145)" aria-pressed="false"><title>S-206 (R-145)</title></rect>
+            <rect id="f2_room_1790500485062" class="selectable-room" x="845" y="873" width="106" height="86" transform="rotate(353 898 916)" data-name="S-203" data-code="R-146" role="button" tabindex="0" aria-label="S-203 (R-146)" aria-pressed="false"><title>S-203 (R-146)</title></rect>
+            <rect id="f2_room_1790500552707" class="selectable-room" x="533" y="911" width="75" height="63" transform="rotate(355 570.5 942.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f2_room_1790500614032" class="selectable-room" x="505" y="657" width="75" height="63" transform="rotate(355 542.5 688.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f2_room_1790500619454" class="selectable-room" x="961" y="732" width="54" height="66" transform="rotate(355 988 765)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f2_room_1790500625267" class="selectable-room" x="859" y="289" width="60" height="63" transform="rotate(355 889 320.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f2_room_1790500631547" class="selectable-room" x="1631" y="660" width="60" height="63" transform="rotate(355 1661 691.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f2_room_1790500639780" class="selectable-room" x="885" y="959" width="75" height="63" transform="rotate(353 922.5 990.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f2_room_1790500650489" class="selectable-room" x="1324" y="460" width="75" height="63" transform="rotate(355 1361.5 491.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f2_room_1790500850398" class="selectable-room" x="824" y="77" width="91" height="81" transform="rotate(353 869.5 117.5)" data-name="Men&#039;s Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men&#039;s Toilet (WC)" aria-pressed="false"><title>Men&#039;s Toilet (WC)</title></rect>
+            <rect id="f2_room_1790500900853" class="selectable-room" x="1614" y="1022" width="125" height="68" transform="rotate(353 1676.5 1056)" data-name="Ladies&#039; Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies&#039; Toilet (WC)" aria-pressed="false"><title>Ladies&#039; Toilet (WC)</title></rect>
+            <rect id="f2_room_1790500984653" class="selectable-room" x="1164" y="1043" width="93" height="73" transform="rotate(353 1210.5 1079.5)" data-name="Ladies&#039; Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies&#039; Toilet (WC)" aria-pressed="false"><title>Ladies&#039; Toilet (WC)</title></rect>
+            <rect id="f2_room_1790501046808" class="selectable-room" x="1529" y="291" width="130" height="66" transform="rotate(353 1594 324)" data-name="Men&#039;s Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men&#039;s Toilet (WC)" aria-pressed="false"><title>Men&#039;s Toilet (WC)</title></rect>
+            <rect id="f2_room_1790501831784" class="selectable-room" x="719" y="606" width="95" height="89" transform="rotate(354 766.5 650.5)" data-name="N-202" data-code="ADM-105" role="button" tabindex="0" aria-label="N-202 (ADM-105)" aria-pressed="false"><title>N-202 (ADM-105)</title></rect>
+            <rect id="f2_room_1790501909379" class="selectable-room" x="940" y="580" width="134" height="89" transform="rotate(353 1007 624.5)" data-name="N-214" data-code="R-155" role="button" tabindex="0" aria-label="N-214 (R-155)" aria-pressed="false"><title>N-214 (R-155)</title></rect>
+            <rect id="f2_room_1790502692180" class="selectable-room" x="1880" y="758" width="97" height="109" transform="rotate(354 1928.5 812.5)" data-name="Microwave Lab" data-code="R-155" role="button" tabindex="0" aria-label="Microwave Lab (R-155)" aria-pressed="false"><title>Microwave Lab (R-155)</title></rect>
+            <rect id="f2_room_1790520116929" class="selectable-room" x="454" y="1072" width="64" height="41" transform="rotate(355 486 1092.5)" data-name="Ladies&#039; Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies&#039; Toilet (WC)" aria-pressed="false"><title>Ladies&#039; Toilet (WC)</title></rect>
+            <rect id="f2_room_1790520135835" class="selectable-room" x="391" y="532" width="69" height="43" transform="rotate(354 425.5 553.5)" data-name="Men&#039;s Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men&#039;s Toilet (WC)" aria-pressed="false"><title>Men&#039;s Toilet (WC)</title></rect>
+            <!-- Second Floor Active Route Layer -->
+            <g id="route-layer-second" class="route-layer" data-floor="second"></g>
+          </svg>
+        </div>
+
+        <!-- Third Floor -->
+        <div class="floor-layer" id="floor-layer-third" data-floor="third">
+          <img 
+            src="floor-3.svg" 
+            alt="Amrita Nav - Third Floor" 
+            class="central-image"
+            draggable="false"
+          >
+          <svg class="selection-overlay" viewBox="0 0 2112 1300" aria-label="Amrita Nav Third Floor Plan">
+            <rect id="f3_room_nanosciences" class="selectable-room" x="730" y="197" width="113" height="326" transform="rotate(353 786.5 360)" data-name="N-306" data-code="ACN" role="button" tabindex="0" aria-label="N-306 (ACN)" aria-pressed="false"><title>N-306 (ACN)</title></rect>
+            <rect id="f3_room_special_hall" class="selectable-room" x="300" y="580" width="165" height="94" transform="rotate(354 382.5 627)" data-name="A-308" data-code="SPH-102" role="button" tabindex="0" aria-label="A-308 (SPH-102)" aria-pressed="false"><title>A-308 (SPH-102)</title></rect>
+            <rect id="f3_room_gad_office" class="selectable-room" x="378" y="671" width="75" height="62" transform="rotate(354 415.5 702)" data-name="A-307" data-code="GAD-103" role="button" tabindex="0" aria-label="A-307 (GAD-103)" aria-pressed="false"><title>A-307 (GAD-103)</title></rect>
+            <rect id="f3_room_admin_block_a" class="selectable-room" x="297" y="738" width="174" height="189" transform="rotate(353 384 832.5)" data-name="A-304" data-code="ADM-BLK-A" role="button" tabindex="0" aria-label="A-304 (ADM-BLK-A)" aria-pressed="false"><title>A-304 (ADM-BLK-A)</title></rect>
+            <rect id="f3_room_admission_office" class="selectable-room" x="618" y="617" width="100" height="89" transform="rotate(354 668 661.5)" data-name="N-301" data-code="ADM-105" role="button" tabindex="0" aria-label="N-301 (ADM-105)" aria-pressed="false"><title>N-301 (ADM-105)</title></rect>
+            <rect id="f3_room_cir_seminar" class="selectable-room" x="811" y="594" width="101" height="89" transform="rotate(353 861.5 638.5)" data-name="N-303" data-code="CIR-106" role="button" tabindex="0" aria-label="N-303 (CIR-106)" aria-pressed="false"><title>N-303 (CIR-106)</title></rect>
+            <rect id="f3_room_guest_room" class="selectable-room" x="652" y="895" width="97" height="85" transform="rotate(354 700.5 937.5)" data-name="S-301" data-code="GST-107" role="button" tabindex="0" aria-label="S-301 (GST-107)" aria-pressed="false"><title>S-301 (GST-107)</title></rect>
+            <rect id="f3_room_mini_conf" class="selectable-room" x="407" y="924" width="73" height="60" transform="rotate(354 443.5 954)" data-name="A-305" data-code="CONF-MINI" role="button" tabindex="0" aria-label="A-305 (CONF-MINI)" aria-pressed="false"><title>A-305 (CONF-MINI)</title></rect>
+            <rect id="f3_room_main_conf" class="selectable-room" x="353" y="986" width="161" height="91" transform="rotate(354 433.5 1031.5)" data-name="A-303" data-code="CONF-MAIN" role="button" tabindex="0" aria-label="A-303 (CONF-MAIN)" aria-pressed="false"><title>A-303 (CONF-MAIN)</title></rect>
+            <rect id="f3_room_acharya_hall" class="selectable-room" x="459" y="1101" width="295" height="112" transform="rotate(354 606.5 1157)" data-name="A-302" data-code="ACH-110" role="button" tabindex="0" aria-label="A-302 (ACH-110)" aria-pressed="false"><title>A-302 (ACH-110)</title></rect>
+            <rect id="f3_room_stationery" class="selectable-room" x="808" y="1082" width="38" height="113" transform="rotate(354 827 1138.5)" data-name="A-301" data-code="STN-111" role="button" tabindex="0" aria-label="A-301 (STN-111)" aria-pressed="false"><title>A-301 (STN-111)</title></rect>
+            <rect id="f3_room_mfg_lab" class="selectable-room" x="845" y="1070" width="226" height="111" transform="rotate(354 958 1125.5)" data-name="S-305" data-code="LAB-MFG" role="button" tabindex="0" aria-label="S-305 (LAB-MFG)" aria-pressed="false"><title>S-305 (LAB-MFG)</title></rect>
+            <rect id="f3_room_mat_testing" class="selectable-room" x="1070" y="1055" width="65" height="111" transform="rotate(354 1102.5 1110.5)" data-name="S-306" data-code="LAB-MTL" role="button" tabindex="0" aria-label="S-306 (LAB-MTL)" aria-pressed="false"><title>S-306 (LAB-MTL)</title></rect>
+            <rect id="f3_room_wireless_ctr" class="selectable-room" x="960" y="440" width="111" height="66" transform="rotate(354 1015.5 473)" data-name="N-317" data-code="ACWNA" role="button" tabindex="0" aria-label="N-317 (ACWNA)" aria-pressed="false"><title>N-317 (ACWNA)</title></rect>
+            <rect id="f3_room_north_wing" class="selectable-room" x="860" y="180" width="60" height="292" transform="rotate(353 890 326)" data-name="North Corridor Wing" data-code="CORR-N" role="button" tabindex="0" aria-label="North Corridor Wing (CORR-N)" aria-pressed="false"><title>North Corridor Wing (CORR-N)</title></rect>
+            <rect id="f3_room_director_dean" class="selectable-room" x="1135" y="840" width="99" height="90" transform="rotate(354 1184.5 885)" data-name="S-309" data-code="DIR-OFFICE" role="button" tabindex="0" aria-label="S-309 (DIR-OFFICE)" aria-pressed="false"><title>S-309 (DIR-OFFICE)</title></rect>
+            <rect id="f3_room_ladies_infirmary" class="selectable-room" x="1330" y="820" width="30" height="92" transform="rotate(354 1345 866)" data-name="S-312" data-code="INF-118" role="button" tabindex="0" aria-label="S-312 (INF-118)" aria-pressed="false"><title>S-312 (INF-118)</title></rect>
+            <rect id="f3_room_metallurgy" class="selectable-room" x="1205" y="332" width="69" height="109" transform="rotate(353 1239.5 386.5)" data-name="N-319" data-code="LAB-MET" role="button" tabindex="0" aria-label="N-319 (LAB-MET)" aria-pressed="false"><title>N-319 (LAB-MET)</title></rect>
+            <rect id="f3_room_fluid_mech" class="selectable-room" x="1276" y="319" width="127" height="110" transform="rotate(353 1339.5 374)" data-name="N-320" data-code="LAB-FML" role="button" tabindex="0" aria-label="N-320 (LAB-FML)" aria-pressed="false"><title>N-320 (LAB-FML)</title></rect>
+            <rect id="f3_room_cae_cell" class="selectable-room" x="1403" y="308" width="62" height="111" transform="rotate(352 1434 363.5)" data-name="N-323" data-code="CAE-121" role="button" tabindex="0" aria-label="N-323 (CAE-121)" aria-pressed="false"><title>N-323 (CAE-121)</title></rect>
+            <rect id="f3_room_dynamics_lab" class="selectable-room" x="1466" y="300" width="65" height="111" transform="rotate(353 1498.5 355.5)" data-name="N-321" data-code="LAB-MDL" role="button" tabindex="0" aria-label="N-321 (LAB-MDL)" aria-pressed="false"><title>N-321 (LAB-MDL)</title></rect>
+            <rect id="f3_room_math_dept" class="selectable-room" x="1458" y="519" width="129" height="89" transform="rotate(354 1522.5 563.5)" data-name="N-322" data-code="MATH-DEPT" role="button" tabindex="0" aria-label="N-322 (MATH-DEPT)" aria-pressed="false"><title>N-322 (MATH-DEPT)</title></rect>
+            <rect id="f3_room_elec_machines" class="selectable-room" x="1614" y="474" width="263" height="108" transform="rotate(353 1745.5 528)" data-name="N-325" data-code="LAB-EML" role="button" tabindex="0" aria-label="N-325 (LAB-EML)" aria-pressed="false"><title>N-325 (LAB-EML)</title></rect>
+            <rect id="f3_room_prayer_hall" class="selectable-room" x="1876" y="456" width="63" height="107" transform="rotate(353 1907.5 509.5)" data-name="N-327" data-code="PRY-125" role="button" tabindex="0" aria-label="N-327 (PRY-125)" aria-pressed="false"><title>N-327 (PRY-125)</title></rect>
+            <rect id="f3_room_college_admin" class="selectable-room" x="1489" y="800" width="131" height="88" transform="rotate(353 1554.5 844)" data-name="S-315" data-code="CADM-127" role="button" tabindex="0" aria-label="S-315 (CADM-127)" aria-pressed="false"><title>S-315 (CADM-127)</title></rect>
+            <rect id="f3_room_computer_lab" class="selectable-room" x="1649" y="778" width="229" height="107" transform="rotate(353 1763.5 831.5)" data-name="S-318" data-code="LAB-CS" role="button" tabindex="0" aria-label="S-318 (LAB-CS)" aria-pressed="false"><title>S-318 (LAB-CS)</title></rect>
+            <rect id="f3_room_mech_workshop" class="selectable-room" x="1287" y="1020" width="128" height="109" transform="rotate(354 1351 1074.5)" data-name="S-311" data-code="LAB-MECH" role="button" tabindex="0" aria-label="S-311 (LAB-MECH)" aria-pressed="false"><title>S-311 (LAB-MECH)</title></rect>
+            <rect id="f3_room_robotics_lab" class="selectable-room" x="1414" y="1009" width="69" height="108" transform="rotate(354 1448.5 1063)" data-name="S-302" data-code="LAB-ROBO" role="button" tabindex="0" aria-label="S-302 (LAB-ROBO)" aria-pressed="false"><title>S-302 (LAB-ROBO)</title></rect>
+            <rect id="f3_room_wind_tunnel" class="selectable-room" x="1483" y="998" width="129" height="109" transform="rotate(354 1547.5 1052.5)" data-name="S-314" data-code="LAB-WIND" role="button" tabindex="0" aria-label="S-314 (LAB-WIND)" aria-pressed="false"><title>S-314 (LAB-WIND)</title></rect>
+            <rect id="f3_room_1790266501061" class="selectable-room" x="952" y="337" width="111" height="103" transform="rotate(354 1007.5 388.5)" data-name="N-310" data-code="LAB-FLUID" role="button" tabindex="0" aria-label="N-310 (LAB-FLUID)" aria-pressed="false"><title>N-310 (LAB-FLUID)</title></rect>
+            <rect id="f3_room_1790266683270" class="selectable-room" x="935" y="170" width="112" height="168" transform="rotate(354 991 254)" data-name="N-309" data-code="R-136" role="button" tabindex="0" aria-label="N-309 (R-136)" aria-pressed="false"><title>N-309 (R-136)</title></rect>
+            <rect id="f3_room_1790267011208" class="selectable-room" x="1233" y="829" width="96" height="91" transform="rotate(354 1281 874.5)" data-name="S-313" data-code="Arts and Science" role="button" tabindex="0" aria-label="S-313 (Arts and Science)" aria-pressed="false"><title>S-313 (Arts and Science)</title></rect>
+            <rect id="f3_room_1790267197118" class="selectable-room" x="1360" y="816" width="69" height="91" transform="rotate(354 1394.5 861.5)" data-name="S-310" data-code="Conference" role="button" tabindex="0" aria-label="S-310 (Conference)" aria-pressed="false"><title>S-310 (Conference)</title></rect>
+            <rect id="f3_room_1790267337608" class="selectable-room" x="749" y="884" width="96" height="87" transform="rotate(354 797 927.5)" data-name="S-302" data-code="AUMS" role="button" tabindex="0" aria-label="S-302 (AUMS)" aria-pressed="false"><title>S-302 (AUMS)</title></rect>
+            <rect id="f3_room_1790267611764" class="selectable-room" x="384" y="408" width="295" height="112" transform="rotate(354 531.5 464)" data-name="A-304/2" data-code="AMH-101" role="button" tabindex="0" aria-label="A-304/2 (AMH-101)" aria-pressed="false"><title>A-304/2 (AMH-101)</title></rect>
+            <rect id="f3_room_1790267932589" class="selectable-room" x="1102" y="560" width="100" height="89" transform="rotate(353 1152 604.5)" data-name="N-315" data-code="SA" role="button" tabindex="0" aria-label="N-315 (SA)" aria-pressed="false"><title>N-315 (SA)</title></rect>
+            <rect id="f3_room_1790267966500" class="selectable-room" x="1202" y="548" width="94" height="89" transform="rotate(353 1249 592.5)" data-name="N-316" role="button" tabindex="0" aria-label="N-316" aria-pressed="false"><title>N-316</title></rect>
+            <rect id="f3_room_1790268001235" class="selectable-room" x="1296" y="536" width="94" height="89" transform="rotate(353 1343 580.5)" data-name="N-318" role="button" tabindex="0" aria-label="N-318" aria-pressed="false"><title>N-318</title></rect>
+            <rect id="f3_room_1790500434656" class="selectable-room" x="979" y="856" width="155" height="88" transform="rotate(354 1056.5 900)" data-name="S-307" data-code="R-145" role="button" tabindex="0" aria-label="S-307 (R-145)" aria-pressed="false"><title>S-307 (R-145)</title></rect>
+            <rect id="f3_room_1790500485062" class="selectable-room" x="845" y="873" width="106" height="86" transform="rotate(353 898 916)" data-name="S-303" data-code="R-146" role="button" tabindex="0" aria-label="S-303 (R-146)" aria-pressed="false"><title>S-303 (R-146)</title></rect>
+            <rect id="f3_room_1790500552707" class="selectable-room" x="533" y="911" width="75" height="63" transform="rotate(355 570.5 942.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f3_room_1790500614032" class="selectable-room" x="505" y="657" width="75" height="63" transform="rotate(355 542.5 688.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f3_room_1790500619454" class="selectable-room" x="961" y="732" width="54" height="66" transform="rotate(355 988 765)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f3_room_1790500625267" class="selectable-room" x="859" y="289" width="60" height="63" transform="rotate(355 889 320.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f3_room_1790500631547" class="selectable-room" x="1631" y="660" width="60" height="63" transform="rotate(355 1661 691.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f3_room_1790500639780" class="selectable-room" x="885" y="959" width="75" height="63" transform="rotate(353 922.5 990.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f3_room_1790500650489" class="selectable-room" x="1324" y="460" width="75" height="63" transform="rotate(355 1361.5 491.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
+            <rect id="f3_room_1790500850398" class="selectable-room" x="824" y="77" width="91" height="81" transform="rotate(353 869.5 117.5)" data-name="Men&#039;s Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men&#039;s Toilet (WC)" aria-pressed="false"><title>Men&#039;s Toilet (WC)</title></rect>
+            <rect id="f3_room_1790500900853" class="selectable-room" x="1614" y="1022" width="125" height="68" transform="rotate(353 1676.5 1056)" data-name="Ladies&#039; Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies&#039; Toilet (WC)" aria-pressed="false"><title>Ladies&#039; Toilet (WC)</title></rect>
+            <rect id="f3_room_1790500984653" class="selectable-room" x="1164" y="1043" width="93" height="73" transform="rotate(353 1210.5 1079.5)" data-name="Ladies&#039; Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies&#039; Toilet (WC)" aria-pressed="false"><title>Ladies&#039; Toilet (WC)</title></rect>
+            <rect id="f3_room_1790501046808" class="selectable-room" x="1529" y="291" width="130" height="66" transform="rotate(353 1594 324)" data-name="Men&#039;s Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men&#039;s Toilet (WC)" aria-pressed="false"><title>Men&#039;s Toilet (WC)</title></rect>
+            <rect id="f3_room_1790501831784" class="selectable-room" x="719" y="606" width="95" height="89" transform="rotate(354 766.5 650.5)" data-name="N-302" data-code="ADM-105" role="button" tabindex="0" aria-label="N-302 (ADM-105)" aria-pressed="false"><title>N-302 (ADM-105)</title></rect>
+            <rect id="f3_room_1790501909379" class="selectable-room" x="940" y="580" width="134" height="89" transform="rotate(353 1007 624.5)" data-name="N-314" data-code="R-155" role="button" tabindex="0" aria-label="N-314 (R-155)" aria-pressed="false"><title>N-314 (R-155)</title></rect>
+            <rect id="f3_room_1790502692180" class="selectable-room" x="1880" y="758" width="97" height="109" transform="rotate(354 1928.5 812.5)" data-name="S-319 — HUT Lab" data-code="R-155" role="button" tabindex="0" aria-label="S-319 — HUT Lab (R-155)" aria-pressed="false"><title>S-319 — HUT Lab (R-155)</title></rect>
+            <rect id="f3_room_1790523167761" class="selectable-room" x="391" y="532" width="69" height="43" transform="rotate(355 425.5 553.5)" data-name="Men&#039;s Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men&#039;s Toilet (WC)" aria-pressed="false"><title>Men&#039;s Toilet (WC)</title></rect>
+            <rect id="f3_room_1790523236934" class="selectable-room" x="454" y="1072" width="64" height="41" transform="rotate(354 486 1092.5)" data-name="Ladies&#039; Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies&#039; Toilet (WC)" aria-pressed="false"><title>Ladies&#039; Toilet (WC)</title></rect>
+            <!-- Third Floor Active Route Layer -->
+            <g id="route-layer-third" class="route-layer" data-floor="third"></g>
+          </svg>
+        </div>
+      </div> <!-- /#map-pan-stage -->
+
+      <!-- Floating Map Zoom Controls -->
+      <div class="map-zoom-controls" id="map-zoom-controls" role="toolbar" aria-label="Map Zoom Controls">
+        <button type="button" class="map-zoom-btn" id="map-zoom-in" title="Zoom In" aria-label="Zoom In">+</button>
+        <button type="button" class="map-zoom-btn" id="map-zoom-out" title="Zoom Out" aria-label="Zoom Out">−</button>
+        <button type="button" class="map-zoom-btn reset" id="map-zoom-reset" title="Reset View" aria-label="Reset View">⟲</button>
+      </div>
+
+      <!-- Floating Navigation Arrow FAB (Re-center / Locate Me - matches screenshot bottom-right) -->
+      <div class="nav-fab" id="gps-dock">
+        <button id="gps-toggle-btn" class="nav-arrow-btn gps-toggle-btn" type="button" aria-label="Locate Me" title="Locate Me">
+          <svg class="nav-arrow-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+          </svg>
+          <span class="gps-status-dot" id="gps-status-dot" style="display: none;"></span>
+          <span class="gps-btn-text" id="gps-btn-text" style="display: none;">Locate Me</span>
+        </button>
+      </div>
+
+    </div> <!-- /#map-container -->
+  </div> <!-- /.image-wrapper -->
+</main> <!-- /#main-content -->
+
+    <!-- ── Room Details Popup Message (shown when room searched/selected) ── -->
+    <div id="room-details-popup" class="room-details-popup" style="display: none;" role="dialog" aria-modal="false" aria-labelledby="room-popup-title">
+      <div class="room-popup-card">
+        <div class="room-popup-header">
+          <div class="room-popup-badge-group">
+            <span id="room-popup-icon" class="room-popup-icon">📍</span>
+            <span id="room-popup-floor-badge" class="room-popup-floor-badge floor-ground">Ground Floor</span>
+            <span id="room-popup-category-badge" class="room-popup-category-badge">Room</span>
+          </div>
+          <button type="button" id="room-popup-close-btn" class="room-popup-close-btn" title="Close" aria-label="Close room details">✕</button>
+        </div>
+
+        <div class="room-popup-content">
+          <h2 id="room-popup-title" class="room-popup-title">Room Name</h2>
+          <div class="room-popup-meta-row">
+            <span id="room-popup-code-badge" class="room-popup-code-badge" style="display: none;"></span>
+            <span id="room-popup-floor-name" class="room-popup-floor-name">Ground Floor</span>
+          </div>
+        </div>
+
+        <div class="room-popup-footer">
+          <button type="button" id="room-popup-nav-btn" class="room-popup-nav-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+            </svg>
+            <span>Start Navigation</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Floating Bottom Navigation Dock (matches screenshot) ────── -->
+    <nav class="bottom-nav" id="bottom-nav" aria-label="Bottom Navigation">
+  <button type="button" class="bottom-nav-item active" id="bnav-explore" title="Explore Campus">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <span class="bottom-nav-label">Explore</span>
+  </button>
+  <button type="button" class="bottom-nav-item" id="bnav-routes" title="Directions & Route">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="6" cy="19" r="3"></circle>
+      <path d="M9 19h8.5a4.5 4.5 0 0 0 0-9H5a4 4 0 0 1 0-8h11"></path>
+      <circle cx="18" cy="5" r="3"></circle>
+    </svg>
+    <span class="bottom-nav-label">Routes</span>
+  </button>
+  <button type="button" class="bottom-nav-item" id="bnav-saved" title="Saved Places">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+    </svg>
+    <span class="bottom-nav-label">Saved</span>
+  </button>
+  <!-- THEME TOGGLE BUTTON: Replaces the layer feature in image as requested -->
+  <button type="button" class="bottom-nav-item bottom-nav-theme-btn" id="bnav-theme-toggle" title="Toggle Light / Dark Mode" aria-label="Toggle Light / Dark Mode">
+    <span id="bnav-theme-icon" class="bottom-nav-theme-icon">🌙</span>
+    <span class="bottom-nav-label" id="bnav-theme-label">Dark</span>
+  </button>
+  <button type="button" class="bottom-nav-item" id="bnav-profile" title="Campus Info">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+      <circle cx="12" cy="7" r="4"></circle>
+    </svg>
+    <span class="bottom-nav-label">Campus</span>
+  </button>
+</nav>
+
+<!-- ── Saved Places Drawer / Sheet ──────────────────────────── -->
+<div class="bottom-sheet" id="saved-places-sheet" style="display: none;" role="dialog" aria-labelledby="saved-title">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <h3 id="saved-title" class="sheet-title">Saved & Key Places</h3>
+    <button type="button" class="sheet-close-btn" id="saved-sheet-close" aria-label="Close saved places">✕</button>
+  </div>
+  <div class="sheet-content">
+    <div class="saved-item" data-room="room_acharya_hall" data-floor="ground">
+      <div class="saved-item-icon">🏛️</div>
+      <div class="saved-item-info">
+        <div class="saved-item-name">Acharya Hall</div>
+        <div class="saved-item-meta">Ground Floor • ACH-110</div>
+      </div>
+      <button type="button" class="saved-route-btn">Go</button>
+    </div>
+    <div class="saved-item" data-room="room_admin_block_a" data-floor="ground">
+      <div class="saved-item-icon">🏢</div>
+      <div class="saved-item-info">
+        <div class="saved-item-name">Administration Block (A) / Reception</div>
+        <div class="saved-item-meta">Ground Floor • ADM-BLK-A</div>
+      </div>
+      <button type="button" class="saved-route-btn">Go</button>
+    </div>
+    <div class="saved-item" data-room="room_special_hall" data-floor="ground">
+      <div class="saved-item-icon">🧘</div>
+      <div class="saved-item-info">
+        <div class="saved-item-name">Meditation Hall / SPH</div>
+        <div class="saved-item-meta">Ground Floor • SPH-102</div>
+      </div>
+      <button type="button" class="saved-route-btn">Go</button>
+    </div>
+    <div class="saved-item" data-room="room_cir_seminar" data-floor="ground">
+      <div class="saved-item-icon">🎓</div>
+      <div class="saved-item-info">
+        <div class="saved-item-name">CIR Seminar Room</div>
+        <div class="saved-item-meta">Ground Floor • CIR-106</div>
+      </div>
+      <button type="button" class="saved-route-btn">Go</button>
+    </div>
+    <div class="saved-item" data-room="f1_room_computer_lab" data-floor="first">
+      <div class="saved-item-icon">💻</div>
+      <div class="saved-item-info">
+        <div class="saved-item-name">Computer Lab (CSE)</div>
+        <div class="saved-item-meta">1st Floor • S-115</div>
+      </div>
+      <button type="button" class="saved-route-btn">Go</button>
+    </div>
+    <div class="saved-item" data-room="f2_room_main_conf" data-floor="second">
+      <div class="saved-item-icon">👥</div>
+      <div class="saved-item-info">
+        <div class="saved-item-name">Main Conference Room</div>
+        <div class="saved-item-meta">2nd Floor • CONF-MAIN</div>
+      </div>
+      <button type="button" class="saved-route-btn">Go</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Campus Info Drawer / Sheet ───────────────────────────── -->
+<div class="bottom-sheet" id="campus-info-sheet" style="display: none;" role="dialog" aria-labelledby="campus-title">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <h3 id="campus-title" class="sheet-title">Amrita Nav</h3>
+    <button type="button" class="sheet-close-btn" id="campus-sheet-close" aria-label="Close campus info">✕</button>
+  </div>
+  <div class="sheet-content">
+    <div class="campus-info-card">
+      <h4>📍 Indoor Navigation System</h4>
+      <p>Navigate across Ground, 1st, 2nd, and 3rd floors with shortest-path routing, staircase transition pins, and live GPS locator.</p>
+    </div>
+    <div class="campus-stats-row">
+      <div class="campus-stat">
+        <span class="stat-value">4</span>
+        <span class="stat-label">Floors</span>
+      </div>
+      <div class="campus-stat">
+        <span class="stat-value">60+</span>
+        <span class="stat-label">Rooms</span>
+      </div>
+      <div class="campus-stat">
+        <span class="stat-value">8</span>
+        <span class="stat-label">Staircases</span>
+      </div>
+    </div>
+    <div class="campus-legend">
+      <div class="legend-row"><span class="legend-dot green"></span> Start Location</div>
+      <div class="legend-row"><span class="legend-dot red"></span> Destination</div>
+      <div class="legend-row"><span class="legend-dot gold"></span> Stairway Change</div>
+      <div class="legend-row"><span class="legend-dot blue"></span> Live Location</div>
+    </div>
+  </div>
+</div>
+
+</div> <!-- /#app-shell -->
+  <script src="ground-nav-data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
