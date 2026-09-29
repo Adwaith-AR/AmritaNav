@@ -965,7 +965,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         mapPanStage.style.transition = 'none';
       }
-      mapPanStage.style.transform = `translate3d(${panX}px, ${panY}px, 0px) scale(${scale})`;
+      mapPanStage.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
     }
 
     mapPanStage.addEventListener('transitionend', () => {

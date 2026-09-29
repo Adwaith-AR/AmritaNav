@@ -12,7 +12,6 @@
   </defs>
 
   <!-- Background -->
-  <rect width="2112" height="1300" class="floorplan-bg"/>
 
   <!-- Vector Pathways & Corridors -->
   <g id="pathways" class="layer-pathways">
