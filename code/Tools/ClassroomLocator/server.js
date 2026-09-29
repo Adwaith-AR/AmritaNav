@@ -76,10 +76,37 @@ httpServer.listen(HTTP_PORT, '0.0.0.0', () => {
   console.log(`[HTTP]  Mobile:  http://${localIp}:${HTTP_PORT}`);
 });
 
+const { execSync } = require('child_process');
+
+function ensureCertificates() {
+  const keyPath = path.join(ROOT, 'server.key');
+  const certPath = path.join(ROOT, 'server.cert');
+
+  if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
+    return { keyPath, certPath };
+  }
+
+  console.log('Generating self-signed SSL certificates for HTTPS...');
+  try {
+    execSync(
+      `openssl req -x509 -newkey rsa:2048 -nodes -keyout "${keyPath}" -out "${certPath}" -days 365 -subj "/CN=localhost" -addext "subjectAltName=DNS:localhost,IP:127.0.0.1,IP:${localIp}"`,
+      { stdio: 'pipe' }
+    );
+  } catch (err) {
+    execSync(
+      `openssl req -x509 -newkey rsa:2048 -nodes -keyout "${keyPath}" -out "${certPath}" -days 365 -subj "/CN=localhost"`,
+      { stdio: 'pipe' }
+    );
+  }
+
+  return { keyPath, certPath };
+}
+
 // Start HTTPS Server
 try {
-  const key = fs.readFileSync(path.join(ROOT, 'server.key'));
-  const cert = fs.readFileSync(path.join(ROOT, 'server.cert'));
+  const { keyPath, certPath } = ensureCertificates();
+  const key = fs.readFileSync(keyPath);
+  const cert = fs.readFileSync(certPath);
   const httpsServer = https.createServer({ key, cert }, serveFile);
 
   httpsServer.listen(HTTPS_PORT, '0.0.0.0', () => {

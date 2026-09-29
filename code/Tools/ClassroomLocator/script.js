@@ -10,10 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   const themeBtnLight = document.getElementById('theme-btn-light');
   const themeBtnDark  = document.getElementById('theme-btn-dark');
-  const bnavThemeToggle = document.getElementById('bnav-theme-toggle');
-  const bnavThemeIcon = document.getElementById('bnav-theme-icon');
-  const bnavThemeLabel = document.getElementById('bnav-theme-label');
-
   let currentTheme = 'light';
 
   function applyTheme(theme) {
@@ -31,18 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
       themeBtnDark.classList.toggle('active', isDark);
       themeBtnDark.setAttribute('aria-checked', String(isDark));
     }
-
-    if (bnavThemeIcon && bnavThemeLabel) {
-      if (theme === 'dark') {
-        bnavThemeIcon.textContent = '☀️';
-        bnavThemeLabel.textContent = 'Light';
-        if (bnavThemeToggle) bnavThemeToggle.title = 'Switch to Light Mode';
-      } else {
-        bnavThemeIcon.textContent = '🌙';
-        bnavThemeLabel.textContent = 'Dark';
-        if (bnavThemeToggle) bnavThemeToggle.title = 'Switch to Dark Mode';
-      }
-    }
   }
 
   // Initialise from saved preference, fall back to OS preference
@@ -55,12 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   if (themeBtnDark) {
     themeBtnDark.addEventListener('click', (e) => { e.stopPropagation(); applyTheme('dark'); });
-  }
-  if (bnavThemeToggle) {
-    bnavThemeToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
-    });
   }
 
   // --- Room Selection Logic ---
@@ -282,8 +260,8 @@ document.addEventListener('DOMContentLoaded', () => {
     centerLon: 76.4917617,
     campusRadiusMeters: 750,
     // Default marker position (Admin Reception Entrance in SVG pixels)
-    defaultX: 380,
-    defaultY: 830
+    defaultX: 305,
+    defaultY: 835
   };
 
   // UI Element References
@@ -858,6 +836,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (navDestSelect) {
       navDestSelect.value = '';
     }
+    if (typeof syncNavDestInputFromSelect === 'function') {
+      syncNavDestInputFromSelect();
+    }
   }
 
   function onRoomClicked(roomId) {
@@ -867,6 +848,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (navDestSelect) {
       navDestSelect.value = roomId;
+    }
+    if (typeof syncNavDestInputFromSelect === 'function') {
+      syncNavDestInputFromSelect();
     }
     generateCampusRoute();
   }
@@ -935,12 +919,18 @@ document.addEventListener('DOMContentLoaded', () => {
           navStartSelect.value = curDest;
           navDestSelect.value = '';
           clearActiveRoute();
+          if (typeof syncNavInputsFromSelects === 'function') {
+            syncNavInputsFromSelects();
+          }
         }
         return;
       }
       if (curDest) {
         navStartSelect.value = curDest;
         navDestSelect.value = curStart;
+        if (typeof syncNavInputsFromSelects === 'function') {
+          syncNavInputsFromSelects();
+        }
         const newDestEl = document.getElementById(curStart);
         if (newDestEl && newDestEl.classList.contains('selectable-room')) {
           if (selectedRoom !== newDestEl) {
@@ -1071,12 +1061,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let totalDragDistance = 0;
 
     mapContainer.addEventListener('pointerdown', (e) => {
-      // Don't initiate map pan if interacting with control buttons, sheets, or floating bars
+      // Don't initiate map pan if interacting with control buttons or floating bars
       if (e.target.closest('#map-zoom-controls') ||
           e.target.closest('#gps-dock') ||
-          e.target.closest('.floating-top-bar') ||
-          e.target.closest('.bottom-nav') ||
-          e.target.closest('.bottom-sheet')) {
+          e.target.closest('.floating-top-bar')) {
         return;
       }
 
@@ -1692,6 +1680,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (navDestSelect) {
         navDestSelect.value = targetRoom.id;
       }
+      if (typeof syncNavDestInputFromSelect === 'function') {
+        syncNavDestInputFromSelect();
+      }
       if (groundNavBar) {
         groundNavBar.style.display = 'flex';
       }
@@ -1901,89 +1892,283 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==========================================
-  // --- Bottom Navigation Bar Interactions ---
+  // --- Navigation Search Feature for From & To ---
   // ==========================================
-  const bnavExplore = document.getElementById('bnav-explore');
-  const bnavRoutes  = document.getElementById('bnav-routes');
-  const bnavSaved   = document.getElementById('bnav-saved');
-  const bnavProfile = document.getElementById('bnav-profile');
+  const navStartInput = document.getElementById('nav-start-input');
+  const navStartClear = document.getElementById('nav-start-clear');
+  const navStartSuggestions = document.getElementById('nav-start-suggestions');
+  const navStartWrapper = document.getElementById('nav-start-wrapper');
 
-  const savedSheet   = document.getElementById('saved-places-sheet');
-  const campusSheet  = document.getElementById('campus-info-sheet');
-  const savedClose   = document.getElementById('saved-sheet-close');
-  const campusClose  = document.getElementById('campus-sheet-close');
+  const navDestInput = document.getElementById('nav-dest-input');
+  const navDestClear = document.getElementById('nav-dest-clear');
+  const navDestSuggestions = document.getElementById('nav-dest-suggestions');
+  const navDestWrapper = document.getElementById('nav-dest-wrapper');
 
-  function closeAllSheets() {
-    if (savedSheet) savedSheet.style.display = 'none';
-    if (campusSheet) campusSheet.style.display = 'none';
-    if (bnavSaved) bnavSaved.classList.remove('active');
-    if (bnavProfile) bnavProfile.classList.remove('active');
+  function getRoomDisplayLabel(id) {
+    if (!id) return '';
+    if (id === 'gps') return '📍 Current Location (GPS)';
+    const room = (typeof searchableRooms !== 'undefined' ? searchableRooms : []).find(r => r.id === id);
+    if (room) {
+      return room.code && room.code !== room.name ? `${room.name} (${room.code})` : room.name;
+    }
+    if (navDestSelect) {
+      const opt = navDestSelect.querySelector(`option[value="${id}"]`);
+      if (opt && opt.textContent) return opt.textContent;
+    }
+    return id;
   }
 
-  if (savedClose) savedClose.addEventListener('click', () => { closeAllSheets(); });
-  if (campusClose) campusClose.addEventListener('click', () => { closeAllSheets(); });
+  function syncNavStartInputFromSelect() {
+    if (!navStartInput || !navStartSelect) return;
+    const val = navStartSelect.value;
+    navStartInput.value = getRoomDisplayLabel(val);
+    if (navStartClear) {
+      navStartClear.style.display = val ? 'flex' : 'none';
+    }
+  }
 
-  if (bnavExplore) {
-    bnavExplore.addEventListener('click', () => {
-      closeAllSheets();
-      if (bnavExplore) bnavExplore.classList.add('active');
-      if (searchInput) {
-        searchInput.focus();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+  function syncNavDestInputFromSelect() {
+    if (!navDestInput || !navDestSelect) return;
+    const val = navDestSelect.value;
+    navDestInput.value = getRoomDisplayLabel(val);
+    if (navDestClear) {
+      navDestClear.style.display = val ? 'flex' : 'none';
+    }
+  }
+
+  function syncNavInputsFromSelects() {
+    syncNavStartInputFromSelect();
+    syncNavDestInputFromSelect();
+  }
+
+  function setupNavSearchCombobox({ input, clearBtn, dropdown, selectEl, wrapper, isStart }) {
+    if (!input || !dropdown || !selectEl) return;
+
+    let activeIndex = -1;
+    let currentItems = [];
+
+    function renderDropdown(items) {
+      dropdown.innerHTML = '';
+      currentItems = items || [];
+      activeIndex = -1;
+
+      if (!currentItems.length) {
+        const empty = document.createElement('div');
+        empty.className = 'nav-suggestion-empty';
+        empty.textContent = isStart ? 'No matching starting locations' : 'No matching destinations';
+        dropdown.appendChild(empty);
+        dropdown.style.display = 'flex';
+        input.setAttribute('aria-expanded', 'true');
+        return;
       }
-    });
-  }
 
-  if (bnavRoutes) {
-    bnavRoutes.addEventListener('click', () => {
-      closeAllSheets();
-      if (groundNavBar) {
-        const isHidden = groundNavBar.style.display === 'none' || !groundNavBar.style.display;
-        groundNavBar.style.display = isHidden ? 'flex' : 'none';
-        bnavRoutes.classList.toggle('active', isHidden);
-      }
-    });
-  }
+      const frag = document.createDocumentFragment();
+      currentItems.forEach((item, idx) => {
+        const row = document.createElement('div');
+        row.className = 'nav-suggestion-item';
+        row.setAttribute('role', 'option');
+        row.setAttribute('data-index', idx);
 
-  if (bnavSaved) {
-    bnavSaved.addEventListener('click', () => {
-      if (savedSheet) {
-        const isOpen = savedSheet.style.display !== 'none';
-        closeAllSheets();
-        savedSheet.style.display = isOpen ? 'none' : 'block';
-        bnavSaved.classList.toggle('active', !isOpen);
-      }
-    });
-  }
+        row.innerHTML = `
+          <span class="nav-suggestion-icon">${item.icon || '🚪'}</span>
+          <div class="nav-suggestion-info">
+            <span class="nav-suggestion-name">${item.title}</span>
+            <span class="nav-suggestion-sub">${item.subtitle || ''}</span>
+          </div>
+          ${item.badge ? `<span class="nav-suggestion-badge">${item.badge}</span>` : ''}
+        `;
 
-  if (bnavProfile) {
-    bnavProfile.addEventListener('click', () => {
-      if (campusSheet) {
-        const isOpen = campusSheet.style.display !== 'none';
-        closeAllSheets();
-        campusSheet.style.display = isOpen ? 'none' : 'block';
-        bnavProfile.classList.toggle('active', !isOpen);
-      }
-    });
-  }
+        row.addEventListener('click', (e) => {
+          e.stopPropagation();
+          selectItem(item);
+        });
 
-  // Handle saved item clicks
-  document.querySelectorAll('.saved-item').forEach(item => {
-    item.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const floor = item.dataset.floor;
-      const roomId = item.dataset.room;
-      if (floor) switchFloor(floor);
-      if (roomId) {
-        setTimeout(() => {
-          const roomEl = document.getElementById(roomId);
-          if (roomEl) {
+        frag.appendChild(row);
+      });
+
+      dropdown.appendChild(frag);
+      dropdown.style.display = 'flex';
+      input.setAttribute('aria-expanded', 'true');
+    }
+
+    function selectItem(item) {
+      input.value = item.displayLabel || item.title;
+      selectEl.value = item.id;
+      if (clearBtn) clearBtn.style.display = 'flex';
+      dropdown.style.display = 'none';
+      input.setAttribute('aria-expanded', 'false');
+
+      if (!isStart) {
+        const roomEl = document.getElementById(item.id);
+        if (roomEl && roomEl.classList.contains('selectable-room')) {
+          if (selectedRoom !== roomEl) {
             selectRoom(roomEl);
-            if (typeof onRoomClicked === 'function') onRoomClicked(roomId);
           }
-        }, 150);
+        }
       }
-      closeAllSheets();
+
+      if (navStartSelect && navDestSelect && navStartSelect.value && navDestSelect.value) {
+        generateCampusRoute();
+      }
+    }
+
+    function getItemsForQuery(rawQuery) {
+      const q = (rawQuery || '').trim();
+      const results = [];
+
+      if (isStart) {
+        if (!q || /gps|curr|loc|start|my\s*loc|entrance/i.test(q)) {
+          results.push({
+            id: 'gps',
+            title: 'Current Location (GPS)',
+            subtitle: '📍 Live device GPS or campus entrance',
+            icon: '📍',
+            badge: 'GPS',
+            displayLabel: '📍 Current Location (GPS)'
+          });
+        }
+      }
+
+      if (!q) {
+        const sorted = (searchableRooms || []).slice().sort((a, b) => {
+          if (a.floor === currentFloor && b.floor !== currentFloor) return -1;
+          if (b.floor === currentFloor && a.floor !== currentFloor) return 1;
+          return a.name.localeCompare(b.name);
+        });
+
+        sorted.slice(0, 32).forEach(r => {
+          results.push({
+            id: r.id,
+            title: r.name,
+            subtitle: (r.code && r.code !== r.name ? `Code: ${r.code} • ` : '') + (r.categoryLabel || r.floorTitle),
+            icon: r.icon || (r.isToilet ? '🚻' : (r.category === 'lab' ? '🔬' : '🚪')),
+            badge: r.floorTitle,
+            displayLabel: r.code && r.code !== r.name ? `${r.name} (${r.code})` : r.name
+          });
+        });
+      } else {
+        const matches = findRoomMatches(q);
+        matches.slice(0, 32).forEach(r => {
+          results.push({
+            id: r.id,
+            title: r.name,
+            subtitle: (r.code && r.code !== r.name ? `Code: ${r.code} • ` : '') + (r.categoryLabel || r.floorTitle),
+            icon: r.icon || (r.isToilet ? '🚻' : (r.category === 'lab' ? '🔬' : '🚪')),
+            badge: r.floorTitle,
+            displayLabel: r.code && r.code !== r.name ? `${r.name} (${r.code})` : r.name
+          });
+        });
+      }
+
+      return results;
+    }
+
+    input.addEventListener('focus', () => {
+      if (isStart && navDestSuggestions) navDestSuggestions.style.display = 'none';
+      if (!isStart && navStartSuggestions) navStartSuggestions.style.display = 'none';
+
+      const items = getItemsForQuery(input.value === '📍 Current Location (GPS)' ? '' : input.value);
+      renderDropdown(items);
     });
+
+    input.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (dropdown.style.display === 'none' || !dropdown.style.display) {
+        const items = getItemsForQuery(input.value === '📍 Current Location (GPS)' ? '' : input.value);
+        renderDropdown(items);
+      }
+    });
+
+    input.addEventListener('input', () => {
+      const val = input.value;
+      if (clearBtn) clearBtn.style.display = val ? 'flex' : 'none';
+      const items = getItemsForQuery(val);
+      renderDropdown(items);
+    });
+
+    input.addEventListener('keydown', (e) => {
+      const itemsEl = dropdown.querySelectorAll('.nav-suggestion-item');
+      if (dropdown.style.display !== 'none' && itemsEl.length > 0) {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          activeIndex = (activeIndex + 1) % itemsEl.length;
+          itemsEl.forEach((it, idx) => it.classList.toggle('active', idx === activeIndex));
+          itemsEl[activeIndex].scrollIntoView({ block: 'nearest' });
+          return;
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          activeIndex = (activeIndex - 1 + itemsEl.length) % itemsEl.length;
+          itemsEl.forEach((it, idx) => it.classList.toggle('active', idx === activeIndex));
+          itemsEl[activeIndex].scrollIntoView({ block: 'nearest' });
+          return;
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          if (activeIndex >= 0 && activeIndex < currentItems.length) {
+            selectItem(currentItems[activeIndex]);
+          } else if (currentItems.length > 0) {
+            selectItem(currentItems[0]);
+          }
+          return;
+        }
+      }
+
+      if (e.key === 'Escape') {
+        dropdown.style.display = 'none';
+        input.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        input.value = '';
+        selectEl.value = '';
+        clearBtn.style.display = 'none';
+        dropdown.style.display = 'none';
+        input.setAttribute('aria-expanded', 'false');
+        input.focus();
+        if (!isStart) {
+          clearActiveRoute();
+        }
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      if (wrapper && !wrapper.contains(e.target)) {
+        dropdown.style.display = 'none';
+        input.setAttribute('aria-expanded', 'false');
+        if (selectEl.value) {
+          input.value = getRoomDisplayLabel(selectEl.value);
+          if (clearBtn) clearBtn.style.display = 'flex';
+        }
+      }
+    });
+  }
+
+  setupNavSearchCombobox({
+    input: navStartInput,
+    clearBtn: navStartClear,
+    dropdown: navStartSuggestions,
+    selectEl: navStartSelect,
+    wrapper: navStartWrapper,
+    isStart: true
   });
+
+  setupNavSearchCombobox({
+    input: navDestInput,
+    clearBtn: navDestClear,
+    dropdown: navDestSuggestions,
+    selectEl: navDestSelect,
+    wrapper: navDestWrapper,
+    isStart: false
+  });
+
+  // Initial display sync
+  if (navStartInput && navStartSelect) {
+    syncNavStartInputFromSelect();
+  }
+  if (navDestInput && navDestSelect) {
+    syncNavDestInputFromSelect();
+  }
+
 });

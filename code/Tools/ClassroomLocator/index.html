@@ -108,16 +108,49 @@
       <!-- Multi-Floor Navigation Bar -->
       <div id="ground-nav-bar" class="ground-nav-bar" style="display: none;">
         <div class="nav-control-group">
-          <div class="nav-select-wrapper">
-            <span class="nav-icon">🟢</span>
-            <select id="nav-start-select" class="nav-select" aria-label="Starting Location">
+          <div class="nav-select-wrapper" id="nav-start-wrapper">
+            <label for="nav-start-input" class="nav-label">From</label>
+            <div class="nav-input-container">
+              <input
+                type="text"
+                id="nav-start-input"
+                class="nav-search-input"
+                placeholder="Search start location..."
+                value="📍 Current Location (GPS)"
+                autocomplete="off"
+                spellcheck="false"
+                aria-label="Starting Location"
+                role="combobox"
+                aria-expanded="false"
+                aria-autocomplete="list"
+              />
+              <button type="button" id="nav-start-clear" class="nav-input-clear" title="Clear start" aria-label="Clear start">✕</button>
+              <div id="nav-start-suggestions" class="nav-suggestions-dropdown" style="display: none;" role="listbox"></div>
+            </div>
+            <select id="nav-start-select" class="nav-select" style="display: none;" aria-hidden="true" tabindex="-1">
               <option value="gps">📍 Current Location (GPS)</option>
             </select>
           </div>
           <button type="button" id="nav-swap-btn" class="nav-swap-btn" title="Swap start and destination" aria-label="Swap start and destination">⇄</button>
-          <div class="nav-select-wrapper">
-            <span class="nav-icon">🔴</span>
-            <select id="nav-dest-select" class="nav-select" aria-label="Destination Location">
+          <div class="nav-select-wrapper" id="nav-dest-wrapper">
+            <label for="nav-dest-input" class="nav-label">To</label>
+            <div class="nav-input-container">
+              <input
+                type="text"
+                id="nav-dest-input"
+                class="nav-search-input"
+                placeholder="Search destination..."
+                autocomplete="off"
+                spellcheck="false"
+                aria-label="Destination Location"
+                role="combobox"
+                aria-expanded="false"
+                aria-autocomplete="list"
+              />
+              <button type="button" id="nav-dest-clear" class="nav-input-clear" title="Clear destination" aria-label="Clear destination" style="display: none;">✕</button>
+              <div id="nav-dest-suggestions" class="nav-suggestions-dropdown" style="display: none;" role="listbox"></div>
+            </div>
+            <select id="nav-dest-select" class="nav-select" style="display: none;" aria-hidden="true" tabindex="-1">
               <option value="">Select Destination...</option>
             </select>
           </div>
@@ -227,7 +260,6 @@
               <circle class="gps-pin-shadow" cx="0" cy="2" r="12" />
               <circle class="gps-pin-outer" cx="0" cy="0" r="11" />
               <circle class="gps-pin-inner" cx="0" cy="0" r="8" />
-              <circle class="gps-pin-center" cx="0" cy="0" r="3" />
             </g>
           </svg>
         </div>
@@ -450,11 +482,13 @@
         <button type="button" class="map-zoom-btn reset" id="map-zoom-reset" title="Reset View" aria-label="Reset View">⟲</button>
       </div>
 
-      <!-- Floating Navigation Arrow FAB (Re-center / Locate Me - matches screenshot bottom-right) -->
+      <!-- Floating Locate Me FAB with Google Maps Blue Circle -->
       <div class="nav-fab" id="gps-dock">
         <button id="gps-toggle-btn" class="nav-arrow-btn gps-toggle-btn" type="button" aria-label="Locate Me" title="Locate Me">
-          <svg class="nav-arrow-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+          <svg class="gps-locate-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+            <circle class="gps-icon-halo" cx="12" cy="12" r="10" fill="#1a73e8" fill-opacity="0.2" />
+            <circle class="gps-icon-border" cx="12" cy="12" r="7.5" fill="#ffffff" />
+            <circle class="gps-icon-core" cx="12" cy="12" r="5" fill="#1a73e8" />
           </svg>
           <span class="gps-status-dot" id="gps-status-dot" style="display: none;"></span>
           <span class="gps-btn-text" id="gps-btn-text" style="display: none;">Locate Me</span>
@@ -495,139 +529,7 @@
         </div>
       </div>
     </div>
-
-    <!-- ── Floating Bottom Navigation Dock (matches screenshot) ────── -->
-    <nav class="bottom-nav" id="bottom-nav" aria-label="Bottom Navigation">
-  <button type="button" class="bottom-nav-item active" id="bnav-explore" title="Explore Campus">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="11" cy="11" r="8"></circle>
-      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-    </svg>
-    <span class="bottom-nav-label">Explore</span>
-  </button>
-  <button type="button" class="bottom-nav-item" id="bnav-routes" title="Directions & Route">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="6" cy="19" r="3"></circle>
-      <path d="M9 19h8.5a4.5 4.5 0 0 0 0-9H5a4 4 0 0 1 0-8h11"></path>
-      <circle cx="18" cy="5" r="3"></circle>
-    </svg>
-    <span class="bottom-nav-label">Routes</span>
-  </button>
-  <button type="button" class="bottom-nav-item" id="bnav-saved" title="Saved Places">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-    </svg>
-    <span class="bottom-nav-label">Saved</span>
-  </button>
-  <!-- THEME TOGGLE BUTTON: Replaces the layer feature in image as requested -->
-  <button type="button" class="bottom-nav-item bottom-nav-theme-btn" id="bnav-theme-toggle" title="Toggle Light / Dark Mode" aria-label="Toggle Light / Dark Mode">
-    <span id="bnav-theme-icon" class="bottom-nav-theme-icon">🌙</span>
-    <span class="bottom-nav-label" id="bnav-theme-label">Dark</span>
-  </button>
-  <button type="button" class="bottom-nav-item" id="bnav-profile" title="Campus Info">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-      <circle cx="12" cy="7" r="4"></circle>
-    </svg>
-    <span class="bottom-nav-label">Campus</span>
-  </button>
-</nav>
-
-<!-- ── Saved Places Drawer / Sheet ──────────────────────────── -->
-<div class="bottom-sheet" id="saved-places-sheet" style="display: none;" role="dialog" aria-labelledby="saved-title">
-  <div class="sheet-handle"></div>
-  <div class="sheet-header">
-    <h3 id="saved-title" class="sheet-title">Saved & Key Places</h3>
-    <button type="button" class="sheet-close-btn" id="saved-sheet-close" aria-label="Close saved places">✕</button>
-  </div>
-  <div class="sheet-content">
-    <div class="saved-item" data-room="room_acharya_hall" data-floor="ground">
-      <div class="saved-item-icon">🏛️</div>
-      <div class="saved-item-info">
-        <div class="saved-item-name">Acharya Hall</div>
-        <div class="saved-item-meta">Ground Floor • ACH-110</div>
-      </div>
-      <button type="button" class="saved-route-btn">Go</button>
-    </div>
-    <div class="saved-item" data-room="room_admin_block_a" data-floor="ground">
-      <div class="saved-item-icon">🏢</div>
-      <div class="saved-item-info">
-        <div class="saved-item-name">Administration Block (A) / Reception</div>
-        <div class="saved-item-meta">Ground Floor • ADM-BLK-A</div>
-      </div>
-      <button type="button" class="saved-route-btn">Go</button>
-    </div>
-    <div class="saved-item" data-room="room_special_hall" data-floor="ground">
-      <div class="saved-item-icon">🧘</div>
-      <div class="saved-item-info">
-        <div class="saved-item-name">Meditation Hall / SPH</div>
-        <div class="saved-item-meta">Ground Floor • SPH-102</div>
-      </div>
-      <button type="button" class="saved-route-btn">Go</button>
-    </div>
-    <div class="saved-item" data-room="room_cir_seminar" data-floor="ground">
-      <div class="saved-item-icon">🎓</div>
-      <div class="saved-item-info">
-        <div class="saved-item-name">CIR Seminar Room</div>
-        <div class="saved-item-meta">Ground Floor • CIR-106</div>
-      </div>
-      <button type="button" class="saved-route-btn">Go</button>
-    </div>
-    <div class="saved-item" data-room="f1_room_computer_lab" data-floor="first">
-      <div class="saved-item-icon">💻</div>
-      <div class="saved-item-info">
-        <div class="saved-item-name">Computer Lab (CSE)</div>
-        <div class="saved-item-meta">1st Floor • S-115</div>
-      </div>
-      <button type="button" class="saved-route-btn">Go</button>
-    </div>
-    <div class="saved-item" data-room="f2_room_main_conf" data-floor="second">
-      <div class="saved-item-icon">👥</div>
-      <div class="saved-item-info">
-        <div class="saved-item-name">Main Conference Room</div>
-        <div class="saved-item-meta">2nd Floor • CONF-MAIN</div>
-      </div>
-      <button type="button" class="saved-route-btn">Go</button>
-    </div>
-  </div>
-</div>
-
-<!-- ── Campus Info Drawer / Sheet ───────────────────────────── -->
-<div class="bottom-sheet" id="campus-info-sheet" style="display: none;" role="dialog" aria-labelledby="campus-title">
-  <div class="sheet-handle"></div>
-  <div class="sheet-header">
-    <h3 id="campus-title" class="sheet-title">Amrita Nav</h3>
-    <button type="button" class="sheet-close-btn" id="campus-sheet-close" aria-label="Close campus info">✕</button>
-  </div>
-  <div class="sheet-content">
-    <div class="campus-info-card">
-      <h4>📍 Indoor Navigation System</h4>
-      <p>Navigate across Ground, 1st, 2nd, and 3rd floors with shortest-path routing, staircase transition pins, and live GPS locator.</p>
-    </div>
-    <div class="campus-stats-row">
-      <div class="campus-stat">
-        <span class="stat-value">4</span>
-        <span class="stat-label">Floors</span>
-      </div>
-      <div class="campus-stat">
-        <span class="stat-value">60+</span>
-        <span class="stat-label">Rooms</span>
-      </div>
-      <div class="campus-stat">
-        <span class="stat-value">8</span>
-        <span class="stat-label">Staircases</span>
-      </div>
-    </div>
-    <div class="campus-legend">
-      <div class="legend-row"><span class="legend-dot green"></span> Start Location</div>
-      <div class="legend-row"><span class="legend-dot red"></span> Destination</div>
-      <div class="legend-row"><span class="legend-dot gold"></span> Stairway Change</div>
-      <div class="legend-row"><span class="legend-dot blue"></span> Live Location</div>
-    </div>
-  </div>
-</div>
-
-</div> <!-- /#app-shell -->
+  </div> <!-- /#app-shell -->
   <script src="ground-nav-data.js"></script>
   <script src="script.js"></script>
 </body>
