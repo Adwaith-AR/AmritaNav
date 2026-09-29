@@ -111,8 +111,8 @@
     <rect id="room_1790501831784" class="room-wall" x="719" y="606" width="95" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-302" data-code="ADM-105" transform="rotate(354 766.5 650.5)"/>
     <rect id="room_1790501909379" class="room-wall" x="940" y="580" width="134" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-314" data-code="R-155" transform="rotate(353 1007 624.5)"/>
     <rect id="room_1790502692180" class="room-wall" x="1880" y="758" width="97" height="109" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-319 — HUT Lab" data-code="R-155" transform="rotate(354 1928.5 812.5)"/>
-    <rect id="room_1790523167761" class="room-wall" x="391" y="532" width="69" height="43" fill="#cedbf9" fill-opacity="0.85" stroke="#449fdb" stroke-width="2" data-name="Men Toilet" data-code="WC" transform="rotate(355 425.5 553.5)"/>
-    <rect id="room_1790523236934" class="room-wall" x="454" y="1072" width="64" height="41" fill="#e6cbfd" fill-opacity="0.85" stroke="#e56efb" stroke-width="2" data-name="Ladies Toilet" data-code="WC" transform="rotate(354 486 1092.5)"/>
+    <rect id="room_1790523167761" class="room-wall" x="391" y="532" width="69" height="43" fill="#cedbf9" fill-opacity="0.85" stroke="#449fdb" stroke-width="2" data-name="Men&#039;s Toilet" data-code="WC" transform="rotate(355 425.5 553.5)"/>
+    <rect id="room_1790523236934" class="room-wall" x="454" y="1072" width="64" height="41" fill="#e6cbfd" fill-opacity="0.85" stroke="#e56efb" stroke-width="2" data-name="Ladies&#039; Toilet" data-code="WC" transform="rotate(354 486 1092.5)"/>
   </g>
 
   <!-- Room Labels -->
@@ -336,11 +336,11 @@
       <text class="room-code" y="9">R-155</text>
     </g>
     <g transform="translate(426, 554)">
-      <text class="room-label" y="-7">Men Toilet</text>
+      <text class="room-label" y="-7">Men&#039;s Toilet</text>
       <text class="room-code" y="9">WC</text>
     </g>
     <g transform="translate(486, 1093)">
-      <text class="room-label" y="-7">Ladies Toilet</text>
+      <text class="room-label" y="-7">Ladies&#039; Toilet</text>
       <text class="room-code" y="9">WC</text>
     </g>
   </g>

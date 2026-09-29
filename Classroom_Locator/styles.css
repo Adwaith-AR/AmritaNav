@@ -109,29 +109,6 @@ body {
   background: var(--bg-color);
 }
 
-/* ── Dynamic Island / Notch Indicator (Top Center) ──────────── */
-.app-shell::before {
-  content: "";
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 124px;
-  height: 32px;
-  background: #000000;
-  border-radius: 20px;
-  z-index: 60;
-  pointer-events: none;
-  opacity: 0.95;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-  display: block;
-}
-
-@media (min-width: 768px) {
-  .app-shell::before {
-    display: none;
-  }
-}
 
 /* ── Center Full-Screen Map ─────────────────────────────────── */
 .main-content {
@@ -239,7 +216,8 @@ body {
   left: 0;
   right: 0;
   z-index: 50;
-  padding: 48px 14px 0;
+  padding: 12px 14px 0;
+  padding-top: max(12px, env(safe-area-inset-top));
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -1484,7 +1462,8 @@ body {
 /* ── Responsive Mobile Optimizations ────────────────────────── */
 @media (max-width: 480px) {
   .floating-top-bar {
-    padding-top: 44px;
+    padding-top: 10px;
+    padding-top: max(10px, env(safe-area-inset-top));
     padding-left: 10px;
     padding-right: 10px;
     gap: 8px;
