@@ -174,12 +174,353 @@
           <div class="map-pan-stage" id="map-pan-stage">
             <!-- Ground Floor -->
           <div class="floor-layer" id="floor-layer-ground" data-floor="ground">
-            <img 
-              src="floor-0.svg" 
-              alt="Amrita Nav - Ground Floor" 
-              class="central-image"
-              draggable="false"
-            >
+            <svg class="central-image floorplan-vector" viewBox="0 0 2112 1300" aria-hidden="true">
+            <defs>
+    <style>
+      .floorplan-bg { fill: #ffffff; }
+      .room-wall { stroke-linejoin: round; stroke-linecap: round; }
+      .room-label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 600; text-anchor: middle; dominant-baseline: central; fill: #0f172a; pointer-events: none; }
+      .room-code { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 500; text-anchor: middle; dominant-baseline: central; fill: #64748b; pointer-events: none; }
+    </style>
+  </defs>
+
+  
+  <rect width="2112" height="1300" class="floorplan-bg"/>
+
+  
+  <g id="bg_g_pathways" class="layer-pathways">
+    <polyline id="bg_g_pathway_1790271320290-casing" class="pathway-casing" points="472,527 473,537 474,546 476,564 480,600 488,673 492,710 494,728 494.746,734.716 495,737 496,746 504,818 512,891 513.653,905.876 514,909 516,927 518,945 520,963 524,1000 534.503,1094.528 535,1099 536,1108" fill="none" stroke="#cbd5e1" stroke-width="27.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_1790271320290" class="pathway-wall" points="472,527 473,537 474,546 476,564 480,600 488,673 492,710 494,728 494.746,734.716 495,737 496,746 504,818 512,891 513.653,905.876 514,909 516,927 518,945 520,963 524,1000 534.503,1094.528 535,1099 536,1108" fill="none" stroke="#ffffff" stroke-width="25" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="West Hall and Reception Corridor"/>
+    <polyline id="bg_g_pathway_courtyard_north_concourse-casing" class="pathway-casing" points="494.746,734.716 662,716 883,691 938.482,684.159 1166,658 1256,648 1301.632,642.783 1365,636 1428.313,628.35 1519,618 1609.143,607.747 1765,590 1921.124,572.201" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_courtyard_north_concourse" class="pathway-wall" points="494.746,734.716 662,716 883,691 938.482,684.159 1166,658 1256,648 1301.632,642.783 1365,636 1428.313,628.35 1519,618 1609.143,607.747 1765,590 1921.124,572.201" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Courtyards — North Concourse"/>
+    <polyline id="bg_g_pathway_courtyard_south_concourse-casing" class="pathway-casing" points="510,902 677,884 788,871 954,851 1159,829 1272,815 1317,810 1333,809 1380,803 1444,796 1534,785 1625,775 1781,757 1937,739" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_courtyard_south_concourse" class="pathway-wall" points="510,902 677,884 788,871 954,851 1159,829 1272,815 1317,810 1333,809 1380,803 1444,796 1534,785 1625,775 1781,757 1937,739" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Courtyards — South Concourse"/>
+    <polyline id="bg_g_pathway_central_north_south_spine-casing" class="pathway-casing" points="916.973,495.38 938.482,684.159 948,770 957.975,855.252 980.027,1048.8" fill="none" stroke="#cbd5e1" stroke-width="26.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_central_north_south_spine" class="pathway-wall" points="916.973,495.38 938.482,684.159 948,770 957.975,855.252 980.027,1048.8" fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Central North–South Corridor"/>
+    <polyline id="bg_g_pathway_middle_courtyard_link-casing" class="pathway-casing" points="1301.632,642.783 1321.126,813.876" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_middle_courtyard_link" class="pathway-wall" points="1301.632,642.783 1321.126,813.876" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Central / East Courtyard Link"/>
+    <polyline id="bg_g_pathway_east_north_south_spine-casing" class="pathway-casing" points="1580,360 1609.143,607.747 1619,693 1628.636,778.84 1660,1020" fill="none" stroke="#cbd5e1" stroke-width="20.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_east_north_south_spine" class="pathway-wall" points="1580,360 1609.143,607.747 1619,693 1628.636,778.84 1660,1020" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="East Wing North–South Corridor"/>
+    <polyline id="bg_g_pathway_far_east_courtyard_return-casing" class="pathway-casing" points="1921.124,572.201 1940.618,743.294" fill="none" stroke="#cbd5e1" stroke-width="20.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_far_east_courtyard_return" class="pathway-wall" points="1921.124,572.201 1940.618,743.294" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Far-East Courtyard Return"/>
+    <polyline id="bg_g_pathway_north_labs_west-casing" class="pathway-casing" points="832.038,173.929 842,255 851,337 869.282,500.814" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_north_labs_west" class="pathway-wall" points="832.038,173.929 842,255 851,337 869.282,500.814" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — West Passage"/>
+    <polyline id="bg_g_pathway_north_labs_east-casing" class="pathway-casing" points="913.511,164.646 923,246 932,328 941,410 950.754,491.531" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_north_labs_east" class="pathway-wall" points="913.511,164.646 923,246 932,328 941,410 950.754,491.531" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — East Passage"/>
+    <polyline id="bg_g_pathway_north_labs_top-casing" class="pathway-casing" points="832.038,173.929 872.774,169.287 913.511,164.646" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_north_labs_top" class="pathway-wall" points="832.038,173.929 872.774,169.287 913.511,164.646" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — Upper Link"/>
+    <polyline id="bg_g_pathway_north_labs_bottom-casing" class="pathway-casing" points="869.282,500.814 916.973,495.38 950.754,491.531" fill="none" stroke="#cbd5e1" stroke-width="18.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_north_labs_bottom" class="pathway-wall" points="869.282,500.814 916.973,495.38 950.754,491.531" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — Lower Link"/>
+    <polyline id="bg_g_pathway_north_toilet_approach-casing" class="pathway-casing" points="872.774,169.287 871.529,158.358" fill="none" stroke="#cbd5e1" stroke-width="18.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_north_toilet_approach" class="pathway-wall" points="872.774,169.287 871.529,158.358" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Amenities Approach"/>
+    <polyline id="bg_g_pathway_engineering_lab_concourse-casing" class="pathway-casing" points="1210.077,461.985 1308,451 1406.804,439.571 1450,435 1493,430 1580,420" fill="none" stroke="#cbd5e1" stroke-width="20.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_engineering_lab_concourse" class="pathway-wall" points="1210.077,461.985 1308,451 1406.804,439.571 1450,435 1493,430 1580,420" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Metallurgy / Fluids / CAE / Dynamics Corridor"/>
+    <polyline id="bg_g_pathway_engineering_lab_link-casing" class="pathway-casing" points="1406.804,439.571 1428.313,628.35" fill="none" stroke="#cbd5e1" stroke-width="26.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_engineering_lab_link" class="pathway-wall" points="1406.804,439.571 1428.313,628.35" fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Engineering Labs to Main Concourse"/>
+    <polyline id="bg_g_pathway_south_workshop_concourse-casing" class="pathway-casing" points="796.216,1069.742 980.027,1048.8 1103,1035 1225,1021 1241,1020" fill="none" stroke="#cbd5e1" stroke-width="30.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_south_workshop_concourse" class="pathway-wall" points="796.216,1069.742 980.027,1048.8 1103,1035 1225,1021 1241,1020" fill="none" stroke="#ffffff" stroke-width="28" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="South Wing — Manufacturing and Workshops"/>
+    <polyline id="bg_g_pathway_south_office_link-casing" class="pathway-casing" points="1447.806,799.443 1469.858,992.99" fill="none" stroke="#cbd5e1" stroke-width="26.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_south_office_link" class="pathway-wall" points="1447.806,799.443 1469.858,992.99" fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Conference / College Administration Link"/>
+    <polyline id="bg_g_pathway_acharya_south_link-casing" class="pathway-casing" points="536,1094 747,1072" fill="none" stroke="#cbd5e1" stroke-width="34.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_acharya_south_link" class="pathway-wall" points="536,1094 747,1072" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Acharya Hall to South Wing"/>
+    <polyline id="bg_g_pathway_west_entry_approach-casing" class="pathway-casing" points="37.026,871.205 295.688,841.734" fill="none" stroke="#cbd5e1" stroke-width="24.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_west_entry_approach" class="pathway-wall" points="37.026,871.205 295.688,841.734" fill="none" stroke="#ffffff" stroke-width="22" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="West Road to Main Entrance"/>
+    <polyline id="bg_g_pathway_1790702052622-casing" class="pathway-casing" points="680,518 611,527 543,537 474,546" fill="none" stroke="#cbd5e1" stroke-width="34.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_1790702052622" class="pathway-wall" points="680,518 611,527 543,537 474,546" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 26"/>
+    <polyline id="bg_g_pathway_1790702117495-casing" class="pathway-casing" points="1282,1020 1375,1008 1467,996 1559,984 1651,972" fill="none" stroke="#cbd5e1" stroke-width="34.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_1790702117495" class="pathway-wall" points="1282,1020 1375,1008 1467,996 1559,984 1651,972" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 27"/>
+    <polyline id="bg_g_pathway_1790702266010-casing" class="pathway-casing" points="296,842 360,760 496,746" fill="none" stroke="#cbd5e1" stroke-width="34.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_1790702266010" class="pathway-wall" points="296,842 360,760 496,746" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 21"/>
+    <polyline id="bg_g_pathway_1790702286027-casing" class="pathway-casing" points="296,842 380,900 512,891" fill="none" stroke="#cbd5e1" stroke-width="34.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_g_pathway_1790702286027" class="pathway-wall" points="296,842 380,900 512,891" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 22"/>
+  </g>
+
+  
+  <g id="bg_g_rooms" class="layer-rooms">
+    <rect id="bg_g_room_nanosciences" class="room-wall" x="730" y="197" width="113" height="326" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="Amrita Center for Nanosciences" data-code="ACN" transform="rotate(353 786.5 360)"/>
+    <rect id="bg_g_room_special_hall" class="room-wall" x="300" y="580" width="165" height="94" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="Special Programs Hall / Meditation Hall" data-code="SPH-102" transform="rotate(354 382.5 627)"/>
+    <rect id="bg_g_room_gad_office" class="room-wall" x="378" y="671" width="75" height="62" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="GAD-PR Office" data-code="GAD-103" transform="rotate(354 415.5 702)"/>
+    <rect id="bg_g_room_admin_block_a" class="room-wall" x="297" y="740" width="174" height="189" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Administration Block (A) / Reception" data-code="ADM-BLK-A" transform="rotate(353 384 834.5)"/>
+    <rect id="bg_g_room_admission_office" class="room-wall" x="620" y="615" width="100" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Admission Office" data-code="ADM-105" transform="rotate(354 670 659.5)"/>
+    <rect id="bg_g_room_cir_seminar" class="room-wall" x="811" y="592" width="101" height="89" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="CIR Seminar Room" data-code="CIR-106" transform="rotate(353 861.5 636.5)"/>
+    <rect id="bg_g_room_guest_room" class="room-wall" x="652" y="895" width="97" height="85" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="Guest Room" data-code="GST-107" transform="rotate(354 700.5 937.5)"/>
+    <rect id="bg_g_room_mini_conf" class="room-wall" x="407" y="924" width="73" height="60" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Mini Conference Room" data-code="CONF-MINI" transform="rotate(354 443.5 954)"/>
+    <rect id="bg_g_room_main_conf" class="room-wall" x="353" y="986" width="161" height="91" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="Main Conference Room" data-code="CONF-MAIN" transform="rotate(354 433.5 1031.5)"/>
+    <rect id="bg_g_room_acharya_hall" class="room-wall" x="459" y="1101" width="295" height="112" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="Acharya Hall" data-code="ACH-110" transform="rotate(354 606.5 1157)"/>
+    <rect id="bg_g_room_stationery" class="room-wall" x="808" y="1082" width="38" height="113" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="Stationery &amp; Courier" data-code="STN-111" transform="rotate(354 827 1138.5)"/>
+    <rect id="bg_g_room_mfg_lab" class="room-wall" x="845" y="1070" width="226" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="Manufacturing Lab" data-code="LAB-MFG" transform="rotate(354 958 1125.5)"/>
+    <rect id="bg_g_room_mat_testing" class="room-wall" x="1070" y="1055" width="65" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="Material Testing Lab" data-code="LAB-MTL" transform="rotate(354 1102.5 1110.5)"/>
+    <rect id="bg_g_room_wireless_ctr" class="room-wall" x="960" y="440" width="111" height="66" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="Amrita Center for Wireless Networks &amp; Apps" data-code="ACWNA" transform="rotate(354 1015.5 473)"/>
+    <rect id="bg_g_room_north_wing" class="room-wall" x="860" y="184" width="60" height="292" fill="#f1f5f9" fill-opacity="0.85" stroke="#475569" stroke-width="2" data-name="North Corridor Wing" data-code="CORR-N" transform="rotate(353 890 330)"/>
+    <rect id="bg_g_room_courtyard_west" class="room-wall" x="524" y="717" width="407" height="151" fill="#e5eddb" fill-opacity="0.85" stroke="#a3c299" stroke-width="2" data-name="Courtyard (West)" data-code="CYD-WEST" transform="rotate(354 727.5 792.5)"/>
+    <rect id="bg_g_room_courtyard_central" class="room-wall" x="1014" y="672" width="286" height="147" fill="#e5eddb" fill-opacity="0.85" stroke="#a3c299" stroke-width="2" data-name="Courtyard (Central)" data-code="CYD-CTR" transform="rotate(354 1157 745.5)"/>
+    <rect id="bg_g_room_director_dean" class="room-wall" x="1135" y="840" width="99" height="90" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Director / Associate Dean" data-code="DIR-OFFICE" transform="rotate(354 1184.5 885)"/>
+    <rect id="bg_g_room_ladies_infirmary" class="room-wall" x="1330" y="820" width="30" height="92" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="Ladies Infirmary" data-code="INF-118" transform="rotate(354 1345 866)"/>
+    <rect id="bg_g_room_metallurgy" class="room-wall" x="1205" y="332" width="69" height="109" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="Metallurgy Laboratory" data-code="LAB-MET" transform="rotate(353 1239.5 386.5)"/>
+    <rect id="bg_g_room_fluid_mech" class="room-wall" x="1276" y="319" width="127" height="110" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="Fluid Mechanics Lab" data-code="LAB-FML" transform="rotate(353 1339.5 374)"/>
+    <rect id="bg_g_room_cae_cell" class="room-wall" x="1403" y="308" width="62" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="C.A.E. Cell" data-code="CAE-121" transform="rotate(352 1434 363.5)"/>
+    <rect id="bg_g_room_dynamics_lab" class="room-wall" x="1466" y="300" width="65" height="111" fill="#e0f2fe" fill-opacity="0.74" stroke="#0369a1" stroke-width="2" data-name="Machine Dynamics Lab" data-code="LAB-MDL" transform="rotate(353 1498.5 355.5)"/>
+    <rect id="bg_g_room_math_dept" class="room-wall" x="1458" y="519" width="129" height="89" fill="#e0e7ff" fill-opacity="0.85" stroke="#4338ca" stroke-width="2" data-name="Department of Mathematics" data-code="MATH-DEPT" transform="rotate(354 1522.5 563.5)"/>
+    <rect id="bg_g_room_elec_machines" class="room-wall" x="1614" y="474" width="263" height="108" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="Electrical Machines Lab" data-code="LAB-EML" transform="rotate(353 1745.5 528)"/>
+    <rect id="bg_g_room_prayer_hall" class="room-wall" x="1876" y="456" width="63" height="107" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="Prayer Hall" data-code="PRY-125" transform="rotate(353 1907.5 509.5)"/>
+    <rect id="bg_g_room_courtyard_east" class="room-wall" x="1323" y="640" width="280" height="140" fill="#e5eddb" fill-opacity="0.85" stroke="#a3c299" stroke-width="2" data-name="Courtyard (East)" data-code="CYD-EAST" transform="rotate(353 1463 710)"/>
+    <polygon id="bg_g_room_courtyard_fareast" class="room-wall" points="null,null null,null null,null null,null null,null null,null null,null" fill="#e5eddb" fill-opacity="0.85" stroke="#a3c299" stroke-width="2" data-name="Courtyard (Far-East)" data-code="CYD-FEAST"/>
+    <rect id="bg_g_room_college_admin" class="room-wall" x="1489" y="800" width="131" height="88" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="College Administration Office" data-code="CADM-127" transform="rotate(353 1554.5 844)"/>
+    <rect id="bg_g_room_computer_lab" class="room-wall" x="1649" y="778" width="229" height="107" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="Computer Lab" data-code="LAB-CS" transform="rotate(353 1763.5 831.5)"/>
+    <rect id="bg_g_room_nanotech_lab" class="room-wall" x="1879" y="758" width="95" height="108" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="Nanotech Lab" data-code="LAB-NANO" transform="rotate(353 1926.5 812)"/>
+    <rect id="bg_g_room_mech_workshop" class="room-wall" x="1287" y="1020" width="128" height="109" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="Mechanical Workshop" data-code="LAB-MECH" transform="rotate(354 1351 1074.5)"/>
+    <rect id="bg_g_room_robotics_lab" class="room-wall" x="1414" y="1009" width="69" height="108" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="CNC Robotics &amp; Autom. Lab" data-code="LAB-ROBO" transform="rotate(354 1448.5 1063)"/>
+    <rect id="bg_g_room_wind_tunnel" class="room-wall" x="1483" y="998" width="129" height="109" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="Wind Tunnel" data-code="LAB-WIND" transform="rotate(354 1547.5 1052.5)"/>
+    <rect id="bg_g_room_1790266501061" class="room-wall" x="952" y="337" width="111" height="103" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="M Tech (Fluid Lab )" data-code="LAB-FLUID" transform="rotate(354 1007.5 388.5)"/>
+    <rect id="bg_g_room_1790266683270" class="room-wall" x="935" y="170" width="112" height="168" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Room 36" data-code="R-136" transform="rotate(354 991 254)"/>
+    <rect id="bg_g_room_1790267011208" class="room-wall" x="1233" y="829" width="96" height="91" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Principal Arts and Sciences" data-code="Arts and Science" transform="rotate(354 1281 874.5)"/>
+    <rect id="bg_g_room_1790267197118" class="room-wall" x="1360" y="816" width="69" height="91" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="Conference Room" data-code="Conference" transform="rotate(354 1394.5 861.5)"/>
+    <rect id="bg_g_room_1790267337608" class="room-wall" x="749" y="884" width="96" height="87" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="AUMS Web Services" data-code="AUMS" transform="rotate(354 797 927.5)"/>
+    <rect id="bg_g_room_1790267611764" class="room-wall" x="384" y="408" width="295" height="112" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="Amritheswari Hall " data-code="AMH-101" transform="rotate(354 531.5 464)"/>
+    <rect id="bg_g_room_1790267932589" class="room-wall" x="1102" y="560" width="100" height="89" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="Students Affair" data-code="SA" transform="rotate(353 1152 604.5)"/>
+    <rect id="bg_g_room_1790267966500" class="room-wall" x="1202" y="548" width="94" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Reserve" data-code="" transform="rotate(353 1249 592.5)"/>
+    <rect id="bg_g_room_1790268001235" class="room-wall" x="1296" y="536" width="94" height="89" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="Principal" data-code="" transform="rotate(353 1343 580.5)"/>
+    <rect id="bg_g_room_1790268898290" class="room-wall" x="1690" y="600" width="200" height="149" fill="#e5eddb" fill-opacity="0.85" stroke="#a3c299" stroke-width="2" data-name="Courtyard (Far East) " data-code="CYD-Far EAST" transform="rotate(353 1790 674.5)"/>
+    <rect id="bg_g_room_1790702325986" class="room-wall" x="505" y="656" width="66" height="68" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-145" transform="rotate(352 538 690)"/>
+    <rect id="bg_g_room_1790702367787" class="room-wall" x="822" y="82" width="94" height="76" fill="#f3e8ff" fill-opacity="0.85" stroke="#7e22ce" stroke-width="2" data-name="Men&#039;s Toilet" data-code="WC" transform="rotate(353 869 120)"/>
+    <rect id="bg_g_room_1790702402426" class="room-wall" x="1530" y="289" width="129" height="69" fill="#f3e8ff" fill-opacity="0.85" stroke="#7e22ce" stroke-width="2" data-name="Men&#039;s Toilet" data-code="R-147" transform="rotate(353 1594.5 323.5)"/>
+    <rect id="bg_g_room_1790702448982" class="room-wall" x="391" y="532" width="69" height="43" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Men&#039;s Toilet" data-code="WC" transform="rotate(355 425.5 553.5)"/>
+    <rect id="bg_g_room_1790702475554" class="room-wall" x="454" y="1072" width="82" height="41" fill="#f3e8ff" fill-opacity="0.85" stroke="#7e22ce" stroke-width="2" data-name="Ladies&#039; Toilet" data-code="WC" transform="rotate(356 495 1092.5)"/>
+    <rect id="bg_g_room_1790702517442" class="room-wall" x="1160" y="1040" width="100" height="80" fill="#f3e8ff" fill-opacity="0.85" stroke="#7e22ce" stroke-width="2" data-name="Ladies&#039; Toilet" data-code="WC" transform="rotate(354 1210 1080)"/>
+    <rect id="bg_g_room_1790702556324" class="room-wall" x="1609" y="1020" width="128" height="71" fill="#f3e8ff" fill-opacity="0.85" stroke="#7e22ce" stroke-width="2" data-name="Ladies&#039; Toilet" data-code="WC" transform="rotate(353 1673 1055.5)"/>
+    <rect id="bg_g_room_1790702619796" class="room-wall" x="1631" y="660" width="60" height="60" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-152" transform="rotate(353 1661 690)"/>
+    <rect id="bg_g_room_1790702663799" class="room-wall" x="1338" y="457" width="60" height="48" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-153" transform="rotate(355 1368 481)"/>
+    <rect id="bg_g_room_1790702707883" class="room-wall" x="960" y="730" width="59" height="66" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-154" transform="rotate(354 989.5 763)"/>
+    <rect id="bg_g_room_1790702726790" class="room-wall" x="535" y="909" width="65" height="60" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-155" transform="rotate(354 567.5 939)"/>
+    <rect id="bg_g_room_1790702771045" class="room-wall" x="896" y="980" width="60" height="60" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-156" transform="rotate(354 926 1010)"/>
+  </g>
+
+  
+  <g id="bg_g_labels" class="layer-labels">
+    <g transform="translate(787, 360)">
+      <text class="room-label" y="-7">Amrita Center for Nanosciences</text>
+      <text class="room-code" y="9">ACN</text>
+    </g>
+    <g transform="translate(383, 627)">
+      <text class="room-label" y="-7">Special Programs Hall / Meditation Hall</text>
+      <text class="room-code" y="9">SPH-102</text>
+    </g>
+    <g transform="translate(416, 702)">
+      <text class="room-label" y="-7">GAD-PR Office</text>
+      <text class="room-code" y="9">GAD-103</text>
+    </g>
+    <g transform="translate(384, 835)">
+      <text class="room-label" y="-7">Administration Block (A) / Reception</text>
+      <text class="room-code" y="9">ADM-BLK-A</text>
+    </g>
+    <g transform="translate(670, 660)">
+      <text class="room-label" y="-7">Admission Office</text>
+      <text class="room-code" y="9">ADM-105</text>
+    </g>
+    <g transform="translate(862, 637)">
+      <text class="room-label" y="-7">CIR Seminar Room</text>
+      <text class="room-code" y="9">CIR-106</text>
+    </g>
+    <g transform="translate(701, 938)">
+      <text class="room-label" y="-7">Guest Room</text>
+      <text class="room-code" y="9">GST-107</text>
+    </g>
+    <g transform="translate(444, 954)">
+      <text class="room-label" y="-7">Mini Conference Room</text>
+      <text class="room-code" y="9">CONF-MINI</text>
+    </g>
+    <g transform="translate(434, 1032)">
+      <text class="room-label" y="-7">Main Conference Room</text>
+      <text class="room-code" y="9">CONF-MAIN</text>
+    </g>
+    <g transform="translate(607, 1157)">
+      <text class="room-label" y="-7">Acharya Hall</text>
+      <text class="room-code" y="9">ACH-110</text>
+    </g>
+    <g transform="translate(827, 1139)">
+      <text class="room-label" y="-7">Stationery &amp; Courier</text>
+      <text class="room-code" y="9">STN-111</text>
+    </g>
+    <g transform="translate(958, 1126)">
+      <text class="room-label" y="-7">Manufacturing Lab</text>
+      <text class="room-code" y="9">LAB-MFG</text>
+    </g>
+    <g transform="translate(1103, 1111)">
+      <text class="room-label" y="-7">Material Testing Lab</text>
+      <text class="room-code" y="9">LAB-MTL</text>
+    </g>
+    <g transform="translate(1016, 473)">
+      <text class="room-label" y="-7">Amrita Center for Wireless Networks &amp; Apps</text>
+      <text class="room-code" y="9">ACWNA</text>
+    </g>
+    <g transform="translate(890, 330)">
+      <text class="room-label" y="-7">North Corridor Wing</text>
+      <text class="room-code" y="9">CORR-N</text>
+    </g>
+    <g transform="translate(728, 793)">
+      <text class="room-label" y="-7">Courtyard (West)</text>
+      <text class="room-code" y="9">CYD-WEST</text>
+    </g>
+    <g transform="translate(1157, 746)">
+      <text class="room-label" y="-7">Courtyard (Central)</text>
+      <text class="room-code" y="9">CYD-CTR</text>
+    </g>
+    <g transform="translate(1185, 885)">
+      <text class="room-label" y="-7">Director / Associate Dean</text>
+      <text class="room-code" y="9">DIR-OFFICE</text>
+    </g>
+    <g transform="translate(1345, 866)">
+      <text class="room-label" y="-7">Ladies Infirmary</text>
+      <text class="room-code" y="9">INF-118</text>
+    </g>
+    <g transform="translate(1240, 387)">
+      <text class="room-label" y="-7">Metallurgy Laboratory</text>
+      <text class="room-code" y="9">LAB-MET</text>
+    </g>
+    <g transform="translate(1340, 374)">
+      <text class="room-label" y="-7">Fluid Mechanics Lab</text>
+      <text class="room-code" y="9">LAB-FML</text>
+    </g>
+    <g transform="translate(1434, 364)">
+      <text class="room-label" y="-7">C.A.E. Cell</text>
+      <text class="room-code" y="9">CAE-121</text>
+    </g>
+    <g transform="translate(1499, 356)">
+      <text class="room-label" y="-7">Machine Dynamics Lab</text>
+      <text class="room-code" y="9">LAB-MDL</text>
+    </g>
+    <g transform="translate(1523, 564)">
+      <text class="room-label" y="-7">Department of Mathematics</text>
+      <text class="room-code" y="9">MATH-DEPT</text>
+    </g>
+    <g transform="translate(1746, 528)">
+      <text class="room-label" y="-7">Electrical Machines Lab</text>
+      <text class="room-code" y="9">LAB-EML</text>
+    </g>
+    <g transform="translate(1908, 510)">
+      <text class="room-label" y="-7">Prayer Hall</text>
+      <text class="room-code" y="9">PRY-125</text>
+    </g>
+    <g transform="translate(1463, 710)">
+      <text class="room-label" y="-7">Courtyard (East)</text>
+      <text class="room-code" y="9">CYD-EAST</text>
+    </g>
+    <g transform="translate(0, 0)">
+      <text class="room-label" y="-7">Courtyard (Far-East)</text>
+      <text class="room-code" y="9">CYD-FEAST</text>
+    </g>
+    <g transform="translate(1555, 844)">
+      <text class="room-label" y="-7">College Administration Office</text>
+      <text class="room-code" y="9">CADM-127</text>
+    </g>
+    <g transform="translate(1764, 832)">
+      <text class="room-label" y="-7">Computer Lab</text>
+      <text class="room-code" y="9">LAB-CS</text>
+    </g>
+    <g transform="translate(1927, 812)">
+      <text class="room-label" y="-7">Nanotech Lab</text>
+      <text class="room-code" y="9">LAB-NANO</text>
+    </g>
+    <g transform="translate(1351, 1075)">
+      <text class="room-label" y="-7">Mechanical Workshop</text>
+      <text class="room-code" y="9">LAB-MECH</text>
+    </g>
+    <g transform="translate(1449, 1063)">
+      <text class="room-label" y="-7">CNC Robotics &amp; Autom. Lab</text>
+      <text class="room-code" y="9">LAB-ROBO</text>
+    </g>
+    <g transform="translate(1548, 1053)">
+      <text class="room-label" y="-7">Wind Tunnel</text>
+      <text class="room-code" y="9">LAB-WIND</text>
+    </g>
+    <g transform="translate(1008, 389)">
+      <text class="room-label" y="-7">M Tech (Fluid Lab )</text>
+      <text class="room-code" y="9">LAB-FLUID</text>
+    </g>
+    <g transform="translate(991, 254)">
+      <text class="room-label" y="-7">Room 36</text>
+      <text class="room-code" y="9">R-136</text>
+    </g>
+    <g transform="translate(1281, 875)">
+      <text class="room-label" y="-7">Principal Arts and Sciences</text>
+      <text class="room-code" y="9">Arts and Science</text>
+    </g>
+    <g transform="translate(1395, 862)">
+      <text class="room-label" y="-7">Conference Room</text>
+      <text class="room-code" y="9">Conference</text>
+    </g>
+    <g transform="translate(797, 928)">
+      <text class="room-label" y="-7">AUMS Web Services</text>
+      <text class="room-code" y="9">AUMS</text>
+    </g>
+    <g transform="translate(532, 464)">
+      <text class="room-label" y="-7">Amritheswari Hall </text>
+      <text class="room-code" y="9">AMH-101</text>
+    </g>
+    <g transform="translate(1152, 605)">
+      <text class="room-label" y="-7">Students Affair</text>
+      <text class="room-code" y="9">SA</text>
+    </g>
+    <g transform="translate(1249, 593)">
+      <text class="room-label" y="0">Reserve</text>
+    </g>
+    <g transform="translate(1343, 581)">
+      <text class="room-label" y="0">Principal</text>
+    </g>
+    <g transform="translate(1790, 675)">
+      <text class="room-label" y="-7">Courtyard (Far East) </text>
+      <text class="room-code" y="9">CYD-Far EAST</text>
+    </g>
+    <g transform="translate(538, 690)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-145</text>
+    </g>
+    <g transform="translate(869, 120)">
+      <text class="room-label" y="-7">Men&#039;s Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(1595, 324)">
+      <text class="room-label" y="-7">Men&#039;s Toilet</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(426, 554)">
+      <text class="room-label" y="-7">Men&#039;s Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(495, 1093)">
+      <text class="room-label" y="-7">Ladies&#039; Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(1210, 1080)">
+      <text class="room-label" y="-7">Ladies&#039; Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(1673, 1056)">
+      <text class="room-label" y="-7">Ladies&#039; Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(1661, 690)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-152</text>
+    </g>
+    <g transform="translate(1368, 481)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-153</text>
+    </g>
+    <g transform="translate(990, 763)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-154</text>
+    </g>
+    <g transform="translate(568, 939)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-155</text>
+    </g>
+    <g transform="translate(926, 1010)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-156</text>
+    </g>
+  </g>
+          </svg>
           <svg class="selection-overlay" viewBox="0 0 2112 1300" aria-label="Amrita Nav Floor Plan">
             <defs>
               <radialGradient id="gps-beam-grad" cx="0" cy="0" r="52" gradientUnits="userSpaceOnUse">
@@ -187,7 +528,7 @@
                 <stop offset="100%" stop-color="#3b82f6" stop-opacity="0" />
               </radialGradient>
             </defs>
-                        <rect id="room_nanosciences" class="selectable-room" x="730" y="197" width="113" height="326" transform="rotate(353 786.5 360)" data-name="Amrita Center for Nanosciences" data-code="ACN" role="button" tabindex="0" aria-label="Amrita Center for Nanosciences (ACN)" aria-pressed="false"><title>Amrita Center for Nanosciences (ACN)</title></rect>
+            <rect id="room_nanosciences" class="selectable-room" x="730" y="197" width="113" height="326" transform="rotate(353 786.5 360)" data-name="Amrita Center for Nanosciences" data-code="ACN" role="button" tabindex="0" aria-label="Amrita Center for Nanosciences (ACN)" aria-pressed="false"><title>Amrita Center for Nanosciences (ACN)</title></rect>
             <rect id="room_special_hall" class="selectable-room" x="300" y="580" width="165" height="94" transform="rotate(354 382.5 627)" data-name="Special Programs Hall / Meditation Hall" data-code="SPH-102" role="button" tabindex="0" aria-label="Special Programs Hall / Meditation Hall (SPH-102)" aria-pressed="false"><title>Special Programs Hall / Meditation Hall (SPH-102)</title></rect>
             <rect id="room_gad_office" class="selectable-room" x="378" y="671" width="75" height="62" transform="rotate(354 415.5 702)" data-name="GAD-PR Office" data-code="GAD-103" role="button" tabindex="0" aria-label="GAD-PR Office (GAD-103)" aria-pressed="false"><title>GAD-PR Office (GAD-103)</title></rect>
             <rect id="room_admin_block_a" class="selectable-room" x="297" y="740" width="174" height="189" transform="rotate(353 384 834.5)" data-name="Administration Block (A) / Reception" data-code="ADM-BLK-A" role="button" tabindex="0" aria-label="Administration Block (A) / Reception (ADM-BLK-A)" aria-pressed="false"><title>Administration Block (A) / Reception (ADM-BLK-A)</title></rect>
@@ -197,10 +538,11 @@
             <rect id="room_mini_conf" class="selectable-room" x="407" y="924" width="73" height="60" transform="rotate(354 443.5 954)" data-name="Mini Conference Room" data-code="CONF-MINI" role="button" tabindex="0" aria-label="Mini Conference Room (CONF-MINI)" aria-pressed="false"><title>Mini Conference Room (CONF-MINI)</title></rect>
             <rect id="room_main_conf" class="selectable-room" x="353" y="986" width="161" height="91" transform="rotate(354 433.5 1031.5)" data-name="Main Conference Room" data-code="CONF-MAIN" role="button" tabindex="0" aria-label="Main Conference Room (CONF-MAIN)" aria-pressed="false"><title>Main Conference Room (CONF-MAIN)</title></rect>
             <rect id="room_acharya_hall" class="selectable-room" x="459" y="1101" width="295" height="112" transform="rotate(354 606.5 1157)" data-name="Acharya Hall" data-code="ACH-110" role="button" tabindex="0" aria-label="Acharya Hall (ACH-110)" aria-pressed="false"><title>Acharya Hall (ACH-110)</title></rect>
-            <rect id="room_stationery" class="selectable-room" x="808" y="1082" width="38" height="113" transform="rotate(354 827 1138.5)" data-name="Stationery & Courier" data-code="STN-111" role="button" tabindex="0" aria-label="Stationery & Courier (STN-111)" aria-pressed="false"><title>Stationery & Courier (STN-111)</title></rect>
+            <rect id="room_stationery" class="selectable-room" x="808" y="1082" width="38" height="113" transform="rotate(354 827 1138.5)" data-name="Stationery &amp; Courier" data-code="STN-111" role="button" tabindex="0" aria-label="Stationery &amp; Courier (STN-111)" aria-pressed="false"><title>Stationery &amp; Courier (STN-111)</title></rect>
             <rect id="room_mfg_lab" class="selectable-room" x="845" y="1070" width="226" height="111" transform="rotate(354 958 1125.5)" data-name="Manufacturing Lab" data-code="LAB-MFG" role="button" tabindex="0" aria-label="Manufacturing Lab (LAB-MFG)" aria-pressed="false"><title>Manufacturing Lab (LAB-MFG)</title></rect>
             <rect id="room_mat_testing" class="selectable-room" x="1070" y="1055" width="65" height="111" transform="rotate(354 1102.5 1110.5)" data-name="Material Testing Lab" data-code="LAB-MTL" role="button" tabindex="0" aria-label="Material Testing Lab (LAB-MTL)" aria-pressed="false"><title>Material Testing Lab (LAB-MTL)</title></rect>
-            <rect id="room_wireless_ctr" class="selectable-room" x="960" y="440" width="111" height="66" transform="rotate(354 1015.5 473)" data-name="Amrita Center for Wireless Networks & Apps" data-code="ACWNA" role="button" tabindex="0" aria-label="Amrita Center for Wireless Networks & Apps (ACWNA)" aria-pressed="false"><title>Amrita Center for Wireless Networks & Apps (ACWNA)</title></rect>
+            <rect id="room_wireless_ctr" class="selectable-room" x="960" y="440" width="111" height="66" transform="rotate(354 1015.5 473)" data-name="Amrita Center for Wireless Networks &amp; Apps" data-code="ACWNA" role="button" tabindex="0" aria-label="Amrita Center for Wireless Networks &amp; Apps (ACWNA)" aria-pressed="false"><title>Amrita Center for Wireless Networks &amp; Apps (ACWNA)</title></rect>
+            <rect id="room_north_wing" class="selectable-room" x="860" y="184" width="60" height="292" transform="rotate(353 890 330)" data-name="North Corridor Wing" data-code="CORR-N" role="button" tabindex="0" aria-label="North Corridor Wing (CORR-N)" aria-pressed="false"><title>North Corridor Wing (CORR-N)</title></rect>
             <rect id="room_director_dean" class="selectable-room" x="1135" y="840" width="99" height="90" transform="rotate(354 1184.5 885)" data-name="Director / Associate Dean" data-code="DIR-OFFICE" role="button" tabindex="0" aria-label="Director / Associate Dean (DIR-OFFICE)" aria-pressed="false"><title>Director / Associate Dean (DIR-OFFICE)</title></rect>
             <rect id="room_ladies_infirmary" class="selectable-room" x="1330" y="820" width="30" height="92" transform="rotate(354 1345 866)" data-name="Ladies Infirmary" data-code="INF-118" role="button" tabindex="0" aria-label="Ladies Infirmary (INF-118)" aria-pressed="false"><title>Ladies Infirmary (INF-118)</title></rect>
             <rect id="room_metallurgy" class="selectable-room" x="1205" y="332" width="69" height="109" transform="rotate(353 1239.5 386.5)" data-name="Metallurgy Laboratory" data-code="LAB-MET" role="button" tabindex="0" aria-label="Metallurgy Laboratory (LAB-MET)" aria-pressed="false"><title>Metallurgy Laboratory (LAB-MET)</title></rect>
@@ -214,30 +556,29 @@
             <rect id="room_computer_lab" class="selectable-room" x="1649" y="778" width="229" height="107" transform="rotate(353 1763.5 831.5)" data-name="Computer Lab" data-code="LAB-CS" role="button" tabindex="0" aria-label="Computer Lab (LAB-CS)" aria-pressed="false"><title>Computer Lab (LAB-CS)</title></rect>
             <rect id="room_nanotech_lab" class="selectable-room" x="1879" y="758" width="95" height="108" transform="rotate(353 1926.5 812)" data-name="Nanotech Lab" data-code="LAB-NANO" role="button" tabindex="0" aria-label="Nanotech Lab (LAB-NANO)" aria-pressed="false"><title>Nanotech Lab (LAB-NANO)</title></rect>
             <rect id="room_mech_workshop" class="selectable-room" x="1287" y="1020" width="128" height="109" transform="rotate(354 1351 1074.5)" data-name="Mechanical Workshop" data-code="LAB-MECH" role="button" tabindex="0" aria-label="Mechanical Workshop (LAB-MECH)" aria-pressed="false"><title>Mechanical Workshop (LAB-MECH)</title></rect>
-            <rect id="room_robotics_lab" class="selectable-room" x="1414" y="1009" width="69" height="108" transform="rotate(354 1448.5 1063)" data-name="CNC Robotics & Autom. Lab" data-code="LAB-ROBO" role="button" tabindex="0" aria-label="CNC Robotics & Autom. Lab (LAB-ROBO)" aria-pressed="false"><title>CNC Robotics & Autom. Lab (LAB-ROBO)</title></rect>
+            <rect id="room_robotics_lab" class="selectable-room" x="1414" y="1009" width="69" height="108" transform="rotate(354 1448.5 1063)" data-name="CNC Robotics &amp; Autom. Lab" data-code="LAB-ROBO" role="button" tabindex="0" aria-label="CNC Robotics &amp; Autom. Lab (LAB-ROBO)" aria-pressed="false"><title>CNC Robotics &amp; Autom. Lab (LAB-ROBO)</title></rect>
             <rect id="room_wind_tunnel" class="selectable-room" x="1483" y="998" width="129" height="109" transform="rotate(354 1547.5 1052.5)" data-name="Wind Tunnel" data-code="LAB-WIND" role="button" tabindex="0" aria-label="Wind Tunnel (LAB-WIND)" aria-pressed="false"><title>Wind Tunnel (LAB-WIND)</title></rect>
             <rect id="room_1790266501061" class="selectable-room" x="952" y="337" width="111" height="103" transform="rotate(354 1007.5 388.5)" data-name="M Tech (Fluid Lab )" data-code="LAB-FLUID" role="button" tabindex="0" aria-label="M Tech (Fluid Lab ) (LAB-FLUID)" aria-pressed="false"><title>M Tech (Fluid Lab ) (LAB-FLUID)</title></rect>
             <rect id="room_1790266683270" class="selectable-room" x="935" y="170" width="112" height="168" transform="rotate(354 991 254)" data-name="Room 36" data-code="R-136" role="button" tabindex="0" aria-label="Room 36 (R-136)" aria-pressed="false"><title>Room 36 (R-136)</title></rect>
-            <rect id="room_1790267011208" class="selectable-room" x="1231" y="825" width="96" height="91" transform="rotate(354 1279 870.5)" data-name="Principal Arts and Sciences" data-code="Arts and Science" role="button" tabindex="0" aria-label="Principal Arts and Sciences (Arts and Science)" aria-pressed="false"><title>Principal Arts and Sciences (Arts and Science)</title></rect>
+            <rect id="room_1790267011208" class="selectable-room" x="1233" y="829" width="96" height="91" transform="rotate(354 1281 874.5)" data-name="Principal Arts and Sciences" data-code="Arts and Science" role="button" tabindex="0" aria-label="Principal Arts and Sciences (Arts and Science)" aria-pressed="false"><title>Principal Arts and Sciences (Arts and Science)</title></rect>
             <rect id="room_1790267197118" class="selectable-room" x="1360" y="816" width="69" height="91" transform="rotate(354 1394.5 861.5)" data-name="Conference Room" data-code="Conference" role="button" tabindex="0" aria-label="Conference Room (Conference)" aria-pressed="false"><title>Conference Room (Conference)</title></rect>
             <rect id="room_1790267337608" class="selectable-room" x="749" y="884" width="96" height="87" transform="rotate(354 797 927.5)" data-name="AUMS Web Services" data-code="AUMS" role="button" tabindex="0" aria-label="AUMS Web Services (AUMS)" aria-pressed="false"><title>AUMS Web Services (AUMS)</title></rect>
             <rect id="room_1790267611764" class="selectable-room" x="384" y="408" width="295" height="112" transform="rotate(354 531.5 464)" data-name="Amritheswari Hall " data-code="AMH-101" role="button" tabindex="0" aria-label="Amritheswari Hall  (AMH-101)" aria-pressed="false"><title>Amritheswari Hall  (AMH-101)</title></rect>
             <rect id="room_1790267932589" class="selectable-room" x="1102" y="560" width="100" height="89" transform="rotate(353 1152 604.5)" data-name="Students Affair" data-code="SA" role="button" tabindex="0" aria-label="Students Affair (SA)" aria-pressed="false"><title>Students Affair (SA)</title></rect>
             <rect id="room_1790267966500" class="selectable-room" x="1202" y="548" width="94" height="89" transform="rotate(353 1249 592.5)" data-name="Reserve" role="button" tabindex="0" aria-label="Reserve" aria-pressed="false"><title>Reserve</title></rect>
             <rect id="room_1790268001235" class="selectable-room" x="1296" y="536" width="94" height="89" transform="rotate(353 1343 580.5)" data-name="Principal" role="button" tabindex="0" aria-label="Principal" aria-pressed="false"><title>Principal</title></rect>
-            <rect id="room_1790578035647" class="selectable-room" x="1339" y="453" width="60" height="47" transform="rotate(354 1369 476.5)" data-name="Stairs" data-code="R-145" role="button" tabindex="0" aria-label="Stairs (R-145)" aria-pressed="false"><title>Stairs (R-145)</title></rect>
-            <rect id="room_1790578073580" class="selectable-room" x="900" y="1000" width="60" height="40" transform="rotate(357 930 1020)" data-name="Stairs" data-code="R-146" role="button" tabindex="0" aria-label="Stairs (R-146)" aria-pressed="false"><title>Stairs (R-146)</title></rect>
-            <rect id="room_1790578100156" class="selectable-room" x="1160" y="1040" width="100" height="80" transform="rotate(355 1210 1080)" data-name="Ladies&#039; Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies&#039; Toilet (WC)" aria-pressed="false"><title>Ladies&#039; Toilet (WC)</title></rect>
-            <rect id="room_1790578145285" class="selectable-room" x="1614" y="1020" width="126" height="80" transform="rotate(355 1677 1060)" data-name="Ladies&#039; Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies&#039; Toilet (WC)" aria-pressed="false"><title>Ladies&#039; Toilet (WC)</title></rect>
-            <rect id="room_1790578197842" class="selectable-room" x="440" y="1073" width="80" height="41" transform="rotate(355 480 1093.5)" data-name="Ladies&#039; Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies&#039; Toilet (WC)" aria-pressed="false"><title>Ladies&#039; Toilet (WC)</title></rect>
-            <rect id="room_1790578250255" class="selectable-room" x="391" y="532" width="69" height="43" transform="rotate(355 425.5 553.5)" data-name="Men&#039;s Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men&#039;s Toilet (WC)" aria-pressed="false"><title>Men&#039;s Toilet (WC)</title></rect>
-            <rect id="room_1790578281913" class="selectable-room" x="820" y="76" width="94" height="85" transform="rotate(356 867 118.5)" data-name="Men&#039;s Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men&#039;s Toilet (WC)" aria-pressed="false"><title>Men&#039;s Toilet (WC)</title></rect>
-            <rect id="room_1790578307230" class="selectable-room" x="1530" y="288" width="128" height="72" transform="rotate(353 1594 324)" data-name="Men&#039;s Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men&#039;s Toilet (WC)" aria-pressed="false"><title>Men&#039;s Toilet (WC)</title></rect>
-            <rect id="room_1790578386471" class="selectable-room" x="860" y="300" width="60" height="60" transform="rotate(355 890 330)" data-name="Stairs" data-code="R-152" role="button" tabindex="0" aria-label="Stairs (R-152)" aria-pressed="false"><title>Stairs (R-152)</title></rect>
-            <rect id="room_1790578435142" class="selectable-room" x="960" y="731" width="58" height="67" transform="rotate(355 989 764.5)" data-name="Stairs" data-code="R-153" role="button" tabindex="0" aria-label="Stairs (R-153)" aria-pressed="false"><title>Stairs (R-153)</title></rect>
-            <rect id="room_1790578489388" class="selectable-room" x="1629" y="660" width="62" height="59" transform="rotate(354 1660 689.5)" data-name="Stairs" data-code="R-154" role="button" tabindex="0" aria-label="Stairs (R-154)" aria-pressed="false"><title>Stairs (R-154)</title></rect>
-            <rect id="room_1790578512841" class="selectable-room" x="532" y="910" width="80" height="60" transform="rotate(355 572 940)" data-name="Stairs" data-code="R-155" role="button" tabindex="0" aria-label="Stairs (R-155)" aria-pressed="false"><title>Stairs (R-155)</title></rect>
-            <rect id="room_1790578548474" class="selectable-room" x="507" y="660" width="60" height="60" transform="rotate(353 537 690)" data-name="Stairs" data-code="R-156" role="button" tabindex="0" aria-label="Stairs (R-156)" aria-pressed="false"><title>Stairs (R-156)</title></rect>
+            <rect id="room_1790702325986" class="selectable-room" x="505" y="656" width="66" height="68" transform="rotate(352 538 690)" data-name="Stairs" data-code="R-145" role="button" tabindex="0" aria-label="Stairs (R-145)" aria-pressed="false"><title>Stairs (R-145)</title></rect>
+            <rect id="room_1790702367787" class="selectable-room" x="822" y="82" width="94" height="76" transform="rotate(353 869 120)" data-name="Men&#039;s Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men&#039;s Toilet (WC)" aria-pressed="false"><title>Men&#039;s Toilet (WC)</title></rect>
+            <rect id="room_1790702402426" class="selectable-room" x="1530" y="289" width="129" height="69" transform="rotate(353 1594.5 323.5)" data-name="Men&#039;s Toilet" data-code="R-147" role="button" tabindex="0" aria-label="Men&#039;s Toilet (R-147)" aria-pressed="false"><title>Men&#039;s Toilet (R-147)</title></rect>
+            <rect id="room_1790702448982" class="selectable-room" x="391" y="532" width="69" height="43" transform="rotate(355 425.5 553.5)" data-name="Men&#039;s Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men&#039;s Toilet (WC)" aria-pressed="false"><title>Men&#039;s Toilet (WC)</title></rect>
+            <rect id="room_1790702475554" class="selectable-room" x="454" y="1072" width="82" height="41" transform="rotate(356 495 1092.5)" data-name="Ladies&#039; Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies&#039; Toilet (WC)" aria-pressed="false"><title>Ladies&#039; Toilet (WC)</title></rect>
+            <rect id="room_1790702517442" class="selectable-room" x="1160" y="1040" width="100" height="80" transform="rotate(354 1210 1080)" data-name="Ladies&#039; Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies&#039; Toilet (WC)" aria-pressed="false"><title>Ladies&#039; Toilet (WC)</title></rect>
+            <rect id="room_1790702556324" class="selectable-room" x="1609" y="1020" width="128" height="71" transform="rotate(353 1673 1055.5)" data-name="Ladies&#039; Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies&#039; Toilet (WC)" aria-pressed="false"><title>Ladies&#039; Toilet (WC)</title></rect>
+            <rect id="room_1790702619796" class="selectable-room" x="1631" y="660" width="60" height="60" transform="rotate(353 1661 690)" data-name="Stairs" data-code="R-152" role="button" tabindex="0" aria-label="Stairs (R-152)" aria-pressed="false"><title>Stairs (R-152)</title></rect>
+            <rect id="room_1790702663799" class="selectable-room" x="1338" y="457" width="60" height="48" transform="rotate(355 1368 481)" data-name="Stairs" data-code="R-153" role="button" tabindex="0" aria-label="Stairs (R-153)" aria-pressed="false"><title>Stairs (R-153)</title></rect>
+            <rect id="room_1790702707883" class="selectable-room" x="960" y="730" width="59" height="66" transform="rotate(354 989.5 763)" data-name="Stairs" data-code="R-154" role="button" tabindex="0" aria-label="Stairs (R-154)" aria-pressed="false"><title>Stairs (R-154)</title></rect>
+            <rect id="room_1790702726790" class="selectable-room" x="535" y="909" width="65" height="60" transform="rotate(354 567.5 939)" data-name="Stairs" data-code="R-155" role="button" tabindex="0" aria-label="Stairs (R-155)" aria-pressed="false"><title>Stairs (R-155)</title></rect>
+            <rect id="room_1790702771045" class="selectable-room" x="896" y="980" width="60" height="60" transform="rotate(354 926 1010)" data-name="Stairs" data-code="R-156" role="button" tabindex="0" aria-label="Stairs (R-156)" aria-pressed="false"><title>Stairs (R-156)</title></rect>
 
             <!-- Ground Floor Active Route Layer -->
             <g id="ground-route-layer" class="ground-route-layer route-layer" data-floor="ground"></g>
@@ -266,12 +607,354 @@
 
         <!-- First Floor -->
         <div class="floor-layer" id="floor-layer-first" data-floor="first">
-          <img 
-            src="floor-1.svg" 
-            alt="Amrita Nav - First Floor" 
-            class="central-image"
-            draggable="false"
-          >
+          <svg class="central-image floorplan-vector" viewBox="0 0 2112 1300" aria-hidden="true">
+            <defs>
+    <style>
+      .floorplan-bg { fill: #ffffff; }
+      .room-wall { stroke-linejoin: round; stroke-linecap: round; }
+      .room-label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 600; text-anchor: middle; dominant-baseline: central; fill: #0f172a; pointer-events: none; }
+      .room-code { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 500; text-anchor: middle; dominant-baseline: central; fill: #64748b; pointer-events: none; }
+    </style>
+  </defs>
+
+  
+  <rect width="2112" height="1300" class="floorplan-bg"/>
+
+  
+  <g id="bg_f1_pathways" class="layer-pathways">
+    <polyline id="bg_f1_pathway_1790271320290-casing" class="pathway-casing" points="472,527 473,537 474,546 476,564 480,600 488,673 489,683 490,692 491,701 492,710 493,719 494,728 495,735 495,737 496,746 504,818 512,891 514,906 514,909 516,927 518,945 520,963 524,1000 535,1095 535,1099 536,1108" fill="none" stroke="#cbd5e1" stroke-width="27.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_1790271320290" class="pathway-wall" points="472,527 473,537 474,546 476,564 480,600 488,673 489,683 490,692 491,701 492,710 493,719 494,728 495,735 495,737 496,746 504,818 512,891 514,906 514,909 516,927 518,945 520,963 524,1000 535,1095 535,1099 536,1108" fill="none" stroke="#ffffff" stroke-width="25" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="West Hall and Reception Corridor"/>
+    <polyline id="bg_f1_pathway_courtyard_north_concourse-casing" class="pathway-casing" points="494.746,734.716 662,716 717,709 773,703 828,697 883,691 938.482,684.159 984,679 1052,671 1120,663 1166,658 1211,653 1256,648 1301.632,642.783 1365,636 1428.313,628.35 1519,618 1609.143,607.747 1687,599 1765,590 1843,581 1882,577 1921.124,572.201" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_courtyard_north_concourse" class="pathway-wall" points="494.746,734.716 662,716 717,709 773,703 828,697 883,691 938.482,684.159 984,679 1052,671 1120,663 1166,658 1211,653 1256,648 1301.632,642.783 1365,636 1428.313,628.35 1519,618 1609.143,607.747 1687,599 1765,590 1843,581 1882,577 1921.124,572.201" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Courtyards — North Concourse"/>
+    <polyline id="bg_f1_pathway_courtyard_south_concourse-casing" class="pathway-casing" points="514,906 625,894 736,881 792,875 847,868 903,862 958,855 1004,850 1049,845 1140,835 1231,825 1276,820 1321,814 1337,813 1385,807 1448,800 1494,795 1539,790 1584,785 1629,779 1707,770 1785,761 1863,752 1902,748 1941,743" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_courtyard_south_concourse" class="pathway-wall" points="514,906 625,894 736,881 792,875 847,868 903,862 958,855 1004,850 1049,845 1140,835 1231,825 1276,820 1321,814 1337,813 1385,807 1448,800 1494,795 1539,790 1584,785 1629,779 1707,770 1785,761 1863,752 1902,748 1941,743" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Courtyards — South Concourse"/>
+    <polyline id="bg_f1_pathway_central_north_south_spine-casing" class="pathway-casing" points="916.973,495.38 938.482,684.159 948,770 957.975,855.252 969,952 975,1000 980.027,1048.8" fill="none" stroke="#cbd5e1" stroke-width="26.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_central_north_south_spine" class="pathway-wall" points="916.973,495.38 938.482,684.159 948,770 957.975,855.252 969,952 975,1000 980.027,1048.8" fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Central North–South Corridor"/>
+    <polyline id="bg_f1_pathway_middle_courtyard_link-casing" class="pathway-casing" points="1302,643 1321,814" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_middle_courtyard_link" class="pathway-wall" points="1302,643 1321,814" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Central / East Courtyard Link"/>
+    <polyline id="bg_f1_pathway_east_north_south_spine-casing" class="pathway-casing" points="1583,359 1609,608 1619,694 1629,779 1657,1024" fill="none" stroke="#cbd5e1" stroke-width="22.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_east_north_south_spine" class="pathway-wall" points="1583,359 1609,608 1619,694 1629,779 1657,1024" fill="none" stroke="#ffffff" stroke-width="20" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="East Wing North–South Corridor"/>
+    <polyline id="bg_f1_pathway_north_labs_west-casing" class="pathway-casing" points="832.038,173.929 842,255 851,337 860,419 869.282,500.814" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_north_labs_west" class="pathway-wall" points="832.038,173.929 842,255 851,337 860,419 869.282,500.814" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — West Passage"/>
+    <polyline id="bg_f1_pathway_north_labs_east-casing" class="pathway-casing" points="913.511,164.646 923,246 932,328 941,410 950.754,491.531" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_north_labs_east" class="pathway-wall" points="913.511,164.646 923,246 932,328 941,410 950.754,491.531" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — East Passage"/>
+    <polyline id="bg_f1_pathway_north_labs_top-casing" class="pathway-casing" points="832,174 873,169 913,165" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_north_labs_top" class="pathway-wall" points="832,174 873,169 913,165" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — Upper Link"/>
+    <polyline id="bg_f1_pathway_north_labs_bottom-casing" class="pathway-casing" points="869.282,500.814 916.973,495.38 950.754,491.531" fill="none" stroke="#cbd5e1" stroke-width="18.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_north_labs_bottom" class="pathway-wall" points="869.282,500.814 916.973,495.38 950.754,491.531" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — Lower Link"/>
+    <polyline id="bg_f1_pathway_north_toilet_approach-casing" class="pathway-casing" points="872.774,169.287 871.529,158.358" fill="none" stroke="#cbd5e1" stroke-width="18.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_north_toilet_approach" class="pathway-wall" points="872.774,169.287 871.529,158.358" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Amenities Approach"/>
+    <polyline id="bg_f1_pathway_engineering_lab_concourse-casing" class="pathway-casing" points="1220,460 1270,455 1319,449 1368,444 1417,438 1461,433 1504,428 1590,418" fill="none" stroke="#cbd5e1" stroke-width="20.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_engineering_lab_concourse" class="pathway-wall" points="1220,460 1270,455 1319,449 1368,444 1417,438 1461,433 1504,428 1590,418" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Metallurgy / Fluids / CAE / Dynamics Corridor"/>
+    <polyline id="bg_f1_pathway_engineering_lab_link-casing" class="pathway-casing" points="1406.804,439.571 1412,487 1418,534 1428.313,628.35" fill="none" stroke="#cbd5e1" stroke-width="26.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_engineering_lab_link" class="pathway-wall" points="1406.804,439.571 1412,487 1418,534 1428.313,628.35" fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Engineering Labs to Main Concourse"/>
+    <polyline id="bg_f1_pathway_south_office_link-casing" class="pathway-casing" points="1447.806,799.443 1469.858,992.99" fill="none" stroke="#cbd5e1" stroke-width="26.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_south_office_link" class="pathway-wall" points="1447.806,799.443 1469.858,992.99" fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Conference / College Administration Link"/>
+    <polyline id="bg_f1_pathway_acharya_south_link-casing" class="pathway-casing" points="534.503,1094.528 594,1088 654,1081 684,1078 713,1074 743,1071" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_acharya_south_link" class="pathway-wall" points="534.503,1094.528 594,1088 654,1081 684,1078 713,1074 743,1071" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Acharya Hall to South Wing"/>
+    <polyline id="bg_f1_pathway_1790501146427-casing" class="pathway-casing" points="796,1070 852,1064 907,1058 963,1052 1018,1045 1074,1039 1102,1036 1129,1033 1185,1027 1240,1020" fill="none" stroke="#cbd5e1" stroke-width="34.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_1790501146427" class="pathway-wall" points="796,1070 852,1064 907,1058 963,1052 1018,1045 1074,1039 1102,1036 1129,1033 1185,1027 1240,1020" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 22"/>
+    <polyline id="bg_f1_pathway_1790501178957-casing" class="pathway-casing" points="1280,1009 1328,1004 1375,999 1423,994 1470,989 1518,984 1565,979 1613,974 1660,969" fill="none" stroke="#cbd5e1" stroke-width="34.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_1790501178957" class="pathway-wall" points="1280,1009 1328,1004 1375,999 1423,994 1470,989 1518,984 1565,979 1613,974 1660,969" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 23"/>
+    <polyline id="bg_f1_pathway_1790501764854-casing" class="pathway-casing" points="1921,572 1931,576 1940,580 1940,600" fill="none" stroke="#cbd5e1" stroke-width="34.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_1790501764854" class="pathway-wall" points="1921,572 1931,576 1940,580 1940,600" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 23"/>
+    <polyline id="bg_f1_pathway_1790501790671-casing" class="pathway-casing" points="1950,702 1940,740 1920,740" fill="none" stroke="#cbd5e1" stroke-width="34.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_1790501790671" class="pathway-wall" points="1950,702 1940,740 1920,740" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 24"/>
+    <polyline id="bg_f1_pathway_1790521160888-casing" class="pathway-casing" points="474,546 543,538 611,530 680,522" fill="none" stroke="#cbd5e1" stroke-width="32.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f1_pathway_1790521160888" class="pathway-wall" points="474,546 543,538 611,530 680,522" fill="none" stroke="#ffffff" stroke-width="30" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 21"/>
+  </g>
+
+  
+  <g id="bg_f1_rooms" class="layer-rooms">
+    <rect id="bg_f1_room_nanosciences" class="room-wall" x="730" y="197" width="113" height="326" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-107 — Physics Lab" data-code="ACN" transform="rotate(353 786.5 360)"/>
+    <rect id="bg_f1_room_special_hall" class="room-wall" x="300" y="580" width="165" height="94" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="A-105 — General Administration Dept. (CAD)" data-code="SPH-102" transform="rotate(354 382.5 627)"/>
+    <rect id="bg_f1_room_gad_office" class="room-wall" x="378" y="671" width="75" height="62" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="ICTS — Reprographics Center" data-code="GAD-103" transform="rotate(354 415.5 702)"/>
+    <rect id="bg_f1_room_admin_block_a" class="room-wall" x="297" y="738" width="174" height="189" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="A-104 — Accounts Office" data-code="ADM-BLK-A" transform="rotate(353 384 832.5)"/>
+    <rect id="bg_f1_room_admission_office" class="room-wall" x="618" y="617" width="100" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-101" data-code="ADM-105" transform="rotate(354 668 661.5)"/>
+    <rect id="bg_f1_room_cir_seminar" class="room-wall" x="811" y="594" width="101" height="89" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="N-103" data-code="CIR-106" transform="rotate(353 861.5 638.5)"/>
+    <rect id="bg_f1_room_guest_room" class="room-wall" x="652" y="895" width="97" height="85" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="S-101" data-code="GST-107" transform="rotate(354 700.5 937.5)"/>
+    <rect id="bg_f1_room_mini_conf" class="room-wall" x="407" y="924" width="73" height="60" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="A-104A — Reserve" data-code="CONF-MINI" transform="rotate(354 443.5 954)"/>
+    <rect id="bg_f1_room_main_conf" class="room-wall" x="353" y="986" width="161" height="91" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="A-103 — ICTS" data-code="CONF-MAIN" transform="rotate(354 433.5 1031.5)"/>
+    <rect id="bg_f1_room_acharya_hall" class="room-wall" x="459" y="1101" width="295" height="112" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="A-102 — ICTS-Stores" data-code="ACH-110" transform="rotate(354 606.5 1157)"/>
+    <rect id="bg_f1_room_stationery" class="room-wall" x="808" y="1082" width="38" height="113" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="A-101 — ICTS Server Room" data-code="STN-111" transform="rotate(354 827 1138.5)"/>
+    <rect id="bg_f1_room_mfg_lab" class="room-wall" x="845" y="1070" width="226" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-104 — Dept. of English / MSW / Physical Education / Philosophy" data-code="LAB-MFG" transform="rotate(354 958 1125.5)"/>
+    <rect id="bg_f1_room_mat_testing" class="room-wall" x="1070" y="1055" width="65" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-105 — Cisco Lab / ICPC Lab / MSW Specialization" data-code="LAB-MTL" transform="rotate(354 1102.5 1110.5)"/>
+    <rect id="bg_f1_room_wireless_ctr" class="room-wall" x="960" y="440" width="111" height="66" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-108 — B.Tech Chemistry Lab" data-code="ACWNA" transform="rotate(354 1015.5 473)"/>
+    <rect id="bg_f1_room_north_wing" class="room-wall" x="860" y="184" width="60" height="292" fill="#f1f5f9" fill-opacity="0.85" stroke="#475569" stroke-width="2" data-name="North Corridor Wing" data-code="CORR-N" transform="rotate(353 890 330)"/>
+    <rect id="bg_f1_room_director_dean" class="room-wall" x="1135" y="840" width="99" height="90" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-107" data-code="DIR-OFFICE" transform="rotate(354 1184.5 885)"/>
+    <rect id="bg_f1_room_ladies_infirmary" class="room-wall" x="1330" y="820" width="30" height="92" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="HOD-ECE" data-code="INF-118" transform="rotate(354 1345 866)"/>
+    <rect id="bg_f1_room_metallurgy" class="room-wall" x="1205" y="332" width="69" height="109" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-116 — EEM Lab" data-code="LAB-MET" transform="rotate(353 1239.5 386.5)"/>
+    <rect id="bg_f1_room_fluid_mech" class="room-wall" x="1276" y="319" width="127" height="110" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-116A — Control &amp; Instrum. Lab" data-code="LAB-FML" transform="rotate(353 1339.5 374)"/>
+    <rect id="bg_f1_room_cae_cell" class="room-wall" x="1403" y="308" width="62" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-119" data-code="CAE-121" transform="rotate(352 1434 363.5)"/>
+    <rect id="bg_f1_room_dynamics_lab" class="room-wall" x="1466" y="300" width="65" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-117 — Power &amp; Energy Lab (EEE)" data-code="LAB-MDL" transform="rotate(353 1498.5 355.5)"/>
+    <rect id="bg_f1_room_math_dept" class="room-wall" x="1458" y="519" width="129" height="89" fill="#e0e7ff" fill-opacity="0.85" stroke="#4338ca" stroke-width="2" data-name="N-118 — CSE Staff Room" data-code="MATH-DEPT" transform="rotate(354 1522.5 563.5)"/>
+    <rect id="bg_f1_room_elec_machines" class="room-wall" x="1614" y="474" width="263" height="108" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-120" data-code="LAB-EML" transform="rotate(353 1745.5 528)"/>
+    <rect id="bg_f1_room_prayer_hall" class="room-wall" x="1876" y="456" width="63" height="107" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="Room 12" data-code="PRY-125" transform="rotate(353 1907.5 509.5)"/>
+    <polygon id="bg_f1_room_courtyard_fareast" class="room-wall" points="null,null null,null null,null null,null null,null null,null null,null" fill="#e5eddb" fill-opacity="0.85" stroke="#a3c299" stroke-width="2" data-name="Courtyard (Far-East)" data-code="CYD-FEAST"/>
+    <rect id="bg_f1_room_college_admin" class="room-wall" x="1489" y="800" width="131" height="88" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-114 — ECE Staff Room" data-code="CADM-127" transform="rotate(353 1554.5 844)"/>
+    <rect id="bg_f1_room_computer_lab" class="room-wall" x="1649" y="778" width="229" height="107" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-115 — Computer Lab" data-code="LAB-CS" transform="rotate(353 1763.5 831.5)"/>
+    <rect id="bg_f1_room_nanotech_lab" class="room-wall" x="1890" y="604" width="131" height="97" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-117 — Micro Processor Lab" data-code="LAB-NANO" transform="rotate(353 1955.5 652.5)"/>
+    <rect id="bg_f1_room_mech_workshop" class="room-wall" x="1287" y="1020" width="128" height="109" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-103" data-code="LAB-MECH" transform="rotate(354 1351 1074.5)"/>
+    <rect id="bg_f1_room_robotics_lab" class="room-wall" x="1414" y="1009" width="69" height="108" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-102" data-code="LAB-ROBO" transform="rotate(354 1448.5 1063)"/>
+    <rect id="bg_f1_room_wind_tunnel" class="room-wall" x="1483" y="998" width="129" height="109" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-101" data-code="LAB-WIND" transform="rotate(354 1547.5 1052.5)"/>
+    <rect id="bg_f1_room_1790266501061" class="room-wall" x="952" y="337" width="111" height="103" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-109 — M.Sc Chemistry Lab" data-code="LAB-FLUID" transform="rotate(354 1007.5 388.5)"/>
+    <rect id="bg_f1_room_1790266683270" class="room-wall" x="935" y="170" width="112" height="168" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-110 — Chem. Research Lab" data-code="R-136" transform="rotate(354 991 254)"/>
+    <rect id="bg_f1_room_1790267011208" class="room-wall" x="1233" y="829" width="96" height="91" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-108" data-code="Arts and Science" transform="rotate(354 1281 874.5)"/>
+    <rect id="bg_f1_room_1790267197118" class="room-wall" x="1360" y="816" width="69" height="91" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="S-109 — Chairman CSE Dept." data-code="Conference" transform="rotate(354 1394.5 861.5)"/>
+    <rect id="bg_f1_room_1790267337608" class="room-wall" x="749" y="884" width="96" height="87" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-102" data-code="AUMS" transform="rotate(354 797 927.5)"/>
+    <rect id="bg_f1_room_1790267611764" class="room-wall" x="384" y="408" width="295" height="112" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="A-108" data-code="AMH-101" transform="rotate(354 531.5 464)"/>
+    <rect id="bg_f1_room_1790267932589" class="room-wall" x="1102" y="560" width="100" height="89" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="N-113" data-code="SA" transform="rotate(353 1152 604.5)"/>
+    <rect id="bg_f1_room_1790267966500" class="room-wall" x="1202" y="548" width="94" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-114" data-code="" transform="rotate(353 1249 592.5)"/>
+    <rect id="bg_f1_room_1790268001235" class="room-wall" x="1296" y="536" width="94" height="89" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="N-115 — Dept. of CSE/CSA" data-code="" transform="rotate(353 1343 580.5)"/>
+    <rect id="bg_f1_room_1790500434656" class="room-wall" x="979" y="856" width="155" height="88" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-105" data-code="R-145" transform="rotate(354 1056.5 900)"/>
+    <rect id="bg_f1_room_1790500485062" class="room-wall" x="845" y="873" width="106" height="86" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-103" data-code="R-146" transform="rotate(353 898 916)"/>
+    <rect id="bg_f1_room_1790500552707" class="room-wall" x="533" y="911" width="75" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 570.5 942.5)"/>
+    <rect id="bg_f1_room_1790500614032" class="room-wall" x="505" y="657" width="75" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 542.5 688.5)"/>
+    <rect id="bg_f1_room_1790500619454" class="room-wall" x="961" y="732" width="54" height="66" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 988 765)"/>
+    <rect id="bg_f1_room_1790500625267" class="room-wall" x="859" y="289" width="60" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 889 320.5)"/>
+    <rect id="bg_f1_room_1790500631547" class="room-wall" x="1631" y="660" width="60" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 1661 691.5)"/>
+    <rect id="bg_f1_room_1790500639780" class="room-wall" x="885" y="959" width="75" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(353 922.5 990.5)"/>
+    <rect id="bg_f1_room_1790500650489" class="room-wall" x="1324" y="460" width="75" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 1361.5 491.5)"/>
+    <rect id="bg_f1_room_1790500850398" class="room-wall" x="824" y="77" width="91" height="81" fill="#bed6e7" fill-opacity="0.85" stroke="#0395d1" stroke-width="2" data-name="Men&#039;s Toilet" data-code="WC" transform="rotate(353 869.5 117.5)"/>
+    <rect id="bg_f1_room_1790500900853" class="room-wall" x="1614" y="1022" width="125" height="68" fill="#f8eaed" fill-opacity="0.85" stroke="#ff00f9" stroke-width="2" data-name="Ladies&#039; Toilet" data-code="WC" transform="rotate(353 1676.5 1056)"/>
+    <rect id="bg_f1_room_1790500984653" class="room-wall" x="1164" y="1043" width="93" height="73" fill="#eee8f4" fill-opacity="0.85" stroke="#ff00f9" stroke-width="2" data-name="Ladies&#039; Toilet" data-code="WC" transform="rotate(353 1210.5 1079.5)"/>
+    <rect id="bg_f1_room_1790501046808" class="room-wall" x="1529" y="291" width="130" height="66" fill="#cddcf1" fill-opacity="0.85" stroke="#289bd4" stroke-width="2" data-name="Men&#039;s Toilet" data-code="WC" transform="rotate(353 1594 324)"/>
+    <rect id="bg_f1_room_1790501831784" class="room-wall" x="719" y="606" width="95" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-102" data-code="ADM-105" transform="rotate(354 766.5 650.5)"/>
+    <rect id="bg_f1_room_1790501909379" class="room-wall" x="940" y="580" width="134" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="CS Staff Room" data-code="R-155" transform="rotate(353 1007 624.5)"/>
+    <rect id="bg_f1_room_1790521278087" class="room-wall" x="440" y="1072" width="80" height="42" fill="#ff00f9" fill-opacity="0.85" stroke="#ff00f9" stroke-width="2" data-name="Ladies&#039; Toilet" data-code="WC" transform="rotate(355 480 1093)"/>
+    <rect id="bg_f1_room_1790521338973" class="room-wall" x="391" y="532" width="69" height="43" fill="#0095d1" fill-opacity="0.85" stroke="#0095d1" stroke-width="2" data-name="Men&#039;s Toilet" data-code="WC" transform="rotate(354 425.5 553.5)"/>
+  </g>
+
+  
+  <g id="bg_f1_labels" class="layer-labels">
+    <g transform="translate(787, 360)">
+      <text class="room-label" y="-7">N-107 — Physics Lab</text>
+      <text class="room-code" y="9">ACN</text>
+    </g>
+    <g transform="translate(383, 627)">
+      <text class="room-label" y="-7">A-105 — General Administration Dept. (CAD)</text>
+      <text class="room-code" y="9">SPH-102</text>
+    </g>
+    <g transform="translate(416, 702)">
+      <text class="room-label" y="-7">ICTS — Reprographics Center</text>
+      <text class="room-code" y="9">GAD-103</text>
+    </g>
+    <g transform="translate(384, 833)">
+      <text class="room-label" y="-7">A-104 — Accounts Office</text>
+      <text class="room-code" y="9">ADM-BLK-A</text>
+    </g>
+    <g transform="translate(668, 662)">
+      <text class="room-label" y="-7">N-101</text>
+      <text class="room-code" y="9">ADM-105</text>
+    </g>
+    <g transform="translate(862, 639)">
+      <text class="room-label" y="-7">N-103</text>
+      <text class="room-code" y="9">CIR-106</text>
+    </g>
+    <g transform="translate(701, 938)">
+      <text class="room-label" y="-7">S-101</text>
+      <text class="room-code" y="9">GST-107</text>
+    </g>
+    <g transform="translate(444, 954)">
+      <text class="room-label" y="-7">A-104A — Reserve</text>
+      <text class="room-code" y="9">CONF-MINI</text>
+    </g>
+    <g transform="translate(434, 1032)">
+      <text class="room-label" y="-7">A-103 — ICTS</text>
+      <text class="room-code" y="9">CONF-MAIN</text>
+    </g>
+    <g transform="translate(607, 1157)">
+      <text class="room-label" y="-7">A-102 — ICTS-Stores</text>
+      <text class="room-code" y="9">ACH-110</text>
+    </g>
+    <g transform="translate(827, 1139)">
+      <text class="room-label" y="-7">A-101 — ICTS Server Room</text>
+      <text class="room-code" y="9">STN-111</text>
+    </g>
+    <g transform="translate(958, 1126)">
+      <text class="room-label" y="-7">S-104 — Dept. of English / MSW / Physical Education / Philosophy</text>
+      <text class="room-code" y="9">LAB-MFG</text>
+    </g>
+    <g transform="translate(1103, 1111)">
+      <text class="room-label" y="-7">S-105 — Cisco Lab / ICPC Lab / MSW Specialization</text>
+      <text class="room-code" y="9">LAB-MTL</text>
+    </g>
+    <g transform="translate(1016, 473)">
+      <text class="room-label" y="-7">N-108 — B.Tech Chemistry Lab</text>
+      <text class="room-code" y="9">ACWNA</text>
+    </g>
+    <g transform="translate(890, 330)">
+      <text class="room-label" y="-7">North Corridor Wing</text>
+      <text class="room-code" y="9">CORR-N</text>
+    </g>
+    <g transform="translate(1185, 885)">
+      <text class="room-label" y="-7">S-107</text>
+      <text class="room-code" y="9">DIR-OFFICE</text>
+    </g>
+    <g transform="translate(1345, 866)">
+      <text class="room-label" y="-7">HOD-ECE</text>
+      <text class="room-code" y="9">INF-118</text>
+    </g>
+    <g transform="translate(1240, 387)">
+      <text class="room-label" y="-7">N-116 — EEM Lab</text>
+      <text class="room-code" y="9">LAB-MET</text>
+    </g>
+    <g transform="translate(1340, 374)">
+      <text class="room-label" y="-7">N-116A — Control &amp; Instrum. Lab</text>
+      <text class="room-code" y="9">LAB-FML</text>
+    </g>
+    <g transform="translate(1434, 364)">
+      <text class="room-label" y="-7">N-119</text>
+      <text class="room-code" y="9">CAE-121</text>
+    </g>
+    <g transform="translate(1499, 356)">
+      <text class="room-label" y="-7">N-117 — Power &amp; Energy Lab (EEE)</text>
+      <text class="room-code" y="9">LAB-MDL</text>
+    </g>
+    <g transform="translate(1523, 564)">
+      <text class="room-label" y="-7">N-118 — CSE Staff Room</text>
+      <text class="room-code" y="9">MATH-DEPT</text>
+    </g>
+    <g transform="translate(1746, 528)">
+      <text class="room-label" y="-7">N-120</text>
+      <text class="room-code" y="9">LAB-EML</text>
+    </g>
+    <g transform="translate(1908, 510)">
+      <text class="room-label" y="-7">Room 12</text>
+      <text class="room-code" y="9">PRY-125</text>
+    </g>
+    <g transform="translate(0, 0)">
+      <text class="room-label" y="-7">Courtyard (Far-East)</text>
+      <text class="room-code" y="9">CYD-FEAST</text>
+    </g>
+    <g transform="translate(1555, 844)">
+      <text class="room-label" y="-7">S-114 — ECE Staff Room</text>
+      <text class="room-code" y="9">CADM-127</text>
+    </g>
+    <g transform="translate(1764, 832)">
+      <text class="room-label" y="-7">S-115 — Computer Lab</text>
+      <text class="room-code" y="9">LAB-CS</text>
+    </g>
+    <g transform="translate(1956, 653)">
+      <text class="room-label" y="-7">S-117 — Micro Processor Lab</text>
+      <text class="room-code" y="9">LAB-NANO</text>
+    </g>
+    <g transform="translate(1351, 1075)">
+      <text class="room-label" y="-7">S-103</text>
+      <text class="room-code" y="9">LAB-MECH</text>
+    </g>
+    <g transform="translate(1449, 1063)">
+      <text class="room-label" y="-7">S-102</text>
+      <text class="room-code" y="9">LAB-ROBO</text>
+    </g>
+    <g transform="translate(1548, 1053)">
+      <text class="room-label" y="-7">S-101</text>
+      <text class="room-code" y="9">LAB-WIND</text>
+    </g>
+    <g transform="translate(1008, 389)">
+      <text class="room-label" y="-7">N-109 — M.Sc Chemistry Lab</text>
+      <text class="room-code" y="9">LAB-FLUID</text>
+    </g>
+    <g transform="translate(991, 254)">
+      <text class="room-label" y="-7">N-110 — Chem. Research Lab</text>
+      <text class="room-code" y="9">R-136</text>
+    </g>
+    <g transform="translate(1281, 875)">
+      <text class="room-label" y="-7">S-108</text>
+      <text class="room-code" y="9">Arts and Science</text>
+    </g>
+    <g transform="translate(1395, 862)">
+      <text class="room-label" y="-7">S-109 — Chairman CSE Dept.</text>
+      <text class="room-code" y="9">Conference</text>
+    </g>
+    <g transform="translate(797, 928)">
+      <text class="room-label" y="-7">S-102</text>
+      <text class="room-code" y="9">AUMS</text>
+    </g>
+    <g transform="translate(532, 464)">
+      <text class="room-label" y="-7">A-108</text>
+      <text class="room-code" y="9">AMH-101</text>
+    </g>
+    <g transform="translate(1152, 605)">
+      <text class="room-label" y="-7">N-113</text>
+      <text class="room-code" y="9">SA</text>
+    </g>
+    <g transform="translate(1249, 593)">
+      <text class="room-label" y="0">N-114</text>
+    </g>
+    <g transform="translate(1343, 581)">
+      <text class="room-label" y="0">N-115 — Dept. of CSE/CSA</text>
+    </g>
+    <g transform="translate(1057, 900)">
+      <text class="room-label" y="-7">S-105</text>
+      <text class="room-code" y="9">R-145</text>
+    </g>
+    <g transform="translate(898, 916)">
+      <text class="room-label" y="-7">S-103</text>
+      <text class="room-code" y="9">R-146</text>
+    </g>
+    <g transform="translate(571, 943)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(543, 689)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(988, 765)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(889, 321)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(1661, 692)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(923, 991)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(1362, 492)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(870, 118)">
+      <text class="room-label" y="-7">Men&#039;s Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(1677, 1056)">
+      <text class="room-label" y="-7">Ladies&#039; Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(1211, 1080)">
+      <text class="room-label" y="-7">Ladies&#039; Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(1594, 324)">
+      <text class="room-label" y="-7">Men&#039;s Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(767, 651)">
+      <text class="room-label" y="-7">N-102</text>
+      <text class="room-code" y="9">ADM-105</text>
+    </g>
+    <g transform="translate(1007, 625)">
+      <text class="room-label" y="-7">CS Staff Room</text>
+      <text class="room-code" y="9">R-155</text>
+    </g>
+    <g transform="translate(480, 1093)">
+      <text class="room-label" y="-7">Ladies&#039; Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(426, 554)">
+      <text class="room-label" y="-7">Men&#039;s Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+  </g>
+          </svg>
           <svg class="selection-overlay" viewBox="0 0 2112 1300" aria-label="Amrita Nav First Floor Plan">
             <rect id="f1_room_nanosciences" class="selectable-room" x="730" y="197" width="113" height="326" transform="rotate(353 786.5 360)" data-name="N-107 — Physics Lab" data-code="ACN" role="button" tabindex="0" aria-label="N-107 — Physics Lab (ACN)" aria-pressed="false"><title>N-107 — Physics Lab (ACN)</title></rect>
             <rect id="f1_room_special_hall" class="selectable-room" x="300" y="580" width="165" height="94" transform="rotate(354 382.5 627)" data-name="A-105 — General Administration Dept. (CAD)" data-code="SPH-102" role="button" tabindex="0" aria-label="A-105 — General Administration Dept. (CAD) (SPH-102)" aria-pressed="false"><title>A-105 — General Administration Dept. (CAD) (SPH-102)</title></rect>
@@ -336,12 +1019,350 @@
 
         <!-- Second Floor -->
         <div class="floor-layer" id="floor-layer-second" data-floor="second">
-          <img 
-            src="floor-2.svg" 
-            alt="Amrita Nav - Second Floor" 
-            class="central-image"
-            draggable="false"
-          >
+          <svg class="central-image floorplan-vector" viewBox="0 0 2112 1300" aria-hidden="true">
+            <defs>
+    <style>
+      .floorplan-bg { fill: #ffffff; }
+      .room-wall { stroke-linejoin: round; stroke-linecap: round; }
+      .room-label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 600; text-anchor: middle; dominant-baseline: central; fill: #0f172a; pointer-events: none; }
+      .room-code { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 500; text-anchor: middle; dominant-baseline: central; fill: #64748b; pointer-events: none; }
+    </style>
+  </defs>
+
+  
+  <rect width="2112" height="1300" class="floorplan-bg"/>
+
+  
+  <g id="bg_f2_pathways" class="layer-pathways">
+    <polyline id="bg_f2_pathway_1790271320290-casing" class="pathway-casing" points="472,527 473,537 474,546 476,564 480,600 488,673 492,710 494,728 494.746,734.716 495,737 496,746 504,818 512,891 513.653,905.876 514,909 516,927 518,945 520,963 524,1000 534.503,1094.528 535,1099 536,1108" fill="none" stroke="#cbd5e1" stroke-width="27.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f2_pathway_1790271320290" class="pathway-wall" points="472,527 473,537 474,546 476,564 480,600 488,673 492,710 494,728 494.746,734.716 495,737 496,746 504,818 512,891 513.653,905.876 514,909 516,927 518,945 520,963 524,1000 534.503,1094.528 535,1099 536,1108" fill="none" stroke="#ffffff" stroke-width="25" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="West Hall and Reception Corridor"/>
+    <polyline id="bg_f2_pathway_courtyard_north_concourse-casing" class="pathway-casing" points="495,737 662,719 717,712 773,706 828,699 884,693 939,686 985,681 1030,676 1121,666 1167,661 1212,656 1257,651 1302,645 1366,638 1429,631 1519,621 1609,610 1661,604 1712,598 1815,585 1918,573 1944,570" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f2_pathway_courtyard_north_concourse" class="pathway-wall" points="495,737 662,719 717,712 773,706 828,699 884,693 939,686 985,681 1030,676 1121,666 1167,661 1212,656 1257,651 1302,645 1366,638 1429,631 1519,621 1609,610 1661,604 1712,598 1815,585 1918,573 1944,570" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Courtyards — North Concourse"/>
+    <polyline id="bg_f2_pathway_courtyard_south_concourse-casing" class="pathway-casing" points="514,906 625,894 681,888 736,881 792,875 847,868 903,862 958,855 1003,850 1049,845 1095,840 1140,835 1186,830 1231,824 1276,819 1321,814 1337,812 1353,810 1384,807 1448,800 1539,790 1629,779 1707,770 1785,761 1863,752 1941,743" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f2_pathway_courtyard_south_concourse" class="pathway-wall" points="514,906 625,894 681,888 736,881 792,875 847,868 903,862 958,855 1003,850 1049,845 1095,840 1140,835 1186,830 1231,824 1276,819 1321,814 1337,812 1353,810 1384,807 1448,800 1539,790 1629,779 1707,770 1785,761 1863,752 1941,743" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Courtyards — South Concourse"/>
+    <polyline id="bg_f2_pathway_central_north_south_spine-casing" class="pathway-casing" points="917,495 939,684 949,770 958,855 969,952 972,976 975,1000 980,1048" fill="none" stroke="#cbd5e1" stroke-width="26.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f2_pathway_central_north_south_spine" class="pathway-wall" points="917,495 939,684 949,770 958,855 969,952 972,976 975,1000 980,1048" fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Central North–South Corridor"/>
+    <polyline id="bg_f2_pathway_middle_courtyard_link-casing" class="pathway-casing" points="1301.632,642.783 1321.126,813.876" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f2_pathway_middle_courtyard_link" class="pathway-wall" points="1301.632,642.783 1321.126,813.876" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Central / East Courtyard Link"/>
+    <polyline id="bg_f2_pathway_east_north_south_spine-casing" class="pathway-casing" points="1583,359 1609,608 1619,694 1629,779 1657,1024" fill="none" stroke="#cbd5e1" stroke-width="20.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f2_pathway_east_north_south_spine" class="pathway-wall" points="1583,359 1609,608 1619,694 1629,779 1657,1024" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="East Wing North–South Corridor"/>
+    <polyline id="bg_f2_pathway_north_labs_west-casing" class="pathway-casing" points="832.038,173.929 837,214 842,255 847,296 851,337 856,378 860,419 865,460 869.282,500.814" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f2_pathway_north_labs_west" class="pathway-wall" points="832.038,173.929 837,214 842,255 847,296 851,337 856,378 860,419 865,460 869.282,500.814" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — West Passage"/>
+    <polyline id="bg_f2_pathway_north_labs_east-casing" class="pathway-casing" points="914,165 919,206 922,227 924,247 929,288 933,329 936,350 938,370 942,411 947,452 951,492" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f2_pathway_north_labs_east" class="pathway-wall" points="914,165 919,206 922,227 924,247 929,288 933,329 936,350 938,370 942,411 947,452 951,492" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — East Passage"/>
+    <polyline id="bg_f2_pathway_north_labs_top-casing" class="pathway-casing" points="832.038,173.929 872.774,169.287 913.511,164.646" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f2_pathway_north_labs_top" class="pathway-wall" points="832.038,173.929 872.774,169.287 913.511,164.646" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — Upper Link"/>
+    <polyline id="bg_f2_pathway_north_labs_bottom-casing" class="pathway-casing" points="869.282,500.814 916.973,495.38 950.754,491.531" fill="none" stroke="#cbd5e1" stroke-width="18.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f2_pathway_north_labs_bottom" class="pathway-wall" points="869.282,500.814 916.973,495.38 950.754,491.531" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — Lower Link"/>
+    <polyline id="bg_f2_pathway_north_toilet_approach-casing" class="pathway-casing" points="872.774,169.287 871.529,158.358" fill="none" stroke="#cbd5e1" stroke-width="18.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f2_pathway_north_toilet_approach" class="pathway-wall" points="872.774,169.287 871.529,158.358" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Amenities Approach"/>
+    <polyline id="bg_f2_pathway_engineering_lab_concourse-casing" class="pathway-casing" points="1210.077,461.985 1259,456 1308,451 1357,445 1406.804,439.571 1450,435 1493,430 1580,420" fill="none" stroke="#cbd5e1" stroke-width="20.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f2_pathway_engineering_lab_concourse" class="pathway-wall" points="1210.077,461.985 1259,456 1308,451 1357,445 1406.804,439.571 1450,435 1493,430 1580,420" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Metallurgy / Fluids / CAE / Dynamics Corridor"/>
+    <polyline id="bg_f2_pathway_engineering_lab_link-casing" class="pathway-casing" points="1406.804,439.571 1412,487 1418,534 1428.313,628.35" fill="none" stroke="#cbd5e1" stroke-width="26.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f2_pathway_engineering_lab_link" class="pathway-wall" points="1406.804,439.571 1412,487 1418,534 1428.313,628.35" fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Engineering Labs to Main Concourse"/>
+    <polyline id="bg_f2_pathway_south_office_link-casing" class="pathway-casing" points="1447.806,799.443 1469.858,992.99" fill="none" stroke="#cbd5e1" stroke-width="26.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f2_pathway_south_office_link" class="pathway-wall" points="1447.806,799.443 1469.858,992.99" fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Conference / College Administration Link"/>
+    <polyline id="bg_f2_pathway_acharya_south_link-casing" class="pathway-casing" points="535,1095 595,1088 654,1081 684,1078 714,1075 744,1072" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f2_pathway_acharya_south_link" class="pathway-wall" points="535,1095 595,1088 654,1081 684,1078 714,1075 744,1072" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Acharya Hall to South Wing"/>
+    <polyline id="bg_f2_pathway_1790501146427-casing" class="pathway-casing" points="796,1070 852,1064 907,1058 963,1052 1018,1045 1074,1039 1129,1033 1185,1027 1240,1020" fill="none" stroke="#cbd5e1" stroke-width="34.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f2_pathway_1790501146427" class="pathway-wall" points="796,1070 852,1064 907,1058 963,1052 1018,1045 1074,1039 1129,1033 1185,1027 1240,1020" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 22"/>
+    <polyline id="bg_f2_pathway_1790501178957-casing" class="pathway-casing" points="1283,1012 1373,1002 1418,997 1463,992 1553,982 1643,972" fill="none" stroke="#cbd5e1" stroke-width="34.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f2_pathway_1790501178957" class="pathway-wall" points="1283,1012 1373,1002 1418,997 1463,992 1553,982 1643,972" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 23"/>
+    <polyline id="bg_f2_pathway_1790575291631-casing" class="pathway-casing" points="480,540 530,535 580,530 630,525 680,520" fill="none" stroke="#cbd5e1" stroke-width="34.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f2_pathway_1790575291631" class="pathway-wall" points="480,540 530,535 580,530 630,525 680,520" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 19"/>
+  </g>
+
+  
+  <g id="bg_f2_rooms" class="layer-rooms">
+    <rect id="bg_f2_room_nanosciences" class="room-wall" x="730" y="197" width="113" height="326" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-207" data-code="ACN" transform="rotate(353 786.5 360)"/>
+    <rect id="bg_f2_room_special_hall" class="room-wall" x="300" y="580" width="165" height="94" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="A-208" data-code="SPH-102" transform="rotate(354 382.5 627)"/>
+    <rect id="bg_f2_room_gad_office" class="room-wall" x="378" y="671" width="75" height="62" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="A-207" data-code="GAD-103" transform="rotate(354 415.5 702)"/>
+    <rect id="bg_f2_room_admin_block_a" class="room-wall" x="297" y="738" width="174" height="189" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="A-204" data-code="ADM-BLK-A" transform="rotate(353 384 832.5)"/>
+    <rect id="bg_f2_room_admission_office" class="room-wall" x="618" y="617" width="100" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-201" data-code="ADM-105" transform="rotate(354 668 661.5)"/>
+    <rect id="bg_f2_room_cir_seminar" class="room-wall" x="811" y="594" width="101" height="89" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="N-203" data-code="CIR-106" transform="rotate(353 861.5 638.5)"/>
+    <rect id="bg_f2_room_guest_room" class="room-wall" x="652" y="895" width="97" height="85" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="S-201" data-code="GST-107" transform="rotate(354 700.5 937.5)"/>
+    <rect id="bg_f2_room_mini_conf" class="room-wall" x="407" y="924" width="73" height="60" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="A-205" data-code="CONF-MINI" transform="rotate(354 443.5 954)"/>
+    <rect id="bg_f2_room_main_conf" class="room-wall" x="353" y="986" width="161" height="91" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="A-203" data-code="CONF-MAIN" transform="rotate(354 433.5 1031.5)"/>
+    <rect id="bg_f2_room_acharya_hall" class="room-wall" x="459" y="1101" width="295" height="112" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="A-202" data-code="ACH-110" transform="rotate(354 606.5 1157)"/>
+    <rect id="bg_f2_room_stationery" class="room-wall" x="808" y="1082" width="38" height="113" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="A-201" data-code="STN-111" transform="rotate(354 827 1138.5)"/>
+    <rect id="bg_f2_room_mfg_lab" class="room-wall" x="845" y="1070" width="226" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-205" data-code="LAB-MFG" transform="rotate(354 958 1125.5)"/>
+    <rect id="bg_f2_room_mat_testing" class="room-wall" x="1070" y="1055" width="65" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-206" data-code="LAB-MTL" transform="rotate(354 1102.5 1110.5)"/>
+    <rect id="bg_f2_room_wireless_ctr" class="room-wall" x="960" y="440" width="111" height="66" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-208" data-code="ACWNA" transform="rotate(354 1015.5 473)"/>
+    <rect id="bg_f2_room_north_wing" class="room-wall" x="860" y="184" width="60" height="292" fill="#f1f5f9" fill-opacity="0.85" stroke="#475569" stroke-width="2" data-name="North Corridor Wing" data-code="CORR-N" transform="rotate(353 890 330)"/>
+    <rect id="bg_f2_room_director_dean" class="room-wall" x="1135" y="840" width="99" height="90" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-210" data-code="DIR-OFFICE" transform="rotate(354 1184.5 885)"/>
+    <rect id="bg_f2_room_ladies_infirmary" class="room-wall" x="1330" y="820" width="30" height="92" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="S-212" data-code="INF-118" transform="rotate(354 1345 866)"/>
+    <rect id="bg_f2_room_metallurgy" class="room-wall" x="1205" y="332" width="69" height="109" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-218" data-code="LAB-MET" transform="rotate(353 1239.5 386.5)"/>
+    <rect id="bg_f2_room_fluid_mech" class="room-wall" x="1276" y="319" width="127" height="110" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-220 / N-219" data-code="LAB-FML" transform="rotate(353 1339.5 374)"/>
+    <rect id="bg_f2_room_cae_cell" class="room-wall" x="1403" y="308" width="62" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-221" data-code="CAE-121" transform="rotate(352 1434 363.5)"/>
+    <rect id="bg_f2_room_dynamics_lab" class="room-wall" x="1466" y="300" width="65" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-220" data-code="LAB-MDL" transform="rotate(353 1498.5 355.5)"/>
+    <rect id="bg_f2_room_math_dept" class="room-wall" x="1458" y="519" width="129" height="89" fill="#e0e7ff" fill-opacity="0.85" stroke="#4338ca" stroke-width="2" data-name="N-222" data-code="MATH-DEPT" transform="rotate(354 1522.5 563.5)"/>
+    <rect id="bg_f2_room_elec_machines" class="room-wall" x="1614" y="474" width="263" height="108" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-223" data-code="LAB-EML" transform="rotate(353 1745.5 528)"/>
+    <rect id="bg_f2_room_prayer_hall" class="room-wall" x="1876" y="456" width="63" height="107" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="N-225" data-code="PRY-125" transform="rotate(353 1907.5 509.5)"/>
+    <polygon id="bg_f2_room_courtyard_fareast" class="room-wall" points="null,null null,null null,null null,null null,null null,null null,null" fill="#e5eddb" fill-opacity="0.85" stroke="#a3c299" stroke-width="2" data-name="Courtyard (Far-East)" data-code="CYD-FEAST"/>
+    <rect id="bg_f2_room_college_admin" class="room-wall" x="1489" y="800" width="131" height="88" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-216" data-code="CADM-127" transform="rotate(353 1554.5 844)"/>
+    <rect id="bg_f2_room_computer_lab" class="room-wall" x="1640" y="780" width="229" height="107" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-220 / S-219 / S-218 / S-217" data-code="LAB-CS" transform="rotate(353 1754.5 833.5)"/>
+    <rect id="bg_f2_room_mech_workshop" class="room-wall" x="1287" y="1020" width="128" height="109" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-203" data-code="LAB-MECH" transform="rotate(354 1351 1074.5)"/>
+    <rect id="bg_f2_room_robotics_lab" class="room-wall" x="1414" y="1009" width="69" height="108" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-202" data-code="LAB-ROBO" transform="rotate(354 1448.5 1063)"/>
+    <rect id="bg_f2_room_wind_tunnel" class="room-wall" x="1483" y="998" width="129" height="109" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-214" data-code="LAB-WIND" transform="rotate(354 1547.5 1052.5)"/>
+    <rect id="bg_f2_room_1790266501061" class="room-wall" x="952" y="337" width="111" height="103" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-209" data-code="LAB-FLUID" transform="rotate(354 1007.5 388.5)"/>
+    <rect id="bg_f2_room_1790266683270" class="room-wall" x="935" y="170" width="112" height="168" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-210" data-code="R-136" transform="rotate(354 991 254)"/>
+    <rect id="bg_f2_room_1790267011208" class="room-wall" x="1233" y="829" width="96" height="91" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-211" data-code="Arts and Science" transform="rotate(354 1281 874.5)"/>
+    <rect id="bg_f2_room_1790267197118" class="room-wall" x="1360" y="816" width="69" height="91" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="S-212" data-code="Conference" transform="rotate(354 1394.5 861.5)"/>
+    <rect id="bg_f2_room_1790267337608" class="room-wall" x="749" y="884" width="96" height="87" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-202" data-code="AUMS" transform="rotate(354 797 927.5)"/>
+    <rect id="bg_f2_room_1790267611764" class="room-wall" x="384" y="408" width="295" height="112" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="A-210" data-code="AMH-101" transform="rotate(354 531.5 464)"/>
+    <rect id="bg_f2_room_1790267932589" class="room-wall" x="1102" y="560" width="100" height="89" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="N-215" data-code="SA" transform="rotate(353 1152 604.5)"/>
+    <rect id="bg_f2_room_1790267966500" class="room-wall" x="1202" y="548" width="94" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-216" data-code="" transform="rotate(353 1249 592.5)"/>
+    <rect id="bg_f2_room_1790268001235" class="room-wall" x="1296" y="536" width="94" height="89" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="N-217" data-code="" transform="rotate(353 1343 580.5)"/>
+    <rect id="bg_f2_room_1790500434656" class="room-wall" x="979" y="856" width="155" height="88" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-206" data-code="R-145" transform="rotate(354 1056.5 900)"/>
+    <rect id="bg_f2_room_1790500485062" class="room-wall" x="845" y="873" width="106" height="86" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-203" data-code="R-146" transform="rotate(353 898 916)"/>
+    <rect id="bg_f2_room_1790500552707" class="room-wall" x="533" y="911" width="75" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 570.5 942.5)"/>
+    <rect id="bg_f2_room_1790500614032" class="room-wall" x="505" y="657" width="75" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 542.5 688.5)"/>
+    <rect id="bg_f2_room_1790500619454" class="room-wall" x="961" y="732" width="54" height="66" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 988 765)"/>
+    <rect id="bg_f2_room_1790500625267" class="room-wall" x="859" y="289" width="60" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 889 320.5)"/>
+    <rect id="bg_f2_room_1790500631547" class="room-wall" x="1631" y="660" width="60" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 1661 691.5)"/>
+    <rect id="bg_f2_room_1790500639780" class="room-wall" x="885" y="959" width="75" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(353 922.5 990.5)"/>
+    <rect id="bg_f2_room_1790500650489" class="room-wall" x="1324" y="460" width="75" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 1361.5 491.5)"/>
+    <rect id="bg_f2_room_1790500850398" class="room-wall" x="824" y="77" width="91" height="81" fill="#0095d1" fill-opacity="0.85" stroke="#0095d1" stroke-width="2" data-name="Men&#039;s Toilet" data-code="WC" transform="rotate(353 869.5 117.5)"/>
+    <rect id="bg_f2_room_1790500900853" class="room-wall" x="1614" y="1022" width="125" height="68" fill="#ff00f9" fill-opacity="0.85" stroke="#ff00f9" stroke-width="2" data-name="Ladies&#039; Toilet" data-code="WC" transform="rotate(353 1676.5 1056)"/>
+    <rect id="bg_f2_room_1790500984653" class="room-wall" x="1164" y="1043" width="93" height="73" fill="#e8c5fd" fill-opacity="0.85" stroke="#f64bf8" stroke-width="2" data-name="Ladies&#039; Toilet" data-code="WC" transform="rotate(353 1210.5 1079.5)"/>
+    <rect id="bg_f2_room_1790501046808" class="room-wall" x="1529" y="291" width="130" height="66" fill="#0095d1" fill-opacity="0.85" stroke="#0095d1" stroke-width="2" data-name="Men&#039;s Toilet" data-code="WC" transform="rotate(353 1594 324)"/>
+    <rect id="bg_f2_room_1790501831784" class="room-wall" x="719" y="606" width="95" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-202" data-code="ADM-105" transform="rotate(354 766.5 650.5)"/>
+    <rect id="bg_f2_room_1790501909379" class="room-wall" x="940" y="580" width="134" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-214" data-code="R-155" transform="rotate(353 1007 624.5)"/>
+    <rect id="bg_f2_room_1790502692180" class="room-wall" x="1880" y="758" width="97" height="109" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Microwave Lab" data-code="R-155" transform="rotate(354 1928.5 812.5)"/>
+    <rect id="bg_f2_room_1790520116929" class="room-wall" x="454" y="1072" width="64" height="41" fill="#e8c5fd" fill-opacity="0.85" stroke="#fa00f5" stroke-width="2" data-name="Ladies&#039; toilet " data-code="WC" transform="rotate(355 486 1092.5)"/>
+    <rect id="bg_f2_room_1790520135835" class="room-wall" x="391" y="532" width="69" height="43" fill="#0095cd" fill-opacity="0.85" stroke="#0095d1" stroke-width="2" data-name="Men&#039;s Toilet" data-code="WC" transform="rotate(354 425.5 553.5)"/>
+  </g>
+
+  
+  <g id="bg_f2_labels" class="layer-labels">
+    <g transform="translate(787, 360)">
+      <text class="room-label" y="-7">N-207</text>
+      <text class="room-code" y="9">ACN</text>
+    </g>
+    <g transform="translate(383, 627)">
+      <text class="room-label" y="-7">A-208</text>
+      <text class="room-code" y="9">SPH-102</text>
+    </g>
+    <g transform="translate(416, 702)">
+      <text class="room-label" y="-7">A-207</text>
+      <text class="room-code" y="9">GAD-103</text>
+    </g>
+    <g transform="translate(384, 833)">
+      <text class="room-label" y="-7">A-204</text>
+      <text class="room-code" y="9">ADM-BLK-A</text>
+    </g>
+    <g transform="translate(668, 662)">
+      <text class="room-label" y="-7">N-201</text>
+      <text class="room-code" y="9">ADM-105</text>
+    </g>
+    <g transform="translate(862, 639)">
+      <text class="room-label" y="-7">N-203</text>
+      <text class="room-code" y="9">CIR-106</text>
+    </g>
+    <g transform="translate(701, 938)">
+      <text class="room-label" y="-7">S-201</text>
+      <text class="room-code" y="9">GST-107</text>
+    </g>
+    <g transform="translate(444, 954)">
+      <text class="room-label" y="-7">A-205</text>
+      <text class="room-code" y="9">CONF-MINI</text>
+    </g>
+    <g transform="translate(434, 1032)">
+      <text class="room-label" y="-7">A-203</text>
+      <text class="room-code" y="9">CONF-MAIN</text>
+    </g>
+    <g transform="translate(607, 1157)">
+      <text class="room-label" y="-7">A-202</text>
+      <text class="room-code" y="9">ACH-110</text>
+    </g>
+    <g transform="translate(827, 1139)">
+      <text class="room-label" y="-7">A-201</text>
+      <text class="room-code" y="9">STN-111</text>
+    </g>
+    <g transform="translate(958, 1126)">
+      <text class="room-label" y="-7">S-205</text>
+      <text class="room-code" y="9">LAB-MFG</text>
+    </g>
+    <g transform="translate(1103, 1111)">
+      <text class="room-label" y="-7">S-206</text>
+      <text class="room-code" y="9">LAB-MTL</text>
+    </g>
+    <g transform="translate(1016, 473)">
+      <text class="room-label" y="-7">N-208</text>
+      <text class="room-code" y="9">ACWNA</text>
+    </g>
+    <g transform="translate(890, 330)">
+      <text class="room-label" y="-7">North Corridor Wing</text>
+      <text class="room-code" y="9">CORR-N</text>
+    </g>
+    <g transform="translate(1185, 885)">
+      <text class="room-label" y="-7">S-210</text>
+      <text class="room-code" y="9">DIR-OFFICE</text>
+    </g>
+    <g transform="translate(1345, 866)">
+      <text class="room-label" y="-7">S-212</text>
+      <text class="room-code" y="9">INF-118</text>
+    </g>
+    <g transform="translate(1240, 387)">
+      <text class="room-label" y="-7">N-218</text>
+      <text class="room-code" y="9">LAB-MET</text>
+    </g>
+    <g transform="translate(1340, 374)">
+      <text class="room-label" y="-7">N-220 / N-219</text>
+      <text class="room-code" y="9">LAB-FML</text>
+    </g>
+    <g transform="translate(1434, 364)">
+      <text class="room-label" y="-7">N-221</text>
+      <text class="room-code" y="9">CAE-121</text>
+    </g>
+    <g transform="translate(1499, 356)">
+      <text class="room-label" y="-7">N-220</text>
+      <text class="room-code" y="9">LAB-MDL</text>
+    </g>
+    <g transform="translate(1523, 564)">
+      <text class="room-label" y="-7">N-222</text>
+      <text class="room-code" y="9">MATH-DEPT</text>
+    </g>
+    <g transform="translate(1746, 528)">
+      <text class="room-label" y="-7">N-223</text>
+      <text class="room-code" y="9">LAB-EML</text>
+    </g>
+    <g transform="translate(1908, 510)">
+      <text class="room-label" y="-7">N-225</text>
+      <text class="room-code" y="9">PRY-125</text>
+    </g>
+    <g transform="translate(0, 0)">
+      <text class="room-label" y="-7">Courtyard (Far-East)</text>
+      <text class="room-code" y="9">CYD-FEAST</text>
+    </g>
+    <g transform="translate(1555, 844)">
+      <text class="room-label" y="-7">S-216</text>
+      <text class="room-code" y="9">CADM-127</text>
+    </g>
+    <g transform="translate(1755, 834)">
+      <text class="room-label" y="-7">S-220 / S-219 / S-218 / S-217</text>
+      <text class="room-code" y="9">LAB-CS</text>
+    </g>
+    <g transform="translate(1351, 1075)">
+      <text class="room-label" y="-7">S-203</text>
+      <text class="room-code" y="9">LAB-MECH</text>
+    </g>
+    <g transform="translate(1449, 1063)">
+      <text class="room-label" y="-7">S-202</text>
+      <text class="room-code" y="9">LAB-ROBO</text>
+    </g>
+    <g transform="translate(1548, 1053)">
+      <text class="room-label" y="-7">S-214</text>
+      <text class="room-code" y="9">LAB-WIND</text>
+    </g>
+    <g transform="translate(1008, 389)">
+      <text class="room-label" y="-7">N-209</text>
+      <text class="room-code" y="9">LAB-FLUID</text>
+    </g>
+    <g transform="translate(991, 254)">
+      <text class="room-label" y="-7">N-210</text>
+      <text class="room-code" y="9">R-136</text>
+    </g>
+    <g transform="translate(1281, 875)">
+      <text class="room-label" y="-7">S-211</text>
+      <text class="room-code" y="9">Arts and Science</text>
+    </g>
+    <g transform="translate(1395, 862)">
+      <text class="room-label" y="-7">S-212</text>
+      <text class="room-code" y="9">Conference</text>
+    </g>
+    <g transform="translate(797, 928)">
+      <text class="room-label" y="-7">S-202</text>
+      <text class="room-code" y="9">AUMS</text>
+    </g>
+    <g transform="translate(532, 464)">
+      <text class="room-label" y="-7">A-210</text>
+      <text class="room-code" y="9">AMH-101</text>
+    </g>
+    <g transform="translate(1152, 605)">
+      <text class="room-label" y="-7">N-215</text>
+      <text class="room-code" y="9">SA</text>
+    </g>
+    <g transform="translate(1249, 593)">
+      <text class="room-label" y="0">N-216</text>
+    </g>
+    <g transform="translate(1343, 581)">
+      <text class="room-label" y="0">N-217</text>
+    </g>
+    <g transform="translate(1057, 900)">
+      <text class="room-label" y="-7">S-206</text>
+      <text class="room-code" y="9">R-145</text>
+    </g>
+    <g transform="translate(898, 916)">
+      <text class="room-label" y="-7">S-203</text>
+      <text class="room-code" y="9">R-146</text>
+    </g>
+    <g transform="translate(571, 943)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(543, 689)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(988, 765)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(889, 321)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(1661, 692)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(923, 991)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(1362, 492)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(870, 118)">
+      <text class="room-label" y="-7">Men&#039;s Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(1677, 1056)">
+      <text class="room-label" y="-7">Ladies&#039; Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(1211, 1080)">
+      <text class="room-label" y="-7">Ladies&#039; Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(1594, 324)">
+      <text class="room-label" y="-7">Men&#039;s Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(767, 651)">
+      <text class="room-label" y="-7">N-202</text>
+      <text class="room-code" y="9">ADM-105</text>
+    </g>
+    <g transform="translate(1007, 625)">
+      <text class="room-label" y="-7">N-214</text>
+      <text class="room-code" y="9">R-155</text>
+    </g>
+    <g transform="translate(1929, 813)">
+      <text class="room-label" y="-7">Microwave Lab</text>
+      <text class="room-code" y="9">R-155</text>
+    </g>
+    <g transform="translate(486, 1093)">
+      <text class="room-label" y="-7">Ladies&#039; toilet </text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(426, 554)">
+      <text class="room-label" y="-7">Men&#039;s Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+  </g>
+          </svg>
           <svg class="selection-overlay" viewBox="0 0 2112 1300" aria-label="Amrita Nav Second Floor Plan">
             <rect id="f2_room_nanosciences" class="selectable-room" x="730" y="197" width="113" height="326" transform="rotate(353 786.5 360)" data-name="N-207" data-code="ACN" role="button" tabindex="0" aria-label="N-207 (ACN)" aria-pressed="false"><title>N-207 (ACN)</title></rect>
             <rect id="f2_room_special_hall" class="selectable-room" x="300" y="580" width="165" height="94" transform="rotate(354 382.5 627)" data-name="A-208" data-code="SPH-102" role="button" tabindex="0" aria-label="A-208 (SPH-102)" aria-pressed="false"><title>A-208 (SPH-102)</title></rect>
@@ -406,12 +1427,350 @@
 
         <!-- Third Floor -->
         <div class="floor-layer" id="floor-layer-third" data-floor="third">
-          <img 
-            src="floor-3.svg" 
-            alt="Amrita Nav - Third Floor" 
-            class="central-image"
-            draggable="false"
-          >
+          <svg class="central-image floorplan-vector" viewBox="0 0 2112 1300" aria-hidden="true">
+            <defs>
+    <style>
+      .floorplan-bg { fill: #ffffff; }
+      .room-wall { stroke-linejoin: round; stroke-linecap: round; }
+      .room-label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 600; text-anchor: middle; dominant-baseline: central; fill: #0f172a; pointer-events: none; }
+      .room-code { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 500; text-anchor: middle; dominant-baseline: central; fill: #64748b; pointer-events: none; }
+    </style>
+  </defs>
+
+  
+  <rect width="2112" height="1300" class="floorplan-bg"/>
+
+  
+  <g id="bg_f3_pathways" class="layer-pathways">
+    <polyline id="bg_f3_pathway_1790271320290-casing" class="pathway-casing" points="472,527 473,537 474,546 476,564 480,600 488,673 492,710 494,728 494.746,734.716 495,737 496,746 504,818 512,891 513.653,905.876 514,909 516,927 518,945 520,963 524,1000 534.503,1094.528 535,1099 536,1108" fill="none" stroke="#cbd5e1" stroke-width="27.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f3_pathway_1790271320290" class="pathway-wall" points="472,527 473,537 474,546 476,564 480,600 488,673 492,710 494,728 494.746,734.716 495,737 496,746 504,818 512,891 513.653,905.876 514,909 516,927 518,945 520,963 524,1000 534.503,1094.528 535,1099 536,1108" fill="none" stroke="#ffffff" stroke-width="25" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="West Hall and Reception Corridor"/>
+    <polyline id="bg_f3_pathway_courtyard_north_concourse-casing" class="pathway-casing" points="495,737 662,719 717,712 773,706 828,699 884,693 939,686 1030,676 1121,666 1212,656 1257,651 1302,645 1366,638 1429,631 1519,621 1609,610 1692,603 1775,595 1858,588 1940,580" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f3_pathway_courtyard_north_concourse" class="pathway-wall" points="495,737 662,719 717,712 773,706 828,699 884,693 939,686 1030,676 1121,666 1212,656 1257,651 1302,645 1366,638 1429,631 1519,621 1609,610 1692,603 1775,595 1858,588 1940,580" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Courtyards — North Concourse"/>
+    <polyline id="bg_f3_pathway_courtyard_south_concourse-casing" class="pathway-casing" points="513.653,905.876 625,893 681,887 736,881 792,875 847,868 902,862 957.975,855.252 1049,845 1186,830 1276,819 1321.126,813.876 1384,807 1447.806,799.443 1538,789 1628.636,778.84 1707,770 1785,761 1863,752 1902,748 1940.618,743.294" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f3_pathway_courtyard_south_concourse" class="pathway-wall" points="513.653,905.876 625,893 681,887 736,881 792,875 847,868 902,862 957.975,855.252 1049,845 1186,830 1276,819 1321.126,813.876 1384,807 1447.806,799.443 1538,789 1628.636,778.84 1707,770 1785,761 1863,752 1902,748 1940.618,743.294" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Courtyards — South Concourse"/>
+    <polyline id="bg_f3_pathway_central_north_south_spine-casing" class="pathway-casing" points="917,495 939,684 949,770 958,855 969,952 972,976 975,1000 980,1048" fill="none" stroke="#cbd5e1" stroke-width="26.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f3_pathway_central_north_south_spine" class="pathway-wall" points="917,495 939,684 949,770 958,855 969,952 972,976 975,1000 980,1048" fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Central North–South Corridor"/>
+    <polyline id="bg_f3_pathway_middle_courtyard_link-casing" class="pathway-casing" points="1301.632,642.783 1311,728 1321.126,813.876" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f3_pathway_middle_courtyard_link" class="pathway-wall" points="1301.632,642.783 1311,728 1321.126,813.876" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Central / East Courtyard Link"/>
+    <polyline id="bg_f3_pathway_east_north_south_spine-casing" class="pathway-casing" points="1583,359 1590,422 1596,484 1609,608 1619,694 1629,779 1660,1020" fill="none" stroke="#cbd5e1" stroke-width="20.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f3_pathway_east_north_south_spine" class="pathway-wall" points="1583,359 1590,422 1596,484 1609,608 1619,694 1629,779 1660,1020" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="East Wing North–South Corridor"/>
+    <polyline id="bg_f3_pathway_north_labs_west-casing" class="pathway-casing" points="832.038,173.929 842,255 847,296 851,337 856,378 860,419 865,460 869.282,500.814" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f3_pathway_north_labs_west" class="pathway-wall" points="832.038,173.929 842,255 847,296 851,337 856,378 860,419 865,460 869.282,500.814" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — West Passage"/>
+    <polyline id="bg_f3_pathway_north_labs_east-casing" class="pathway-casing" points="913.511,164.646 918,205 923,246 932,328 937,369 941,410 946,451 950.754,491.531" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f3_pathway_north_labs_east" class="pathway-wall" points="913.511,164.646 918,205 923,246 932,328 937,369 941,410 946,451 950.754,491.531" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — East Passage"/>
+    <polyline id="bg_f3_pathway_north_labs_top-casing" class="pathway-casing" points="832.038,173.929 872.774,169.287 913.511,164.646" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f3_pathway_north_labs_top" class="pathway-wall" points="832.038,173.929 872.774,169.287 913.511,164.646" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — Upper Link"/>
+    <polyline id="bg_f3_pathway_north_labs_bottom-casing" class="pathway-casing" points="869.282,500.814 916.973,495.38 950.754,491.531" fill="none" stroke="#cbd5e1" stroke-width="18.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f3_pathway_north_labs_bottom" class="pathway-wall" points="869.282,500.814 916.973,495.38 950.754,491.531" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Labs — Lower Link"/>
+    <polyline id="bg_f3_pathway_north_toilet_approach-casing" class="pathway-casing" points="872.774,169.287 871.529,158.358" fill="none" stroke="#cbd5e1" stroke-width="18.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f3_pathway_north_toilet_approach" class="pathway-wall" points="872.774,169.287 871.529,158.358" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="North Amenities Approach"/>
+    <polyline id="bg_f3_pathway_engineering_lab_concourse-casing" class="pathway-casing" points="1210.077,461.985 1259,456 1308,451 1406.804,439.571 1450,435 1493,430 1515,428 1537,425 1580,420" fill="none" stroke="#cbd5e1" stroke-width="20.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f3_pathway_engineering_lab_concourse" class="pathway-wall" points="1210.077,461.985 1259,456 1308,451 1406.804,439.571 1450,435 1493,430 1515,428 1537,425 1580,420" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Metallurgy / Fluids / CAE / Dynamics Corridor"/>
+    <polyline id="bg_f3_pathway_engineering_lab_link-casing" class="pathway-casing" points="1407,440 1412,487 1418,534 1429,629" fill="none" stroke="#cbd5e1" stroke-width="26.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f3_pathway_engineering_lab_link" class="pathway-wall" points="1407,440 1412,487 1418,534 1429,629" fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Engineering Labs to Main Concourse"/>
+    <polyline id="bg_f3_pathway_south_office_link-casing" class="pathway-casing" points="1447.806,799.443 1469.858,992.99" fill="none" stroke="#cbd5e1" stroke-width="26.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f3_pathway_south_office_link" class="pathway-wall" points="1447.806,799.443 1469.858,992.99" fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Conference / College Administration Link"/>
+    <polyline id="bg_f3_pathway_acharya_south_link-casing" class="pathway-casing" points="535,1095 595,1088 654,1081 684,1078 714,1075 744,1072" fill="none" stroke="#cbd5e1" stroke-width="16.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f3_pathway_acharya_south_link" class="pathway-wall" points="535,1095 595,1088 654,1081 684,1078 714,1075 744,1072" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Acharya Hall to South Wing"/>
+    <polyline id="bg_f3_pathway_1790501146427-casing" class="pathway-casing" points="802,1084 858,1078 913,1072 969,1066 1024,1059 1080,1053 1135,1047 1246,1034" fill="none" stroke="#cbd5e1" stroke-width="34.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f3_pathway_1790501146427" class="pathway-wall" points="802,1084 858,1078 913,1072 969,1066 1024,1059 1080,1053 1135,1047 1246,1034" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 22"/>
+    <polyline id="bg_f3_pathway_1790501178957-casing" class="pathway-casing" points="1280,1020 1560,980" fill="none" stroke="#cbd5e1" stroke-width="34.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f3_pathway_1790501178957" class="pathway-wall" points="1280,1020 1560,980" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 23"/>
+    <polyline id="bg_f3_pathway_1790523024665-casing" class="pathway-casing" points="480,540 530,535 580,530 630,525 680,520" fill="none" stroke="#cbd5e1" stroke-width="25.5" stroke-linecap="butt" stroke-linejoin="round" opacity="0.9"/>
+    <polyline id="bg_f3_pathway_1790523024665" class="pathway-wall" points="480,540 530,535 580,530 630,525 680,520" fill="none" stroke="#ffffff" stroke-width="23" stroke-linecap="butt" stroke-linejoin="round" opacity="1" data-name="Pathway 20"/>
+  </g>
+
+  
+  <g id="bg_f3_rooms" class="layer-rooms">
+    <rect id="bg_f3_room_nanosciences" class="room-wall" x="730" y="197" width="113" height="326" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-306" data-code="ACN" transform="rotate(353 786.5 360)"/>
+    <rect id="bg_f3_room_special_hall" class="room-wall" x="300" y="580" width="165" height="94" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="A-308" data-code="SPH-102" transform="rotate(354 382.5 627)"/>
+    <rect id="bg_f3_room_gad_office" class="room-wall" x="378" y="671" width="75" height="62" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="A-307" data-code="GAD-103" transform="rotate(354 415.5 702)"/>
+    <rect id="bg_f3_room_admin_block_a" class="room-wall" x="297" y="738" width="174" height="189" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="A-304" data-code="ADM-BLK-A" transform="rotate(353 384 832.5)"/>
+    <rect id="bg_f3_room_admission_office" class="room-wall" x="618" y="617" width="100" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-301" data-code="ADM-105" transform="rotate(354 668 661.5)"/>
+    <rect id="bg_f3_room_cir_seminar" class="room-wall" x="811" y="594" width="101" height="89" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="N-303" data-code="CIR-106" transform="rotate(353 861.5 638.5)"/>
+    <rect id="bg_f3_room_guest_room" class="room-wall" x="652" y="895" width="97" height="85" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="S-301" data-code="GST-107" transform="rotate(354 700.5 937.5)"/>
+    <rect id="bg_f3_room_mini_conf" class="room-wall" x="407" y="924" width="73" height="60" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="A-305" data-code="CONF-MINI" transform="rotate(354 443.5 954)"/>
+    <rect id="bg_f3_room_main_conf" class="room-wall" x="353" y="986" width="161" height="91" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="A-303" data-code="CONF-MAIN" transform="rotate(354 433.5 1031.5)"/>
+    <rect id="bg_f3_room_acharya_hall" class="room-wall" x="459" y="1101" width="295" height="112" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="A-302" data-code="ACH-110" transform="rotate(354 606.5 1157)"/>
+    <rect id="bg_f3_room_stationery" class="room-wall" x="808" y="1082" width="38" height="113" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="A-301" data-code="STN-111" transform="rotate(354 827 1138.5)"/>
+    <rect id="bg_f3_room_mfg_lab" class="room-wall" x="845" y="1070" width="226" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-305" data-code="LAB-MFG" transform="rotate(354 958 1125.5)"/>
+    <rect id="bg_f3_room_mat_testing" class="room-wall" x="1070" y="1055" width="65" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-306" data-code="LAB-MTL" transform="rotate(354 1102.5 1110.5)"/>
+    <rect id="bg_f3_room_wireless_ctr" class="room-wall" x="960" y="440" width="111" height="66" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-317" data-code="ACWNA" transform="rotate(354 1015.5 473)"/>
+    <rect id="bg_f3_room_north_wing" class="room-wall" x="860" y="180" width="60" height="292" fill="#f1f5f9" fill-opacity="0.85" stroke="#475569" stroke-width="2" data-name="North Corridor Wing" data-code="CORR-N" transform="rotate(353 890 326)"/>
+    <rect id="bg_f3_room_director_dean" class="room-wall" x="1135" y="840" width="99" height="90" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-309" data-code="DIR-OFFICE" transform="rotate(354 1184.5 885)"/>
+    <rect id="bg_f3_room_ladies_infirmary" class="room-wall" x="1330" y="820" width="30" height="92" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="S-312" data-code="INF-118" transform="rotate(354 1345 866)"/>
+    <rect id="bg_f3_room_metallurgy" class="room-wall" x="1205" y="332" width="69" height="109" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-319" data-code="LAB-MET" transform="rotate(353 1239.5 386.5)"/>
+    <rect id="bg_f3_room_fluid_mech" class="room-wall" x="1276" y="319" width="127" height="110" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-320" data-code="LAB-FML" transform="rotate(353 1339.5 374)"/>
+    <rect id="bg_f3_room_cae_cell" class="room-wall" x="1403" y="308" width="62" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-323" data-code="CAE-121" transform="rotate(352 1434 363.5)"/>
+    <rect id="bg_f3_room_dynamics_lab" class="room-wall" x="1466" y="300" width="65" height="111" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-321" data-code="LAB-MDL" transform="rotate(353 1498.5 355.5)"/>
+    <rect id="bg_f3_room_math_dept" class="room-wall" x="1458" y="519" width="129" height="89" fill="#e0e7ff" fill-opacity="0.85" stroke="#4338ca" stroke-width="2" data-name="N-322" data-code="MATH-DEPT" transform="rotate(354 1522.5 563.5)"/>
+    <rect id="bg_f3_room_elec_machines" class="room-wall" x="1614" y="474" width="263" height="108" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-325" data-code="LAB-EML" transform="rotate(353 1745.5 528)"/>
+    <rect id="bg_f3_room_prayer_hall" class="room-wall" x="1876" y="456" width="63" height="107" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="N-327" data-code="PRY-125" transform="rotate(353 1907.5 509.5)"/>
+    <polygon id="bg_f3_room_courtyard_fareast" class="room-wall" points="null,null null,null null,null null,null null,null null,null null,null" fill="#e5eddb" fill-opacity="0.85" stroke="#a3c299" stroke-width="2" data-name="Courtyard (Far-East)" data-code="CYD-FEAST"/>
+    <rect id="bg_f3_room_college_admin" class="room-wall" x="1489" y="800" width="131" height="88" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-315" data-code="CADM-127" transform="rotate(353 1554.5 844)"/>
+    <rect id="bg_f3_room_computer_lab" class="room-wall" x="1649" y="778" width="229" height="107" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-318" data-code="LAB-CS" transform="rotate(353 1763.5 831.5)"/>
+    <rect id="bg_f3_room_mech_workshop" class="room-wall" x="1287" y="1020" width="128" height="109" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-311" data-code="LAB-MECH" transform="rotate(354 1351 1074.5)"/>
+    <rect id="bg_f3_room_robotics_lab" class="room-wall" x="1414" y="1009" width="69" height="108" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-302" data-code="LAB-ROBO" transform="rotate(354 1448.5 1063)"/>
+    <rect id="bg_f3_room_wind_tunnel" class="room-wall" x="1483" y="998" width="129" height="109" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="S-314" data-code="LAB-WIND" transform="rotate(354 1547.5 1052.5)"/>
+    <rect id="bg_f3_room_1790266501061" class="room-wall" x="952" y="337" width="111" height="103" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="N-310" data-code="LAB-FLUID" transform="rotate(354 1007.5 388.5)"/>
+    <rect id="bg_f3_room_1790266683270" class="room-wall" x="935" y="170" width="112" height="168" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-309" data-code="R-136" transform="rotate(354 991 254)"/>
+    <rect id="bg_f3_room_1790267011208" class="room-wall" x="1233" y="829" width="96" height="91" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-313" data-code="Arts and Science" transform="rotate(354 1281 874.5)"/>
+    <rect id="bg_f3_room_1790267197118" class="room-wall" x="1360" y="816" width="69" height="91" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="S-310" data-code="Conference" transform="rotate(354 1394.5 861.5)"/>
+    <rect id="bg_f3_room_1790267337608" class="room-wall" x="749" y="884" width="96" height="87" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-302" data-code="AUMS" transform="rotate(354 797 927.5)"/>
+    <rect id="bg_f3_room_1790267611764" class="room-wall" x="384" y="408" width="295" height="112" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="A-304/2" data-code="AMH-101" transform="rotate(354 531.5 464)"/>
+    <rect id="bg_f3_room_1790267932589" class="room-wall" x="1102" y="560" width="100" height="89" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="N-315" data-code="SA" transform="rotate(353 1152 604.5)"/>
+    <rect id="bg_f3_room_1790267966500" class="room-wall" x="1202" y="548" width="94" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-316" data-code="" transform="rotate(353 1249 592.5)"/>
+    <rect id="bg_f3_room_1790268001235" class="room-wall" x="1296" y="536" width="94" height="89" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="N-318" data-code="" transform="rotate(353 1343 580.5)"/>
+    <rect id="bg_f3_room_1790500434656" class="room-wall" x="979" y="856" width="155" height="88" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-307" data-code="R-145" transform="rotate(354 1056.5 900)"/>
+    <rect id="bg_f3_room_1790500485062" class="room-wall" x="845" y="873" width="106" height="86" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-303" data-code="R-146" transform="rotate(353 898 916)"/>
+    <rect id="bg_f3_room_1790500552707" class="room-wall" x="533" y="911" width="75" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 570.5 942.5)"/>
+    <rect id="bg_f3_room_1790500614032" class="room-wall" x="505" y="657" width="75" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 542.5 688.5)"/>
+    <rect id="bg_f3_room_1790500619454" class="room-wall" x="961" y="732" width="54" height="66" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 988 765)"/>
+    <rect id="bg_f3_room_1790500625267" class="room-wall" x="859" y="289" width="60" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 889 320.5)"/>
+    <rect id="bg_f3_room_1790500631547" class="room-wall" x="1631" y="660" width="60" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 1661 691.5)"/>
+    <rect id="bg_f3_room_1790500639780" class="room-wall" x="885" y="959" width="75" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(353 922.5 990.5)"/>
+    <rect id="bg_f3_room_1790500650489" class="room-wall" x="1324" y="460" width="75" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 1361.5 491.5)"/>
+    <rect id="bg_f3_room_1790500850398" class="room-wall" x="824" y="77" width="91" height="81" fill="#c0d5f6" fill-opacity="0.85" stroke="#449fdb" stroke-width="2" data-name="Men&#039;s Toilet" data-code="WC" transform="rotate(353 869.5 117.5)"/>
+    <rect id="bg_f3_room_1790500900853" class="room-wall" x="1614" y="1022" width="125" height="68" fill="#ff00f9" fill-opacity="0.85" stroke="#e56efb" stroke-width="2" data-name="Ladies&#039; Toilet" data-code="WC" transform="rotate(353 1676.5 1056)"/>
+    <rect id="bg_f3_room_1790500984653" class="room-wall" x="1164" y="1043" width="93" height="73" fill="#e6cbfd" fill-opacity="0.85" stroke="#e56efb" stroke-width="2" data-name="Ladies&#039; Toilet" data-code="WC" transform="rotate(353 1210.5 1079.5)"/>
+    <rect id="bg_f3_room_1790501046808" class="room-wall" x="1529" y="291" width="130" height="66" fill="#0095d1" fill-opacity="0.85" stroke="#449fdb" stroke-width="2" data-name="Men&#039;s Toilet" data-code="WC" transform="rotate(353 1594 324)"/>
+    <rect id="bg_f3_room_1790501831784" class="room-wall" x="719" y="606" width="95" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-302" data-code="ADM-105" transform="rotate(354 766.5 650.5)"/>
+    <rect id="bg_f3_room_1790501909379" class="room-wall" x="940" y="580" width="134" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="N-314" data-code="R-155" transform="rotate(353 1007 624.5)"/>
+    <rect id="bg_f3_room_1790502692180" class="room-wall" x="1880" y="758" width="97" height="109" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="S-319 — HUT Lab" data-code="R-155" transform="rotate(354 1928.5 812.5)"/>
+    <rect id="bg_f3_room_1790523167761" class="room-wall" x="391" y="532" width="69" height="43" fill="#cedbf9" fill-opacity="0.85" stroke="#449fdb" stroke-width="2" data-name="Men&#039;s Toilet" data-code="WC" transform="rotate(355 425.5 553.5)"/>
+    <rect id="bg_f3_room_1790523236934" class="room-wall" x="454" y="1072" width="64" height="41" fill="#e6cbfd" fill-opacity="0.85" stroke="#e56efb" stroke-width="2" data-name="Ladies&#039; Toilet" data-code="WC" transform="rotate(354 486 1092.5)"/>
+  </g>
+
+  
+  <g id="bg_f3_labels" class="layer-labels">
+    <g transform="translate(787, 360)">
+      <text class="room-label" y="-7">N-306</text>
+      <text class="room-code" y="9">ACN</text>
+    </g>
+    <g transform="translate(383, 627)">
+      <text class="room-label" y="-7">A-308</text>
+      <text class="room-code" y="9">SPH-102</text>
+    </g>
+    <g transform="translate(416, 702)">
+      <text class="room-label" y="-7">A-307</text>
+      <text class="room-code" y="9">GAD-103</text>
+    </g>
+    <g transform="translate(384, 833)">
+      <text class="room-label" y="-7">A-304</text>
+      <text class="room-code" y="9">ADM-BLK-A</text>
+    </g>
+    <g transform="translate(668, 662)">
+      <text class="room-label" y="-7">N-301</text>
+      <text class="room-code" y="9">ADM-105</text>
+    </g>
+    <g transform="translate(862, 639)">
+      <text class="room-label" y="-7">N-303</text>
+      <text class="room-code" y="9">CIR-106</text>
+    </g>
+    <g transform="translate(701, 938)">
+      <text class="room-label" y="-7">S-301</text>
+      <text class="room-code" y="9">GST-107</text>
+    </g>
+    <g transform="translate(444, 954)">
+      <text class="room-label" y="-7">A-305</text>
+      <text class="room-code" y="9">CONF-MINI</text>
+    </g>
+    <g transform="translate(434, 1032)">
+      <text class="room-label" y="-7">A-303</text>
+      <text class="room-code" y="9">CONF-MAIN</text>
+    </g>
+    <g transform="translate(607, 1157)">
+      <text class="room-label" y="-7">A-302</text>
+      <text class="room-code" y="9">ACH-110</text>
+    </g>
+    <g transform="translate(827, 1139)">
+      <text class="room-label" y="-7">A-301</text>
+      <text class="room-code" y="9">STN-111</text>
+    </g>
+    <g transform="translate(958, 1126)">
+      <text class="room-label" y="-7">S-305</text>
+      <text class="room-code" y="9">LAB-MFG</text>
+    </g>
+    <g transform="translate(1103, 1111)">
+      <text class="room-label" y="-7">S-306</text>
+      <text class="room-code" y="9">LAB-MTL</text>
+    </g>
+    <g transform="translate(1016, 473)">
+      <text class="room-label" y="-7">N-317</text>
+      <text class="room-code" y="9">ACWNA</text>
+    </g>
+    <g transform="translate(890, 326)">
+      <text class="room-label" y="-7">North Corridor Wing</text>
+      <text class="room-code" y="9">CORR-N</text>
+    </g>
+    <g transform="translate(1185, 885)">
+      <text class="room-label" y="-7">S-309</text>
+      <text class="room-code" y="9">DIR-OFFICE</text>
+    </g>
+    <g transform="translate(1345, 866)">
+      <text class="room-label" y="-7">S-312</text>
+      <text class="room-code" y="9">INF-118</text>
+    </g>
+    <g transform="translate(1240, 387)">
+      <text class="room-label" y="-7">N-319</text>
+      <text class="room-code" y="9">LAB-MET</text>
+    </g>
+    <g transform="translate(1340, 374)">
+      <text class="room-label" y="-7">N-320</text>
+      <text class="room-code" y="9">LAB-FML</text>
+    </g>
+    <g transform="translate(1434, 364)">
+      <text class="room-label" y="-7">N-323</text>
+      <text class="room-code" y="9">CAE-121</text>
+    </g>
+    <g transform="translate(1499, 356)">
+      <text class="room-label" y="-7">N-321</text>
+      <text class="room-code" y="9">LAB-MDL</text>
+    </g>
+    <g transform="translate(1523, 564)">
+      <text class="room-label" y="-7">N-322</text>
+      <text class="room-code" y="9">MATH-DEPT</text>
+    </g>
+    <g transform="translate(1746, 528)">
+      <text class="room-label" y="-7">N-325</text>
+      <text class="room-code" y="9">LAB-EML</text>
+    </g>
+    <g transform="translate(1908, 510)">
+      <text class="room-label" y="-7">N-327</text>
+      <text class="room-code" y="9">PRY-125</text>
+    </g>
+    <g transform="translate(0, 0)">
+      <text class="room-label" y="-7">Courtyard (Far-East)</text>
+      <text class="room-code" y="9">CYD-FEAST</text>
+    </g>
+    <g transform="translate(1555, 844)">
+      <text class="room-label" y="-7">S-315</text>
+      <text class="room-code" y="9">CADM-127</text>
+    </g>
+    <g transform="translate(1764, 832)">
+      <text class="room-label" y="-7">S-318</text>
+      <text class="room-code" y="9">LAB-CS</text>
+    </g>
+    <g transform="translate(1351, 1075)">
+      <text class="room-label" y="-7">S-311</text>
+      <text class="room-code" y="9">LAB-MECH</text>
+    </g>
+    <g transform="translate(1449, 1063)">
+      <text class="room-label" y="-7">S-302</text>
+      <text class="room-code" y="9">LAB-ROBO</text>
+    </g>
+    <g transform="translate(1548, 1053)">
+      <text class="room-label" y="-7">S-314</text>
+      <text class="room-code" y="9">LAB-WIND</text>
+    </g>
+    <g transform="translate(1008, 389)">
+      <text class="room-label" y="-7">N-310</text>
+      <text class="room-code" y="9">LAB-FLUID</text>
+    </g>
+    <g transform="translate(991, 254)">
+      <text class="room-label" y="-7">N-309</text>
+      <text class="room-code" y="9">R-136</text>
+    </g>
+    <g transform="translate(1281, 875)">
+      <text class="room-label" y="-7">S-313</text>
+      <text class="room-code" y="9">Arts and Science</text>
+    </g>
+    <g transform="translate(1395, 862)">
+      <text class="room-label" y="-7">S-310</text>
+      <text class="room-code" y="9">Conference</text>
+    </g>
+    <g transform="translate(797, 928)">
+      <text class="room-label" y="-7">S-302</text>
+      <text class="room-code" y="9">AUMS</text>
+    </g>
+    <g transform="translate(532, 464)">
+      <text class="room-label" y="-7">A-304/2</text>
+      <text class="room-code" y="9">AMH-101</text>
+    </g>
+    <g transform="translate(1152, 605)">
+      <text class="room-label" y="-7">N-315</text>
+      <text class="room-code" y="9">SA</text>
+    </g>
+    <g transform="translate(1249, 593)">
+      <text class="room-label" y="0">N-316</text>
+    </g>
+    <g transform="translate(1343, 581)">
+      <text class="room-label" y="0">N-318</text>
+    </g>
+    <g transform="translate(1057, 900)">
+      <text class="room-label" y="-7">S-307</text>
+      <text class="room-code" y="9">R-145</text>
+    </g>
+    <g transform="translate(898, 916)">
+      <text class="room-label" y="-7">S-303</text>
+      <text class="room-code" y="9">R-146</text>
+    </g>
+    <g transform="translate(571, 943)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(543, 689)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(988, 765)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(889, 321)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(1661, 692)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(923, 991)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(1362, 492)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
+    <g transform="translate(870, 118)">
+      <text class="room-label" y="-7">Men&#039;s Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(1677, 1056)">
+      <text class="room-label" y="-7">Ladies&#039; Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(1211, 1080)">
+      <text class="room-label" y="-7">Ladies&#039; Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(1594, 324)">
+      <text class="room-label" y="-7">Men&#039;s Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(767, 651)">
+      <text class="room-label" y="-7">N-302</text>
+      <text class="room-code" y="9">ADM-105</text>
+    </g>
+    <g transform="translate(1007, 625)">
+      <text class="room-label" y="-7">N-314</text>
+      <text class="room-code" y="9">R-155</text>
+    </g>
+    <g transform="translate(1929, 813)">
+      <text class="room-label" y="-7">S-319 — HUT Lab</text>
+      <text class="room-code" y="9">R-155</text>
+    </g>
+    <g transform="translate(426, 554)">
+      <text class="room-label" y="-7">Men&#039;s Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+    <g transform="translate(486, 1093)">
+      <text class="room-label" y="-7">Ladies&#039; Toilet</text>
+      <text class="room-code" y="9">WC</text>
+    </g>
+  </g>
+          </svg>
           <svg class="selection-overlay" viewBox="0 0 2112 1300" aria-label="Amrita Nav Third Floor Plan">
             <rect id="f3_room_nanosciences" class="selectable-room" x="730" y="197" width="113" height="326" transform="rotate(353 786.5 360)" data-name="N-306" data-code="ACN" role="button" tabindex="0" aria-label="N-306 (ACN)" aria-pressed="false"><title>N-306 (ACN)</title></rect>
             <rect id="f3_room_special_hall" class="selectable-room" x="300" y="580" width="165" height="94" transform="rotate(354 382.5 627)" data-name="A-308" data-code="SPH-102" role="button" tabindex="0" aria-label="A-308 (SPH-102)" aria-pressed="false"><title>A-308 (SPH-102)</title></rect>
@@ -531,6 +1890,8 @@
     </div>
   </div> <!-- /#app-shell -->
   <script src="ground-nav-data.js"></script>
+  <script src="campus-data.js"></script>
+  <script src="campus-router.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
