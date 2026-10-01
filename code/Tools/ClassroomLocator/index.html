@@ -106,8 +106,13 @@
       </div>
 
       <!-- Multi-Floor Navigation Bar -->
+      <button type="button" id="nav-toggle-btn" class="nav-toggle-btn" title="Route planner" aria-label="Open route planner" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M21.71 11.29l-9-9a.996.996 0 0 0-1.41 0l-9 9a.996.996 0 0 0 0 1.41l9 9c.39.39 1.02.39 1.41 0l9-9a.996.996 0 0 0 0-1.41zM14 14.5V12h-4v3H8v-4c0-.55.45-1 1-1h5V7.5l3.5 3.5-3.5 3.5z"/>
+        </svg>
+      </button>
       <div id="ground-nav-bar" class="ground-nav-bar" style="display: none;">
-        <div class="nav-control-group">
+        <div class="nav-control-group collapsed" id="nav-control-group">
           <div class="nav-select-wrapper" id="nav-start-wrapper">
             <label for="nav-start-input" class="nav-label">From</label>
             <div class="nav-input-container">
@@ -294,6 +299,7 @@
     <rect id="bg_g_room_1790702707883" class="room-wall" x="960" y="730" width="59" height="66" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-154" transform="rotate(354 989.5 763)"/>
     <rect id="bg_g_room_1790702726790" class="room-wall" x="535" y="909" width="65" height="60" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-155" transform="rotate(354 567.5 939)"/>
     <rect id="bg_g_room_1790702771045" class="room-wall" x="896" y="980" width="60" height="60" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-156" transform="rotate(354 926 1010)"/>
+    <rect id="bg_g_room_1790702812520" class="room-wall" x="859" y="289" width="60" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 889 320.5)"/>
   </g>
 
   
@@ -520,8 +526,12 @@
       <text class="room-label" y="-7">Stairs</text>
       <text class="room-code" y="9">R-156</text>
     </g>
+    <g transform="translate(889, 321)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
   </g>
-          
+
     </g>
           </svg>
           <svg class="selection-overlay" viewBox="0 0 1300 2112" aria-label="Amrita Nav Floor Plan">
@@ -583,6 +593,7 @@
             <rect id="room_1790702707883" class="selectable-room" x="960" y="730" width="59" height="66" transform="rotate(354 989.5 763)" data-name="Stairs" data-code="R-154" role="button" tabindex="0" aria-label="Stairs (R-154)" aria-pressed="false"><title>Stairs (R-154)</title></rect>
             <rect id="room_1790702726790" class="selectable-room" x="535" y="909" width="65" height="60" transform="rotate(354 567.5 939)" data-name="Stairs" data-code="R-155" role="button" tabindex="0" aria-label="Stairs (R-155)" aria-pressed="false"><title>Stairs (R-155)</title></rect>
             <rect id="room_1790702771045" class="selectable-room" x="896" y="980" width="60" height="60" transform="rotate(354 926 1010)" data-name="Stairs" data-code="R-156" role="button" tabindex="0" aria-label="Stairs (R-156)" aria-pressed="false"><title>Stairs (R-156)</title></rect>
+            <rect id="room_1790702812520" class="selectable-room" x="859" y="289" width="60" height="63" transform="rotate(355 889 320.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
 
             <!-- Ground Floor Active Route Layer -->
             <g id="ground-route-layer" class="ground-route-layer route-layer" data-floor="ground"></g>
@@ -1911,6 +1922,14 @@
           </button>
         </div>
       </div>
+    </div>
+
+    <!-- Staircase climb prompt (shown when the user reaches a staircase mid-route) -->
+    <div id="stair-popup" class="stair-popup" style="display: none;" role="alertdialog" aria-labelledby="stair-popup-title">
+      <button type="button" id="stair-popup-close" class="stair-popup-close" title="Dismiss" aria-label="Dismiss">✕</button>
+      <div class="stair-popup-icon">🪜</div>
+      <h2 id="stair-popup-title" class="stair-popup-title">Climb the stairs</h2>
+      <p id="stair-popup-sub" class="stair-popup-sub"></p>
     </div>
   </div> <!-- /#app-shell -->
   <script src="ground-nav-data.js"></script>

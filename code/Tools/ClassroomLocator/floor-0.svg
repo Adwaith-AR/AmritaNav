@@ -119,6 +119,7 @@
     <rect id="room_1790702707883" class="room-wall" x="960" y="730" width="59" height="66" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-154" transform="rotate(354 989.5 763)"/>
     <rect id="room_1790702726790" class="room-wall" x="535" y="909" width="65" height="60" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-155" transform="rotate(354 567.5 939)"/>
     <rect id="room_1790702771045" class="room-wall" x="896" y="980" width="60" height="60" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-156" transform="rotate(354 926 1010)"/>
+    <rect id="room_1790702812520" class="room-wall" x="859" y="289" width="60" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 889 320.5)"/>
   </g>
 
   <!-- Room Labels -->
@@ -344,6 +345,10 @@
     <g transform="translate(926, 1010)">
       <text class="room-label" y="-7">Stairs</text>
       <text class="room-code" y="9">R-156</text>
+    </g>
+    <g transform="translate(889, 321)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
     </g>
   </g>
 </svg>

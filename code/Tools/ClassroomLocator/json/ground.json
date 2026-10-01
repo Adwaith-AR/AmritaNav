@@ -11,7 +11,7 @@
   "rooms": [
     {
       "id": "room_nanosciences",
-      "nodeId": "ground_wp_408",
+      "nodeId": "ground_wp_409",
       "title": "Amrita Center for Nanosciences",
       "name": "Amrita Center for Nanosciences",
       "code": "ACN",
@@ -30,7 +30,7 @@
     },
     {
       "id": "room_special_hall",
-      "nodeId": "ground_wp_409",
+      "nodeId": "ground_wp_410",
       "title": "Special Programs Hall / Meditation Hall",
       "name": "Special Programs Hall / Meditation Hall",
       "code": "SPH-102",
@@ -49,7 +49,7 @@
     },
     {
       "id": "room_gad_office",
-      "nodeId": "ground_wp_410",
+      "nodeId": "ground_wp_411",
       "title": "GAD-PR Office",
       "name": "GAD-PR Office",
       "code": "GAD-103",
@@ -68,7 +68,7 @@
     },
     {
       "id": "room_admin_block_a",
-      "nodeId": "ground_wp_411",
+      "nodeId": "ground_wp_412",
       "title": "Entrance",
       "name": "Entrance",
       "code": "ADM-BLK-A",
@@ -87,7 +87,7 @@
     },
     {
       "id": "room_admission_office",
-      "nodeId": "ground_wp_412",
+      "nodeId": "ground_wp_413",
       "title": "Admission Office",
       "name": "Admission Office",
       "code": "ADM-105",
@@ -106,7 +106,7 @@
     },
     {
       "id": "room_cir_seminar",
-      "nodeId": "ground_wp_413",
+      "nodeId": "ground_wp_414",
       "title": "CIR Seminar Room",
       "name": "CIR Seminar Room",
       "code": "CIR-106",
@@ -125,7 +125,7 @@
     },
     {
       "id": "room_guest_room",
-      "nodeId": "ground_wp_414",
+      "nodeId": "ground_wp_415",
       "title": "Guest Room",
       "name": "Guest Room",
       "code": "GST-107",
@@ -144,7 +144,7 @@
     },
     {
       "id": "room_mini_conf",
-      "nodeId": "ground_wp_415",
+      "nodeId": "ground_wp_416",
       "title": "Mini Conference Room",
       "name": "Mini Conference Room",
       "code": "CONF-MINI",
@@ -163,7 +163,7 @@
     },
     {
       "id": "room_main_conf",
-      "nodeId": "ground_wp_416",
+      "nodeId": "ground_wp_417",
       "title": "Main Conference Room",
       "name": "Main Conference Room",
       "code": "CONF-MAIN",
@@ -182,7 +182,7 @@
     },
     {
       "id": "room_acharya_hall",
-      "nodeId": "ground_wp_417",
+      "nodeId": "ground_wp_418",
       "title": "Acharya Hall",
       "name": "Acharya Hall",
       "code": "ACH-110",
@@ -201,7 +201,7 @@
     },
     {
       "id": "room_stationery",
-      "nodeId": "ground_wp_418",
+      "nodeId": "ground_wp_419",
       "title": "Stationery &amp; Courier",
       "name": "Stationery &amp; Courier",
       "code": "STN-111",
@@ -220,7 +220,7 @@
     },
     {
       "id": "room_mfg_lab",
-      "nodeId": "ground_wp_419",
+      "nodeId": "ground_wp_420",
       "title": "Manufacturing Lab",
       "name": "Manufacturing Lab",
       "code": "LAB-MFG",
@@ -239,7 +239,7 @@
     },
     {
       "id": "room_mat_testing",
-      "nodeId": "ground_wp_420",
+      "nodeId": "ground_wp_421",
       "title": "Material Testing Lab",
       "name": "Material Testing Lab",
       "code": "LAB-MTL",
@@ -258,7 +258,7 @@
     },
     {
       "id": "room_wireless_ctr",
-      "nodeId": "ground_wp_421",
+      "nodeId": "ground_wp_422",
       "title": "Amrita Center for Wireless Networks &amp; Apps",
       "name": "Amrita Center for Wireless Networks &amp; Apps",
       "code": "ACWNA",
@@ -277,7 +277,7 @@
     },
     {
       "id": "room_north_wing",
-      "nodeId": "ground_wp_422",
+      "nodeId": "ground_wp_423",
       "title": "North Corridor Wing",
       "name": "North Corridor Wing",
       "code": "CORR-N",
@@ -296,7 +296,7 @@
     },
     {
       "id": "room_courtyard_west",
-      "nodeId": "ground_wp_423",
+      "nodeId": "ground_wp_424",
       "title": "Courtyard (West)",
       "name": "Courtyard (West)",
       "code": "CYD-WEST",
@@ -315,7 +315,7 @@
     },
     {
       "id": "room_courtyard_central",
-      "nodeId": "ground_wp_424",
+      "nodeId": "ground_wp_425",
       "title": "Courtyard (Central)",
       "name": "Courtyard (Central)",
       "code": "CYD-CTR",
@@ -334,7 +334,7 @@
     },
     {
       "id": "room_director_dean",
-      "nodeId": "ground_wp_425",
+      "nodeId": "ground_wp_426",
       "title": "Director / Associate Dean",
       "name": "Director / Associate Dean",
       "code": "DIR-OFFICE",
@@ -353,7 +353,7 @@
     },
     {
       "id": "room_ladies_infirmary",
-      "nodeId": "ground_wp_426",
+      "nodeId": "ground_wp_427",
       "title": "Ladies Infirmary",
       "name": "Ladies Infirmary",
       "code": "INF-118",
@@ -372,7 +372,7 @@
     },
     {
       "id": "room_metallurgy",
-      "nodeId": "ground_wp_427",
+      "nodeId": "ground_wp_428",
       "title": "Metallurgy Laboratory",
       "name": "Metallurgy Laboratory",
       "code": "LAB-MET",
@@ -391,7 +391,7 @@
     },
     {
       "id": "room_fluid_mech",
-      "nodeId": "ground_wp_428",
+      "nodeId": "ground_wp_429",
       "title": "Fluid Mechanics Lab",
       "name": "Fluid Mechanics Lab",
       "code": "LAB-FML",
@@ -410,7 +410,7 @@
     },
     {
       "id": "room_cae_cell",
-      "nodeId": "ground_wp_429",
+      "nodeId": "ground_wp_430",
       "title": "C.A.E. Cell",
       "name": "C.A.E. Cell",
       "code": "CAE-121",
@@ -429,7 +429,7 @@
     },
     {
       "id": "room_dynamics_lab",
-      "nodeId": "ground_wp_430",
+      "nodeId": "ground_wp_431",
       "title": "Machine Dynamics Lab",
       "name": "Machine Dynamics Lab",
       "code": "LAB-MDL",
@@ -448,7 +448,7 @@
     },
     {
       "id": "room_math_dept",
-      "nodeId": "ground_wp_431",
+      "nodeId": "ground_wp_432",
       "title": "Department of Mathematics",
       "name": "Department of Mathematics",
       "code": "MATH-DEPT",
@@ -467,7 +467,7 @@
     },
     {
       "id": "room_elec_machines",
-      "nodeId": "ground_wp_432",
+      "nodeId": "ground_wp_433",
       "title": "Electrical Machines Lab",
       "name": "Electrical Machines Lab",
       "code": "LAB-EML",
@@ -486,7 +486,7 @@
     },
     {
       "id": "room_prayer_hall",
-      "nodeId": "ground_wp_433",
+      "nodeId": "ground_wp_434",
       "title": "Prayer Hall",
       "name": "Prayer Hall",
       "code": "PRY-125",
@@ -505,7 +505,7 @@
     },
     {
       "id": "room_courtyard_east",
-      "nodeId": "ground_wp_434",
+      "nodeId": "ground_wp_435",
       "title": "Courtyard (East)",
       "name": "Courtyard (East)",
       "code": "CYD-EAST",
@@ -524,7 +524,7 @@
     },
     {
       "id": "room_college_admin",
-      "nodeId": "ground_wp_435",
+      "nodeId": "ground_wp_436",
       "title": "College Administration Office",
       "name": "College Administration Office",
       "code": "CADM-127",
@@ -543,7 +543,7 @@
     },
     {
       "id": "room_computer_lab",
-      "nodeId": "ground_wp_436",
+      "nodeId": "ground_wp_437",
       "title": "Computer Lab",
       "name": "Computer Lab",
       "code": "LAB-CS",
@@ -562,7 +562,7 @@
     },
     {
       "id": "room_nanotech_lab",
-      "nodeId": "ground_wp_437",
+      "nodeId": "ground_wp_438",
       "title": "Nanotech Lab",
       "name": "Nanotech Lab",
       "code": "LAB-NANO",
@@ -581,7 +581,7 @@
     },
     {
       "id": "room_mech_workshop",
-      "nodeId": "ground_wp_438",
+      "nodeId": "ground_wp_439",
       "title": "Mechanical Workshop",
       "name": "Mechanical Workshop",
       "code": "LAB-MECH",
@@ -600,7 +600,7 @@
     },
     {
       "id": "room_robotics_lab",
-      "nodeId": "ground_wp_439",
+      "nodeId": "ground_wp_440",
       "title": "CNC Robotics &amp; Autom. Lab",
       "name": "CNC Robotics &amp; Autom. Lab",
       "code": "LAB-ROBO",
@@ -619,7 +619,7 @@
     },
     {
       "id": "room_wind_tunnel",
-      "nodeId": "ground_wp_440",
+      "nodeId": "ground_wp_441",
       "title": "Wind Tunnel",
       "name": "Wind Tunnel",
       "code": "LAB-WIND",
@@ -638,7 +638,7 @@
     },
     {
       "id": "room_1790266501061",
-      "nodeId": "ground_wp_441",
+      "nodeId": "ground_wp_442",
       "title": "M Tech (Fluid Lab )",
       "name": "M Tech (Fluid Lab )",
       "code": "LAB-FLUID",
@@ -657,7 +657,7 @@
     },
     {
       "id": "room_1790266683270",
-      "nodeId": "ground_wp_442",
+      "nodeId": "ground_wp_443",
       "title": "Room 36",
       "name": "Room 36",
       "code": "R-136",
@@ -676,7 +676,7 @@
     },
     {
       "id": "room_1790267011208",
-      "nodeId": "ground_wp_443",
+      "nodeId": "ground_wp_444",
       "title": "Principal Arts and Sciences",
       "name": "Principal Arts and Sciences",
       "code": "Arts and Science",
@@ -695,7 +695,7 @@
     },
     {
       "id": "room_1790267197118",
-      "nodeId": "ground_wp_444",
+      "nodeId": "ground_wp_445",
       "title": "Conference Room",
       "name": "Conference Room",
       "code": "Conference",
@@ -714,7 +714,7 @@
     },
     {
       "id": "room_1790267337608",
-      "nodeId": "ground_wp_445",
+      "nodeId": "ground_wp_446",
       "title": "AUMS Web Services",
       "name": "AUMS Web Services",
       "code": "AUMS",
@@ -733,7 +733,7 @@
     },
     {
       "id": "room_1790267611764",
-      "nodeId": "ground_wp_446",
+      "nodeId": "ground_wp_447",
       "title": "Amritheswari Hall",
       "name": "Amritheswari Hall",
       "code": "AMH-101",
@@ -752,7 +752,7 @@
     },
     {
       "id": "room_1790267932589",
-      "nodeId": "ground_wp_447",
+      "nodeId": "ground_wp_448",
       "title": "Students Affair",
       "name": "Students Affair",
       "code": "SA",
@@ -771,7 +771,7 @@
     },
     {
       "id": "room_1790267966500",
-      "nodeId": "ground_wp_448",
+      "nodeId": "ground_wp_449",
       "title": "Reserve",
       "name": "Reserve",
       "code": "",
@@ -790,7 +790,7 @@
     },
     {
       "id": "room_1790268001235",
-      "nodeId": "ground_wp_449",
+      "nodeId": "ground_wp_450",
       "title": "Principal",
       "name": "Principal",
       "code": "",
@@ -809,7 +809,7 @@
     },
     {
       "id": "room_1790268898290",
-      "nodeId": "ground_wp_450",
+      "nodeId": "ground_wp_451",
       "title": "Courtyard (Far East)",
       "name": "Courtyard (Far East)",
       "code": "CYD-Far EAST",
@@ -828,7 +828,7 @@
     },
     {
       "id": "room_1790702367787",
-      "nodeId": "ground_wp_451",
+      "nodeId": "ground_wp_452",
       "title": "Men&#039;s Toilet",
       "name": "Men&#039;s Toilet",
       "code": "WC",
@@ -866,7 +866,7 @@
     },
     {
       "id": "room_1790702448982",
-      "nodeId": "ground_wp_452",
+      "nodeId": "ground_wp_453",
       "title": "Men&#039;s Toilet",
       "name": "Men&#039;s Toilet",
       "code": "WC",
@@ -885,7 +885,7 @@
     },
     {
       "id": "room_1790702475554",
-      "nodeId": "ground_wp_453",
+      "nodeId": "ground_wp_454",
       "title": "Ladies&#039; Toilet",
       "name": "Ladies&#039; Toilet",
       "code": "WC",
@@ -904,7 +904,7 @@
     },
     {
       "id": "room_1790702517442",
-      "nodeId": "ground_wp_454",
+      "nodeId": "ground_wp_455",
       "title": "Ladies&#039; Toilet",
       "name": "Ladies&#039; Toilet",
       "code": "WC",
@@ -923,7 +923,7 @@
     },
     {
       "id": "room_1790702556324",
-      "nodeId": "ground_wp_455",
+      "nodeId": "ground_wp_456",
       "title": "Ladies&#039; Toilet",
       "name": "Ladies&#039; Toilet",
       "code": "WC",
@@ -989,6 +989,14 @@
       "name": "Central-South Stairs (Near Courtyard)",
       "x": 926,
       "y": 1010
+    },
+    {
+      "id": "ground_wp_408",
+      "roomId": "room_1790702812520",
+      "colId": "STAIR-N",
+      "name": "North Wing Stairs (Near Physics / Chemistry Labs)",
+      "x": 889,
+      "y": 320.5
     }
   ],
   "nodes": [
@@ -4270,6 +4278,16 @@
     },
     {
       "id": "ground_wp_408",
+      "x": 889,
+      "y": 320.5,
+      "floor": "ground",
+      "floorIdx": 0,
+      "type": "stair",
+      "stairId": "STAIR-N",
+      "stairName": "North Wing Stairs (Near Physics / Chemistry Labs)"
+    },
+    {
+      "id": "ground_wp_409",
       "x": 843.62,
       "y": 361.63,
       "floor": "ground",
@@ -4277,7 +4295,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_409",
+      "id": "ground_wp_410",
       "x": 464.73,
       "y": 620.07,
       "floor": "ground",
@@ -4285,7 +4303,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_410",
+      "id": "ground_wp_411",
       "x": 403.14,
       "y": 734.47,
       "floor": "ground",
@@ -4293,7 +4311,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_411",
+      "id": "ground_wp_412",
       "x": 302.21,
       "y": 882.23,
       "floor": "ground",
@@ -4301,7 +4319,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_412",
+      "id": "ground_wp_413",
       "x": 682.98,
       "y": 702.88,
       "floor": "ground",
@@ -4309,7 +4327,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_413",
+      "id": "ground_wp_414",
       "x": 859.44,
       "y": 681.59,
       "floor": "ground",
@@ -4317,7 +4335,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_414",
+      "id": "ground_wp_415",
       "x": 722.83,
       "y": 892.42,
       "floor": "ground",
@@ -4325,7 +4343,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_415",
+      "id": "ground_wp_416",
       "x": 470.83,
       "y": 920.96,
       "floor": "ground",
@@ -4333,7 +4351,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_416",
+      "id": "ground_wp_417",
       "x": 513.76,
       "y": 1024.98,
       "floor": "ground",
@@ -4341,7 +4359,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_417",
+      "id": "ground_wp_418",
       "x": 584.35,
       "y": 1103.02,
       "floor": "ground",
@@ -4349,7 +4367,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_418",
+      "id": "ground_wp_419",
       "x": 802.2,
       "y": 1084.3,
       "floor": "ground",
@@ -4357,7 +4375,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_419",
+      "id": "ground_wp_420",
       "x": 958.96,
       "y": 1069.59,
       "floor": "ground",
@@ -4365,7 +4383,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_420",
+      "id": "ground_wp_421",
       "x": 1125.39,
       "y": 1052.29,
       "floor": "ground",
@@ -4373,7 +4391,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_421",
+      "id": "ground_wp_422",
       "x": 959.38,
       "y": 469.99,
       "floor": "ground",
@@ -4381,7 +4399,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_422",
+      "id": "ground_wp_423",
       "x": 917.65,
       "y": 308.99,
       "floor": "ground",
@@ -4389,7 +4407,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_423",
+      "id": "ground_wp_424",
       "x": 729.13,
       "y": 716.41,
       "floor": "ground",
@@ -4397,7 +4415,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_424",
+      "id": "ground_wp_425",
       "x": 1167.31,
       "y": 670.51,
       "floor": "ground",
@@ -4405,7 +4423,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_425",
+      "id": "ground_wp_426",
       "x": 1160.4,
       "y": 842.29,
       "floor": "ground",
@@ -4413,7 +4431,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_426",
+      "id": "ground_wp_427",
       "x": 1325.27,
       "y": 821.82,
       "floor": "ground",
@@ -4421,7 +4439,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_427",
+      "id": "ground_wp_428",
       "x": 1247.15,
       "y": 440.47,
       "floor": "ground",
@@ -4429,7 +4447,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_428",
+      "id": "ground_wp_429",
       "x": 1365.09,
       "y": 426.27,
       "floor": "ground",
@@ -4437,7 +4455,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_429",
+      "id": "ground_wp_430",
       "x": 1447.56,
       "y": 417.64,
       "floor": "ground",
@@ -4445,7 +4463,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_430",
+      "id": "ground_wp_431",
       "x": 1534.29,
       "y": 407.02,
       "floor": "ground",
@@ -4453,7 +4471,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_431",
+      "id": "ground_wp_432",
       "x": 1495.33,
       "y": 611.1,
       "floor": "ground",
@@ -4461,7 +4479,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_432",
+      "id": "ground_wp_433",
       "x": 1763.79,
       "y": 580.16,
       "floor": "ground",
@@ -4469,7 +4487,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_433",
+      "id": "ground_wp_434",
       "x": 1897.58,
       "y": 564.62,
       "floor": "ground",
@@ -4477,7 +4495,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_434",
+      "id": "ground_wp_435",
       "x": 1464.91,
       "y": 780.29,
       "floor": "ground",
@@ -4485,7 +4503,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_435",
+      "id": "ground_wp_436",
       "x": 1581.51,
       "y": 796.35,
       "floor": "ground",
@@ -4493,7 +4511,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_436",
+      "id": "ground_wp_437",
       "x": 1783.23,
       "y": 775.18,
       "floor": "ground",
@@ -4501,7 +4519,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_437",
+      "id": "ground_wp_438",
       "x": 1942.14,
       "y": 755.67,
       "floor": "ground",
@@ -4509,7 +4527,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_438",
+      "id": "ground_wp_439",
       "x": 1352.65,
       "y": 1019.53,
       "floor": "ground",
@@ -4517,7 +4535,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_439",
+      "id": "ground_wp_440",
       "x": 1445.06,
       "y": 1009.06,
       "floor": "ground",
@@ -4525,7 +4543,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_440",
+      "id": "ground_wp_441",
       "x": 1537.24,
       "y": 998.78,
       "floor": "ground",
@@ -4533,7 +4551,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_441",
+      "id": "ground_wp_442",
       "x": 951.66,
       "y": 388.14,
       "floor": "ground",
@@ -4541,7 +4559,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_442",
+      "id": "ground_wp_443",
       "x": 933.73,
       "y": 244.87,
       "floor": "ground",
@@ -4549,7 +4567,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_443",
+      "id": "ground_wp_444",
       "x": 1296.04,
       "y": 827.17,
       "floor": "ground",
@@ -4557,7 +4575,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_444",
+      "id": "ground_wp_445",
       "x": 1424.05,
       "y": 812.64,
       "floor": "ground",
@@ -4565,7 +4583,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_445",
+      "id": "ground_wp_446",
       "x": 767.2,
       "y": 886.89,
       "floor": "ground",
@@ -4573,7 +4591,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_446",
+      "id": "ground_wp_447",
       "x": 563.91,
       "y": 516.9,
       "floor": "ground",
@@ -4581,7 +4599,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_447",
+      "id": "ground_wp_448",
       "x": 1142.01,
       "y": 650.56,
       "floor": "ground",
@@ -4589,7 +4607,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_448",
+      "id": "ground_wp_449",
       "x": 1277.4,
       "y": 633.85,
       "floor": "ground",
@@ -4597,7 +4615,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_449",
+      "id": "ground_wp_450",
       "x": 1342.3,
       "y": 625.42,
       "floor": "ground",
@@ -4605,7 +4623,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_450",
+      "id": "ground_wp_451",
       "x": 1802.5,
       "y": 748.02,
       "floor": "ground",
@@ -4613,7 +4631,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_451",
+      "id": "ground_wp_452",
       "x": 891.73,
       "y": 155.49,
       "floor": "ground",
@@ -4621,7 +4639,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_452",
+      "id": "ground_wp_453",
       "x": 461.16,
       "y": 565.3,
       "floor": "ground",
@@ -4629,7 +4647,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_453",
+      "id": "ground_wp_454",
       "x": 536.23,
       "y": 1094.41,
       "floor": "ground",
@@ -4637,7 +4655,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_454",
+      "id": "ground_wp_455",
       "x": 1226.79,
       "y": 1038.02,
       "floor": "ground",
@@ -4645,7 +4663,7 @@
       "type": "room_door"
     },
     {
-      "id": "ground_wp_455",
+      "id": "ground_wp_456",
       "x": 1659.85,
       "y": 1021.35,
       "floor": "ground",
@@ -4702,7 +4720,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_452",
+        "node": "ground_wp_453",
         "weight": 14.9,
         "type": "room_access"
       }
@@ -4743,7 +4761,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_409",
+        "node": "ground_wp_410",
         "weight": 17.37,
         "type": "room_access"
       }
@@ -5093,7 +5111,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_416",
+        "node": "ground_wp_417",
         "weight": 12.94,
         "type": "room_access"
       }
@@ -5139,7 +5157,7 @@
         "type": "junction"
       },
       {
-        "node": "ground_wp_453",
+        "node": "ground_wp_454",
         "weight": 1.73,
         "type": "room_access"
       }
@@ -5291,7 +5309,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_412",
+        "node": "ground_wp_413",
         "weight": 10.68,
         "type": "room_access"
       }
@@ -5320,7 +5338,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_423",
+        "node": "ground_wp_424",
         "weight": 7.95,
         "type": "room_access"
       }
@@ -5397,7 +5415,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_413",
+        "node": "ground_wp_414",
         "weight": 12,
         "type": "room_access"
       }
@@ -5568,7 +5586,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_447",
+        "node": "ground_wp_448",
         "weight": 10.14,
         "type": "room_access"
       }
@@ -5585,7 +5603,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_424",
+        "node": "ground_wp_425",
         "weight": 12.58,
         "type": "room_access"
       }
@@ -5650,7 +5668,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_448",
+        "node": "ground_wp_449",
         "weight": 11.63,
         "type": "room_access"
       }
@@ -5696,7 +5714,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_449",
+        "node": "ground_wp_450",
         "weight": 12.94,
         "type": "room_access"
       }
@@ -5790,7 +5808,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_431",
+        "node": "ground_wp_432",
         "weight": 9.54,
         "type": "room_access"
       }
@@ -5949,7 +5967,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_432",
+        "node": "ground_wp_433",
         "weight": 9.91,
         "type": "room_access"
       }
@@ -6026,7 +6044,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_433",
+        "node": "ground_wp_434",
         "weight": 10.2,
         "type": "room_access"
       }
@@ -6183,7 +6201,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_414",
+        "node": "ground_wp_415",
         "weight": 13.69,
         "type": "room_access"
       }
@@ -6212,7 +6230,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_445",
+        "node": "ground_wp_446",
         "weight": 13.36,
         "type": "room_access"
       }
@@ -6426,7 +6444,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_425",
+        "node": "ground_wp_426",
         "weight": 13.36,
         "type": "room_access"
       }
@@ -6503,7 +6521,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_443",
+        "node": "ground_wp_444",
         "weight": 14.75,
         "type": "room_access"
       }
@@ -6585,7 +6603,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_444",
+        "node": "ground_wp_445",
         "weight": 14.38,
         "type": "room_access"
       }
@@ -6619,7 +6637,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_434",
+        "node": "ground_wp_435",
         "weight": 13.06,
         "type": "room_access"
       }
@@ -6684,7 +6702,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_435",
+        "node": "ground_wp_436",
         "weight": 16.47,
         "type": "room_access"
       }
@@ -6802,7 +6820,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_436",
+        "node": "ground_wp_437",
         "weight": 18.32,
         "type": "room_access"
       }
@@ -6819,7 +6837,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_450",
+        "node": "ground_wp_451",
         "weight": 6.46,
         "type": "room_access"
       }
@@ -7327,7 +7345,7 @@
         "type": "junction"
       },
       {
-        "node": "ground_wp_426",
+        "node": "ground_wp_427",
         "weight": 8.95,
         "type": "room_access"
       }
@@ -7693,7 +7711,7 @@
         "type": "junction"
       },
       {
-        "node": "ground_wp_455",
+        "node": "ground_wp_456",
         "weight": 45.54,
         "type": "room_access"
       }
@@ -7813,7 +7831,7 @@
         "type": "junction"
       },
       {
-        "node": "ground_wp_437",
+        "node": "ground_wp_438",
         "weight": 12.47,
         "type": "room_access"
       }
@@ -7912,6 +7930,11 @@
         "node": "ground_wp_245",
         "weight": 20.62,
         "type": "corridor"
+      },
+      {
+        "node": "ground_wp_408",
+        "weight": 40.45,
+        "type": "stair_access"
       }
     ],
     "ground_wp_245": [
@@ -7924,6 +7947,11 @@
         "node": "ground_wp_246",
         "weight": 23.55,
         "type": "corridor"
+      },
+      {
+        "node": "ground_wp_408",
+        "weight": 41.43,
+        "type": "stair_access"
       }
     ],
     "ground_wp_246": [
@@ -7938,7 +7966,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_408",
+        "node": "ground_wp_409",
         "weight": 10.07,
         "type": "room_access"
       }
@@ -8075,7 +8103,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_442",
+        "node": "ground_wp_443",
         "weight": 10.79,
         "type": "room_access"
       }
@@ -8116,7 +8144,12 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_422",
+        "node": "ground_wp_408",
+        "weight": 42.77,
+        "type": "stair_access"
+      },
+      {
+        "node": "ground_wp_423",
         "weight": 12.19,
         "type": "room_access"
       }
@@ -8169,7 +8202,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_441",
+        "node": "ground_wp_442",
         "weight": 12.98,
         "type": "room_access"
       }
@@ -8222,7 +8255,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_421",
+        "node": "ground_wp_422",
         "weight": 11.12,
         "type": "room_access"
       }
@@ -8280,7 +8313,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_451",
+        "node": "ground_wp_452",
         "weight": 11.57,
         "type": "room_access"
       }
@@ -8347,7 +8380,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_427",
+        "node": "ground_wp_428",
         "weight": 17.25,
         "type": "room_access"
       }
@@ -8434,7 +8467,7 @@
         "type": "stair_access"
       },
       {
-        "node": "ground_wp_428",
+        "node": "ground_wp_429",
         "weight": 18,
         "type": "room_access"
       }
@@ -8497,7 +8530,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_429",
+        "node": "ground_wp_430",
         "weight": 17.53,
         "type": "room_access"
       }
@@ -8550,7 +8583,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_430",
+        "node": "ground_wp_431",
         "weight": 18.12,
         "type": "room_access"
       }
@@ -8670,7 +8703,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_418",
+        "node": "ground_wp_419",
         "weight": 15.74,
         "type": "room_access"
       }
@@ -8769,7 +8802,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_419",
+        "node": "ground_wp_420",
         "weight": 18.27,
         "type": "room_access"
       }
@@ -8858,7 +8891,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_420",
+        "node": "ground_wp_421",
         "weight": 19.73,
         "type": "room_access"
       }
@@ -8923,7 +8956,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_454",
+        "node": "ground_wp_455",
         "weight": 17.11,
         "type": "room_access"
       }
@@ -9096,7 +9129,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_417",
+        "node": "ground_wp_418",
         "weight": 13.99,
         "type": "room_access"
       }
@@ -9386,7 +9419,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_446",
+        "node": "ground_wp_447",
         "weight": 16.86,
         "type": "room_access"
       }
@@ -9470,7 +9503,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_438",
+        "node": "ground_wp_439",
         "weight": 8.58,
         "type": "room_access"
       }
@@ -9523,7 +9556,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_439",
+        "node": "ground_wp_440",
         "weight": 10.12,
         "type": "room_access"
       }
@@ -9581,7 +9614,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_440",
+        "node": "ground_wp_441",
         "weight": 11.85,
         "type": "room_access"
       }
@@ -9747,7 +9780,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_410",
+        "node": "ground_wp_411",
         "weight": 20.97,
         "type": "room_access"
       }
@@ -9824,7 +9857,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_411",
+        "node": "ground_wp_412",
         "weight": 44.52,
         "type": "room_access"
       }
@@ -9901,7 +9934,7 @@
         "type": "corridor"
       },
       {
-        "node": "ground_wp_415",
+        "node": "ground_wp_416",
         "weight": 27.11,
         "type": "room_access"
       }
@@ -10022,334 +10055,351 @@
     ],
     "ground_wp_408": [
       {
+        "node": "ground_wp_244",
+        "weight": 40.45,
+        "type": "stair_access"
+      },
+      {
+        "node": "ground_wp_245",
+        "weight": 41.43,
+        "type": "stair_access"
+      },
+      {
+        "node": "ground_wp_260",
+        "weight": 42.77,
+        "type": "stair_access"
+      }
+    ],
+    "ground_wp_409": [
+      {
         "node": "ground_wp_246",
         "weight": 10.07,
         "type": "room_access"
       }
     ],
-    "ground_wp_409": [
+    "ground_wp_410": [
       {
         "node": "ground_wp_6",
         "weight": 17.37,
         "type": "room_access"
       }
     ],
-    "ground_wp_410": [
+    "ground_wp_411": [
       {
         "node": "ground_wp_388",
         "weight": 20.97,
         "type": "room_access"
       }
     ],
-    "ground_wp_411": [
+    "ground_wp_412": [
       {
         "node": "ground_wp_394",
         "weight": 44.52,
         "type": "room_access"
       }
     ],
-    "ground_wp_412": [
+    "ground_wp_413": [
       {
         "node": "ground_wp_45",
         "weight": 10.68,
         "type": "room_access"
       }
     ],
-    "ground_wp_413": [
+    "ground_wp_414": [
       {
         "node": "ground_wp_53",
         "weight": 12,
         "type": "room_access"
       }
     ],
-    "ground_wp_414": [
+    "ground_wp_415": [
       {
         "node": "ground_wp_111",
         "weight": 13.69,
         "type": "room_access"
       }
     ],
-    "ground_wp_415": [
+    "ground_wp_416": [
       {
         "node": "ground_wp_400",
         "weight": 27.11,
         "type": "room_access"
       }
     ],
-    "ground_wp_416": [
+    "ground_wp_417": [
       {
         "node": "ground_wp_31",
         "weight": 12.94,
         "type": "room_access"
       }
     ],
-    "ground_wp_417": [
+    "ground_wp_418": [
       {
         "node": "ground_wp_335",
         "weight": 13.99,
         "type": "room_access"
       }
     ],
-    "ground_wp_418": [
+    "ground_wp_419": [
       {
         "node": "ground_wp_302",
         "weight": 15.74,
         "type": "room_access"
       }
     ],
-    "ground_wp_419": [
+    "ground_wp_420": [
       {
         "node": "ground_wp_309",
         "weight": 18.27,
         "type": "room_access"
       }
     ],
-    "ground_wp_420": [
+    "ground_wp_421": [
       {
         "node": "ground_wp_316",
         "weight": 19.73,
         "type": "room_access"
       }
     ],
-    "ground_wp_421": [
+    "ground_wp_422": [
       {
         "node": "ground_wp_268",
         "weight": 11.12,
         "type": "room_access"
       }
     ],
-    "ground_wp_422": [
+    "ground_wp_423": [
       {
         "node": "ground_wp_260",
         "weight": 12.19,
         "type": "room_access"
       }
     ],
-    "ground_wp_423": [
+    "ground_wp_424": [
       {
         "node": "ground_wp_47",
         "weight": 7.95,
         "type": "room_access"
       }
     ],
-    "ground_wp_424": [
+    "ground_wp_425": [
       {
         "node": "ground_wp_67",
         "weight": 12.58,
         "type": "room_access"
       }
     ],
-    "ground_wp_425": [
+    "ground_wp_426": [
       {
         "node": "ground_wp_130",
         "weight": 13.36,
         "type": "room_access"
       }
     ],
-    "ground_wp_426": [
+    "ground_wp_427": [
       {
         "node": "ground_wp_198",
         "weight": 8.95,
         "type": "room_access"
       }
     ],
-    "ground_wp_427": [
+    "ground_wp_428": [
       {
         "node": "ground_wp_278",
         "weight": 17.25,
         "type": "room_access"
       }
     ],
-    "ground_wp_428": [
+    "ground_wp_429": [
       {
         "node": "ground_wp_284",
         "weight": 18,
         "type": "room_access"
       }
     ],
-    "ground_wp_429": [
+    "ground_wp_430": [
       {
         "node": "ground_wp_288",
         "weight": 17.53,
         "type": "room_access"
       }
     ],
-    "ground_wp_430": [
+    "ground_wp_431": [
       {
         "node": "ground_wp_292",
         "weight": 18.12,
         "type": "room_access"
       }
     ],
-    "ground_wp_431": [
+    "ground_wp_432": [
       {
         "node": "ground_wp_82",
         "weight": 9.54,
         "type": "room_access"
       }
     ],
-    "ground_wp_432": [
+    "ground_wp_433": [
       {
         "node": "ground_wp_94",
         "weight": 9.91,
         "type": "room_access"
       }
     ],
-    "ground_wp_433": [
+    "ground_wp_434": [
       {
         "node": "ground_wp_100",
         "weight": 10.2,
         "type": "room_access"
       }
     ],
-    "ground_wp_434": [
+    "ground_wp_435": [
       {
         "node": "ground_wp_144",
         "weight": 13.06,
         "type": "room_access"
       }
     ],
-    "ground_wp_435": [
+    "ground_wp_436": [
       {
         "node": "ground_wp_149",
         "weight": 16.47,
         "type": "room_access"
       }
     ],
-    "ground_wp_436": [
+    "ground_wp_437": [
       {
         "node": "ground_wp_158",
         "weight": 18.32,
         "type": "room_access"
       }
     ],
-    "ground_wp_437": [
+    "ground_wp_438": [
       {
         "node": "ground_wp_236",
         "weight": 12.47,
         "type": "room_access"
       }
     ],
-    "ground_wp_438": [
+    "ground_wp_439": [
       {
         "node": "ground_wp_367",
         "weight": 8.58,
         "type": "room_access"
       }
     ],
-    "ground_wp_439": [
+    "ground_wp_440": [
       {
         "node": "ground_wp_371",
         "weight": 10.12,
         "type": "room_access"
       }
     ],
-    "ground_wp_440": [
+    "ground_wp_441": [
       {
         "node": "ground_wp_375",
         "weight": 11.85,
         "type": "room_access"
       }
     ],
-    "ground_wp_441": [
+    "ground_wp_442": [
       {
         "node": "ground_wp_264",
         "weight": 12.98,
         "type": "room_access"
       }
     ],
-    "ground_wp_442": [
+    "ground_wp_443": [
       {
         "node": "ground_wp_257",
         "weight": 10.79,
         "type": "room_access"
       }
     ],
-    "ground_wp_443": [
+    "ground_wp_444": [
       {
         "node": "ground_wp_136",
         "weight": 14.75,
         "type": "room_access"
       }
     ],
-    "ground_wp_444": [
+    "ground_wp_445": [
       {
         "node": "ground_wp_142",
         "weight": 14.38,
         "type": "room_access"
       }
     ],
-    "ground_wp_445": [
+    "ground_wp_446": [
       {
         "node": "ground_wp_113",
         "weight": 13.36,
         "type": "room_access"
       }
     ],
-    "ground_wp_446": [
+    "ground_wp_447": [
       {
         "node": "ground_wp_360",
         "weight": 16.86,
         "type": "room_access"
       }
     ],
-    "ground_wp_447": [
+    "ground_wp_448": [
       {
         "node": "ground_wp_66",
         "weight": 10.14,
         "type": "room_access"
       }
     ],
-    "ground_wp_448": [
+    "ground_wp_449": [
       {
         "node": "ground_wp_72",
         "weight": 11.63,
         "type": "room_access"
       }
     ],
-    "ground_wp_449": [
+    "ground_wp_450": [
       {
         "node": "ground_wp_75",
         "weight": 12.94,
         "type": "room_access"
       }
     ],
-    "ground_wp_450": [
+    "ground_wp_451": [
       {
         "node": "ground_wp_159",
         "weight": 6.46,
         "type": "room_access"
       }
     ],
-    "ground_wp_451": [
+    "ground_wp_452": [
       {
         "node": "ground_wp_272",
         "weight": 11.57,
         "type": "room_access"
       }
     ],
-    "ground_wp_452": [
+    "ground_wp_453": [
       {
         "node": "ground_wp_3",
         "weight": 14.9,
         "type": "room_access"
       }
     ],
-    "ground_wp_453": [
+    "ground_wp_454": [
       {
         "node": "ground_wp_34",
         "weight": 1.73,
         "type": "room_access"
       }
     ],
-    "ground_wp_454": [
+    "ground_wp_455": [
       {
         "node": "ground_wp_321",
         "weight": 17.11,
         "type": "room_access"
       }
     ],
-    "ground_wp_455": [
+    "ground_wp_456": [
       {
         "node": "ground_wp_226",
         "weight": 45.54,
