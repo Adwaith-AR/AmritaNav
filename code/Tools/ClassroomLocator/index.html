@@ -106,8 +106,13 @@
       </div>
 
       <!-- Multi-Floor Navigation Bar -->
+      <button type="button" id="nav-toggle-btn" class="nav-toggle-btn" title="Route planner" aria-label="Open route planner" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M21.71 11.29l-9-9a.996.996 0 0 0-1.41 0l-9 9a.996.996 0 0 0 0 1.41l9 9c.39.39 1.02.39 1.41 0l9-9a.996.996 0 0 0 0-1.41zM14 14.5V12h-4v3H8v-4c0-.55.45-1 1-1h5V7.5l3.5 3.5-3.5 3.5z"/>
+        </svg>
+      </button>
       <div id="ground-nav-bar" class="ground-nav-bar" style="display: none;">
-        <div class="nav-control-group">
+        <div class="nav-control-group collapsed" id="nav-control-group">
           <div class="nav-select-wrapper" id="nav-start-wrapper">
             <label for="nav-start-input" class="nav-label">From</label>
             <div class="nav-input-container">
@@ -173,8 +178,8 @@
         <div class="map-container" id="map-container">
           <div class="map-pan-stage" id="map-pan-stage">
             <!-- Ground Floor -->
-          <div class="floor-layer" id="floor-layer-ground" data-floor="ground">
-            <svg class="central-image floorplan-vector" viewBox="0 0 2112 1300" aria-hidden="true">
+          <div class="floor-layer" id="floor-layer-ground" data-floor="ground" data-orig-width="2112" data-orig-height="1300">
+            <svg class="central-image floorplan-vector" viewBox="0 0 1300 2112" aria-hidden="true">
             <defs>
     <style>
       .floorplan-bg { fill: #ffffff; }
@@ -183,6 +188,7 @@
       .room-code { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 500; text-anchor: middle; dominant-baseline: central; fill: #64748b; pointer-events: none; }
     </style>
   </defs>
+    <g class="map-orientation-layer" transform="translate(0, 2112) rotate(-90)">
 
   
   <rect width="2112" height="1300" class="floorplan-bg"/>
@@ -240,7 +246,7 @@
     <rect id="bg_g_room_nanosciences" class="room-wall" x="730" y="197" width="113" height="326" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="Amrita Center for Nanosciences" data-code="ACN" transform="rotate(353 786.5 360)"/>
     <rect id="bg_g_room_special_hall" class="room-wall" x="300" y="580" width="165" height="94" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="Special Programs Hall / Meditation Hall" data-code="SPH-102" transform="rotate(354 382.5 627)"/>
     <rect id="bg_g_room_gad_office" class="room-wall" x="378" y="671" width="75" height="62" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="GAD-PR Office" data-code="GAD-103" transform="rotate(354 415.5 702)"/>
-    <rect id="bg_g_room_admin_block_a" class="room-wall" x="297" y="740" width="174" height="189" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Administration Block (A) / Reception" data-code="ADM-BLK-A" transform="rotate(353 384 834.5)"/>
+    <rect id="bg_g_room_admin_block_a" class="room-wall" x="297" y="740" width="174" height="189" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Entrance" data-code="ADM-BLK-A" transform="rotate(353 384 834.5)"/>
     <rect id="bg_g_room_admission_office" class="room-wall" x="620" y="615" width="100" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Admission Office" data-code="ADM-105" transform="rotate(354 670 659.5)"/>
     <rect id="bg_g_room_cir_seminar" class="room-wall" x="811" y="592" width="101" height="89" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="CIR Seminar Room" data-code="CIR-106" transform="rotate(353 861.5 636.5)"/>
     <rect id="bg_g_room_guest_room" class="room-wall" x="652" y="895" width="97" height="85" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="Guest Room" data-code="GST-107" transform="rotate(354 700.5 937.5)"/>
@@ -293,6 +299,7 @@
     <rect id="bg_g_room_1790702707883" class="room-wall" x="960" y="730" width="59" height="66" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-154" transform="rotate(354 989.5 763)"/>
     <rect id="bg_g_room_1790702726790" class="room-wall" x="535" y="909" width="65" height="60" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-155" transform="rotate(354 567.5 939)"/>
     <rect id="bg_g_room_1790702771045" class="room-wall" x="896" y="980" width="60" height="60" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-156" transform="rotate(354 926 1010)"/>
+    <rect id="bg_g_room_1790702812520" class="room-wall" x="859" y="289" width="60" height="63" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Stairs" data-code="R-147" transform="rotate(355 889 320.5)"/>
   </g>
 
   
@@ -310,7 +317,7 @@
       <text class="room-code" y="9">GAD-103</text>
     </g>
     <g transform="translate(384, 835)">
-      <text class="room-label" y="-7">Administration Block (A) / Reception</text>
+      <text class="room-label" y="-7">Entrance</text>
       <text class="room-code" y="9">ADM-BLK-A</text>
     </g>
     <g transform="translate(670, 660)">
@@ -519,19 +526,26 @@
       <text class="room-label" y="-7">Stairs</text>
       <text class="room-code" y="9">R-156</text>
     </g>
+    <g transform="translate(889, 321)">
+      <text class="room-label" y="-7">Stairs</text>
+      <text class="room-code" y="9">R-147</text>
+    </g>
   </g>
+
+    </g>
           </svg>
-          <svg class="selection-overlay" viewBox="0 0 2112 1300" aria-label="Amrita Nav Floor Plan">
+          <svg class="selection-overlay" viewBox="0 0 1300 2112" aria-label="Amrita Nav Floor Plan">
             <defs>
               <radialGradient id="gps-beam-grad" cx="0" cy="0" r="52" gradientUnits="userSpaceOnUse">
                 <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.45" />
                 <stop offset="100%" stop-color="#3b82f6" stop-opacity="0" />
               </radialGradient>
             </defs>
+    <g class="map-orientation-layer" transform="translate(0, 2112) rotate(-90)">
             <rect id="room_nanosciences" class="selectable-room" x="730" y="197" width="113" height="326" transform="rotate(353 786.5 360)" data-name="Amrita Center for Nanosciences" data-code="ACN" role="button" tabindex="0" aria-label="Amrita Center for Nanosciences (ACN)" aria-pressed="false"><title>Amrita Center for Nanosciences (ACN)</title></rect>
             <rect id="room_special_hall" class="selectable-room" x="300" y="580" width="165" height="94" transform="rotate(354 382.5 627)" data-name="Special Programs Hall / Meditation Hall" data-code="SPH-102" role="button" tabindex="0" aria-label="Special Programs Hall / Meditation Hall (SPH-102)" aria-pressed="false"><title>Special Programs Hall / Meditation Hall (SPH-102)</title></rect>
             <rect id="room_gad_office" class="selectable-room" x="378" y="671" width="75" height="62" transform="rotate(354 415.5 702)" data-name="GAD-PR Office" data-code="GAD-103" role="button" tabindex="0" aria-label="GAD-PR Office (GAD-103)" aria-pressed="false"><title>GAD-PR Office (GAD-103)</title></rect>
-            <rect id="room_admin_block_a" class="selectable-room" x="297" y="740" width="174" height="189" transform="rotate(353 384 834.5)" data-name="Administration Block (A) / Reception" data-code="ADM-BLK-A" role="button" tabindex="0" aria-label="Administration Block (A) / Reception (ADM-BLK-A)" aria-pressed="false"><title>Administration Block (A) / Reception (ADM-BLK-A)</title></rect>
+            <rect id="room_admin_block_a" class="selectable-room" x="297" y="740" width="174" height="189" transform="rotate(353 384 834.5)" data-name="Entrance" data-code="ADM-BLK-A" role="button" tabindex="0" aria-label="Entrance (ADM-BLK-A)" aria-pressed="false"><title>Entrance (ADM-BLK-A)</title></rect>
             <rect id="room_admission_office" class="selectable-room" x="620" y="615" width="100" height="89" transform="rotate(354 670 659.5)" data-name="Admission Office" data-code="ADM-105" role="button" tabindex="0" aria-label="Admission Office (ADM-105)" aria-pressed="false"><title>Admission Office (ADM-105)</title></rect>
             <rect id="room_cir_seminar" class="selectable-room" x="811" y="592" width="101" height="89" transform="rotate(353 861.5 636.5)" data-name="CIR Seminar Room" data-code="CIR-106" role="button" tabindex="0" aria-label="CIR Seminar Room (CIR-106)" aria-pressed="false"><title>CIR Seminar Room (CIR-106)</title></rect>
             <rect id="room_guest_room" class="selectable-room" x="652" y="895" width="97" height="85" transform="rotate(354 700.5 937.5)" data-name="Guest Room" data-code="GST-107" role="button" tabindex="0" aria-label="Guest Room (GST-107)" aria-pressed="false"><title>Guest Room (GST-107)</title></rect>
@@ -579,6 +593,7 @@
             <rect id="room_1790702707883" class="selectable-room" x="960" y="730" width="59" height="66" transform="rotate(354 989.5 763)" data-name="Stairs" data-code="R-154" role="button" tabindex="0" aria-label="Stairs (R-154)" aria-pressed="false"><title>Stairs (R-154)</title></rect>
             <rect id="room_1790702726790" class="selectable-room" x="535" y="909" width="65" height="60" transform="rotate(354 567.5 939)" data-name="Stairs" data-code="R-155" role="button" tabindex="0" aria-label="Stairs (R-155)" aria-pressed="false"><title>Stairs (R-155)</title></rect>
             <rect id="room_1790702771045" class="selectable-room" x="896" y="980" width="60" height="60" transform="rotate(354 926 1010)" data-name="Stairs" data-code="R-156" role="button" tabindex="0" aria-label="Stairs (R-156)" aria-pressed="false"><title>Stairs (R-156)</title></rect>
+            <rect id="room_1790702812520" class="selectable-room" x="859" y="289" width="60" height="63" transform="rotate(355 889 320.5)" data-name="Stairs" data-code="R-147" role="button" tabindex="0" aria-label="Stairs (R-147)" aria-pressed="false"><title>Stairs (R-147)</title></rect>
 
             <!-- Ground Floor Active Route Layer -->
             <g id="ground-route-layer" class="ground-route-layer route-layer" data-floor="ground"></g>
@@ -602,12 +617,14 @@
               <circle class="gps-pin-outer" cx="0" cy="0" r="11" />
               <circle class="gps-pin-inner" cx="0" cy="0" r="8" />
             </g>
+          
+    </g>
           </svg>
         </div>
 
         <!-- First Floor -->
-        <div class="floor-layer" id="floor-layer-first" data-floor="first">
-          <svg class="central-image floorplan-vector" viewBox="0 0 2112 1300" aria-hidden="true">
+        <div class="floor-layer" id="floor-layer-first" data-floor="first" data-orig-width="2112" data-orig-height="1300">
+          <svg class="central-image floorplan-vector" viewBox="0 0 1300 2112" aria-hidden="true">
             <defs>
     <style>
       .floorplan-bg { fill: #ffffff; }
@@ -616,6 +633,7 @@
       .room-code { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 500; text-anchor: middle; dominant-baseline: central; fill: #64748b; pointer-events: none; }
     </style>
   </defs>
+    <g class="map-orientation-layer" transform="translate(0, 2112) rotate(-90)">
 
   
   <rect width="2112" height="1300" class="floorplan-bg"/>
@@ -954,8 +972,11 @@
       <text class="room-code" y="9">WC</text>
     </g>
   </g>
+          
+    </g>
           </svg>
-          <svg class="selection-overlay" viewBox="0 0 2112 1300" aria-label="Amrita Nav First Floor Plan">
+          <svg class="selection-overlay" viewBox="0 0 1300 2112" aria-label="Amrita Nav First Floor Plan">
+    <g class="map-orientation-layer" transform="translate(0, 2112) rotate(-90)">
             <rect id="f1_room_nanosciences" class="selectable-room" x="730" y="197" width="113" height="326" transform="rotate(353 786.5 360)" data-name="N-107 — Physics Lab" data-code="ACN" role="button" tabindex="0" aria-label="N-107 — Physics Lab (ACN)" aria-pressed="false"><title>N-107 — Physics Lab (ACN)</title></rect>
             <rect id="f1_room_special_hall" class="selectable-room" x="300" y="580" width="165" height="94" transform="rotate(354 382.5 627)" data-name="A-105 — General Administration Dept. (CAD)" data-code="SPH-102" role="button" tabindex="0" aria-label="A-105 — General Administration Dept. (CAD) (SPH-102)" aria-pressed="false"><title>A-105 — General Administration Dept. (CAD) (SPH-102)</title></rect>
             <rect id="f1_room_gad_office" class="selectable-room" x="378" y="671" width="75" height="62" transform="rotate(354 415.5 702)" data-name="ICTS — Reprographics Center" data-code="GAD-103" role="button" tabindex="0" aria-label="ICTS — Reprographics Center (GAD-103)" aria-pressed="false"><title>ICTS — Reprographics Center (GAD-103)</title></rect>
@@ -1014,12 +1035,14 @@
             <rect id="f1_room_1790521338973" class="selectable-room" x="391" y="532" width="69" height="43" transform="rotate(354 425.5 553.5)" data-name="Men&#039;s Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men&#039;s Toilet (WC)" aria-pressed="false"><title>Men&#039;s Toilet (WC)</title></rect>
             <!-- First Floor Active Route Layer -->
             <g id="route-layer-first" class="route-layer" data-floor="first"></g>
+          
+    </g>
           </svg>
         </div>
 
         <!-- Second Floor -->
-        <div class="floor-layer" id="floor-layer-second" data-floor="second">
-          <svg class="central-image floorplan-vector" viewBox="0 0 2112 1300" aria-hidden="true">
+        <div class="floor-layer" id="floor-layer-second" data-floor="second" data-orig-width="2112" data-orig-height="1300">
+          <svg class="central-image floorplan-vector" viewBox="0 0 1300 2112" aria-hidden="true">
             <defs>
     <style>
       .floorplan-bg { fill: #ffffff; }
@@ -1028,6 +1051,7 @@
       .room-code { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 500; text-anchor: middle; dominant-baseline: central; fill: #64748b; pointer-events: none; }
     </style>
   </defs>
+    <g class="map-orientation-layer" transform="translate(0, 2112) rotate(-90)">
 
   
   <rect width="2112" height="1300" class="floorplan-bg"/>
@@ -1362,8 +1386,11 @@
       <text class="room-code" y="9">WC</text>
     </g>
   </g>
+          
+    </g>
           </svg>
-          <svg class="selection-overlay" viewBox="0 0 2112 1300" aria-label="Amrita Nav Second Floor Plan">
+          <svg class="selection-overlay" viewBox="0 0 1300 2112" aria-label="Amrita Nav Second Floor Plan">
+    <g class="map-orientation-layer" transform="translate(0, 2112) rotate(-90)">
             <rect id="f2_room_nanosciences" class="selectable-room" x="730" y="197" width="113" height="326" transform="rotate(353 786.5 360)" data-name="N-207" data-code="ACN" role="button" tabindex="0" aria-label="N-207 (ACN)" aria-pressed="false"><title>N-207 (ACN)</title></rect>
             <rect id="f2_room_special_hall" class="selectable-room" x="300" y="580" width="165" height="94" transform="rotate(354 382.5 627)" data-name="A-208" data-code="SPH-102" role="button" tabindex="0" aria-label="A-208 (SPH-102)" aria-pressed="false"><title>A-208 (SPH-102)</title></rect>
             <rect id="f2_room_gad_office" class="selectable-room" x="378" y="671" width="75" height="62" transform="rotate(354 415.5 702)" data-name="A-207" data-code="GAD-103" role="button" tabindex="0" aria-label="A-207 (GAD-103)" aria-pressed="false"><title>A-207 (GAD-103)</title></rect>
@@ -1422,12 +1449,14 @@
             <rect id="f2_room_1790520135835" class="selectable-room" x="391" y="532" width="69" height="43" transform="rotate(354 425.5 553.5)" data-name="Men&#039;s Toilet" data-code="WC" role="button" tabindex="0" aria-label="Men&#039;s Toilet (WC)" aria-pressed="false"><title>Men&#039;s Toilet (WC)</title></rect>
             <!-- Second Floor Active Route Layer -->
             <g id="route-layer-second" class="route-layer" data-floor="second"></g>
+          
+    </g>
           </svg>
         </div>
 
         <!-- Third Floor -->
-        <div class="floor-layer" id="floor-layer-third" data-floor="third">
-          <svg class="central-image floorplan-vector" viewBox="0 0 2112 1300" aria-hidden="true">
+        <div class="floor-layer" id="floor-layer-third" data-floor="third" data-orig-width="2112" data-orig-height="1300">
+          <svg class="central-image floorplan-vector" viewBox="0 0 1300 2112" aria-hidden="true">
             <defs>
     <style>
       .floorplan-bg { fill: #ffffff; }
@@ -1436,6 +1465,7 @@
       .room-code { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 500; text-anchor: middle; dominant-baseline: central; fill: #64748b; pointer-events: none; }
     </style>
   </defs>
+    <g class="map-orientation-layer" transform="translate(0, 2112) rotate(-90)">
 
   
   <rect width="2112" height="1300" class="floorplan-bg"/>
@@ -1770,8 +1800,11 @@
       <text class="room-code" y="9">WC</text>
     </g>
   </g>
+          
+    </g>
           </svg>
-          <svg class="selection-overlay" viewBox="0 0 2112 1300" aria-label="Amrita Nav Third Floor Plan">
+          <svg class="selection-overlay" viewBox="0 0 1300 2112" aria-label="Amrita Nav Third Floor Plan">
+    <g class="map-orientation-layer" transform="translate(0, 2112) rotate(-90)">
             <rect id="f3_room_nanosciences" class="selectable-room" x="730" y="197" width="113" height="326" transform="rotate(353 786.5 360)" data-name="N-306" data-code="ACN" role="button" tabindex="0" aria-label="N-306 (ACN)" aria-pressed="false"><title>N-306 (ACN)</title></rect>
             <rect id="f3_room_special_hall" class="selectable-room" x="300" y="580" width="165" height="94" transform="rotate(354 382.5 627)" data-name="A-308" data-code="SPH-102" role="button" tabindex="0" aria-label="A-308 (SPH-102)" aria-pressed="false"><title>A-308 (SPH-102)</title></rect>
             <rect id="f3_room_gad_office" class="selectable-room" x="378" y="671" width="75" height="62" transform="rotate(354 415.5 702)" data-name="A-307" data-code="GAD-103" role="button" tabindex="0" aria-label="A-307 (GAD-103)" aria-pressed="false"><title>A-307 (GAD-103)</title></rect>
@@ -1830,6 +1863,8 @@
             <rect id="f3_room_1790523236934" class="selectable-room" x="454" y="1072" width="64" height="41" transform="rotate(354 486 1092.5)" data-name="Ladies&#039; Toilet" data-code="WC" role="button" tabindex="0" aria-label="Ladies&#039; Toilet (WC)" aria-pressed="false"><title>Ladies&#039; Toilet (WC)</title></rect>
             <!-- Third Floor Active Route Layer -->
             <g id="route-layer-third" class="route-layer" data-floor="third"></g>
+          
+    </g>
           </svg>
         </div>
       </div> <!-- /#map-pan-stage -->
@@ -1887,6 +1922,14 @@
           </button>
         </div>
       </div>
+    </div>
+
+    <!-- Staircase climb prompt (shown when the user reaches a staircase mid-route) -->
+    <div id="stair-popup" class="stair-popup" style="display: none;" role="alertdialog" aria-labelledby="stair-popup-title">
+      <button type="button" id="stair-popup-close" class="stair-popup-close" title="Dismiss" aria-label="Dismiss">✕</button>
+      <div class="stair-popup-icon">🪜</div>
+      <h2 id="stair-popup-title" class="stair-popup-title">Climb the stairs</h2>
+      <p id="stair-popup-sub" class="stair-popup-sub"></p>
     </div>
   </div> <!-- /#app-shell -->
   <script src="ground-nav-data.js"></script>

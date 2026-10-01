@@ -134,13 +134,50 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentFloor = null;
   let activeCategoryFilter = null; // 'toilet' | 'lab' | 'office' | null
 
+  // ==========================================
+  // --- Global 90° Anticlockwise Display Orientation ---
+  // ==========================================
+  function rotatePoint90CCW(x, y, floorW, floorH) {
+    return {
+      x: y,
+      y: floorW - x
+    };
+  }
+
+  function unrotatePoint90CCW(displayX, displayY, floorW, floorH) {
+    return {
+      x: floorW - displayY,
+      y: displayX
+    };
+  }
+
+  function getFloorDimensions(floorKey) {
+    const f = floorKey || currentFloor || 'ground';
+    const navData = window.CAMPUS_NAV_DATA || window.GROUND_NAV_DATA;
+    if (navData && navData.floors && navData.floors[f] && navData.floors[f].viewBox) {
+      return {
+        width: navData.floors[f].viewBox[0],
+        height: navData.floors[f].viewBox[1]
+      };
+    }
+    const layer = document.getElementById(`floor-layer-${f}`);
+    if (layer) {
+      const origW = layer.dataset.origWidth;
+      const origH = layer.dataset.origHeight;
+      if (origW && origH) return { width: parseFloat(origW), height: parseFloat(origH) };
+    }
+    return { width: 2112, height: 1300 };
+  }
+
   function moveGpsMarkerToActiveFloor() {
     const activeLayer = document.querySelector('.floor-layer.active');
     const marker = document.getElementById('gps-marker');
     if (!activeLayer || !marker) return;
+    const activeOrientationLayer = activeLayer.querySelector('.selection-overlay .map-orientation-layer');
     const activeOverlay = activeLayer.querySelector('.selection-overlay');
-    if (activeOverlay && marker.parentElement !== activeOverlay) {
-      activeOverlay.appendChild(marker);
+    const targetParent = activeOrientationLayer || activeOverlay;
+    if (targetParent && marker.parentElement !== targetParent) {
+      targetParent.appendChild(marker);
     }
   }
 
@@ -188,6 +225,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Handle Initial Floor Selection Prompt (on website open)
+  // The chosen floor becomes the user's current floor for "Current Location"
+  // navigation; live GPS is started right away so the precise position on
+  // that floor shows as soon as the first fix arrives.
   floorPromptBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const selectedFloor = btn.dataset.floor;
@@ -199,6 +239,10 @@ document.addEventListener('DOMContentLoaded', () => {
           mainContent.style.display = 'flex';
         }
         switchFloor(selectedFloor);
+        if (!isGpsActive) {
+          pendingFocusUser = true;
+          startGpsTracking();
+        }
       }
     });
 
@@ -214,6 +258,10 @@ document.addEventListener('DOMContentLoaded', () => {
             mainContent.style.display = 'flex';
           }
           switchFloor(selectedFloor);
+          if (!isGpsActive) {
+            pendingFocusUser = true;
+            startGpsTracking();
+          }
         }
       }
     });
@@ -281,6 +329,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let watchId = null;
   let currentHeading = null;
   let currentPos = { x: GPS_CALIBRATION.defaultX, y: GPS_CALIBRATION.defaultY };
+
+  // Bridge filled in by the Map Pan & Zoom engine below; lets the navigation
+  // rotation engine pan the map (auto-center) without touching pan internals.
+  let navPanBridge = null;
 
   // Prevent dock clicks from bubbling to map/rooms
   if (gpsDock) {
@@ -381,6 +433,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     isGpsActive = true;
+    updateNavRotationActive();
     gpsToggleBtn.classList.add('active', 'locating');
     gpsBtnText.textContent = 'Locating...';
     setGpsStatus('locating');
@@ -409,6 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
       watchId = null;
     }
     hideMarker();
+    updateNavRotationActive();
 
     gpsToggleBtn.classList.remove('active', 'locating');
     gpsBtnText.textContent = 'Locate Me';
@@ -421,6 +475,7 @@ document.addEventListener('DOMContentLoaded', () => {
     gpsToggleBtn.classList.remove('locating');
 
     const { latitude, longitude, accuracy, heading } = pos.coords;
+    updateHeadingFromFix(latitude, longitude, accuracy, heading, pos.coords.speed, pos.timestamp);
     const dist = haversineDistance(
       latitude,
       longitude,
@@ -438,6 +493,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const pt = gpsToCanvas(latitude, longitude);
       updateMarker(pt.x, pt.y, accuracy || 5, currentHeading);
       setGpsStatus('active');
+      // Navigation was just started: snap the view onto the user's precise
+      // location on their chosen floor as soon as the first fix arrives.
+      if (pendingFocusUser) {
+        pendingFocusUser = false;
+        autoCenterOnUser(1);
+      }
     } else {
       updateMarker(GPS_CALIBRATION.defaultX, GPS_CALIBRATION.defaultY, 15, currentHeading);
       setGpsStatus('warning');
@@ -472,10 +533,33 @@ document.addEventListener('DOMContentLoaded', () => {
     overlay.addEventListener('dblclick', (e) => {
       if (!isGpsActive) return;
       const rect = overlay.getBoundingClientRect();
-      const clickX = ((e.clientX - rect.left) / rect.width) * 2112;
-      const clickY = ((e.clientY - rect.top) / rect.height) * 1300;
+      const floorKey = currentFloor || 'ground';
+      const dims = getFloorDimensions(floorKey);
+      const visualW = dims.height;
+      const visualH = dims.width;
 
-      updateMarker(clickX, clickY, 4, currentHeading);
+      const stageW = rect.width;
+      const stageH = rect.height;
+      const scaleSvg = Math.min(stageW / visualW, stageH / visualH);
+      const svgLeft = (stageW - visualW * scaleSvg) / 2;
+      const svgTop = (stageH - visualH * scaleSvg) / 2;
+
+      const clickDisplayX = (e.clientX - rect.left - svgLeft) / scaleSvg;
+      const clickDisplayY = (e.clientY - rect.top - svgTop) / scaleSvg;
+
+      // Undo the navigation map rotation (rotation pivots about the user
+      // marker's display position) before unrotating the base 90° orientation.
+      let dispX = clickDisplayX, dispY = clickDisplayY;
+      if (typeof navRotCurrent === 'number' && navRotCurrent !== 0 && typeof markerDisplayPt === 'function') {
+        const piv = markerDisplayPt();
+        const rad = -navRotCurrent * Math.PI / 180;
+        const ddx = dispX - piv.x, ddy = dispY - piv.y;
+        dispX = piv.x + ddx * Math.cos(rad) - ddy * Math.sin(rad);
+        dispY = piv.y + ddx * Math.sin(rad) + ddy * Math.cos(rad);
+      }
+
+      const originalPt = unrotatePoint90CCW(dispX, dispY, dims.width, dims.height);
+      updateMarker(originalPt.x, originalPt.y, 4, currentHeading);
       setGpsStatus('active');
     });
   });
@@ -485,6 +569,48 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   const navStartSelect = document.getElementById('nav-start-select');
   const navDestSelect = document.getElementById('nav-dest-select');
+  const navToggleBtn = document.getElementById('nav-toggle-btn');
+  const navControlGroup = document.getElementById('nav-control-group');
+
+  // ── Route planner dropdown (icon → form) ──────────────────────
+  function isRoutePlannerOpen() {
+    return navControlGroup ? !navControlGroup.classList.contains('collapsed') : false;
+  }
+
+  function setRoutePlannerOpen(open) {
+    if (navControlGroup) navControlGroup.classList.toggle('collapsed', !open);
+    if (navToggleBtn) {
+      navToggleBtn.classList.toggle('active', open);
+      navToggleBtn.setAttribute('aria-expanded', String(open));
+    }
+  }
+
+  if (navToggleBtn) {
+    navToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setRoutePlannerOpen(!isRoutePlannerOpen());
+    });
+  }
+
+  // ── Show the user's location when navigation starts ───────────
+  // The floor chosen in the opening prompt is the user's current floor
+  // (switchFloor sets it); GPS then gives the precise position on it.
+  let pendingFocusUser = false;
+
+  function focusUserLocation() {
+    if (!isGpsActive) {
+      pendingFocusUser = true;
+      startGpsTracking();
+      return;
+    }
+    // No precise fix yet (marker still hidden): snap once the first fix lands.
+    if (!gpsMarker || gpsMarker.style.display === 'none') {
+      pendingFocusUser = true;
+      return;
+    }
+    pendingFocusUser = false;
+    autoCenterOnUser(1); // snap to the user immediately
+  }
   const navSwapBtn = document.getElementById('nav-swap-btn');
   const getRouteBtn = document.getElementById('get-route-btn');
   const clearRouteBtn = document.getElementById('clear-route-btn');
@@ -591,6 +717,50 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   let lastAutoSwitchTime = 0;
+
+  // ── Staircase climb popup ─────────────────────────────────────
+  const stairPopup = document.getElementById('stair-popup');
+  const stairPopupTitle = document.getElementById('stair-popup-title');
+  const stairPopupSub = document.getElementById('stair-popup-sub');
+  let stairPopupTimer = null;
+
+  function hideStairPopup() {
+    if (stairPopup) stairPopup.style.display = 'none';
+    if (stairPopupTimer) {
+      clearTimeout(stairPopupTimer);
+      stairPopupTimer = null;
+    }
+  }
+
+  function showStairPopup(transition, route) {
+    if (!stairPopup || !transition) return;
+    const dirWord = transition.direction === 'down' ? 'down' : 'up';
+    if (stairPopupTitle) {
+      stairPopupTitle.textContent = `Climb ${dirWord} to ${transition.toFloorTitle}`;
+    }
+    if (stairPopupSub) {
+      // Tell the user which floor the climb ends at: the immediate transition
+      // floor, plus the final destination floor when the route continues.
+      const destTitle = route && route.dest && route.dest.floorTitle ? route.dest.floorTitle : null;
+      if (destTitle && destTitle !== transition.toFloorTitle) {
+        stairPopupSub.textContent = `via ${transition.stairName} — then continue on to ${destTitle}`;
+      } else {
+        stairPopupSub.textContent = `via ${transition.stairName}`;
+      }
+    }
+    stairPopup.style.display = 'block';
+    if (stairPopupTimer) clearTimeout(stairPopupTimer);
+    stairPopupTimer = setTimeout(hideStairPopup, 7000);
+  }
+
+  const stairPopupCloseBtn = document.getElementById('stair-popup-close');
+  if (stairPopupCloseBtn) {
+    stairPopupCloseBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hideStairPopup();
+    });
+  }
+
   function checkAutoFloorSwitch(x, y) {
     if (!activeRoute || !activeRoute.isMultiFloor || !activeRoute.stairTransitions) return;
     const now = performance.now();
@@ -608,6 +778,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const distToStairs = Math.hypot(x - stairExitPt[0], y - stairExitPt[1]);
     if (distToStairs <= 28) {
       lastAutoSwitchTime = now;
+
+      // Popup: tell the user to climb and till which floor
+      showStairPopup(transition, activeRoute);
+
       // Auto switch to next floor
       switchFloor(transition.toFloor);
 
@@ -628,6 +802,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderCampusRoute(route) {
     activeRoute = route;
+    updateNavRotationActive();
 
     // Clear all floor route layers
     Object.values(floorRouteLayers).forEach(layer => {
@@ -669,7 +844,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const startPt = pts[0];
         if (route.origin && route.origin.id !== 'gps_location') {
           svgHtml += `
-            <g class="route-pin route-pin-start" transform="translate(${startPt[0].toFixed(1)}, ${startPt[1].toFixed(1)})">
+            <g class="route-pin route-pin-start" transform="translate(${startPt[0].toFixed(1)}, ${startPt[1].toFixed(1)}) rotate(90)">
               <circle cx="0" cy="0" r="7" fill="#10b981" stroke="#ffffff" stroke-width="2.5" />
               <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
             </g>
@@ -681,7 +856,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (isEndFloor) {
         const endPt = pts[pts.length - 1];
         svgHtml += `
-          <g class="route-pin route-pin-dest" transform="translate(${endPt[0].toFixed(1)}, ${endPt[1].toFixed(1)})">
+          <g class="route-pin route-pin-dest" transform="translate(${endPt[0].toFixed(1)}, ${endPt[1].toFixed(1)}) rotate(90)">
             <circle cx="0" cy="0" r="8" fill="#e11d48" stroke="#ffffff" stroke-width="2.5" />
             <circle cx="0" cy="0" r="3" fill="#ffffff" />
           </g>
@@ -697,7 +872,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const dirArrow = exitTrans.direction === 'up' ? '▲' : '▼';
           const toName = floorShort[exitTrans.toFloor] || exitTrans.toFloor;
           svgHtml += `
-            <g class="route-stair-pin" transform="translate(${exitPt[0].toFixed(1)}, ${exitPt[1].toFixed(1)})">
+            <g class="route-stair-pin" transform="translate(${exitPt[0].toFixed(1)}, ${exitPt[1].toFixed(1)}) rotate(90)">
               <circle cx="0" cy="0" r="14" fill="#f59e0b" stroke="#ffffff" stroke-width="2.5" />
               <text x="0" y="4.5" text-anchor="middle" font-size="12" fill="#ffffff">🪜</text>
               <rect x="-42" y="-30" width="84" height="18" rx="9" fill="#0f172a" fill-opacity="0.88" />
@@ -712,7 +887,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const enterPt = pts[0];
           const fromName = floorShort[enterTrans.fromFloor] || enterTrans.fromFloor;
           svgHtml += `
-            <g class="route-stair-pin" transform="translate(${enterPt[0].toFixed(1)}, ${enterPt[1].toFixed(1)})">
+            <g class="route-stair-pin" transform="translate(${enterPt[0].toFixed(1)}, ${enterPt[1].toFixed(1)}) rotate(90)">
               <circle cx="0" cy="0" r="14" fill="#3b82f6" stroke="#ffffff" stroke-width="2.5" />
               <text x="0" y="4.5" text-anchor="middle" font-size="12" fill="#ffffff">🪜</text>
               <rect x="-45" y="-30" width="90" height="18" rx="9" fill="#0f172a" fill-opacity="0.88" />
@@ -776,6 +951,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (clearRouteBtn) {
       clearRouteBtn.style.display = 'inline-block';
     }
+
+    // Re-apply the current navigation rotation to freshly rendered route pins
+    if (typeof applyMapRotation === 'function' && navRotCurrent !== 0) {
+      applyMapRotation(navRotCurrent);
+    }
   }
 
   function renderGroundRoute(route) {
@@ -818,6 +998,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function clearActiveRoute() {
     activeRoute = null;
+    updateNavRotationActive();
+    hideStairPopup();
     Object.values(floorRouteLayers).forEach(layer => {
       if (layer) layer.innerHTML = '';
     });
@@ -864,6 +1046,11 @@ document.addEventListener('DOMContentLoaded', () => {
     getRouteBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       generateCampusRoute();
+      // Starting from the live GPS location: bring the user's position into
+      // view (starts GPS tracking if it isn't running yet).
+      if (!navStartSelect || navStartSelect.value === 'gps') {
+        focusUserLocation();
+      }
     });
   }
 
@@ -1020,12 +1207,24 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!mapContainer || !mapPanStage) return;
       const cRect = mapContainer.getBoundingClientRect();
       const activeLayer = document.querySelector('.floor-layer.active');
+      const floorKey = activeLayer ? activeLayer.dataset.floor : currentFloor;
+      const dims = getFloorDimensions(floorKey);
+
+      // Rotate coordinates 90° anticlockwise for display
+      const rotated = rotatePoint90CCW(cx, cy, dims.width, dims.height);
+      const visualW = dims.height;
+      const visualH = dims.width;
+
       const img = activeLayer ? activeLayer.querySelector('.central-image') : null;
       const stageW = (img && img.offsetWidth) ? img.offsetWidth : (mapPanStage.offsetWidth || 1000);
       const stageH = (img && img.offsetHeight) ? img.offsetHeight : (mapPanStage.offsetHeight || 615);
 
-      const stageX = (cx / 2112) * stageW;
-      const stageY = (cy / 1300) * stageH;
+      const scaleSvg = Math.min(stageW / visualW, stageH / visualH);
+      const svgLeft = (stageW - visualW * scaleSvg) / 2;
+      const svgTop = (stageH - visualH * scaleSvg) / 2;
+
+      const stageX = svgLeft + (rotated.x * scaleSvg);
+      const stageY = svgTop + (rotated.y * scaleSvg);
 
       scale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, targetScale));
       panX = (cRect.width / 2) - (stageX * scale);
@@ -1039,6 +1238,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mapContainer.addEventListener('wheel', (e) => {
       // Prevent entire webpage from scrolling or zooming while hovering map
       e.preventDefault();
+      if (navPanBridge) navPanBridge.markUserPan();
 
       let zoomFactor;
       if (e.ctrlKey) {
@@ -1104,12 +1304,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (totalDragDistance > 4) {
           suppressClick = true;
         }
+        if (navPanBridge) navPanBridge.markUserPan();
         panX += dx;
         panY += dy;
         clampPan();
         applyTransform(false);
       } else if (activePointers.size === 2) {
         suppressClick = true;
+        if (navPanBridge) navPanBridge.markUserPan();
         const pts = Array.from(activePointers.values());
         const currentDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
         if (startPointerDist > 0) {
@@ -1154,6 +1356,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (zoomInBtn) {
       zoomInBtn.addEventListener('click', (e) => {
         e.stopPropagation();
+        if (navPanBridge) navPanBridge.markUserPan();
         const rect = mapContainer.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
@@ -1165,6 +1368,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (zoomOutBtn) {
       zoomOutBtn.addEventListener('click', (e) => {
         e.stopPropagation();
+        if (navPanBridge) navPanBridge.markUserPan();
         const rect = mapContainer.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
@@ -1176,6 +1380,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (zoomResetBtn) {
       zoomResetBtn.addEventListener('click', (e) => {
         e.stopPropagation();
+        if (navPanBridge) navPanBridge.markUserPan();
         resetView(true);
       });
     }
@@ -1185,7 +1390,277 @@ document.addEventListener('DOMContentLoaded', () => {
       clampPan();
       applyTransform(false);
     });
+
+    // 5. Bridge used by the navigation rotation engine: tracks the last time
+    //    the user moved/zoomed the map by hand and exposes a smooth pan step
+    //    so navigation can auto-center on the user without touching these
+    //    closure-local variables directly.
+    let lastUserPanTime = 0;
+    navPanBridge = {
+      markUserPan() {
+        lastUserPanTime = performance.now();
+      },
+      lastUserPanAt() {
+        return lastUserPanTime;
+      },
+      panTowards(targetX, targetY, factor = 0.08) {
+        panX += (targetX - panX) * factor;
+        panY += (targetY - panY) * factor;
+        clampPan();
+        applyTransform(false);
+      },
+      getPan() {
+        return { x: panX, y: panY, scale };
+      }
+    };
   }
+
+  // ==========================================
+  // --- Navigation Map Rotation Engine (Google Maps style) ---
+  // ==========================================
+  // While a route is active AND live GPS tracking is on, the map content
+  // (rooms, labels, corridors, routes, marker) rotates so the user's
+  // direction of travel always points towards the top of the screen.
+  // The rotation is applied to the SVG orientation layers only — the website
+  // UI (header, search, floor buttons, zoom controls) stays upright.
+  //
+  // Heading sources, in order of trust:
+  //   1. GPS course-over-ground (coords.heading) — only trusted while moving.
+  //   2. Bearing between successive GPS fixes — only when the move is larger
+  //      than the reported accuracy (filters noisy indoor positions).
+  //   3. Device compass heading — only while moving (gated by GPS fixes).
+  // When the user is stationary the last heading (and thus map orientation)
+  // is retained; a circular exponential filter absorbs GPS noise.
+
+  const ORIENT_LAYERS = document.querySelectorAll('.map-orientation-layer');
+  let navRotCurrent = 0;        // extra rotation currently applied (deg, CCW map convention)
+  let navRotTarget = 0;         // rotation we are easing towards (deg)
+  let navRotActive = false;     // true while route + GPS are active
+  let navRotRafId = null;
+
+  const headingTracker = {
+    smoothed: null,        // smoothed compass heading (deg 0..360)
+    bearingAnchor: null,   // { lat, lon, t } start of the current movement segment
+    trustProvided: true,   // false once a valid movement bearing contradicts the provided heading
+    lastUpdateT: 0
+  };
+
+  function angleDeltaDeg(from, to) {
+    let d = (to - from) % 360;
+    if (d > 180) d -= 360;
+    if (d < -180) d += 360;
+    return d;
+  }
+
+  function bearingBetweenDeg(lat1, lon1, lat2, lon2) {
+    const toRad = Math.PI / 180;
+    const y = Math.sin((lon2 - lon1) * toRad) * Math.cos(lat2 * toRad);
+    const x = Math.cos(lat1 * toRad) * Math.sin(lat2 * toRad) -
+      Math.sin(lat1 * toRad) * Math.cos(lat2 * toRad) * Math.cos((lon2 - lon1) * toRad);
+    return (Math.atan2(y, x) / toRad + 360) % 360;
+  }
+
+  function updateHeadingFromFix(latitude, longitude, accuracy, gpsHeading, speed, timestamp) {
+    const now = timestamp || Date.now();
+    // The bearing anchor only advances when its segment has actually been
+    // consumed, so movement KEEPS ACCUMULATING across fixes until a reliable
+    // bearing is possible. (Re-anchoring on every accepted fix would starve
+    // the bearing path whenever a compass-style heading is always available,
+    // letting an indoor-mirrored compass control the rotation forever.)
+    const anchor = headingTracker.bearingAnchor;
+    if (!anchor) {
+      headingTracker.bearingAnchor = { lat: latitude, lon: longitude, t: now };
+      return;
+    }
+    const movedM = haversineDistance(anchor.lat, anchor.lon, latitude, longitude);
+
+    // Below ~3.5 m of accumulated movement treat the user as stationary and
+    // keep the previous orientation (avoids rotation from GPS jitter).
+    if (movedM < 3.5) return;
+
+    let measured = null;
+    const acc = Number.isFinite(accuracy) ? accuracy : 20;
+
+    // Direction of travel derived from the movement itself. This is the
+    // ground truth for "which way am I walking" and stays correct indoors,
+    // where magnetometer-based headings (coords.heading on iOS Safari, the
+    // device compass) are frequently mirrored or stale.
+    const bearingValid = acc <= 25 && movedM >= Math.max(4, acc * 0.8);
+    const segBearing = bearingValid
+      ? bearingBetweenDeg(anchor.lat, anchor.lon, latitude, longitude)
+      : null;
+    const gpsHeadingOk = Number.isFinite(gpsHeading) && gpsHeading !== null;
+
+    if (segBearing !== null && gpsHeadingOk) {
+      // Only keep trusting the provided heading while it agrees with the
+      // movement evidence; a contradiction (mirrored indoor compass) demotes
+      // it until it agrees again.
+      if (Math.abs(angleDeltaDeg(gpsHeading, segBearing)) <= 90) {
+        measured = gpsHeading;
+        headingTracker.trustProvided = true;
+      } else {
+        measured = segBearing;
+        headingTracker.trustProvided = false;
+      }
+    } else if (segBearing !== null) {
+      measured = segBearing;
+    } else if (gpsHeadingOk && headingTracker.trustProvided !== false &&
+               (!Number.isFinite(speed) || speed >= 0.6)) {
+      // Segment too short to bear from positions, but the fix reports real
+      // course-over-ground speed (or speed is unknown).
+      measured = gpsHeading;
+    } else if (headingTracker.trustProvided !== false &&
+               Number.isFinite(currentHeading) && currentHeading !== null) {
+      // Device compass fallback, still gated on real movement.
+      measured = currentHeading;
+    }
+
+    if (measured === null || !Number.isFinite(measured)) return;
+
+    // A valid movement bearing that contradicts the current heading is
+    // decisive (indoor compass was wrong): accept it outright instead of
+    // slowly dragging the orientation through the wrong side.
+    const decisive = segBearing !== null && headingTracker.smoothed !== null &&
+      Math.abs(angleDeltaDeg(headingTracker.smoothed, segBearing)) > 90;
+
+    if (headingTracker.smoothed === null || decisive) {
+      headingTracker.smoothed = measured;
+    } else {
+      const d = angleDeltaDeg(headingTracker.smoothed, measured);
+      headingTracker.smoothed = (headingTracker.smoothed + d * 0.45 + 360) % 360;
+    }
+    if (bearingValid) {
+      // Segment consumed: start a fresh one from here. If it was not valid,
+      // keep the anchor so the next fixes extend the same segment.
+      headingTracker.bearingAnchor = { lat: latitude, lon: longitude, t: now };
+    }
+    headingTracker.lastUpdateT = now;
+    headingTracker.lastDebug = {
+      movedM: +movedM.toFixed(2),
+      segBearing: segBearing === null ? null : +segBearing.toFixed(1),
+      gpsHeading: gpsHeadingOk ? gpsHeading : null,
+      measured: +measured.toFixed(1),
+      decisive
+    };
+
+    // Convert compass heading -> extra map rotation so that the direction of
+    // travel points to the top of the screen. (Map +x axis already points up
+    // on screen due to the base 90° CCW orientation, i.e. heading 90° = no
+    // extra rotation.)
+    let target = 90 - headingTracker.smoothed;
+    target = ((target % 360) + 540) % 360 - 180;
+    navRotTarget = target;
+    kickNavRotationLoop();
+  }
+
+  function applyMapRotation(deg) {
+    // Pivot about the user's current location marker. The pivot rotation is
+    // the rightmost operation in the chain, so it acts in RAW MAP coords:
+    // pivoting at the marker's map position keeps the marker's display-space
+    // position fixed on screen while the world turns around the user — never
+    // around the view centre, route end or destination.
+    ORIENT_LAYERS.forEach(g => {
+      g.setAttribute('transform', `translate(0, 2112) rotate(-90) rotate(${deg.toFixed(2)} ${currentPos.x.toFixed(1)} ${currentPos.y.toFixed(1)})`);
+    });
+    // Keep route/stair pin captions screen-horizontal: they were drawn with
+    // rotate(90) to cancel the base -90° orientation, so cancel the extra
+    // rotation as well.
+    document.querySelectorAll('.route-pin, .route-stair-pin').forEach(pin => {
+      const tf = pin.getAttribute('transform') || '';
+      if (/rotate\(/.test(tf)) {
+        pin.setAttribute('transform', tf.replace(/rotate\([^)]*\)\s*$/, `rotate(${(90 - deg).toFixed(2)})`));
+      }
+    });
+  }
+
+  function markerDisplayPt() {
+    // Display-space coords (viewBox 1300 x 2112) of the GPS marker.
+    return { x: currentPos.y, y: 2112 - currentPos.x };
+  }
+
+  function autoCenterOnUser(factor = 0.06) {
+    if (!navPanBridge || !mapContainer || !mapPanStage) return;
+    const img = document.querySelector('.floor-layer.active .central-image');
+    const stageW = (img && img.offsetWidth) ? img.offsetWidth : (mapPanStage.offsetWidth || 1000);
+    const stageH = (img && img.offsetHeight) ? img.offsetHeight : (mapPanStage.offsetHeight || 615);
+    const scaleSvg = Math.min(stageW / 1300, stageH / 2112);
+    const svgLeft = (stageW - 1300 * scaleSvg) / 2;
+    const svgTop = (stageH - 2112 * scaleSvg) / 2;
+    const disp = markerDisplayPt();
+    const stageX = svgLeft + disp.x * scaleSvg;
+    const stageY = svgTop + disp.y * scaleSvg;
+    const cRect = mapContainer.getBoundingClientRect();
+    const pan = navPanBridge.getPan();
+    navPanBridge.panTowards(cRect.width / 2 - stageX * pan.scale, cRect.height / 2 - stageY * pan.scale, factor);
+  }
+
+  function navRotationLoop() {
+    navRotRafId = null;
+    const d = angleDeltaDeg(navRotCurrent, navRotTarget);
+    if (Math.abs(d) > 0.05) {
+      navRotCurrent += d * 0.08; // smooth ease, no sudden jumps
+      applyMapRotation(navRotCurrent);
+    } else if (navRotCurrent !== navRotTarget) {
+      navRotCurrent = navRotTarget;
+      applyMapRotation(navRotCurrent);
+    }
+
+    if (navRotActive && isGpsActive && activeRoute) {
+      // Gentle auto-center on the user while navigating, unless the user
+      // panned/zoomed manually within the last few seconds.
+      const lastPan = navPanBridge ? navPanBridge.lastUserPanAt() : 0;
+      if (performance.now() - lastPan > 3500) {
+        autoCenterOnUser();
+      }
+      navRotRafId = requestAnimationFrame(navRotationLoop);
+    } else if (navRotCurrent !== navRotTarget) {
+      // Deactivated: keep easing back to the default orientation.
+      navRotRafId = requestAnimationFrame(navRotationLoop);
+    }
+  }
+
+  function kickNavRotationLoop() {
+    if (navRotRafId === null) {
+      navRotRafId = requestAnimationFrame(navRotationLoop);
+    }
+  }
+
+  function updateNavRotationActive() {
+    const shouldBeActive = !!(activeRoute && isGpsActive);
+    if (shouldBeActive !== navRotActive) {
+      navRotActive = shouldBeActive;
+      if (!navRotActive) {
+        navRotTarget = 0; // ease back to the default map orientation
+      }
+    }
+    kickNavRotationLoop();
+  }
+
+  // Minimal hook for automated tests / debugging (not used by the UI):
+  // lets a driver feed synthetic GPS fixes and inspect the rotation state.
+  window.__amritanavTest = {
+    injectFix(latitude, longitude, opts = {}) {
+      handleGpsSuccess({
+        coords: {
+          latitude,
+          longitude,
+          accuracy: Number.isFinite(opts.accuracy) ? opts.accuracy : 6,
+          heading: opts.heading !== undefined ? opts.heading : null,
+          speed: Number.isFinite(opts.speed) ? opts.speed : null
+        },
+        timestamp: opts.timestamp || Date.now()
+      });
+    },
+    rotationState() {
+      return {
+        active: navRotActive,
+        current: +navRotCurrent.toFixed(2),
+        target: +navRotTarget.toFixed(2),
+        heading: headingTracker.smoothed === null ? null : +headingTracker.smoothed.toFixed(1),
+        lastDebug: headingTracker.lastDebug || null
+      };
+    }
+  };
 
   // ==========================================
   // --- Classroom Search Engine ---
@@ -1686,7 +2161,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (groundNavBar) {
         groundNavBar.style.display = 'flex';
       }
+      // Reveal the route planner dropdown and the user's live location.
+      setRoutePlannerOpen(true);
       generateCampusRoute();
+      focusUserLocation();
     });
   }
 
@@ -2162,6 +2640,220 @@ document.addEventListener('DOMContentLoaded', () => {
     wrapper: navDestWrapper,
     isStart: false
   });
+
+  // ==========================================
+  // --- Room Label Layout Engine (wrap / fit / center) ---
+  // ==========================================
+  // The labels already inherit the map's 90° anticlockwise orientation layer,
+  // so no extra rotation is applied here. This engine only re-flows each
+  // label's text so that long room names wrap onto multiple lines and stay
+  // inside their room boundaries, centred both ways, with a slightly smaller
+  // font for small rooms when needed.
+
+  function layoutRoomLabels() {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const fontStr = px => `600 ${px}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+    const NAME_SIZES = [13, 12, 11, 10, 9];
+    const CODE_FONT = 10;
+
+    const escapeXml = s => s
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+
+    const measure = (text, px) => {
+      ctx.font = fontStr(px);
+      return ctx.measureText(text).width;
+    };
+
+    document.querySelectorAll('.floor-layer').forEach(layer => {
+      const labels = layer.querySelectorAll('.central-image .layer-labels > g[transform]');
+      if (!labels.length) return;
+
+      // Room geometry from the background map rects (rotated like the SVG)
+      const roomEls = [...layer.querySelectorAll('.central-image rect[data-name]')].map(rect => {
+        const x = parseFloat(rect.getAttribute('x')) || 0;
+        const y = parseFloat(rect.getAttribute('y')) || 0;
+        const w = parseFloat(rect.getAttribute('width')) || 0;
+        const h = parseFloat(rect.getAttribute('height')) || 0;
+        let cx = x + w / 2, cy = y + h / 2;
+        const rm = (rect.getAttribute('transform') || '').match(/rotate\(\s*([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)\s*\)/);
+        if (rm) {
+          const a = parseFloat(rm[1]) * Math.PI / 180;
+          const dx = cx - parseFloat(rm[2]), dy = cy - parseFloat(rm[3]);
+          cx = parseFloat(rm[2]) + dx * Math.cos(a) - dy * Math.sin(a);
+          cy = parseFloat(rm[3]) + dx * Math.sin(a) + dy * Math.cos(a);
+        }
+        return { rect, w, h, cx, cy, ang: rm ? parseFloat(rm[1]) : 0 };
+      });
+
+      // Pass 1: match every label to its room by proximity of the label
+      // anchor to the (rotated) room centre.
+      const pairs = [];
+      labels.forEach(g => {
+        const nameText = g.querySelector('text.room-label');
+        if (!nameText) return;
+        const name = nameText.textContent.trim();
+        if (!name) return;
+        const codeText = g.querySelector('text.room-code');
+        const code = codeText ? codeText.textContent.trim() : '';
+        const tm = (g.getAttribute('transform') || '').match(/translate\(\s*([-\d.]+)[,\s]+([-\d.]+)\s*\)/);
+        if (!tm) return;
+        const tx = parseFloat(tm[1]), ty = parseFloat(tm[2]);
+        let room = null, bestD = Infinity;
+        for (const r of roomEls) {
+          const d = Math.hypot(r.cx - tx, r.cy - ty);
+          if (d < bestD) { bestD = d; room = r; }
+        }
+        if (!room || bestD > 5) return;
+        pairs.push({ g, nameText, codeText, code, name, room });
+      });
+
+      // Rooms nested inside a bigger labelled room (e.g. stairs inside a
+      // corridor wing) make both labels collide at the same spot. Move the
+      // container room's label to the centre of the longest span of the
+      // container that the nested room does not cover.
+      const labelShift = new Map(); // container room -> { x, y, axisLen, alongY }
+      pairs.forEach(({ room: A }) => {
+        if (!A || labelShift.has(A)) return;
+        let child = null;
+        pairs.forEach(({ room: B }) => {
+          if (!B || B === A || B.w * B.h >= A.w * A.h) return;
+          const rad = -A.ang * Math.PI / 180;
+          const dx = B.cx - A.cx, dy = B.cy - A.cy;
+          const ux = dx * Math.cos(rad) - dy * Math.sin(rad);
+          const uy = dx * Math.sin(rad) + dy * Math.cos(rad);
+          if (Math.abs(ux) < A.w / 2 && Math.abs(uy) < A.h / 2) {
+            const d = Math.hypot(ux, uy);
+            if (!child || d < child.d) child = { ux, uy, B, d };
+          }
+        });
+        if (!child) return;
+        const alongY = A.h >= A.w;
+        const L = alongY ? A.h : A.w;
+        const v = alongY ? child.uy : child.ux;
+        const half = Math.max(child.B.w, child.B.h) / 2 + 8;
+        const segs = [[-L / 2, v - half], [v + half, L / 2]].filter(s => s[1] - s[0] >= 44);
+        if (!segs.length) return;
+        segs.sort((s1, s2) => (s2[1] - s2[0]) - (s1[1] - s1[0]));
+        const t = (segs[0][0] + segs[0][1]) / 2;
+        const rad2 = A.ang * Math.PI / 180;
+        const lx = alongY ? 0 : t, ly = alongY ? t : 0;
+        labelShift.set(A, {
+          x: A.cx + lx * Math.cos(rad2) - ly * Math.sin(rad2),
+          y: A.cy + lx * Math.sin(rad2) + ly * Math.cos(rad2),
+          axisLen: segs[0][1] - segs[0][0],
+          alongY
+        });
+      });
+
+      // Pass 2: lay out each label inside its room.
+      pairs.forEach(({ g, nameText, codeText, code, name, room }) => {
+        // Available text box inside the room (map coordinates; the label text
+        // runs along the room's x axis). Keep a small margin, but let very
+        // narrow rooms use almost their full width.
+        let availW = Math.max(room.w - 8, room.w * 0.86, 18);
+        let availH = Math.max(room.h - 10, 20);
+
+        const shift = labelShift.get(room);
+        if (shift) {
+          g.setAttribute('transform', `translate(${shift.x.toFixed(1)}, ${shift.y.toFixed(1)})`);
+          if (shift.alongY) availH = Math.max(shift.axisLen - 8, 20);
+          else availW = Math.max(shift.axisLen - 8, 20);
+        }
+
+        // Greedy wrap; optionally hard-split words that can never fit
+        // (kept as a last resort so text stays inside the room).
+        const splitHyphen = t => {
+          const parts = [];
+          let cur = '';
+          for (const ch of t) {
+            cur += ch;
+            if (ch === '-') { parts.push(cur); cur = ''; }
+          }
+          if (cur) parts.push(cur);
+          return parts;
+        };
+        const words = name.split(/\s+/).filter(Boolean).flatMap(splitHyphen);
+
+        const wrap = (px, hard) => {
+          const lines = [];
+          let cur = '';
+          let tooWide = false;
+          const pushWord = wd => {
+            if (!wd) return;
+            if (measure(wd, px) <= availW || !hard) {
+              if (cur) lines.push(cur);
+              cur = wd;
+              if (measure(wd, px) > availW) tooWide = true;
+              return;
+            }
+            // hard-split an over-long word into chunks that fit
+            if (cur) { lines.push(cur); cur = ''; }
+            let chunk = '';
+            for (const ch of wd) {
+              if (chunk && measure(chunk + ch, px) > availW) {
+                lines.push(chunk);
+                chunk = ch;
+              } else {
+                chunk += ch;
+              }
+            }
+            cur = chunk;
+          };
+          for (const wd of words) {
+            const cand = cur ? cur + ' ' + wd : wd;
+            if (measure(cand, px) <= availW) {
+              cur = cand;
+            } else {
+              pushWord(wd);
+            }
+          }
+          if (cur) lines.push(cur);
+          return { lines, tooWide };
+        };
+
+        // Pick the largest font size whose wrapped block fits the room;
+        // if none fits, fall back to the smallest size (best effort).
+        let chosen = null;
+        for (const px of NAME_SIZES) {
+          const lh = px + 3;
+          const { lines, tooWide } = wrap(px, false);
+          const codeH = code ? CODE_FONT + 4 : 0;
+          const totalH = lines.length * lh + codeH;
+          const fits = !tooWide && lines.length * lh <= availH - codeH && totalH <= availH;
+          chosen = { px, lh, lines, codeH, totalH, fits };
+          if (fits) break;
+        }
+        if (!chosen) return;
+        if (!chosen.fits) {
+          // Last resort: hard-split over-long words at the smallest size so
+          // the text stays inside the room boundaries.
+          const lh = chosen.px + 3;
+          const { lines } = wrap(chosen.px, true);
+          const totalH = lines.length * lh + chosen.codeH;
+          chosen = { ...chosen, lh, lines, totalH, fits: totalH <= availH };
+        }
+
+        // Vertically centre the whole block (name lines + code) on the room
+        // centre; each <text>/<tspan> uses dominant-baseline: central, so the
+        // y values below are line-centre positions.
+        const c0 = -chosen.totalH / 2 + chosen.lh / 2;
+        let inner = '';
+        chosen.lines.forEach((ln, i) => {
+          inner += `<tspan x="0" y="${(c0 + i * chosen.lh).toFixed(1)}">${escapeXml(ln)}</tspan>`;
+        });
+        nameText.innerHTML = inner;
+        nameText.style.fontSize = chosen.px + 'px';
+        if (codeText && code) {
+          const codeY = -chosen.totalH / 2 + chosen.lines.length * chosen.lh + chosen.codeH / 2;
+          codeText.setAttribute('y', codeY.toFixed(1));
+        }
+      });
+    });
+  }
+
+  layoutRoomLabels();
 
   // Initial display sync
   if (navStartInput && navStartSelect) {
