@@ -1165,7 +1165,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
         },
         {
           "id": "room_admin_block_a",
-          "name": "Administration Block (A) / Reception",
+          "name": "Entrance",
           "code": "ADM-BLK-A",
           "floor": "ground",
           "floorIdx": 0,
@@ -8271,7 +8271,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "room_admin_block_a",
-      "name": "Administration Block (A) / Reception",
+      "name": "Entrance",
       "code": "ADM-BLK-A",
       "floor": "ground",
       "floorIdx": 0,
@@ -12474,7 +12474,7 @@ const CAMPUS_DATA_PLACEHOLDER = {
     },
     {
       "id": "room_admin_block_a",
-      "name": "Administration Block (A) / Reception",
+      "name": "Entrance",
       "code": "ADM-BLK-A",
       "floor": "ground",
       "floorIdx": 0,

@@ -66,7 +66,7 @@
     <rect id="room_nanosciences" class="room-wall" x="730" y="197" width="113" height="326" fill="#e0f2fe" fill-opacity="0.85" stroke="#0369a1" stroke-width="2" data-name="Amrita Center for Nanosciences" data-code="ACN" transform="rotate(353 786.5 360)"/>
     <rect id="room_special_hall" class="room-wall" x="300" y="580" width="165" height="94" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="Special Programs Hall / Meditation Hall" data-code="SPH-102" transform="rotate(354 382.5 627)"/>
     <rect id="room_gad_office" class="room-wall" x="378" y="671" width="75" height="62" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="GAD-PR Office" data-code="GAD-103" transform="rotate(354 415.5 702)"/>
-    <rect id="room_admin_block_a" class="room-wall" x="297" y="740" width="174" height="189" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Administration Block (A) / Reception" data-code="ADM-BLK-A" transform="rotate(353 384 834.5)"/>
+    <rect id="room_admin_block_a" class="room-wall" x="297" y="740" width="174" height="189" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Entrance" data-code="ADM-BLK-A" transform="rotate(353 384 834.5)"/>
     <rect id="room_admission_office" class="room-wall" x="620" y="615" width="100" height="89" fill="#fef3c7" fill-opacity="0.85" stroke="#b45309" stroke-width="2" data-name="Admission Office" data-code="ADM-105" transform="rotate(354 670 659.5)"/>
     <rect id="room_cir_seminar" class="room-wall" x="811" y="592" width="101" height="89" fill="#fce7f3" fill-opacity="0.85" stroke="#be185d" stroke-width="2" data-name="CIR Seminar Room" data-code="CIR-106" transform="rotate(353 861.5 636.5)"/>
     <rect id="room_guest_room" class="room-wall" x="652" y="895" width="97" height="85" fill="#dcfce7" fill-opacity="0.85" stroke="#15803d" stroke-width="2" data-name="Guest Room" data-code="GST-107" transform="rotate(354 700.5 937.5)"/>
@@ -136,7 +136,7 @@
       <text class="room-code" y="9">GAD-103</text>
     </g>
     <g transform="translate(384, 835)">
-      <text class="room-label" y="-7">Administration Block (A) / Reception</text>
+      <text class="room-label" y="-7">Entrance</text>
       <text class="room-code" y="9">ADM-BLK-A</text>
     </g>
     <g transform="translate(670, 660)">

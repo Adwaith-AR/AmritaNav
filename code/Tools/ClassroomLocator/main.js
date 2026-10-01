@@ -134,13 +134,50 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentFloor = null;
   let activeCategoryFilter = null; // 'toilet' | 'lab' | 'office' | null
 
+  // ==========================================
+  // --- Global 90° Anticlockwise Display Orientation ---
+  // ==========================================
+  function rotatePoint90CCW(x, y, floorW, floorH) {
+    return {
+      x: y,
+      y: floorW - x
+    };
+  }
+
+  function unrotatePoint90CCW(displayX, displayY, floorW, floorH) {
+    return {
+      x: floorW - displayY,
+      y: displayX
+    };
+  }
+
+  function getFloorDimensions(floorKey) {
+    const f = floorKey || currentFloor || 'ground';
+    const navData = window.CAMPUS_NAV_DATA || window.GROUND_NAV_DATA;
+    if (navData && navData.floors && navData.floors[f] && navData.floors[f].viewBox) {
+      return {
+        width: navData.floors[f].viewBox[0],
+        height: navData.floors[f].viewBox[1]
+      };
+    }
+    const layer = document.getElementById(`floor-layer-${f}`);
+    if (layer) {
+      const origW = layer.dataset.origWidth;
+      const origH = layer.dataset.origHeight;
+      if (origW && origH) return { width: parseFloat(origW), height: parseFloat(origH) };
+    }
+    return { width: 2112, height: 1300 };
+  }
+
   function moveGpsMarkerToActiveFloor() {
     const activeLayer = document.querySelector('.floor-layer.active');
     const marker = document.getElementById('gps-marker');
     if (!activeLayer || !marker) return;
+    const activeOrientationLayer = activeLayer.querySelector('.selection-overlay .map-orientation-layer');
     const activeOverlay = activeLayer.querySelector('.selection-overlay');
-    if (activeOverlay && marker.parentElement !== activeOverlay) {
-      activeOverlay.appendChild(marker);
+    const targetParent = activeOrientationLayer || activeOverlay;
+    if (targetParent && marker.parentElement !== targetParent) {
+      targetParent.appendChild(marker);
     }
   }
 
@@ -472,10 +509,22 @@ document.addEventListener('DOMContentLoaded', () => {
     overlay.addEventListener('dblclick', (e) => {
       if (!isGpsActive) return;
       const rect = overlay.getBoundingClientRect();
-      const clickX = ((e.clientX - rect.left) / rect.width) * 2112;
-      const clickY = ((e.clientY - rect.top) / rect.height) * 1300;
+      const floorKey = currentFloor || 'ground';
+      const dims = getFloorDimensions(floorKey);
+      const visualW = dims.height;
+      const visualH = dims.width;
 
-      updateMarker(clickX, clickY, 4, currentHeading);
+      const stageW = rect.width;
+      const stageH = rect.height;
+      const scaleSvg = Math.min(stageW / visualW, stageH / visualH);
+      const svgLeft = (stageW - visualW * scaleSvg) / 2;
+      const svgTop = (stageH - visualH * scaleSvg) / 2;
+
+      const clickDisplayX = (e.clientX - rect.left - svgLeft) / scaleSvg;
+      const clickDisplayY = (e.clientY - rect.top - svgTop) / scaleSvg;
+
+      const originalPt = unrotatePoint90CCW(clickDisplayX, clickDisplayY, dims.width, dims.height);
+      updateMarker(originalPt.x, originalPt.y, 4, currentHeading);
       setGpsStatus('active');
     });
   });
@@ -669,7 +718,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const startPt = pts[0];
         if (route.origin && route.origin.id !== 'gps_location') {
           svgHtml += `
-            <g class="route-pin route-pin-start" transform="translate(${startPt[0].toFixed(1)}, ${startPt[1].toFixed(1)})">
+            <g class="route-pin route-pin-start" transform="translate(${startPt[0].toFixed(1)}, ${startPt[1].toFixed(1)}) rotate(90)">
               <circle cx="0" cy="0" r="7" fill="#10b981" stroke="#ffffff" stroke-width="2.5" />
               <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
             </g>
@@ -681,7 +730,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (isEndFloor) {
         const endPt = pts[pts.length - 1];
         svgHtml += `
-          <g class="route-pin route-pin-dest" transform="translate(${endPt[0].toFixed(1)}, ${endPt[1].toFixed(1)})">
+          <g class="route-pin route-pin-dest" transform="translate(${endPt[0].toFixed(1)}, ${endPt[1].toFixed(1)}) rotate(90)">
             <circle cx="0" cy="0" r="8" fill="#e11d48" stroke="#ffffff" stroke-width="2.5" />
             <circle cx="0" cy="0" r="3" fill="#ffffff" />
           </g>
@@ -697,7 +746,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const dirArrow = exitTrans.direction === 'up' ? '▲' : '▼';
           const toName = floorShort[exitTrans.toFloor] || exitTrans.toFloor;
           svgHtml += `
-            <g class="route-stair-pin" transform="translate(${exitPt[0].toFixed(1)}, ${exitPt[1].toFixed(1)})">
+            <g class="route-stair-pin" transform="translate(${exitPt[0].toFixed(1)}, ${exitPt[1].toFixed(1)}) rotate(90)">
               <circle cx="0" cy="0" r="14" fill="#f59e0b" stroke="#ffffff" stroke-width="2.5" />
               <text x="0" y="4.5" text-anchor="middle" font-size="12" fill="#ffffff">🪜</text>
               <rect x="-42" y="-30" width="84" height="18" rx="9" fill="#0f172a" fill-opacity="0.88" />
@@ -712,7 +761,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const enterPt = pts[0];
           const fromName = floorShort[enterTrans.fromFloor] || enterTrans.fromFloor;
           svgHtml += `
-            <g class="route-stair-pin" transform="translate(${enterPt[0].toFixed(1)}, ${enterPt[1].toFixed(1)})">
+            <g class="route-stair-pin" transform="translate(${enterPt[0].toFixed(1)}, ${enterPt[1].toFixed(1)}) rotate(90)">
               <circle cx="0" cy="0" r="14" fill="#3b82f6" stroke="#ffffff" stroke-width="2.5" />
               <text x="0" y="4.5" text-anchor="middle" font-size="12" fill="#ffffff">🪜</text>
               <rect x="-45" y="-30" width="90" height="18" rx="9" fill="#0f172a" fill-opacity="0.88" />
@@ -1020,12 +1069,24 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!mapContainer || !mapPanStage) return;
       const cRect = mapContainer.getBoundingClientRect();
       const activeLayer = document.querySelector('.floor-layer.active');
+      const floorKey = activeLayer ? activeLayer.dataset.floor : currentFloor;
+      const dims = getFloorDimensions(floorKey);
+
+      // Rotate coordinates 90° anticlockwise for display
+      const rotated = rotatePoint90CCW(cx, cy, dims.width, dims.height);
+      const visualW = dims.height;
+      const visualH = dims.width;
+
       const img = activeLayer ? activeLayer.querySelector('.central-image') : null;
       const stageW = (img && img.offsetWidth) ? img.offsetWidth : (mapPanStage.offsetWidth || 1000);
       const stageH = (img && img.offsetHeight) ? img.offsetHeight : (mapPanStage.offsetHeight || 615);
 
-      const stageX = (cx / 2112) * stageW;
-      const stageY = (cy / 1300) * stageH;
+      const scaleSvg = Math.min(stageW / visualW, stageH / visualH);
+      const svgLeft = (stageW - visualW * scaleSvg) / 2;
+      const svgTop = (stageH - visualH * scaleSvg) / 2;
+
+      const stageX = svgLeft + (rotated.x * scaleSvg);
+      const stageY = svgTop + (rotated.y * scaleSvg);
 
       scale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, targetScale));
       panX = (cRect.width / 2) - (stageX * scale);

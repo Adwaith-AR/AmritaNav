@@ -69,8 +69,8 @@
     {
       "id": "room_admin_block_a",
       "nodeId": "ground_wp_411",
-      "title": "Administration Block (A) / Reception",
-      "name": "Administration Block (A) / Reception",
+      "title": "Entrance",
+      "name": "Entrance",
       "code": "ADM-BLK-A",
       "floor": "ground",
       "floorIdx": 0,
