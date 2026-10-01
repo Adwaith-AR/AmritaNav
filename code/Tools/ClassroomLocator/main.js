@@ -791,7 +791,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (routeInstructionBar) {
-        routeInstructionBar.textContent = `🪜 Reached ${transition.stairName}. Automatically switched to ${transition.toFloorTitle}.`;
+        routeInstructionBar.textContent = `Reached ${transition.stairName}. Automatically switched to ${transition.toFloorTitle}.`;
         routeInstructionBar.style.display = 'flex';
         setTimeout(() => {
           if (routeInstructionBar) routeInstructionBar.style.display = 'none';
@@ -2749,18 +2749,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Pass 2: lay out each label inside its room.
       pairs.forEach(({ g, nameText, codeText, code, name, room }) => {
-        // Available text box inside the room (map coordinates; the label text
-        // runs along the room's x axis). Keep a small margin, but let very
-        // narrow rooms use almost their full width.
-        let availW = Math.max(room.w - 8, room.w * 0.86, 18);
-        let availH = Math.max(room.h - 10, 20);
+        // Labels read horizontally on screen: rotate(90) inside the group
+        // cancels the base -90° map orientation, so text runs along the
+        // room's map-y extent and lines stack along its map-x extent.
+        let availW = Math.max(room.h - 8, room.h * 0.86, 18);
+        let availH = Math.max(room.w - 10, 20);
+
+        let anchorX = parseFloat(g.getAttribute('transform').match(/translate\(\s*([-\d.]+)[,\s]+([-\d.]+)\s*\)/)[1]);
+        let anchorY = parseFloat(g.getAttribute('transform').match(/translate\(\s*([-\d.]+)[,\s]+([-\d.]+)\s*\)/)[2]);
 
         const shift = labelShift.get(room);
         if (shift) {
-          g.setAttribute('transform', `translate(${shift.x.toFixed(1)}, ${shift.y.toFixed(1)})`);
-          if (shift.alongY) availH = Math.max(shift.axisLen - 8, 20);
-          else availW = Math.max(shift.axisLen - 8, 20);
+          anchorX = shift.x;
+          anchorY = shift.y;
+          if (shift.alongY) availW = Math.max(shift.axisLen - 8, 20);
+          else availH = Math.max(shift.axisLen - 8, 20);
         }
+        g.setAttribute('transform', `translate(${anchorX.toFixed(1)}, ${anchorY.toFixed(1)}) rotate(90)`);
 
         // Greedy wrap; optionally hard-split words that can never fit
         // (kept as a last resort so text stays inside the room).

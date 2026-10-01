@@ -65,25 +65,7 @@
       </div>
 
       <!-- Category & Floor Chips -->
-      <div class="chips-row" role="tablist" aria-label="Floor Selection and Categories">
-        <button type="button" class="floor-chip floor-btn active" data-floor="ground" role="tab" aria-selected="true">
-          <span class="chip-badge chip-badge-blue">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-          </span>
-          <span class="chip-label">Ground</span>
-        </button>
-        <button type="button" class="floor-chip floor-btn" data-floor="first" role="tab" aria-selected="false">
-          <span class="chip-badge chip-badge-indigo">1</span>
-          <span class="chip-label">1st Floor</span>
-        </button>
-        <button type="button" class="floor-chip floor-btn" data-floor="second" role="tab" aria-selected="false">
-          <span class="chip-badge chip-badge-purple">2</span>
-          <span class="chip-label">2nd Floor</span>
-        </button>
-        <button type="button" class="floor-chip floor-btn" data-floor="third" role="tab" aria-selected="false">
-          <span class="chip-badge chip-badge-pink">3</span>
-          <span class="chip-label">3rd Floor</span>
-        </button>
+      <div class="chips-row" role="tablist" aria-label="Categories">
         <!-- Facility Category Chips: Washrooms, Labs, Offices -->
         <button type="button" class="category-chip" data-category="toilet" title="Restrooms">
           <span class="chip-badge chip-badge-teal">
@@ -1878,6 +1860,27 @@
 
       <!-- Floating Locate Me FAB with Google Maps Blue Circle -->
       <div class="nav-fab" id="gps-dock">
+        <!-- Floor switcher box (sits above the Locate Me button) -->
+        <div class="floor-switch-list" id="floor-switch-dock" role="tablist" aria-label="Floor Selection">
+          <button type="button" class="floor-chip floor-btn active" data-floor="ground" role="tab" aria-selected="true">
+            <span class="chip-badge chip-badge-blue">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            </span>
+            <span class="chip-label">Ground</span>
+          </button>
+          <button type="button" class="floor-chip floor-btn" data-floor="first" role="tab" aria-selected="false">
+            <span class="chip-badge chip-badge-indigo">1</span>
+            <span class="chip-label">1st Floor</span>
+          </button>
+          <button type="button" class="floor-chip floor-btn" data-floor="second" role="tab" aria-selected="false">
+            <span class="chip-badge chip-badge-purple">2</span>
+            <span class="chip-label">2nd Floor</span>
+          </button>
+          <button type="button" class="floor-chip floor-btn" data-floor="third" role="tab" aria-selected="false">
+            <span class="chip-badge chip-badge-pink">3</span>
+            <span class="chip-label">3rd Floor</span>
+          </button>
+        </div>
         <button id="gps-toggle-btn" class="nav-arrow-btn gps-toggle-btn" type="button" aria-label="Locate Me" title="Locate Me">
           <svg class="gps-locate-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
             <circle class="gps-icon-halo" cx="12" cy="12" r="10" fill="#1a73e8" fill-opacity="0.2" />
@@ -1927,7 +1930,6 @@
     <!-- Staircase climb prompt (shown when the user reaches a staircase mid-route) -->
     <div id="stair-popup" class="stair-popup" style="display: none;" role="alertdialog" aria-labelledby="stair-popup-title">
       <button type="button" id="stair-popup-close" class="stair-popup-close" title="Dismiss" aria-label="Dismiss">✕</button>
-      <div class="stair-popup-icon">🪜</div>
       <h2 id="stair-popup-title" class="stair-popup-title">Climb the stairs</h2>
       <p id="stair-popup-sub" class="stair-popup-sub"></p>
     </div>
