@@ -85,6 +85,36 @@
           </span>
           <span class="chip-label">Offices</span>
         </button>
+        <button type="button" class="category-chip" id="nearby-toggle-btn" title="Nearby facilities" aria-haspopup="menu" aria-expanded="false">
+          <span class="chip-badge chip-badge-teal">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49"/><path d="M7.76 16.24a6 6 0 0 1 0-8.49"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 19.07a10 10 0 0 1 0-14.14"/></svg>
+          </span>
+          <span class="chip-label">Nearby</span>
+          <svg class="nearby-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+
+      <!-- Washroom gender choice for "Nearest Washroom" -->
+      <div id="washroom-choice-pop" class="washroom-choice-pop" style="display: none;" role="menu" aria-label="Choose washroom type">
+        <div class="washroom-choice-title">Which washroom do you need?</div>
+        <div class="washroom-choice-options">
+          <button type="button" id="washroom-mens-btn" class="washroom-option mens" role="menuitem">🚹 Men's</button>
+          <button type="button" id="washroom-ladies-btn" class="washroom-option ladies" role="menuitem">🚺 Ladies'</button>
+        </div>
+        <button type="button" id="washroom-cancel-btn" class="washroom-cancel">Cancel</button>
+      </div>
+
+      <!-- Nearby facilities dropdown menu -->
+      <div id="nearby-menu" class="nearby-menu" style="display: none;" role="menu" aria-label="Nearby facilities">
+        <button type="button" id="nearest-toilet-btn" class="nearby-menu-item" role="menuitem">
+          <span class="nearby-menu-icon" aria-hidden="true">🚻</span> Nearest Washroom
+        </button>
+        <button type="button" id="nearest-stairs-btn" class="nearby-menu-item" role="menuitem">
+          <span class="nearby-menu-icon" aria-hidden="true">🛗</span> Nearest Stairs
+        </button>
+        <button type="button" id="nearest-exit-btn" class="nearby-menu-item" role="menuitem">
+          <span class="nearby-menu-icon" aria-hidden="true">🚪</span> Nearest Exit
+        </button>
       </div>
 
       <!-- Multi-Floor Navigation Bar -->
@@ -145,12 +175,27 @@
           <button type="button" id="clear-route-btn" class="nav-btn secondary" style="display: none;">Clear</button>
         </div>
         <div id="route-summary-bar" class="route-summary-bar" style="display: none;">
-          <div class="route-metrics-group">
-            <span id="route-distance-text" class="route-metric"></span>
-            <span id="route-time-text" class="route-metric"></span>
+          <button type="button" id="route-summary-icon" class="route-summary-icon" title="Show route details" aria-label="Show route details" aria-expanded="false">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M21.71 11.29l-9-9a.996.996 0 0 0-1.41 0l-9 9a.996.996 0 0 0 0 1.41l9 9c.39.39 1.02.39 1.41 0l9-9a.996.996 0 0 0 0-1.41zM14 14.5V12h-4v3H8v-4c0-.55.45-1 1-1h5V7.5l3.5 3.5-3.5 3.5z"/>
+            </svg>
+            <span id="route-summary-icon-text" class="route-summary-icon-text"></span>
+          </button>
+          <div id="route-step-now" class="route-step-now"></div>
+          <div class="route-summary-details">
+            <div class="route-metrics-group">
+              <span id="route-distance-text" class="route-metric"></span>
+              <span id="route-time-text" class="route-metric"></span>
+            </div>
+            <div id="route-floor-steps" class="route-floor-steps"></div>
+            <ol id="route-directions" class="route-directions"></ol>
+            <div id="route-instruction-bar" class="route-instruction-bar" style="display: none;"></div>
           </div>
-          <div id="route-floor-steps" class="route-floor-steps"></div>
-          <div id="route-instruction-bar" class="route-instruction-bar" style="display: none;"></div>
+          <button type="button" id="route-summary-minimize" class="route-summary-minimize" title="Minimize route panel" aria-label="Minimize route panel">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
         </div>
       </div>
     </div><!-- /floating-top-bar -->

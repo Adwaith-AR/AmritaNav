@@ -133,6 +133,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const groundNavBar = document.getElementById('ground-nav-bar');
   let currentFloor = null;
   let activeCategoryFilter = null; // 'toilet' | 'lab' | 'office' | null
+  // Destination chosen via search + "Start Navigation" while the floor
+  // question is being (re-)asked; navigation resumes once the user answers.
+  let pendingNavDestAfterFloorPrompt = null;
 
   // ==========================================
   // --- Global 90° Anticlockwise Display Orientation ---
@@ -228,41 +231,37 @@ document.addEventListener('DOMContentLoaded', () => {
   // The chosen floor becomes the user's current floor for "Current Location"
   // navigation; live GPS is started right away so the precise position on
   // that floor shows as soon as the first fix arrives.
+  function handleFloorPromptChoice(selectedFloor) {
+    if (!selectedFloor) return;
+    if (floorPromptModal) {
+      floorPromptModal.style.display = 'none';
+    }
+    if (mainContent) {
+      mainContent.style.display = 'flex';
+    }
+    switchFloor(selectedFloor);
+    if (!isGpsActive) {
+      pendingFocusUser = true;
+      startGpsTracking();
+    }
+    // The question was re-asked by "Start Navigation": continue it now on the
+    // user's actual floor (route start, view and GPS all follow this floor).
+    if (pendingNavDestAfterFloorPrompt) {
+      const destRoomId = pendingNavDestAfterFloorPrompt;
+      pendingNavDestAfterFloorPrompt = null;
+      startNavigationToRoom(destRoomId);
+    }
+  }
+
   floorPromptBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      const selectedFloor = btn.dataset.floor;
-      if (selectedFloor) {
-        if (floorPromptModal) {
-          floorPromptModal.style.display = 'none';
-        }
-        if (mainContent) {
-          mainContent.style.display = 'flex';
-        }
-        switchFloor(selectedFloor);
-        if (!isGpsActive) {
-          pendingFocusUser = true;
-          startGpsTracking();
-        }
-      }
+      handleFloorPromptChoice(btn.dataset.floor);
     });
 
     btn.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        const selectedFloor = btn.dataset.floor;
-        if (selectedFloor) {
-          if (floorPromptModal) {
-            floorPromptModal.style.display = 'none';
-          }
-          if (mainContent) {
-            mainContent.style.display = 'flex';
-          }
-          switchFloor(selectedFloor);
-          if (!isGpsActive) {
-            pendingFocusUser = true;
-            startGpsTracking();
-          }
-        }
+        handleFloorPromptChoice(btn.dataset.floor);
       }
     });
   });
@@ -385,9 +384,11 @@ document.addEventListener('DOMContentLoaded', () => {
       gpsHeadingCone.setAttribute('transform', `rotate(${Math.round(headingDeg)})`);
     }
 
-    // Dynamic route update if active and starting from GPS
-    if (activeRoute && typeof generateCampusRoute === 'function' && navStartSelect && navStartSelect.value === 'gps') {
-      generateCampusRoute();
+    // Turn-by-turn step advancement + wrong-way/off-route detection. The
+    // route itself stays fixed; it is only re-planned (inside
+    // updateNavigationProgress) when the user strays off it.
+    if (activeRoute && typeof updateNavigationProgress === 'function') {
+      updateNavigationProgress();
     }
 
     // Automatic floor switching check when approaching staircase transition
@@ -497,7 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // location on their chosen floor as soon as the first fix arrives.
       if (pendingFocusUser) {
         pendingFocusUser = false;
-        autoCenterOnUser(1);
+        centerViewOnUser();
       }
     } else {
       updateMarker(GPS_CALIBRATION.defaultX, GPS_CALIBRATION.defaultY, 15, currentHeading);
@@ -609,7 +610,18 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     pendingFocusUser = false;
-    autoCenterOnUser(1); // snap to the user immediately
+    centerViewOnUser();
+  }
+
+  // Zoom in and place the user's GPS marker at the centre of the viewport
+  // (same framing as tapping a room), falling back to a plain pan if the
+  // zoom-capable focus helper isn't available yet.
+  function centerViewOnUser() {
+    if (typeof focusOnCoordinates === 'function') {
+      focusOnCoordinates(currentPos.x, currentPos.y, 2.4, true);
+    } else {
+      autoCenterOnUser(1);
+    }
   }
   const navSwapBtn = document.getElementById('nav-swap-btn');
   const getRouteBtn = document.getElementById('get-route-btn');
@@ -619,6 +631,203 @@ document.addEventListener('DOMContentLoaded', () => {
   const routeTimeText = document.getElementById('route-time-text');
   const routeFloorSteps = document.getElementById('route-floor-steps');
   const routeInstructionBar = document.getElementById('route-instruction-bar');
+  const routeSummaryIconBtn = document.getElementById('route-summary-icon');
+  const routeSummaryIconText = document.getElementById('route-summary-icon-text');
+  const routeSummaryMinimizeBtn = document.getElementById('route-summary-minimize');
+  const routeDirections = document.getElementById('route-directions');
+  const routeStepNow = document.getElementById('route-step-now');
+
+  // The route summary can shrink into a small tappable icon so the map stays
+  // clear while navigating; tapping the icon expands the full panel again.
+  function setRouteSummaryMinimized(minimized) {
+    if (!routeSummaryBar) return;
+    routeSummaryBar.classList.toggle('minimized', minimized);
+    if (routeSummaryIconBtn) {
+      routeSummaryIconBtn.setAttribute('aria-expanded', String(!minimized));
+    }
+  }
+
+  function isRouteSummaryMinimized() {
+    return !!(routeSummaryBar && routeSummaryBar.classList.contains('minimized'));
+  }
+
+  if (routeSummaryIconBtn) {
+    routeSummaryIconBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setRouteSummaryMinimized(false);
+    });
+  }
+
+  if (routeSummaryMinimizeBtn) {
+    routeSummaryMinimizeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setRouteSummaryMinimized(true);
+    });
+  }
+
+  // ── Turn-by-turn progress, wrong-way & off-route detection ───────
+  // The route is planned once from the start position and kept fixed; the
+  // user's live GPS projection along it advances the current step. Only when
+  // the user strays off the polyline or consistently walks backwards does the
+  // route re-plan from their position.
+  const navProgress = { samples: [], originPt: null };
+  const OFF_ROUTE_PX = 60;          // ~9 m from the drawn route
+  const WRONG_WAY_PX = 25;          // ~4 m net backwards along the route
+  const REROUTE_DEBOUNCE_MS = 8000;
+  let lastRerouteAt = 0;
+
+  function nearestPointOnPolyline(pts, x, y) {
+    let best = { dist: Infinity, s: 0 };
+    let acc = 0;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const ax = pts[i][0], ay = pts[i][1];
+      const abx = pts[i + 1][0] - ax, aby = pts[i + 1][1] - ay;
+      const ab2 = abx * abx + aby * aby;
+      let t = ab2 > 0 ? ((x - ax) * abx + (y - ay) * aby) / ab2 : 0;
+      t = Math.max(0, Math.min(1, t));
+      const px = ax + abx * t, py = ay + aby * t;
+      const d = Math.hypot(x - px, y - py);
+      if (d < best.dist) {
+        best = { dist: d, s: acc + Math.hypot(px - ax, py - ay) };
+      }
+      acc += Math.hypot(abx, aby);
+    }
+    if (pts.length === 1) {
+      best = { dist: Math.hypot(x - pts[0][0], y - pts[0][1]), s: 0 };
+    }
+    return best;
+  }
+
+  function rerouteFromGps() {
+    const now = performance.now();
+    if (now - lastRerouteAt < REROUTE_DEBOUNCE_MS) return;
+    lastRerouteAt = now;
+    navProgress.samples = [];
+    if (typeof generateCampusRoute === 'function') {
+      generateCampusRoute();
+    }
+  }
+
+  function polylineLengthPx(pts) {
+    let len = 0;
+    for (let i = 0; i < pts.length - 1; i++) {
+      len += Math.hypot(pts[i + 1][0] - pts[i][0], pts[i + 1][1] - pts[i][1]);
+    }
+    return len;
+  }
+
+  // Remaining walk distance: what's left on the user's floor, plus the full
+  // length of every later floor in the route, plus stair-climb penalties.
+  function computeRemainingMeters(route, floor, sOnFloor, mPerPx) {
+    const order = route.floorsInRoute || [];
+    const idx = order.indexOf(floor);
+    if (idx === -1) return null;
+    let remPx = Math.max(0, polylineLengthPx(route.floorPaths[floor] || []) - sOnFloor);
+    for (let i = idx + 1; i < order.length; i++) {
+      remPx += polylineLengthPx(route.floorPaths[order[i]] || []);
+    }
+    const penalty = (window.CAMPUS_NAV_DATA && window.CAMPUS_NAV_DATA.stairPenaltyMeters) || 15;
+    const stairsLeft = (route.stairTransitions || []).filter(t => order.indexOf(t.fromFloor) > idx).length;
+    return Math.max(0, Math.round(remPx * mPerPx + stairsLeft * penalty));
+  }
+
+  function formatWalkTime(meters) {
+    const speed = (window.CAMPUS_NAV_DATA && window.CAMPUS_NAV_DATA.avgWalkingSpeedMps) || 1.3;
+    const sec = Math.round(meters / speed);
+    const min = Math.floor(sec / 60);
+    const s = sec % 60;
+    return min > 0 ? `${min} min${s ? ' ' + s + 's' : ''}` : `${s}s`;
+  }
+
+  function updateNavigationProgress() {
+    if (!activeRoute || !activeRoute.steps || !activeRoute.steps.length) return;
+    const pts = activeRoute.floorPaths && activeRoute.floorPaths[currentFloor];
+    if (!pts || pts.length === 0) return;
+    const steps = activeRoute.steps;
+    const mPerPx = (window.CAMPUS_NAV_DATA && window.CAMPUS_NAV_DATA.scaleMetersPerPixel) || 0.15;
+
+    // A freshly planned route (origin jumped): restart progress tracking
+    if (!navProgress.originPt ||
+        Math.hypot(activeRoute.origin.x - navProgress.originPt.x, activeRoute.origin.y - navProgress.originPt.y) > 20) {
+      navProgress.originPt = { x: activeRoute.origin.x, y: activeRoute.origin.y };
+      navProgress.samples = [];
+    }
+
+    const proj = nearestPointOnPolyline(pts, currentPos.x, currentPos.y);
+
+    // Highlight the step the user has reached: last step at/behind their
+    // projection on the current floor.
+    let curIdx = -1;
+    for (let i = 0; i < steps.length; i++) {
+      const st = steps[i];
+      if (st.floor !== currentFloor || st.arcLocal === undefined) continue;
+      // Stair steps trigger slightly early so the pin popup has time to show
+      if (st.arcLocal <= proj.s + (st.type === 'stair' ? 20 : 6)) {
+        curIdx = Math.max(curIdx, i);
+      }
+    }
+    if (curIdx === -1) {
+      curIdx = steps.findIndex(st => st.floor === currentFloor);
+      if (curIdx === -1) curIdx = 0;
+    }
+    if (routeDirections) {
+      [...routeDirections.children].forEach((li, i) => li.classList.toggle('current', i === curIdx));
+    }
+
+    // Guidance chip: next event ahead on this floor and the distance to it
+    let guide = null;
+    let remM = 0;
+    for (let i = 0; i < steps.length; i++) {
+      const st = steps[i];
+      if (st.floor !== currentFloor || st.arcLocal === undefined) continue;
+      if (st.arcLocal > proj.s + 4) {
+        guide = st;
+        remM = Math.max(0, Math.round((st.arcLocal - proj.s) * mPerPx));
+        break;
+      }
+    }
+    if (!guide) guide = steps[steps.length - 1];
+
+    // Wrong-way / off-route: progress samples over the last ~20 s
+    const now = performance.now();
+    const hist = navProgress.samples.filter(h => now - h.t < 20000);
+    hist.push({ t: now, s: proj.s, d: proj.dist });
+    navProgress.samples = hist.slice(-6);
+
+    let warning = null;
+    if (hist.length >= 4) {
+      const net = hist[hist.length - 1].s - hist[0].s;
+      if (hist[hist.length - 1].d > OFF_ROUTE_PX) {
+        warning = 'Off route — re-routing…';
+      } else if (net < -WRONG_WAY_PX) {
+        warning = '⚠ Wrong way — turn around';
+      }
+    }
+    if (warning) {
+      routeStepNow.textContent = warning;
+      routeStepNow.classList.add('warning');
+      rerouteFromGps(); // re-plans from the live GPS position (debounced)
+    } else {
+      routeStepNow.classList.remove('warning');
+      routeStepNow.textContent = guide.type === 'walk' ? `${guide.text} · in ${remM}m` : guide.text;
+    }
+
+    // Live ETA: re-compute remaining walk distance and time from the user's
+    // position along the route instead of the static start-to-end total.
+    const remainingM = computeRemainingMeters(activeRoute, currentFloor, proj.s, mPerPx);
+    if (remainingM !== null) {
+      const eta = formatWalkTime(remainingM);
+      if (routeDistanceText) {
+        routeDistanceText.textContent = `Distance: ${activeRoute.totalDistanceMeters}m · ${remainingM}m left`;
+      }
+      if (routeTimeText) {
+        routeTimeText.textContent = `Est. Walk: ~${eta}`;
+      }
+      if (routeSummaryIconText) {
+        routeSummaryIconText.textContent = `${remainingM}m · ~${eta}`;
+      }
+    }
+  }
 
   const floorRouteLayers = {
     ground: document.getElementById('ground-route-layer'),
@@ -627,6 +836,27 @@ document.addEventListener('DOMContentLoaded', () => {
     third: document.getElementById('route-layer-third')
   };
   const groundRouteLayer = floorRouteLayers.ground;
+
+  // ── Consistent toilet colour scheme across all floors ──────────
+  // Every men's / ladies' toilet gets the same fill & stroke on every floor
+  // so they're recognisable at a glance while navigating.
+  const TOILET_COLORS = {
+    mens: { fill: '#bfdbfe', stroke: '#2563eb' },   // blue
+    ladies: { fill: '#fbcfe8', stroke: '#db2777' }  // pink
+  };
+
+  function applyToiletColorScheme() {
+    document.querySelectorAll('rect.room-wall[data-name]').forEach(el => {
+      const name = el.dataset.name || '';
+      const scheme = /ladies/i.test(name)
+        ? TOILET_COLORS.ladies
+        : /\bmen'?s\b|\bmens\b/i.test(name) ? TOILET_COLORS.mens : null;
+      if (!scheme) return;
+      el.setAttribute('fill', scheme.fill);
+      el.setAttribute('stroke', scheme.stroke);
+    });
+  }
+  applyToiletColorScheme();
 
   let campusRouter = null;
   if (typeof window.CampusRouter === 'function' && window.CAMPUS_NAV_DATA) {
@@ -793,6 +1023,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (routeInstructionBar) {
         routeInstructionBar.textContent = `Reached ${transition.stairName}. Automatically switched to ${transition.toFloorTitle}.`;
         routeInstructionBar.style.display = 'flex';
+        // The message lives inside the route summary panel: expand it so
+        // the instruction is actually visible, then let it auto-hide.
+        setRouteSummaryMinimized(false);
         setTimeout(() => {
           if (routeInstructionBar) routeInstructionBar.style.display = 'none';
         }, 3500);
@@ -874,7 +1107,6 @@ document.addEventListener('DOMContentLoaded', () => {
           svgHtml += `
             <g class="route-stair-pin" transform="translate(${exitPt[0].toFixed(1)}, ${exitPt[1].toFixed(1)}) rotate(90)">
               <circle cx="0" cy="0" r="14" fill="#f59e0b" stroke="#ffffff" stroke-width="2.5" />
-              <text x="0" y="4.5" text-anchor="middle" font-size="12" fill="#ffffff">🪜</text>
               <rect x="-42" y="-30" width="84" height="18" rx="9" fill="#0f172a" fill-opacity="0.88" />
               <text x="0" y="-18" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#fef08a">${dirArrow} To ${toName}</text>
             </g>
@@ -889,7 +1121,6 @@ document.addEventListener('DOMContentLoaded', () => {
           svgHtml += `
             <g class="route-stair-pin" transform="translate(${enterPt[0].toFixed(1)}, ${enterPt[1].toFixed(1)}) rotate(90)">
               <circle cx="0" cy="0" r="14" fill="#3b82f6" stroke="#ffffff" stroke-width="2.5" />
-              <text x="0" y="4.5" text-anchor="middle" font-size="12" fill="#ffffff">🪜</text>
               <rect x="-45" y="-30" width="90" height="18" rx="9" fill="#0f172a" fill-opacity="0.88" />
               <text x="0" y="-18" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#ffffff">From ${fromName}</text>
             </g>
@@ -904,6 +1135,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (routeDistanceText && routeTimeText) {
       routeDistanceText.textContent = `Distance: ${route.totalDistanceMeters}m`;
       routeTimeText.textContent = `Est. Walk: ~${route.timeFormatted}`;
+    }
+
+    // Compact one-liner shown while the panel is minimized into the icon
+    if (routeSummaryIconText) {
+      routeSummaryIconText.textContent = `${route.totalDistanceMeters}m · ~${route.timeFormatted}`;
     }
 
     // Populate floor step pills
@@ -933,7 +1169,7 @@ document.addEventListener('DOMContentLoaded', () => {
             stairBadge.className = 'route-stair-badge';
             stairBadge.title = seg.instruction;
             const dirSym = seg.direction === 'up' ? '▲' : '▼';
-            stairBadge.textContent = `🪜 Stairs (${dirSym})`;
+            stairBadge.textContent = `Stairs (${dirSym})`;
             routeFloorSteps.appendChild(stairBadge);
 
             const arrow2 = document.createElement('span');
@@ -952,9 +1188,41 @@ document.addEventListener('DOMContentLoaded', () => {
       clearRouteBtn.style.display = 'inline-block';
     }
 
+    // Turn-by-turn step list; tapping a step centres the map on its point
+    if (routeDirections) {
+      routeDirections.innerHTML = '';
+      (route.steps || []).forEach((st) => {
+        const li = document.createElement('li');
+        li.className = `route-direction ${st.type}${st.turn ? ` turn-${st.turn}` : ''}`;
+        li.title = 'Tap to view this step on the map';
+        const txt = document.createElement('span');
+        txt.className = 'route-direction-text';
+        txt.textContent = st.text;
+        li.appendChild(txt);
+        if (st.distanceMeters > 0) {
+          const d = document.createElement('span');
+          d.className = 'route-direction-dist';
+          d.textContent = st.type === 'walk' && st.turn ? `then ${st.distanceMeters}m` : `${st.distanceMeters}m`;
+          li.appendChild(d);
+        }
+        li.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (st.point && typeof focusOnCoordinates === 'function') {
+            focusOnCoordinates(st.point[0], st.point[1], 2.4, true);
+          }
+        });
+        routeDirections.appendChild(li);
+      });
+    }
+
     // Re-apply the current navigation rotation to freshly rendered route pins
     if (typeof applyMapRotation === 'function' && navRotCurrent !== 0) {
       applyMapRotation(navRotCurrent);
+    }
+
+    // Advance the step highlight with the user's current position
+    if (typeof updateNavigationProgress === 'function') {
+      updateNavigationProgress();
     }
   }
 
@@ -1005,6 +1273,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     if (routeSummaryBar) {
       routeSummaryBar.style.display = 'none';
+      routeSummaryBar.classList.remove('minimized');
     }
     if (clearRouteBtn) {
       clearRouteBtn.style.display = 'none';
@@ -1012,6 +1281,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (routeFloorSteps) {
       routeFloorSteps.innerHTML = '';
     }
+    if (routeDirections) {
+      routeDirections.innerHTML = '';
+    }
+    if (routeStepNow) {
+      routeStepNow.textContent = '';
+      routeStepNow.classList.remove('warning');
+    }
+    navProgress.samples = [];
+    navProgress.originPt = null;
     if (routeInstructionBar) {
       routeInstructionBar.style.display = 'none';
     }
@@ -1046,11 +1324,15 @@ document.addEventListener('DOMContentLoaded', () => {
     getRouteBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       generateCampusRoute();
-      // Starting from the live GPS location: bring the user's position into
-      // view (starts GPS tracking if it isn't running yet).
-      if (!navStartSelect || navStartSelect.value === 'gps') {
-        focusUserLocation();
+      if (activeRoute) {
+        // Navigation mode: shrink the planner and the route summary panel into
+        // their small icons so the map stays clear (tap an icon to reopen).
+        setRoutePlannerOpen(false);
+        setRouteSummaryMinimized(true);
       }
+      // Always bring the user's live GPS position to the centre of the view
+      // (zooms in like tapping a room, and starts GPS if it isn't running yet).
+      focusUserLocation();
     });
   }
 
@@ -1673,6 +1955,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Build searchable rooms list using existing project data (window.CAMPUS_NAV_DATA)
   // with fallback to querying DOM SVG selectable-room elements.
+  // Room names in the generated dataset sometimes contain raw HTML entities
+  // (e.g. "Men&#039;s Toilet") — decode them so search, display and matching
+  // all see plain text.
+  function decodeHtmlEntities(str) {
+    if (!str || !str.includes('&')) return str || '';
+    const t = document.createElement('textarea');
+    t.innerHTML = str;
+    return t.value;
+  }
+
   function getSearchableRooms() {
     const navData = window.CAMPUS_NAV_DATA || window.GROUND_NAV_DATA;
     const floorKeys = ['ground', 'first', 'second', 'third'];
@@ -1697,7 +1989,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           seenIds.add(r.id);
 
-          const rName = r.name || r.id;
+          const rName = decodeHtmlEntities(r.name || r.id);
           const rCode = r.code || '';
           const isToilet = /toilet|washroom|restroom|wc/i.test(rName) || /^wc$/i.test(rCode) || r.id.toLowerCase().includes('toilet');
           const isLab = /lab/i.test(rName) || /lab/i.test(rCode);
@@ -1752,7 +2044,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const layer = roomEl.closest('.floor-layer');
       const floor = layer ? (layer.dataset.floor || 'ground') : 'ground';
-      const name = roomEl.dataset.name || roomEl.getAttribute('aria-label') || id;
+      const name = decodeHtmlEntities(roomEl.dataset.name || roomEl.getAttribute('aria-label') || id);
       const code = roomEl.dataset.code || '';
 
       const isToilet = /toilet|washroom|restroom|wc/i.test(name) || /^wc$/i.test(code) || id.toLowerCase().includes('toilet');
@@ -2057,6 +2349,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Hide initial floor prompt if active & ensure main-content is visible
     if (floorPromptModal && floorPromptModal.style.display !== 'none') {
       floorPromptModal.style.display = 'none';
+      // A new search cancels any navigation that was waiting on the floor answer
+      pendingNavDestAfterFloorPrompt = null;
     }
     if (mainContent && mainContent.style.display === 'none') {
       mainContent.style.display = 'flex';
@@ -2145,6 +2439,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Run navigation to a room: plot the route from the user's current floor,
+  // shrink the planner/summary into their icons and centre the GPS position.
+  function startNavigationToRoom(destRoomId) {
+    if (!destRoomId) return;
+    if (navDestSelect) {
+      navDestSelect.value = destRoomId;
+    }
+    if (typeof syncNavDestInputFromSelect === 'function') {
+      syncNavDestInputFromSelect();
+    }
+    if (groundNavBar) {
+      groundNavBar.style.display = 'flex';
+    }
+    generateCampusRoute();
+    if (activeRoute) {
+      setRoutePlannerOpen(false);
+      setRouteSummaryMinimized(true);
+    }
+    focusUserLocation();
+  }
+
   if (roomPopupNavBtn) {
     roomPopupNavBtn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -2152,19 +2467,205 @@ document.addEventListener('DOMContentLoaded', () => {
       const targetRoom = currentPopupRoom;
       hideRoomDetailsPopup();
 
-      if (navDestSelect) {
-        navDestSelect.value = targetRoom.id;
+      // Starting from live GPS: the map is previewing the destination's
+      // floor, so first confirm which floor the user is actually on — the
+      // answer decides the view, the route start and where GPS is centred.
+      const startingFromGps = !navStartSelect || navStartSelect.value === 'gps';
+      if (startingFromGps && floorPromptModal) {
+        pendingNavDestAfterFloorPrompt = targetRoom.id;
+        floorPromptModal.style.display = 'flex';
+        return;
       }
-      if (typeof syncNavDestInputFromSelect === 'function') {
-        syncNavDestInputFromSelect();
+
+      startNavigationToRoom(targetRoom.id);
+    });
+  }
+
+  // ── Nearest-facility quick navigation ("Nearest Washroom/Stairs/Exit") ──
+  // Picks the candidate with the shortest actual walking route from the
+  // user's live position (not straight-line distance), across all floors,
+  // then starts normal turn-by-turn navigation to it.
+  function navigateToNearestRoom(matcher, notFoundMsg) {
+    if (!campusRouter || !searchableRooms) return;
+    const start = {
+      x: currentPos.x,
+      y: currentPos.y,
+      floor: currentFloor || 'ground',
+      name: 'Current Location'
+    };
+    let best = null;
+    searchableRooms.forEach(r => {
+      if (!matcher(r)) return;
+      const res = campusRouter.findRoute(start, r.id);
+      if (res && res.success && (!best || res.totalDistanceMeters < best.distance)) {
+        best = { roomId: r.id, distance: res.totalDistanceMeters };
       }
-      if (groundNavBar) {
-        groundNavBar.style.display = 'flex';
+    });
+    if (!best) {
+      if (searchFeedback) {
+        searchFeedback.textContent = notFoundMsg;
+        searchFeedback.style.display = 'block';
       }
-      // Reveal the route planner dropdown and the user's live location.
-      setRoutePlannerOpen(true);
-      generateCampusRoute();
-      focusUserLocation();
+      return;
+    }
+    startNavigationToRoom(best.roomId);
+  }
+
+  const nearestToiletBtn = document.getElementById('nearest-toilet-btn');
+  const nearestStairsBtn = document.getElementById('nearest-stairs-btn');
+  const nearestExitBtn = document.getElementById('nearest-exit-btn');
+
+  if (nearestToiletBtn) {
+    nearestToiletBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hideNearbyMenu();
+      if (!washroomChoicePop) return;
+      washroomChoicePop.style.display = washroomChoicePop.style.display === 'none' ? 'flex' : 'none';
+    });
+  }
+
+  const washroomChoicePop = document.getElementById('washroom-choice-pop');
+  const washroomMensBtn = document.getElementById('washroom-mens-btn');
+  const washroomLadiesBtn = document.getElementById('washroom-ladies-btn');
+  const washroomCancelBtn = document.getElementById('washroom-cancel-btn');
+
+  function hideWashroomChoice() {
+    if (washroomChoicePop) washroomChoicePop.style.display = 'none';
+  }
+
+  const isWashroomRoom = r => r.category === 'toilet' || r.isToilet;
+
+  if (washroomMensBtn) {
+    washroomMensBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hideWashroomChoice();
+      navigateToNearestRoom(r => isWashroomRoom(r) && /\bmen'?s\b|\bmens\b/i.test(r.name || ''), 'No men\u2019s washroom found on campus.');
+    });
+  }
+
+  if (washroomLadiesBtn) {
+    washroomLadiesBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hideWashroomChoice();
+      navigateToNearestRoom(r => isWashroomRoom(r) && /ladies/i.test(r.name || ''), 'No ladies\u2019 washroom found on campus.');
+    });
+  }
+
+  if (washroomCancelBtn) {
+    washroomCancelBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hideWashroomChoice();
+    });
+  }
+
+  if (nearestStairsBtn) {
+    nearestStairsBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hideNearbyMenu();
+      navigateToNearestStairs();
+    });
+  }
+
+  // Staircases aren't rooms in the dataset — they live as graph nodes — so
+  // "Nearest Stairs" routes to the closest stair node by walking distance and
+  // renders the route directly instead of going through the destination select.
+  function navigateToNearestStairs() {
+    if (!campusRouter) return;
+    const navData = window.CAMPUS_NAV_DATA;
+    if (!navData || !navData.nodes) return;
+    const start = {
+      x: currentPos.x,
+      y: currentPos.y,
+      floor: currentFloor || 'ground',
+      name: 'Current Location'
+    };
+    let best = null;
+    navData.nodes.forEach(n => {
+      if (n.type !== 'stair') return;
+      const res = campusRouter.findRoute(start, n.id);
+      if (res && res.success && (!best || res.totalDistanceMeters < best.distance)) {
+        best = { res, distance: res.totalDistanceMeters, node: n };
+      }
+    });
+    if (!best) {
+      if (searchFeedback) {
+        searchFeedback.textContent = 'No staircases found on campus.';
+        searchFeedback.style.display = 'block';
+      }
+      return;
+    }
+    if (navDestSelect) navDestSelect.value = '';
+    if (typeof syncNavDestInputFromSelect === 'function') syncNavDestInputFromSelect();
+    if (navDestInput) navDestInput.value = best.node.stairName || 'Nearest Stairs';
+    if (groundNavBar) groundNavBar.style.display = 'flex';
+    if (selectedRoom) {
+      selectedRoom.classList.remove('selected');
+      selectedRoom.setAttribute('aria-pressed', 'false');
+      selectedRoom = null;
+    }
+    renderCampusRoute(best.res);
+    setRoutePlannerOpen(false);
+    setRouteSummaryMinimized(true);
+    focusUserLocation();
+  }
+
+  if (nearestExitBtn) {
+    nearestExitBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hideNearbyMenu();
+      navigateToNearestRoom(r => /entrance|exit/i.test(r.name || ''), 'No exit found on campus.');
+    });
+  }
+
+  // ── "Nearby" chip dropdown: anchors under the chip, closes on selection ──
+  const nearbyToggleBtn = document.getElementById('nearby-toggle-btn');
+  const nearbyMenu = document.getElementById('nearby-menu');
+
+  function hideNearbyMenu() {
+    if (nearbyMenu) nearbyMenu.style.display = 'none';
+    if (nearbyToggleBtn) {
+      nearbyToggleBtn.classList.remove('open');
+      nearbyToggleBtn.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  function positionNearbyMenu() {
+    if (!nearbyToggleBtn || !nearbyMenu) return;
+    const r = nearbyToggleBtn.getBoundingClientRect();
+    nearbyMenu.style.top = `${Math.round(r.bottom + 8)}px`;
+    const menuW = nearbyMenu.offsetWidth || 200;
+    let left = r.left + r.width / 2 - menuW / 2;
+    left = Math.max(8, Math.min(window.innerWidth - menuW - 8, left));
+    nearbyMenu.style.left = `${Math.round(left)}px`;
+  }
+
+  if (nearbyToggleBtn) {
+    nearbyToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!nearbyMenu) return;
+      const show = nearbyMenu.style.display !== 'flex';
+      if (show) {
+        nearbyMenu.style.display = 'flex';
+        positionNearbyMenu();
+        nearbyToggleBtn.classList.add('open');
+        nearbyToggleBtn.setAttribute('aria-expanded', 'true');
+      } else {
+        hideNearbyMenu();
+      }
+    });
+  }
+
+  if (nearbyMenu) {
+    nearbyMenu.addEventListener('click', (e) => e.stopPropagation());
+    // Close when tapping anywhere else (map, panels, other chrome)
+    document.addEventListener('click', (e) => {
+      if (nearbyMenu.style.display !== 'none' && !nearbyMenu.contains(e.target)) {
+        hideNearbyMenu();
+      }
+    });
+    // Keep the menu anchored under the chip when the viewport changes
+    window.addEventListener('resize', () => {
+      if (nearbyMenu.style.display === 'flex') positionNearbyMenu();
     });
   }
 
