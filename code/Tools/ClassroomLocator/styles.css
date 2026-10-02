@@ -1079,6 +1079,90 @@ body {
   color: #ffffff;
 }
 
+/* ── Washroom gender choice popover ── */
+.washroom-choice-pop {
+  position: fixed;
+  top: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 950;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: var(--card-bg);
+  border: 1px solid rgba(37, 99, 235, 0.3);
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  animation: navBarFade 0.15s ease-out;
+}
+
+.washroom-choice-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.washroom-choice-options {
+  display: flex;
+  gap: 10px;
+}
+
+.washroom-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1.5px solid;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.washroom-option:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.washroom-option.mens {
+  background: #dbeafe;
+  border-color: #2563eb;
+  color: #1d4ed8;
+}
+
+.washroom-option.ladies {
+  background: #fce7f3;
+  border-color: #db2777;
+  color: #be185d;
+}
+
+[data-theme="dark"] .washroom-option.mens {
+  background: rgba(37, 99, 235, 0.22);
+  color: #93c5fd;
+}
+
+[data-theme="dark"] .washroom-option.ladies {
+  background: rgba(219, 39, 119, 0.2);
+  color: #f9a8d4;
+}
+
+.washroom-cancel {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.washroom-cancel:hover {
+  color: var(--text-main);
+}
+
 [data-theme="dark"] .route-summary-bar {
   background: rgba(59, 130, 246, 0.16);
   border-color: rgba(59, 130, 246, 0.35);

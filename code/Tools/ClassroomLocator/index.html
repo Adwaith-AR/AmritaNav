@@ -85,6 +85,34 @@
           </span>
           <span class="chip-label">Offices</span>
         </button>
+        <button type="button" class="category-chip nearest-chip" id="nearest-toilet-btn" title="Route to the nearest washroom">
+          <span class="chip-badge chip-badge-teal">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M7 21v-7.5a2.5 2.5 0 0 1 5 0V21"/><path d="M12 21v-7.5a2.5 2.5 0 0 1 5 0V21"/></svg>
+          </span>
+          <span class="chip-label">Nearest Washroom</span>
+        </button>
+        <button type="button" class="category-chip nearest-chip" id="nearest-stairs-btn" title="Route to the nearest staircase">
+          <span class="chip-badge chip-badge-blue">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4v-4h4v-4h4V8h4V4"/></svg>
+          </span>
+          <span class="chip-label">Nearest Stairs</span>
+        </button>
+        <button type="button" class="category-chip nearest-chip" id="nearest-exit-btn" title="Route to the nearest exit / entrance">
+          <span class="chip-badge chip-badge-rose">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="15 17 20 12 15 7"/><line x1="20" y1="12" x2="9" y2="12"/></svg>
+          </span>
+          <span class="chip-label">Nearest Exit</span>
+        </button>
+      </div>
+
+      <!-- Washroom gender choice for "Nearest Washroom" -->
+      <div id="washroom-choice-pop" class="washroom-choice-pop" style="display: none;" role="menu" aria-label="Choose washroom type">
+        <div class="washroom-choice-title">Which washroom do you need?</div>
+        <div class="washroom-choice-options">
+          <button type="button" id="washroom-mens-btn" class="washroom-option mens" role="menuitem">🚹 Men's</button>
+          <button type="button" id="washroom-ladies-btn" class="washroom-option ladies" role="menuitem">🚺 Ladies'</button>
+        </div>
+        <button type="button" id="washroom-cancel-btn" class="washroom-cancel">Cancel</button>
       </div>
 
       <!-- Multi-Floor Navigation Bar -->

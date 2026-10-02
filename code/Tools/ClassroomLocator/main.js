@@ -708,6 +708,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function polylineLengthPx(pts) {
+    let len = 0;
+    for (let i = 0; i < pts.length - 1; i++) {
+      len += Math.hypot(pts[i + 1][0] - pts[i][0], pts[i + 1][1] - pts[i][1]);
+    }
+    return len;
+  }
+
+  // Remaining walk distance: what's left on the user's floor, plus the full
+  // length of every later floor in the route, plus stair-climb penalties.
+  function computeRemainingMeters(route, floor, sOnFloor, mPerPx) {
+    const order = route.floorsInRoute || [];
+    const idx = order.indexOf(floor);
+    if (idx === -1) return null;
+    let remPx = Math.max(0, polylineLengthPx(route.floorPaths[floor] || []) - sOnFloor);
+    for (let i = idx + 1; i < order.length; i++) {
+      remPx += polylineLengthPx(route.floorPaths[order[i]] || []);
+    }
+    const penalty = (window.CAMPUS_NAV_DATA && window.CAMPUS_NAV_DATA.stairPenaltyMeters) || 15;
+    const stairsLeft = (route.stairTransitions || []).filter(t => order.indexOf(t.fromFloor) > idx).length;
+    return Math.max(0, Math.round(remPx * mPerPx + stairsLeft * penalty));
+  }
+
+  function formatWalkTime(meters) {
+    const speed = (window.CAMPUS_NAV_DATA && window.CAMPUS_NAV_DATA.avgWalkingSpeedMps) || 1.3;
+    const sec = Math.round(meters / speed);
+    const min = Math.floor(sec / 60);
+    const s = sec % 60;
+    return min > 0 ? `${min} min${s ? ' ' + s + 's' : ''}` : `${s}s`;
+  }
+
   function updateNavigationProgress() {
     if (!activeRoute || !activeRoute.steps || !activeRoute.steps.length) return;
     const pts = activeRoute.floorPaths && activeRoute.floorPaths[currentFloor];
@@ -780,6 +811,22 @@ document.addEventListener('DOMContentLoaded', () => {
       routeStepNow.classList.remove('warning');
       routeStepNow.textContent = guide.type === 'walk' ? `${guide.text} · in ${remM}m` : guide.text;
     }
+
+    // Live ETA: re-compute remaining walk distance and time from the user's
+    // position along the route instead of the static start-to-end total.
+    const remainingM = computeRemainingMeters(activeRoute, currentFloor, proj.s, mPerPx);
+    if (remainingM !== null) {
+      const eta = formatWalkTime(remainingM);
+      if (routeDistanceText) {
+        routeDistanceText.textContent = `Distance: ${activeRoute.totalDistanceMeters}m · ${remainingM}m left`;
+      }
+      if (routeTimeText) {
+        routeTimeText.textContent = `Est. Walk: ~${eta}`;
+      }
+      if (routeSummaryIconText) {
+        routeSummaryIconText.textContent = `${remainingM}m · ~${eta}`;
+      }
+    }
   }
 
   const floorRouteLayers = {
@@ -789,6 +836,27 @@ document.addEventListener('DOMContentLoaded', () => {
     third: document.getElementById('route-layer-third')
   };
   const groundRouteLayer = floorRouteLayers.ground;
+
+  // ── Consistent toilet colour scheme across all floors ──────────
+  // Every men's / ladies' toilet gets the same fill & stroke on every floor
+  // so they're recognisable at a glance while navigating.
+  const TOILET_COLORS = {
+    mens: { fill: '#bfdbfe', stroke: '#2563eb' },   // blue
+    ladies: { fill: '#fbcfe8', stroke: '#db2777' }  // pink
+  };
+
+  function applyToiletColorScheme() {
+    document.querySelectorAll('rect.room-wall[data-name]').forEach(el => {
+      const name = el.dataset.name || '';
+      const scheme = /ladies/i.test(name)
+        ? TOILET_COLORS.ladies
+        : /\bmen'?s\b|\bmens\b/i.test(name) ? TOILET_COLORS.mens : null;
+      if (!scheme) return;
+      el.setAttribute('fill', scheme.fill);
+      el.setAttribute('stroke', scheme.stroke);
+    });
+  }
+  applyToiletColorScheme();
 
   let campusRouter = null;
   if (typeof window.CampusRouter === 'function' && window.CAMPUS_NAV_DATA) {
@@ -1887,6 +1955,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Build searchable rooms list using existing project data (window.CAMPUS_NAV_DATA)
   // with fallback to querying DOM SVG selectable-room elements.
+  // Room names in the generated dataset sometimes contain raw HTML entities
+  // (e.g. "Men&#039;s Toilet") — decode them so search, display and matching
+  // all see plain text.
+  function decodeHtmlEntities(str) {
+    if (!str || !str.includes('&')) return str || '';
+    const t = document.createElement('textarea');
+    t.innerHTML = str;
+    return t.value;
+  }
+
   function getSearchableRooms() {
     const navData = window.CAMPUS_NAV_DATA || window.GROUND_NAV_DATA;
     const floorKeys = ['ground', 'first', 'second', 'third'];
@@ -1911,7 +1989,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           seenIds.add(r.id);
 
-          const rName = r.name || r.id;
+          const rName = decodeHtmlEntities(r.name || r.id);
           const rCode = r.code || '';
           const isToilet = /toilet|washroom|restroom|wc/i.test(rName) || /^wc$/i.test(rCode) || r.id.toLowerCase().includes('toilet');
           const isLab = /lab/i.test(rName) || /lab/i.test(rCode);
@@ -1966,7 +2044,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const layer = roomEl.closest('.floor-layer');
       const floor = layer ? (layer.dataset.floor || 'ground') : 'ground';
-      const name = roomEl.dataset.name || roomEl.getAttribute('aria-label') || id;
+      const name = decodeHtmlEntities(roomEl.dataset.name || roomEl.getAttribute('aria-label') || id);
       const code = roomEl.dataset.code || '';
 
       const isToilet = /toilet|washroom|restroom|wc/i.test(name) || /^wc$/i.test(code) || id.toLowerCase().includes('toilet');
@@ -2400,6 +2478,139 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       startNavigationToRoom(targetRoom.id);
+    });
+  }
+
+  // ── Nearest-facility quick navigation ("Nearest Washroom/Stairs/Exit") ──
+  // Picks the candidate with the shortest actual walking route from the
+  // user's live position (not straight-line distance), across all floors,
+  // then starts normal turn-by-turn navigation to it.
+  function navigateToNearestRoom(matcher, notFoundMsg) {
+    if (!campusRouter || !searchableRooms) return;
+    const start = {
+      x: currentPos.x,
+      y: currentPos.y,
+      floor: currentFloor || 'ground',
+      name: 'Current Location'
+    };
+    let best = null;
+    searchableRooms.forEach(r => {
+      if (!matcher(r)) return;
+      const res = campusRouter.findRoute(start, r.id);
+      if (res && res.success && (!best || res.totalDistanceMeters < best.distance)) {
+        best = { roomId: r.id, distance: res.totalDistanceMeters };
+      }
+    });
+    if (!best) {
+      if (searchFeedback) {
+        searchFeedback.textContent = notFoundMsg;
+        searchFeedback.style.display = 'block';
+      }
+      return;
+    }
+    startNavigationToRoom(best.roomId);
+  }
+
+  const nearestToiletBtn = document.getElementById('nearest-toilet-btn');
+  const nearestStairsBtn = document.getElementById('nearest-stairs-btn');
+  const nearestExitBtn = document.getElementById('nearest-exit-btn');
+
+  if (nearestToiletBtn) {
+    nearestToiletBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!washroomChoicePop) return;
+      washroomChoicePop.style.display = washroomChoicePop.style.display === 'none' ? 'flex' : 'none';
+    });
+  }
+
+  const washroomChoicePop = document.getElementById('washroom-choice-pop');
+  const washroomMensBtn = document.getElementById('washroom-mens-btn');
+  const washroomLadiesBtn = document.getElementById('washroom-ladies-btn');
+  const washroomCancelBtn = document.getElementById('washroom-cancel-btn');
+
+  function hideWashroomChoice() {
+    if (washroomChoicePop) washroomChoicePop.style.display = 'none';
+  }
+
+  const isWashroomRoom = r => r.category === 'toilet' || r.isToilet;
+
+  if (washroomMensBtn) {
+    washroomMensBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hideWashroomChoice();
+      navigateToNearestRoom(r => isWashroomRoom(r) && /\bmen'?s\b|\bmens\b/i.test(r.name || ''), 'No men\u2019s washroom found on campus.');
+    });
+  }
+
+  if (washroomLadiesBtn) {
+    washroomLadiesBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hideWashroomChoice();
+      navigateToNearestRoom(r => isWashroomRoom(r) && /ladies/i.test(r.name || ''), 'No ladies\u2019 washroom found on campus.');
+    });
+  }
+
+  if (washroomCancelBtn) {
+    washroomCancelBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hideWashroomChoice();
+    });
+  }
+
+  if (nearestStairsBtn) {
+    nearestStairsBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navigateToNearestStairs();
+    });
+  }
+
+  // Staircases aren't rooms in the dataset — they live as graph nodes — so
+  // "Nearest Stairs" routes to the closest stair node by walking distance and
+  // renders the route directly instead of going through the destination select.
+  function navigateToNearestStairs() {
+    if (!campusRouter) return;
+    const navData = window.CAMPUS_NAV_DATA;
+    if (!navData || !navData.nodes) return;
+    const start = {
+      x: currentPos.x,
+      y: currentPos.y,
+      floor: currentFloor || 'ground',
+      name: 'Current Location'
+    };
+    let best = null;
+    navData.nodes.forEach(n => {
+      if (n.type !== 'stair') return;
+      const res = campusRouter.findRoute(start, n.id);
+      if (res && res.success && (!best || res.totalDistanceMeters < best.distance)) {
+        best = { res, distance: res.totalDistanceMeters, node: n };
+      }
+    });
+    if (!best) {
+      if (searchFeedback) {
+        searchFeedback.textContent = 'No staircases found on campus.';
+        searchFeedback.style.display = 'block';
+      }
+      return;
+    }
+    if (navDestSelect) navDestSelect.value = '';
+    if (typeof syncNavDestInputFromSelect === 'function') syncNavDestInputFromSelect();
+    if (navDestInput) navDestInput.value = best.node.stairName || 'Nearest Stairs';
+    if (groundNavBar) groundNavBar.style.display = 'flex';
+    if (selectedRoom) {
+      selectedRoom.classList.remove('selected');
+      selectedRoom.setAttribute('aria-pressed', 'false');
+      selectedRoom = null;
+    }
+    renderCampusRoute(best.res);
+    setRoutePlannerOpen(false);
+    setRouteSummaryMinimized(true);
+    focusUserLocation();
+  }
+
+  if (nearestExitBtn) {
+    nearestExitBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navigateToNearestRoom(r => /entrance|exit/i.test(r.name || ''), 'No exit found on campus.');
     });
   }
 
