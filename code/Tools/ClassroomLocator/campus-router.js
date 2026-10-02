@@ -522,7 +522,25 @@
         // Add node coordinates
         for (let ni = 0; ni < leg.nodes.length; ni++) {
           const n = leg.nodes[ni];
-          const pt = [n.x, n.y];
+          let pt = [n.x, n.y];
+          // Staircases are entered from their front side: end the approach at
+          // the staircase's front edge (door) instead of its centre, so the
+          // drawn route doesn't cut through the stair block.
+          if (n.type === 'stair') {
+            const ref = leg.nodes[ni - 1] ||
+              (isFirstLeg ? { x: origin.x, y: origin.y } : null) ||
+              leg.nodes[ni + 1] ||
+              (isLastLeg ? dest : null);
+            if (ref && (ref.x !== undefined)) {
+              const rdx = n.x - ref.x;
+              const rdy = n.y - ref.y;
+              const refDist = Math.hypot(rdx, rdy);
+              if (refDist > 1) {
+                const entryOffset = 26; // ~front-wall distance from stair centre
+                pt = [n.x - (rdx / refDist) * entryOffset, n.y - (rdy / refDist) * entryOffset];
+              }
+            }
+          }
           const last = legPoints[legPoints.length - 1];
           if (!last || Math.hypot(last[0] - pt[0], last[1] - pt[1]) > 0.5) {
             legPoints.push(pt);
@@ -630,6 +648,98 @@
 
       const floorsInRoute = legs.map(l => l.floor);
 
+      // Align stair transitions with the front-edge entry points just computed,
+      // so pins, captions and the auto-switch marker all sit at the stair door.
+      stairTransitions.forEach(t => {
+        const fromPts = floorPaths[t.fromFloor] || [];
+        const toPts = floorPaths[t.toFloor] || [];
+        const fromPt = fromPts.length ? fromPts[fromPts.length - 1] : t.coords[0];
+        const toPt = toPts.length ? toPts[0] : t.coords[1];
+        t.stairPos = { x: toPt[0], y: toPt[1] };
+        t.coords = [fromPt, toPt];
+        t.points = [fromPt, toPt];
+      });
+
+      // ---- Turn-by-turn directions ----
+      // Steps carry `floor` and `arcLocal` (distance along that floor's
+      // polyline where the step happens) so the UI can match the user's live
+      // GPS projection against them and highlight the current step.
+      const steps = [];
+      legs.forEach((leg, li) => {
+        const fKey = leg.floor;
+        const pts = floorPaths[fKey];
+        const arc = [0];
+        for (let i = 1; i < pts.length; i++) {
+          arc.push(arc[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+        }
+        const segMeters = (a, b) => Math.round((arc[b] - arc[a]) / this.pxPerMeter);
+
+        // Turn events: direction changes of >= 35°, merged when closer than
+        // ~30px (4.5m) so corner jitter doesn't produce micro-steps
+        const events = [];
+        for (let i = 1; i < pts.length - 1; i++) {
+          const v1x = pts[i][0] - pts[i - 1][0], v1y = pts[i][1] - pts[i - 1][1];
+          const v2x = pts[i + 1][0] - pts[i][0], v2y = pts[i + 1][1] - pts[i][1];
+          const v1 = Math.hypot(v1x, v1y), v2 = Math.hypot(v2x, v2y);
+          if (v1 < 1 || v2 < 1) continue;
+          const cross = (v1x * v2y - v1y * v2x) / (v1 * v2);
+          const dot = (v1x * v2x + v1y * v2y) / (v1 * v2);
+          const angle = Math.abs(Math.atan2(cross, dot)) * 180 / Math.PI;
+          const prevIdx = events.length ? events[events.length - 1].idx : 0;
+          if (angle >= 35 && arc[i] - arc[prevIdx] >= 30) {
+            events.push({ idx: i, turn: cross > 0 ? 'right' : 'left' });
+          }
+        }
+
+        // Opening straight run
+        if (events.length) {
+          const d = segMeters(0, events[0].idx);
+          if (d >= 1) {
+            steps.push({ type: 'walk', floor: fKey, turn: null, text: `Walk ${d} m`, distanceMeters: d, point: pts[events[0].idx], arcLocal: arc[events[0].idx] });
+          }
+        }
+        // Turn steps; distance shown is the run following the turn
+        events.forEach((ev, k) => {
+          const nextIdx = k + 1 < events.length ? events[k + 1].idx : pts.length - 1;
+          const d = segMeters(ev.idx, nextIdx);
+          steps.push({ type: 'walk', floor: fKey, turn: ev.turn, text: `Turn ${ev.turn}`, distanceMeters: d, point: pts[ev.idx], arcLocal: arc[ev.idx] });
+        });
+        // Floor with no turns: one straight walk step
+        if (!events.length) {
+          const d = segMeters(0, pts.length - 1);
+          if (d >= 1) {
+            steps.push({ type: 'walk', floor: fKey, turn: null, text: `Walk ${d} m`, distanceMeters: d, point: pts[pts.length - 1], arcLocal: arc[arc.length - 1] });
+          }
+        }
+
+        // Stair climb at the end of this leg
+        if (li < legs.length - 1 && stairTransitions[li]) {
+          const t = stairTransitions[li];
+          steps.push({
+            type: 'stair',
+            floor: fKey,
+            text: `Take ${t.stairName} ${t.direction === 'up' ? 'up' : 'down'} to ${t.toFloorTitle}`,
+            distanceMeters: Math.round(this.stairPenaltyMeters),
+            point: [t.stairPos.x, t.stairPos.y],
+            arcLocal: arc[arc.length - 1]
+          });
+        }
+      });
+
+      // Arrival on the destination floor
+      {
+        const lastFloor = legs[legs.length - 1].floor;
+        const lastPts = floorPaths[lastFloor];
+        steps.push({
+          type: 'arrive',
+          floor: lastFloor,
+          text: `Arrive at ${dest.name}`,
+          distanceMeters: 0,
+          point: lastPts[lastPts.length - 1],
+          arcLocal: undefined
+        });
+      }
+
       return {
         success: true,
         totalDistanceMeters,
@@ -640,6 +750,7 @@
         isMultiFloor: legs.length > 1,
         stairTransitions,
         floorSegments,
+        steps,
         origin,
         dest,
         points: floorPaths[origin.floor] || (floorsInRoute[0] ? floorPaths[floorsInRoute[0]] : [])
