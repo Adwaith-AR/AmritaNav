@@ -1163,6 +1163,60 @@ body {
   color: var(--text-main);
 }
 
+/* ── Nearby facilities dropdown menu ── */
+.nearby-menu {
+  position: fixed;
+  z-index: 950;
+  display: none;
+  flex-direction: column;
+  min-width: 200px;
+  background: var(--card-bg);
+  border: 1px solid rgba(37, 99, 235, 0.3);
+  border-radius: 12px;
+  padding: 6px;
+  gap: 2px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  animation: navBarFade 0.15s ease-out;
+}
+
+.nearby-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--text-main);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: background 0.12s ease;
+}
+
+.nearby-menu-item:hover {
+  background: rgba(37, 99, 235, 0.12);
+}
+
+[data-theme="dark"] .nearby-menu-item:hover {
+  background: rgba(59, 130, 246, 0.18);
+}
+
+.nearby-menu-icon {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.nearby-chevron {
+  transition: transform 0.15s ease;
+}
+
+.category-chip.open .nearby-chevron {
+  transform: rotate(180deg);
+}
+
 [data-theme="dark"] .route-summary-bar {
   background: rgba(59, 130, 246, 0.16);
   border-color: rgba(59, 130, 246, 0.35);

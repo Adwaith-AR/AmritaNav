@@ -2518,6 +2518,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (nearestToiletBtn) {
     nearestToiletBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      hideNearbyMenu();
       if (!washroomChoicePop) return;
       washroomChoicePop.style.display = washroomChoicePop.style.display === 'none' ? 'flex' : 'none';
     });
@@ -2560,6 +2561,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (nearestStairsBtn) {
     nearestStairsBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      hideNearbyMenu();
       navigateToNearestStairs();
     });
   }
@@ -2610,7 +2612,60 @@ document.addEventListener('DOMContentLoaded', () => {
   if (nearestExitBtn) {
     nearestExitBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      hideNearbyMenu();
       navigateToNearestRoom(r => /entrance|exit/i.test(r.name || ''), 'No exit found on campus.');
+    });
+  }
+
+  // ── "Nearby" chip dropdown: anchors under the chip, closes on selection ──
+  const nearbyToggleBtn = document.getElementById('nearby-toggle-btn');
+  const nearbyMenu = document.getElementById('nearby-menu');
+
+  function hideNearbyMenu() {
+    if (nearbyMenu) nearbyMenu.style.display = 'none';
+    if (nearbyToggleBtn) {
+      nearbyToggleBtn.classList.remove('open');
+      nearbyToggleBtn.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  function positionNearbyMenu() {
+    if (!nearbyToggleBtn || !nearbyMenu) return;
+    const r = nearbyToggleBtn.getBoundingClientRect();
+    nearbyMenu.style.top = `${Math.round(r.bottom + 8)}px`;
+    const menuW = nearbyMenu.offsetWidth || 200;
+    let left = r.left + r.width / 2 - menuW / 2;
+    left = Math.max(8, Math.min(window.innerWidth - menuW - 8, left));
+    nearbyMenu.style.left = `${Math.round(left)}px`;
+  }
+
+  if (nearbyToggleBtn) {
+    nearbyToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!nearbyMenu) return;
+      const show = nearbyMenu.style.display !== 'flex';
+      if (show) {
+        nearbyMenu.style.display = 'flex';
+        positionNearbyMenu();
+        nearbyToggleBtn.classList.add('open');
+        nearbyToggleBtn.setAttribute('aria-expanded', 'true');
+      } else {
+        hideNearbyMenu();
+      }
+    });
+  }
+
+  if (nearbyMenu) {
+    nearbyMenu.addEventListener('click', (e) => e.stopPropagation());
+    // Close when tapping anywhere else (map, panels, other chrome)
+    document.addEventListener('click', (e) => {
+      if (nearbyMenu.style.display !== 'none' && !nearbyMenu.contains(e.target)) {
+        hideNearbyMenu();
+      }
+    });
+    // Keep the menu anchored under the chip when the viewport changes
+    window.addEventListener('resize', () => {
+      if (nearbyMenu.style.display === 'flex') positionNearbyMenu();
     });
   }
 

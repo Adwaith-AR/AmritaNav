@@ -85,23 +85,12 @@
           </span>
           <span class="chip-label">Offices</span>
         </button>
-        <button type="button" class="category-chip nearest-chip" id="nearest-toilet-btn" title="Route to the nearest washroom">
+        <button type="button" class="category-chip" id="nearby-toggle-btn" title="Nearby facilities" aria-haspopup="menu" aria-expanded="false">
           <span class="chip-badge chip-badge-teal">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M7 21v-7.5a2.5 2.5 0 0 1 5 0V21"/><path d="M12 21v-7.5a2.5 2.5 0 0 1 5 0V21"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49"/><path d="M7.76 16.24a6 6 0 0 1 0-8.49"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 19.07a10 10 0 0 1 0-14.14"/></svg>
           </span>
-          <span class="chip-label">Nearest Washroom</span>
-        </button>
-        <button type="button" class="category-chip nearest-chip" id="nearest-stairs-btn" title="Route to the nearest staircase">
-          <span class="chip-badge chip-badge-blue">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4v-4h4v-4h4V8h4V4"/></svg>
-          </span>
-          <span class="chip-label">Nearest Stairs</span>
-        </button>
-        <button type="button" class="category-chip nearest-chip" id="nearest-exit-btn" title="Route to the nearest exit / entrance">
-          <span class="chip-badge chip-badge-rose">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="15 17 20 12 15 7"/><line x1="20" y1="12" x2="9" y2="12"/></svg>
-          </span>
-          <span class="chip-label">Nearest Exit</span>
+          <span class="chip-label">Nearby</span>
+          <svg class="nearby-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
       </div>
 
@@ -113,6 +102,19 @@
           <button type="button" id="washroom-ladies-btn" class="washroom-option ladies" role="menuitem">🚺 Ladies'</button>
         </div>
         <button type="button" id="washroom-cancel-btn" class="washroom-cancel">Cancel</button>
+      </div>
+
+      <!-- Nearby facilities dropdown menu -->
+      <div id="nearby-menu" class="nearby-menu" style="display: none;" role="menu" aria-label="Nearby facilities">
+        <button type="button" id="nearest-toilet-btn" class="nearby-menu-item" role="menuitem">
+          <span class="nearby-menu-icon" aria-hidden="true">🚻</span> Nearest Washroom
+        </button>
+        <button type="button" id="nearest-stairs-btn" class="nearby-menu-item" role="menuitem">
+          <span class="nearby-menu-icon" aria-hidden="true">🛗</span> Nearest Stairs
+        </button>
+        <button type="button" id="nearest-exit-btn" class="nearby-menu-item" role="menuitem">
+          <span class="nearby-menu-icon" aria-hidden="true">🚪</span> Nearest Exit
+        </button>
       </div>
 
       <!-- Multi-Floor Navigation Bar -->
