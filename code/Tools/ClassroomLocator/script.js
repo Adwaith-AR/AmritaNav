@@ -311,6 +311,16 @@ document.addEventListener('DOMContentLoaded', () => {
     defaultY: 835
   };
 
+  // Campus exit points: the spots where people leave the campus on foot.
+  // "Nearest Exit" routes to whichever of these is closest.
+  //  - the outdoor walkway just outside the Admin Block entrance (ADM-BLK-A)
+  //  - the north opening of the east-wing connector corridor (between
+  //    Prayer Hall and Nanotech / Computer Lab)
+  const CAMPUS_EXIT_POINTS = [
+    { x: 280, y: 845, floor: 'ground' },
+    { x: 1964, y: 656, floor: 'ground' }
+  ];
+
   // UI Element References
   const gpsDock = document.getElementById('gps-dock');
   const gpsToggleBtn = document.getElementById('gps-toggle-btn');
@@ -484,7 +494,13 @@ document.addEventListener('DOMContentLoaded', () => {
       GPS_CALIBRATION.centerLon
     );
 
-    const insideCampus = dist <= GPS_CALIBRATION.campusRadiusMeters;
+    // Off the campus map canvas counts as out of campus even inside the
+    // radius — the marker then sits on the default gate position.
+    const rawX = (longitude - GPS_CALIBRATION.originLon) / GPS_CALIBRATION.lonPerPixel;
+    const rawY = (GPS_CALIBRATION.originLat - latitude) / GPS_CALIBRATION.latPerPixel;
+    const onCampusMap = rawX >= 0 && rawX <= GPS_CALIBRATION.mapWidth &&
+                        rawY >= 0 && rawY <= GPS_CALIBRATION.mapHeight;
+    const insideCampus = dist <= GPS_CALIBRATION.campusRadiusMeters && onCampusMap;
 
     if (heading !== null && !isNaN(heading)) {
       currentHeading = heading;
@@ -703,6 +719,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (now - lastRerouteAt < REROUTE_DEBOUNCE_MS) return;
     lastRerouteAt = now;
     navProgress.samples = [];
+    // Point-destination routes (Campus Exit) aren't in navDestSelect, so
+    // re-plan them directly — generateCampusRoute would clear them.
+    if (activeRoute && activeRoute.dest && activeRoute.dest.id === 'campus_exit_point') {
+      navigateToNearestExit();
+      return;
+    }
     if (typeof generateCampusRoute === 'function') {
       generateCampusRoute();
     }
@@ -754,6 +776,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const proj = nearestPointOnPolyline(pts, currentPos.x, currentPos.y);
+
+    // Multi-stop trip: reached the current leg's stop (inside its room
+    // footprint or within a couple of metres of the leg's end) — switch to
+    // the next leg.
+    if (activeMultiLeg && activeRoute.multiLeg &&
+        activeMultiLeg.index < activeMultiLeg.legs.length - 1) {
+      const dStop = Math.hypot(currentPos.x - activeRoute.dest.x, currentPos.y - activeRoute.dest.y);
+      const stopInBox = isInsideRoomBox(activeRoute.dest && activeRoute.dest.id, currentPos.x, currentPos.y);
+      if (dStop < 15 || stopInBox) {
+        advanceMultiLeg();
+        return;
+      }
+    }
+
+    // Arrival: on the final leg, the user walked into the destination
+    // room's footprint (or came within a couple of metres of the route's
+    // end) — navigation ends by itself.
+    const isFinalLeg = !activeMultiLeg || activeMultiLeg.index >= activeMultiLeg.legs.length - 1;
+    if (isFinalLeg && activeRoute.totalDistanceMeters > 0) {
+      const endFloor = activeRoute.floorsInRoute[activeRoute.floorsInRoute.length - 1];
+      if (currentFloor === endFloor) {
+        const endPts = activeRoute.floorPaths[endFloor];
+        const endPt = endPts[endPts.length - 1];
+        const dEnd = Math.hypot(currentPos.x - endPt[0], currentPos.y - endPt[1]);
+        const inBox = isInsideRoomBox(activeRoute.dest && activeRoute.dest.id, currentPos.x, currentPos.y);
+        if (inBox || dEnd < 15) {
+          arriveAtDestination();
+          return;
+        }
+      }
+    }
 
     // Highlight the step the user has reached: last step at/behind their
     // projection on the current floor.
@@ -1088,10 +1141,15 @@ document.addEventListener('DOMContentLoaded', () => {
       // Destination Pin (shown on destination floor)
       if (isEndFloor) {
         const endPt = pts[pts.length - 1];
+        // Campus-exit routes end on the walkway near the user's marker — the
+        // pin can hide under it, so raise an EXIT flag above the point.
+        const exitFlag = route.dest && route.dest.id === 'campus_exit_point' ? `
+            <rect x="-24" y="-48" width="48" height="20" rx="10" fill="#e11d48" stroke="#ffffff" stroke-width="1.5" />
+            <text x="0" y="-33.5" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#ffffff">EXIT</text>` : '';
         svgHtml += `
           <g class="route-pin route-pin-dest" transform="translate(${endPt[0].toFixed(1)}, ${endPt[1].toFixed(1)}) rotate(90)">
             <circle cx="0" cy="0" r="8" fill="#e11d48" stroke="#ffffff" stroke-width="2.5" />
-            <circle cx="0" cy="0" r="3" fill="#ffffff" />
+            <circle cx="0" cy="0" r="3" fill="#ffffff" />${exitFlag}
           </g>
         `;
       }
@@ -1131,9 +1189,40 @@ document.addEventListener('DOMContentLoaded', () => {
       layer.innerHTML = svgHtml;
     });
 
+    // Multi-stop trip preview: remaining legs as faint dashed paths, plus
+    // numbered amber pins on the stops still ahead (the current leg's stop
+    // is already marked by the red destination pin).
+    if (route.multiLeg && activeMultiLeg) {
+      const { legs, index } = activeMultiLeg;
+      legs.slice(index + 1).forEach(leg => {
+        Object.entries(leg.floorPaths || {}).forEach(([fk, pts]) => {
+          const layer = floorRouteLayers[fk];
+          if (!layer || !pts || !pts.length) return;
+          const ps = pts.map(pt => `${pt[0].toFixed(1)},${pt[1].toFixed(1)}`).join(' ');
+          layer.innerHTML += `<polyline points="${ps}" class="route-future-polyline" />`;
+        });
+      });
+      legs.slice(index + 1, legs.length - 1).forEach((leg, k) => {
+        const st = leg.dest;
+        const layer = floorRouteLayers[st.floor];
+        if (layer) {
+          layer.innerHTML += `
+            <g class="route-pin route-pin-stop" transform="translate(${st.x.toFixed(1)}, ${st.y.toFixed(1)}) rotate(90)">
+              <circle cx="0" cy="0" r="9" fill="#f59e0b" stroke="#ffffff" stroke-width="2.5" />
+              <text x="0" y="3.5" text-anchor="middle" font-size="10" font-weight="bold" fill="#ffffff">${index + k + 2}</text>
+            </g>
+          `;
+        }
+      });
+    }
+
     // Populate route summary metrics
     if (routeDistanceText && routeTimeText) {
-      routeDistanceText.textContent = `Distance: ${route.totalDistanceMeters}m`;
+      if (route.multiLeg) {
+        routeDistanceText.textContent = `Distance: ${route.totalDistanceMeters}m of ${route.multiLeg.totalDistanceMeters}m trip`;
+      } else {
+        routeDistanceText.textContent = `Distance: ${route.totalDistanceMeters}m`;
+      }
       routeTimeText.textContent = `Est. Walk: ~${route.timeFormatted}`;
     }
 
@@ -1145,6 +1234,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Populate floor step pills
     if (routeFloorSteps) {
       routeFloorSteps.innerHTML = '';
+      if (route.multiLeg) {
+        const tripPill = document.createElement('span');
+        tripPill.className = 'route-trip-pill';
+        const stopCount = route.multiLeg.count - 1;
+        tripPill.textContent = `${stopCount} stop${stopCount === 1 ? '' : 's'} · ~${route.multiLeg.totalDistanceMeters}m trip`;
+        routeFloorSteps.appendChild(tripPill);
+      }
       if (route.isMultiFloor && route.floorSegments) {
         route.floorSegments.forEach(seg => {
           if (seg.type === 'floor_walk') {
@@ -1213,6 +1309,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         routeDirections.appendChild(li);
       });
+
+      // Multi-stop trip: list the stops that follow this leg.
+      if (route.multiLeg && activeMultiLeg) {
+        activeMultiLeg.legs
+          .slice(route.multiLeg.index, activeMultiLeg.legs.length - 1)
+          .forEach((leg, k) => {
+            const li = document.createElement('li');
+            li.className = 'route-direction trip-stop';
+            li.textContent = `Stop ${route.multiLeg.index + k + 1}: then go to ${leg.dest.name}`;
+            routeDirections.appendChild(li);
+          });
+      }
     }
 
     // Re-apply the current navigation rotation to freshly rendered route pins
@@ -1228,6 +1336,99 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderGroundRoute(route) {
     renderCampusRoute(route);
+  }
+
+  // Multi-stop trips navigate leg-by-leg: each leg (start → stop → … →
+  // destination) is a normal router route, so pins, turn-by-turn, ETA and
+  // re-routing all work unchanged per leg. When the user reaches the
+  // current stop, advanceMultiLeg() switches to the next leg.
+  let activeMultiLeg = null; // { legs: [...], index: 0 }
+
+  function planMultiStopRoute(startTarget, stopVals, destVal) {
+    const legs = [];
+    let prev = startTarget;
+    for (const t of [...stopVals, destVal]) {
+      const leg = campusRouter.findRoute(prev, t);
+      if (!leg || !leg.success) return { error: leg };
+      legs.push(leg);
+      prev = t;
+    }
+    return { legs };
+  }
+
+  // Stamp the current trip position onto a leg so renderCampusRoute can
+  // preview the remaining legs and stops.
+  function attachMultiLegMeta(leg) {
+    if (!activeMultiLeg || !leg) return;
+    const { legs, index } = activeMultiLeg;
+    leg.multiLeg = {
+      index,
+      count: legs.length,
+      totalDistanceMeters: legs.reduce((s, l) => s + (l.totalDistanceMeters || 0), 0)
+    };
+    leg.upcomingStops = legs.slice(index + 1, legs.length - 1).map(l => l.dest);
+  }
+
+  function advanceMultiLeg() {
+    if (!activeMultiLeg || !activeRoute) return;
+    const nextName = activeRoute.dest && activeRoute.dest.name;
+    activeMultiLeg.index++;
+    if (activeMultiLeg.index >= activeMultiLeg.legs.length) {
+      activeMultiLeg = null;
+      return;
+    }
+    const leg = activeMultiLeg.legs[activeMultiLeg.index];
+    attachMultiLegMeta(leg);
+    renderCampusRoute(leg);
+    if (routeStepNow) {
+      routeStepNow.textContent = nextName ? `Stop reached — continuing to ${activeRoute.dest.name}` : 'Stop reached — continuing…';
+    }
+  }
+
+  // Point-in-rotated-rect test against the destination room's map shape.
+  // Room ids on floors above ground carry an f1_/f2_/f3_ prefix in the nav
+  // data but not on their SVG rects, so both forms are tried.
+  function isInsideRoomBox(roomId, x, y) {
+    if (!roomId) return false;
+    let el = document.getElementById(roomId);
+    if (!el) el = document.getElementById(roomId.replace(/^f\d_/, ''));
+    if (!el || !el.hasAttribute || !el.hasAttribute('x')) return false;
+    const rx = parseFloat(el.getAttribute('x'));
+    const ry = parseFloat(el.getAttribute('y'));
+    const rw = parseFloat(el.getAttribute('width'));
+    const rh = parseFloat(el.getAttribute('height'));
+    if (isNaN(rx) || isNaN(ry) || isNaN(rw) || isNaN(rh)) return false;
+    let px = x, py = y;
+    const tm = (el.getAttribute('transform') || '').match(/rotate\(\s*([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)\s*\)/);
+    if (tm) {
+      const a = parseFloat(tm[1]) * Math.PI / 180;
+      const cx = parseFloat(tm[2]), cy = parseFloat(tm[3]);
+      const dx = x - cx, dy = y - cy;
+      // inverse of the SVG rotate transform
+      px = cx + dx * Math.cos(a) + dy * Math.sin(a);
+      py = cy - dx * Math.sin(a) + dy * Math.cos(a);
+    }
+    return px >= rx && px <= rx + rw && py >= ry && py <= ry + rh;
+  }
+
+  // Navigation ends by itself once the user reaches the destination.
+  function arriveAtDestination() {
+    const name = activeRoute && activeRoute.dest ? (activeRoute.dest.title || activeRoute.dest.name) : '';
+    clearActiveRoute();
+    if (searchFeedback) {
+      searchFeedback.textContent = `✅ You have arrived${name ? ' at ' + name : ''}`;
+      searchFeedback.style.color = '#16a34a';
+      searchFeedback.style.display = 'block';
+      clearTimeout(arriveAtDestination._t);
+      arriveAtDestination._t = setTimeout(() => {
+        if (searchFeedback.textContent.startsWith('✅')) {
+          searchFeedback.style.display = 'none';
+        }
+      }, 6000);
+    }
+    if (navigator.vibrate) {
+      try { navigator.vibrate([80, 60, 80]); } catch (err) { /* unsupported */ }
+    }
   }
 
   function generateCampusRoute() {
@@ -1252,7 +1453,23 @@ document.addEventListener('DOMContentLoaded', () => {
       startTarget = startVal;
     }
 
-    const result = campusRouter.findRoute(startTarget, destVal);
+    const stopVals = getNavStopValues();
+    let result = null;
+    if (stopVals.length) {
+      const plan = planMultiStopRoute(startTarget, stopVals, destVal);
+      if (plan.legs) {
+        activeMultiLeg = { legs: plan.legs, index: 0 };
+        result = plan.legs[0];
+        attachMultiLegMeta(result);
+      } else {
+        activeMultiLeg = null;
+        result = plan.error;
+      }
+    } else {
+      activeMultiLeg = null;
+      result = campusRouter.findRoute(startTarget, destVal);
+    }
+
     if (result && result.success) {
       renderCampusRoute(result);
     } else {
@@ -1266,6 +1483,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function clearActiveRoute() {
     activeRoute = null;
+    activeMultiLeg = null;
     updateNavRotationActive();
     hideStairPopup();
     Object.values(floorRouteLayers).forEach(layer => {
@@ -1340,6 +1558,7 @@ document.addEventListener('DOMContentLoaded', () => {
     clearRouteBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       clearActiveRoute();
+      clearNavStopRows();
       if (selectedRoom) {
         selectedRoom.classList.remove('selected');
         selectedRoom.setAttribute('aria-pressed', 'false');
@@ -2609,11 +2828,65 @@ document.addEventListener('DOMContentLoaded', () => {
     focusUserLocation();
   }
 
+  // "Nearest Exit" always navigates to the closest campus exit point
+  // (CAMPUS_EXIT_POINTS) — never to the "Entrance" room itself.
+  function navigateToNearestExit() {
+    if (!campusRouter) return;
+    const start = {
+      x: currentPos.x,
+      y: currentPos.y,
+      floor: currentFloor || 'ground',
+      name: 'Current Location'
+    };
+    let best = null;
+    CAMPUS_EXIT_POINTS.forEach(p => {
+      const res = campusRouter.findRoute(start, {
+        // Distinct id: without it this resolves to 'gps_location' like the
+        // start target and findRoute would treat it as "already there".
+        id: 'campus_exit_point',
+        x: p.x,
+        y: p.y,
+        floor: p.floor,
+        name: 'Campus Exit'
+      });
+      if (res && res.success && (!best || res.totalDistanceMeters < best.res.totalDistanceMeters)) {
+        best = { res };
+      }
+    });
+    if (!best) {
+      if (searchFeedback) {
+        searchFeedback.textContent = 'No exit found on campus.';
+        searchFeedback.style.display = 'block';
+      }
+      return;
+    }
+    const res = best.res;
+    // The exit sits on the ground-floor walkway: when the whole route is on
+    // ground (e.g. the user is outside campus), jump there so the pin is in
+    // view; multi-floor routes stay on the current floor until descent.
+    if (!res.isMultiFloor && res.floorsInRoute[0] === 'ground' && currentFloor !== 'ground') {
+      switchFloor('ground');
+    }
+    if (navDestSelect) navDestSelect.value = '';
+    if (typeof syncNavDestInputFromSelect === 'function') syncNavDestInputFromSelect();
+    if (navDestInput) navDestInput.value = 'Campus Exit';
+    if (groundNavBar) groundNavBar.style.display = 'flex';
+    if (selectedRoom) {
+      selectedRoom.classList.remove('selected');
+      selectedRoom.setAttribute('aria-pressed', 'false');
+      selectedRoom = null;
+    }
+    renderCampusRoute(res);
+    setRoutePlannerOpen(false);
+    setRouteSummaryMinimized(true);
+    focusUserLocation();
+  }
+
   if (nearestExitBtn) {
     nearestExitBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       hideNearbyMenu();
-      navigateToNearestRoom(r => /entrance|exit/i.test(r.name || ''), 'No exit found on campus.');
+      navigateToNearestExit();
     });
   }
 
@@ -2751,7 +3024,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==========================================
-  // --- Category Chips & Quick Filters (Washrooms, Labs, Offices) ---
+  // --- Category Chips & Quick Filters (Classrooms, Washrooms, Labs, Offices, Halls, Stairs) ---
   // ==========================================
   const categoryChips = document.querySelectorAll('.category-chip');
 
@@ -2778,14 +3051,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const name = el.dataset.name || el.getAttribute('aria-label') || '';
     const code = el.dataset.code || '';
     const id = el.id || '';
-    return /office|dept|staff|dean|director|principal|admin|reception|chair|hod|reserve|\bsa\b/i.test(name) ||
+    return /office|dept|staff|dean|director|principal|admin|reception|chair|hod|reserve|affair|\bsa\b/i.test(name) ||
            /office|admin|dept|dir/i.test(code) ||
            /office|admin|director|principal|dept/i.test(id);
   }
 
+  function isHallRoom(el) {
+    const name = el.dataset.name || el.getAttribute('aria-label') || '';
+    const id = el.id || '';
+    return /hall|seminar|conf/i.test(name) || /hall|seminar|conf/i.test(id);
+  }
+
+  function isStairRoom(el) {
+    const name = el.dataset.name || el.getAttribute('aria-label') || '';
+    const code = el.dataset.code || '';
+    const id = el.id || '';
+    return /stair/i.test(name) || /stair/i.test(code) || /stair/i.test(id);
+  }
+
+  // Classrooms are the plain numbered rooms (N-220, S-212, A-104A, Room 12…).
+  // The DOM data-code is shared per graph node (N-220 carries code LAB-MDL),
+  // so detection relies on the name pattern after excluding every other
+  // category first.
+  function isClassroomRoom(el) {
+    if (isToiletRoom(el) || isLabRoom(el) || isOfficeRoom(el) ||
+        isHallRoom(el) || isStairRoom(el)) {
+      return false;
+    }
+    const name = el.dataset.name || el.getAttribute('aria-label') || '';
+    return /^\s*[NSA]\s*-\s*\d/i.test(name) || /^room\s*\d+/i.test(name);
+  }
+
   function clearCategoryHighlights() {
     document.querySelectorAll('.selectable-room').forEach(el => {
-      el.classList.remove('search-highlighted', 'toilet-highlighted', 'lab-highlighted', 'office-highlighted');
+      el.classList.remove('search-highlighted', 'toilet-highlighted', 'lab-highlighted',
+        'office-highlighted', 'classroom-highlighted', 'hall-highlighted', 'stairs-highlighted');
     });
   }
 
@@ -2798,13 +3098,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const roomsOnFloor = activeLayer.querySelectorAll('.selectable-room');
     let matchedCount = 0;
-    const highlightClass = category === 'toilet' ? 'toilet-highlighted' : (category === 'lab' ? 'lab-highlighted' : 'office-highlighted');
+    const highlightClasses = {
+      toilet: 'toilet-highlighted',
+      lab: 'lab-highlighted',
+      office: 'office-highlighted',
+      classroom: 'classroom-highlighted',
+      hall: 'hall-highlighted',
+      stairs: 'stairs-highlighted'
+    };
+    const matchers = {
+      toilet: isToiletRoom,
+      lab: isLabRoom,
+      office: isOfficeRoom,
+      classroom: isClassroomRoom,
+      hall: isHallRoom,
+      stairs: isStairRoom
+    };
+    const highlightClass = highlightClasses[category];
 
     roomsOnFloor.forEach(roomEl => {
-      let matches = false;
-      if (category === 'toilet') matches = isToiletRoom(roomEl);
-      else if (category === 'lab') matches = isLabRoom(roomEl);
-      else if (category === 'office') matches = isOfficeRoom(roomEl);
+      const matches = matchers[category] ? matchers[category](roomEl) : false;
 
       if (matches) {
         roomEl.classList.add('search-highlighted', highlightClass);
@@ -2815,7 +3128,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const categoryNames = {
       toilet: 'Washrooms',
       lab: 'Labs',
-      office: 'Offices'
+      office: 'Offices',
+      classroom: 'Classrooms',
+      hall: 'Halls',
+      stairs: 'Staircases'
     };
 
     const floorNames = {
@@ -2828,8 +3144,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const floorName = floorNames[currentFloor] || 'this floor';
     if (searchFeedback) {
       if (matchedCount > 0) {
+        const feedbackColors = {
+          toilet: '#0d9488',
+          lab: '#e11d48',
+          office: '#2563eb',
+          classroom: '#9333ea',
+          hall: '#d97706',
+          stairs: '#16a34a'
+        };
         searchFeedback.textContent = `Showing all ${matchedCount} ${categoryNames[category] || category} on ${floorName}`;
-        searchFeedback.style.color = category === 'toilet' ? '#0d9488' : (category === 'lab' ? '#e11d48' : '#2563eb');
+        searchFeedback.style.color = feedbackColors[category] || '#2563eb';
         searchFeedback.style.display = 'block';
       } else {
         searchFeedback.textContent = `No ${categoryNames[category] || category} found on ${floorName}`;
@@ -2920,7 +3244,7 @@ document.addEventListener('DOMContentLoaded', () => {
     syncNavDestInputFromSelect();
   }
 
-  function setupNavSearchCombobox({ input, clearBtn, dropdown, selectEl, wrapper, isStart }) {
+  function setupNavSearchCombobox({ input, clearBtn, dropdown, selectEl, wrapper, isStart, isStop }) {
     if (!input || !dropdown || !selectEl) return;
 
     let activeIndex = -1;
@@ -2973,11 +3297,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function selectItem(item) {
       input.value = item.displayLabel || item.title;
       selectEl.value = item.id;
+      // Stop-row selects have no <option> per room, so a bare .value write
+      // would reset to '' — keep the id on the element itself as well.
+      selectEl.dataset.value = item.id || '';
       if (clearBtn) clearBtn.style.display = 'flex';
       dropdown.style.display = 'none';
       input.setAttribute('aria-expanded', 'false');
 
-      if (!isStart) {
+      if (!isStart && !isStop) {
         const roomEl = document.getElementById(item.id);
         if (roomEl && roomEl.classList.contains('selectable-room')) {
           if (selectedRoom !== roomEl) {
@@ -3102,12 +3429,18 @@ document.addEventListener('DOMContentLoaded', () => {
         e.stopPropagation();
         input.value = '';
         selectEl.value = '';
+        selectEl.dataset.value = '';
         clearBtn.style.display = 'none';
         dropdown.style.display = 'none';
         input.setAttribute('aria-expanded', 'false');
         input.focus();
-        if (!isStart) {
+        if (!isStart && !isStop) {
           clearActiveRoute();
+        } else if (isStop) {
+          // A cleared "via" just drops out of the trip; re-plan if one exists.
+          if (navStartSelect && navStartSelect.value && navDestSelect && navDestSelect.value) {
+            generateCampusRoute();
+          }
         }
       });
     }
@@ -3116,8 +3449,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (wrapper && !wrapper.contains(e.target)) {
         dropdown.style.display = 'none';
         input.setAttribute('aria-expanded', 'false');
-        if (selectEl.value) {
-          input.value = getRoomDisplayLabel(selectEl.value);
+        const storedId = selectEl.dataset.value || selectEl.value;
+        if (storedId) {
+          input.value = getRoomDisplayLabel(storedId);
           if (clearBtn) clearBtn.style.display = 'flex';
         }
       }
@@ -3141,6 +3475,93 @@ document.addEventListener('DOMContentLoaded', () => {
     wrapper: navDestWrapper,
     isStart: false
   });
+
+  // ── Multi-stop "Via" rows ────────────────────────────────────
+  // Each row reuses the destination combobox (isStop mode: no room-selection
+  // side effects). Rows are read at route time via getNavStopValues().
+  const navStopsContainer = document.getElementById('nav-stops-container');
+  const navAddStopBtn = document.getElementById('nav-add-stop-btn');
+  const navStopRows = [];
+  const MAX_NAV_STOPS = 3;
+
+  function getNavStopValues() {
+    return navStopRows
+      .map(row => row.select.dataset.value || row.select.value || '')
+      .filter(v => v);
+  }
+
+  function updateNavStopUi() {
+    navStopRows.forEach((row, i) => {
+      row.label.textContent = `Via ${i + 1}`;
+    });
+    if (navAddStopBtn) {
+      navAddStopBtn.style.display = navStopRows.length >= MAX_NAV_STOPS ? 'none' : 'flex';
+    }
+  }
+
+  function removeNavStopRow(row, regenerateRoute = true) {
+    const idx = navStopRows.indexOf(row);
+    if (idx !== -1) navStopRows.splice(idx, 1);
+    if (row.wrapper.parentNode) row.wrapper.parentNode.removeChild(row.wrapper);
+    updateNavStopUi();
+    if (regenerateRoute &&
+        navStartSelect && navStartSelect.value && navDestSelect && navDestSelect.value) {
+      generateCampusRoute();
+    }
+  }
+
+  function clearNavStopRows() {
+    while (navStopRows.length) removeNavStopRow(navStopRows[0], false);
+  }
+
+  function addNavStopRow() {
+    if (!navStopsContainer || navStopRows.length >= MAX_NAV_STOPS) return;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'nav-select-wrapper nav-stop-row';
+    wrapper.innerHTML = `
+      <label class="nav-label">Via</label>
+      <div class="nav-input-container">
+        <input type="text" class="nav-search-input" placeholder="Search stop..." autocomplete="off" spellcheck="false" aria-label="Stop along the route" role="combobox" aria-expanded="false" aria-autocomplete="list" />
+        <button type="button" class="nav-input-clear" title="Clear stop" aria-label="Clear stop" style="display: none;">✕</button>
+        <div class="nav-suggestions-dropdown" style="display: none;" role="listbox"></div>
+      </div>
+      <select class="nav-select" style="display: none;" aria-hidden="true" tabindex="-1"><option value="">Select stop...</option></select>
+      <button type="button" class="nav-stop-remove" title="Remove stop" aria-label="Remove stop">✕</button>
+    `;
+    navStopsContainer.appendChild(wrapper);
+
+    const row = {
+      wrapper,
+      label: wrapper.querySelector('.nav-label'),
+      input: wrapper.querySelector('input'),
+      select: wrapper.querySelector('select')
+    };
+    navStopRows.push(row);
+    updateNavStopUi();
+
+    wrapper.querySelector('.nav-stop-remove').addEventListener('click', (e) => {
+      e.stopPropagation();
+      removeNavStopRow(row);
+    });
+
+    setupNavSearchCombobox({
+      input: row.input,
+      clearBtn: wrapper.querySelector('.nav-input-clear'),
+      dropdown: wrapper.querySelector('.nav-suggestions-dropdown'),
+      selectEl: row.select,
+      wrapper,
+      isStart: false,
+      isStop: true
+    });
+  }
+
+  if (navAddStopBtn) {
+    navAddStopBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      addNavStopRow();
+      if (navStopRows.length) navStopRows[navStopRows.length - 1].input.focus();
+    });
+  }
 
   // ==========================================
   // --- Room Label Layout Engine (wrap / fit / center) ---
