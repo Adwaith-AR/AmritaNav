@@ -79,18 +79,36 @@
           </span>
           <span class="chip-label">Labs</span>
         </button>
-        <button type="button" class="category-chip" data-category="office" title="Offices">
-          <span class="chip-badge chip-badge-blue">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
-          </span>
-          <span class="chip-label">Offices</span>
-        </button>
         <button type="button" class="category-chip" id="nearby-toggle-btn" title="Nearby facilities" aria-haspopup="menu" aria-expanded="false">
           <span class="chip-badge chip-badge-teal">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49"/><path d="M7.76 16.24a6 6 0 0 1 0-8.49"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 19.07a10 10 0 0 1 0-14.14"/></svg>
           </span>
           <span class="chip-label">Nearby</span>
           <svg class="nearby-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <button type="button" class="category-chip" data-category="office" title="Offices">
+          <span class="chip-badge chip-badge-blue">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          </span>
+          <span class="chip-label">Offices</span>
+        </button>
+        <button type="button" class="category-chip" data-category="classroom" title="Classrooms">
+          <span class="chip-badge chip-badge-purple">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg>
+          </span>
+          <span class="chip-label">Classrooms</span>
+        </button>
+        <button type="button" class="category-chip" data-category="hall" title="Halls & Seminar Rooms">
+          <span class="chip-badge chip-badge-amber">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M4 21V8l8-5 8 5v13"/><path d="M9 21v-6h6v6"/></svg>
+          </span>
+          <span class="chip-label">Halls</span>
+        </button>
+        <button type="button" class="category-chip" data-category="stairs" title="Staircases">
+          <span class="chip-badge chip-badge-green">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4v-4h4v-4h4V8h4V4"/></svg>
+          </span>
+          <span class="chip-label">Stairs</span>
         </button>
       </div>
 
@@ -149,6 +167,8 @@
             </select>
           </div>
           <button type="button" id="nav-swap-btn" class="nav-swap-btn" title="Swap start and destination" aria-label="Swap start and destination">⇄</button>
+          <div id="nav-stops-container" class="nav-stops-container"></div>
+          <button type="button" id="nav-add-stop-btn" class="nav-swap-btn nav-add-stop-btn" title="Add a stop along the way" aria-label="Add a stop along the way">＋</button>
           <div class="nav-select-wrapper" id="nav-dest-wrapper">
             <label for="nav-dest-input" class="nav-label">To</label>
             <div class="nav-input-container">
