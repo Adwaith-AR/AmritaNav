@@ -336,6 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let isGpsActive = false;
   let watchId = null;
+  let lastGpsFixTs = -Infinity; // newest fix timestamp already applied
   let currentHeading = null;
   let currentPos = { x: GPS_CALIBRATION.defaultX, y: GPS_CALIBRATION.defaultY };
 
@@ -458,6 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (watchId !== null) {
       navigator.geolocation.clearWatch(watchId);
     }
+    lastGpsFixTs = -Infinity;
 
     watchId = navigator.geolocation.watchPosition(
       handleGpsSuccess,
@@ -486,6 +488,16 @@ document.addEventListener('DOMContentLoaded', () => {
     gpsToggleBtn.classList.remove('locating');
 
     const { latitude, longitude, accuracy, heading } = pos.coords;
+
+    // Validate the fix and drop stale/out-of-order callbacks. While the page
+    // is backgrounded (e.g. user is in a fake-GPS app), fixes queue up and can
+    // arrive as an out-of-order burst on resume; only the newest valid fix may
+    // drive the marker, heading and any viewport follow logic.
+    if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return;
+    const fixTs = Number.isFinite(pos.timestamp) ? pos.timestamp : Date.now();
+    if (fixTs < lastGpsFixTs) return;
+    lastGpsFixTs = fixTs;
+
     updateHeadingFromFix(latitude, longitude, accuracy, heading, pos.coords.speed, pos.timestamp);
     const dist = haversineDistance(
       latitude,
@@ -2048,10 +2060,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // travel points to the top of the screen. (Map +x axis already points up
     // on screen due to the base 90° CCW orientation, i.e. heading 90° = no
     // extra rotation.)
-    let target = 90 - headingTracker.smoothed;
-    target = ((target % 360) + 540) % 360 - 180;
-    navRotTarget = target;
-    kickNavRotationLoop();
+    // Rotation is a navigation-only feature: never steer the map orientation
+    // from a bare GPS jump while no route is active. The floor-plan SVGs clip
+    // to their fixed viewBox, so an arbitrary pivot rotation would permanently
+    // crop the map out of the viewport (zoom/pan cannot recover clipped
+    // content) — the fake-GPS "map cropped after location change" bug.
+    if (navRotActive) {
+      let target = 90 - headingTracker.smoothed;
+      target = ((target % 360) + 540) % 360 - 180;
+      navRotTarget = target;
+      kickNavRotationLoop();
+    }
   }
 
   function applyMapRotation(deg) {
@@ -2132,6 +2151,12 @@ document.addEventListener('DOMContentLoaded', () => {
       navRotActive = shouldBeActive;
       if (!navRotActive) {
         navRotTarget = 0; // ease back to the default map orientation
+      } else if (headingTracker.smoothed !== null) {
+        // Rotation just became active: orient immediately to the heading
+        // already tracked from recent movement instead of waiting for the
+        // next fix to arrive.
+        let target = 90 - headingTracker.smoothed;
+        navRotTarget = ((target % 360) + 540) % 360 - 180;
       }
     }
     kickNavRotationLoop();
