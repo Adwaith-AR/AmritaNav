@@ -333,26 +333,6 @@ body {
   color: var(--text-muted);
 }
 
-.mic-btn {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  transition: all 0.15s ease;
-  font-family: inherit;
-}
-
-.mic-btn:hover {
-  color: var(--text-main);
-  transform: scale(1.08);
-}
-
 /* Autocomplete Suggestions */
 .classroom-search-suggestions {
   position: absolute;
