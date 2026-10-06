@@ -35,16 +35,58 @@ const Tools = {
                     Options: [
                               {
                                         type: 2,
-                                        label: "MandiMansil",
-                                        link: "https://maps.app.goo.gl/Dr6Q8fMmTnynD9vm7?g_st=ac",
-                                        distance: "120m away"
+                                        label: "KRISHNA",
+                                        link: "https://maps.app.goo.gl/vhVz8tTfYsBhauk79?g_st=ac%22",
+                                        distance: ""
                               },
                               {
                                         type: 2,
-                                        label: "MandiMansil",
-                                        link: "https://maps.app.goo.gl/Dr6Q8fMmTnynD9vm7?g_st=ac",
-                                        distance: "120m away"
-                              }
+                                        label: "PEPINO",
+                                        link: "",
+                                        distance: ""
+                              },
+                              {
+                                        type: 2,
+                                        label: "ANDURA RUCHULU",
+                                        link: "",
+                                        distance: ""
+                              },
+                              {
+                                        type: 2,
+                                        label: "CALIFO",
+                                        link: "",
+                                        distance: ""
+                              },
+                              {
+                                        type: 2,
+                                        label: "THOMACHAYANS",
+                                        link: "",
+                                        distance: ""
+                              },
+                              {
+                                        type: 2,
+                                        label: "BURGER SPOT",
+                                        link: "",
+                                        distance: ""
+                              },
+                              {
+                                        type: 2,
+                                        label: "KALATHIL BAKERY",
+                                        link: "",
+                                        distance: ""
+                              },
+                              {
+                                        type: 2,
+                                        label: "COFFEE & CRUNCH",
+                                        link: "",
+                                        distance: ""
+                              },
+                              {
+                                        type: 2,
+                                        label: "CHILL OUT",
+                                        link: "",
+                                        distance: ""
+                              },
                     ]
           },
           "Clubs": {
@@ -179,7 +221,7 @@ function CardGenerator(type, label, description, distance, Icon, link, items, pr
                     case 2:
                               return (`
                                         <div class="card_type2" id="${label}" onclick="expand('${label}')">
-                                                  <img src="./img/${label}.png" alt="">
+                                                  <img src="./img/${label}.jpeg" alt="">
                                                   <div id="${label}d" class="details">
                                                
                                                   <h3 id="${label}h">${label}</h3>

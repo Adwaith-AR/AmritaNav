@@ -15,3 +15,14 @@ function openMenu() {
 function closeMenu() {
           mobilemenu.style.display = "none";
 }
+function cardCreator() {
+          const Tools = {
+                    "": {
+                              type: 1,
+                              Label: "Classroom Locator",
+                              IconClass: "fa-solid fa-location-dot",
+                              description: "Find any classroom instantly.",
+                              link: "ClassroomLocator/index.html"
+                    }
+          }
+}
