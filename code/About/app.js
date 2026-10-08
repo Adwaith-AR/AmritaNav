@@ -9,23 +9,23 @@ const details = {
           1: {
                     name: "Adwaith.A",
                     class: "AIE B",
-                    whatapp: "+919544654395",
+                    whatapp: "",
                     insta: "",
-                    phone: "+919544654395"
+                    phone: ""
           },
           2: {
                     name: "Rohan R",
                     class: "AIE B",
-                    whatapp: "+917276882215",
+                    whatapp: "",
                     insta: "",
-                    phone: "7276882215"
+                    phone: ""
           },
           3: {
                     name: "Jayanth",
                     class: "AIE B",
-                    whatapp: "+919059981065",
+                    whatapp: "",
                     insta: "",
-                    phone: "9059981065"
+                    phone: ""
           },
           4: {
                     name: "Riya",
@@ -60,14 +60,14 @@ const details = {
                     class: "AIE B",
                     whatapp: "+919150359502",
                     insta: "",
-                    phone: "9150359502"
+                    phone: ""
           },
           9: {
                     name: "Varsha",
                     class: "AIE B",
-                    whatapp: "+918520034519",
+                    whatapp: "",
                     insta: "",
-                    phone: "8520034519"
+                    phone: ""
           },
           10: {
                     name: "P V Sri Harsha",
