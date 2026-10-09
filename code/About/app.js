@@ -30,35 +30,35 @@ const details = {
           4: {
                     name: "Riya",
                     class: "AIE B",
-                    whatapp: "9895921308",
+                    whatapp: "",
                     insta: "",
-                    phone: "9895921308"
+                    phone: ""
           },
           5: {
                     name: "Meenakshy",
                     class: "AIE B",
-                    whatapp: "+917012444529",
+                    whatapp: "",
                     insta: "",
-                    phone: "7012444529"
+                    phone: ""
           },
           6: {
                     name: "Swathi",
                     class: "AIE B",
-                    whatapp: "8921321507",
+                    whatapp: "",
                     insta: "",
-                    phone: "8921321507"
+                    phone: ""
           },
           7: {
                     name: "Chetana",
                     class: "AIE B",
-                    whatapp: "833087562",
+                    whatapp: "",
                     insta: "",
-                    phone: "833087562"
+                    phone: ""
           },
           8: {
                     name: "Hemaprabha K",
                     class: "AIE B",
-                    whatapp: "+919150359502",
+                    whatapp: "",
                     insta: "",
                     phone: ""
           },
@@ -72,30 +72,30 @@ const details = {
           10: {
                     name: "P V Sri Harsha",
                     class: "AIE B",
-                    whatapp: "+9172819606367",
+                    whatapp: "",
                     insta: "",
-                    phone: "72819606367"
+                    phone: ""
           },
           11: {
                     name: "Satish",
                     class: "AIE B",
-                    whatapp: "+918125349760",
+                    whatapp: "",
                     insta: "",
-                    phone: "+918125349760"
+                    phone: ""
           },
           12: {
                     name: "Vardhan Tammina",
                     class: "AIE B",
-                    whatapp: "+918014355143",
+                    whatapp: "",
                     insta: "",
-                    phone: "+918014355143"
+                    phone: ""
           },
           13: {
                     name: "Pranaya Sree",
                     class: "AIE B",
-                    whatapp: "+918374128467",
+                    whatapp: "",
                     insta: "",
-                    phone: "+918374128467"
+                    phone: ""
           }
 };
 
