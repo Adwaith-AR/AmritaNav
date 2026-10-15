@@ -288,20 +288,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   // ==========================================
   // --- GPS Live Location & Tracking Engine ---
   // ==========================================
