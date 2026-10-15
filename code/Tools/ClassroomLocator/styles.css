@@ -285,7 +285,7 @@ body {
 }
 
 .floating-search-bar:focus-within {
-  border-color: #2563eb;
+  border-color: #8f1537;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15), var(--shadow);
 }
 
@@ -785,9 +785,9 @@ body {
 }
 
 .nav-search-input:focus {
-  border-color: #2563eb;
+  border-color: #f9c51a;
   background: var(--card-bg);
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.18);
+  box-shadow: 0 0 0 2px #cfa51a;
 }
 
 .nav-input-clear {
@@ -971,9 +971,9 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
-  background: rgba(37, 99, 235, 0.12);
+  background:#f4f4f4;
   border: 1px solid rgba(37, 99, 235, 0.30);
-  color: #1d4ed8;
+  color: #8f1537;
   padding: 8px 16px;
   border-radius: 14px;
   font-size: 12.5px;
@@ -1300,8 +1300,8 @@ body {
 }
 
 [data-theme="dark"] .route-summary-icon {
-  background: #1d4ed8;
-  border-color: #93c5fd;
+  background: #6f102a;
+  border-color: #8f1537;
 }
 
 .route-summary-minimize {
